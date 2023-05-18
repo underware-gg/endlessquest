@@ -1,0 +1,24 @@
+{
+  "folders": [
+    {
+      "path": "."
+    }
+  ],
+  "settings": {
+    "files.exclude": {
+      "**/.next": true,
+      "**/.vscode": true,
+      "**/build": true,
+      "**/node_modules": true,
+      "**/_artwork": true,
+    },
+    "search.exclude": {
+      "**/package-lock.yaml": true,
+      "**/pnpm-lock.json": true,
+      "/yarn.lock": true,
+      "/yarn-error.log": true,
+    },
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true,
+  }
+}
