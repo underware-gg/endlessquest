@@ -20,5 +20,36 @@ export function defineContractComponents(world: World) {
         }
       );
     })(),
+    Token: (() => {
+      const tableId = new TableId("", "Token");
+      return defineComponent(
+        world,
+        {
+          coord: RecsType.BigInt,
+        },
+        {
+          metadata: {
+            contractId: tableId.toHexString(),
+            tableId: tableId.toString(),
+          },
+        }
+      );
+    })(),
+    Chamber: (() => {
+      const tableId = new TableId("", "Chamber");
+      return defineComponent(
+        world,
+        {
+          opener: RecsType.String,
+          bitmap: RecsType.BigInt,
+        },
+        {
+          metadata: {
+            contractId: tableId.toHexString(),
+            tableId: tableId.toString(),
+          },
+        }
+      );
+    })(),
   };
 }
