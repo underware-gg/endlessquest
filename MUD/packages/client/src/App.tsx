@@ -1,11 +1,12 @@
 import { useComponentValue, useEntityQuery, useRow } from "@latticexyz/react";
 import { useMUD } from "./MUDContext";
 import { Has, HasValue } from "@latticexyz/recs";
+import { useEffect } from "react";
 
 export const App = () => {
   const {
     components: { Counter, Token },
-    systemCalls: { increment, tokenIdToCoord },
+    systemCalls: { increment, set_tokenIdToCoord },
     network: { singletonEntity, storeCache },
   } = useMUD();
 
@@ -14,6 +15,15 @@ export const App = () => {
 
   // query by KEY
   const token = useRow(storeCache, { table: "Token", key: { tokenId: BigInt(tokenId) } });
+  const coord = token?.value?.coord?.toString() ?? null
+
+  console.log(`APP`, tokenId, coord, token)
+  useEffect(() => {
+    if (tokenId && coord == null) {
+      console.log(`USE_EFFECT_SET_____`)
+      set_tokenIdToCoord(BigInt(tokenId))
+    }
+  }, [tokenId, coord])
 
   // query by VALUE
   // const token = useEntityQuery([HasValue(Token, { coord: BigInt(tokenId) })])
@@ -34,7 +44,7 @@ export const App = () => {
         Increment
       </button>
       <hr />
-      <button
+      {/* <button
         type="button"
         onClick={async (event) => {
           event.preventDefault();
@@ -42,8 +52,8 @@ export const App = () => {
         }}
       >
         Make coord
-      </button>
-      <div>coord: {token?.value?.coord?.toString() ?? '?'}</div>
+      </button> */}
+      <div>coord: {coord ?? '?'}</div>
     </>
   );
 };

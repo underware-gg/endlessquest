@@ -23,10 +23,12 @@
     "@latticexyz/utils": "2.0.0-alpha.1.159+59588ab6",
     "@latticexyz/world": "2.0.0-alpha.1.159+59588ab6",
     "@wagmi/chains": "^0.2.22",
+    "@wagmi/core": "^1.0.5",
     "contracts": "workspace:*",
     "ethers": "^5.7.2",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "viem": "^0.3.30"
   },
   "devDependencies": {
     "@types/react": "^18.2.6",

@@ -7,13 +7,7 @@ import { ChamberBridge } from "../utils/ChamberBridge.sol";
 import { Crawl } from "../utils/Crawl.sol";
 
 contract TokenSystem is System {
-  function tokenIdToCoord(uint256 tokenId) public returns (uint256) {
-    uint256 coord = Token.get(tokenId);
-    if(coord == 0) {
-      coord = tokenId == 0 ? 0 : 1000 + tokenId;
-      Token.set(tokenId, coord);
-    }
-    // Token.set(tokenId, 777);
-    return coord;
+  function set_tokenIdToCoord(uint256 tokenId, uint256 coord) public {
+    Token.set(tokenId, coord);
   }
 }
