@@ -6,7 +6,7 @@ import { useEffect } from "react";
 export const App = () => {
   const {
     components: { Counter, Token },
-    systemCalls: { increment, bridge_tokenId, bridge_chamber },
+    systemCalls: { increment, decrement, bridge_tokenId, bridge_chamber },
     network: { singletonEntity, storeCache },
   } = useMUD();
 
@@ -39,19 +39,21 @@ export const App = () => {
       <div>
         Counter: <span>{counter?.value ?? "??"}</span>
       </div>
-      <button
-        type="button"
+      <button type="button"
         onClick={async (event) => {
           event.preventDefault();
-          console.log("new counter value:", await increment());
+          console.log("new counter value < ", await decrement());
         }}
-      >
-        Increment
-      </button>
+      >Decrement</button>
+      <button type="button"
+        onClick={async (event) => {
+          event.preventDefault();
+          console.log("new counter value > ", await increment());
+        }}
+      >Increment</button>
 
       <hr />
-      {/* <button
-        type="button"
+      {/* <button type="button"
         onClick={async (event) => {
           event.preventDefault();
           console.log("get coord:", await tokenIdToCoord(BigInt(tokenId)));

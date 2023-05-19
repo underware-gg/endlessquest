@@ -11,4 +11,10 @@ contract IncrementSystem is System {
     Counter.set(newValue);
     return newValue;
   }
+  function decrement() public returns (uint32) {
+    uint32 counter = Counter.get();
+    uint32 newValue = counter > 0 ? counter - 1 : 0;
+    Counter.set(newValue);
+    return newValue;
+  }
 }

@@ -10,8 +10,15 @@ export function createSystemCalls(
   { worldSend, txReduced$, singletonEntity, storeCache }: SetupNetworkResult,
   { Counter, Token }: ClientComponents,
 ) {
+  //
+  // CounterSystem
   const increment = async () => {
     const tx = await worldSend("increment", []);
+    await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
+    return getComponentValue(Counter, singletonEntity);
+  };
+  const decrement = async () => {
+    const tx = await worldSend("decrement", []);
     await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
     return getComponentValue(Counter, singletonEntity);
   };
@@ -68,6 +75,7 @@ export function createSystemCalls(
 
   return {
     increment,
+    decrement,
     bridge_tokenId,
     bridge_chamber,
   };
