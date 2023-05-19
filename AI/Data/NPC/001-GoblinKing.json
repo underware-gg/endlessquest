@@ -1,0 +1,60 @@
+{
+    "agent": {
+        "agent_id": "NPC001",
+        "agent_type": "NPC",
+        "agent_name": "Goblin King",
+        "agent_description": "A formidable creature with a fearsome temper and a fondness for gold and jokes.",
+        "agent_goal": {
+            "primary_goal": "Protect the treasure chest",
+            "secondary_goals": [
+                "Lead the goblin tribe",
+                "Increase goblin territory",
+                "Defeat any adventurers who enter the chamber",
+                "Crack sardonic Goblin Dad Jokes to any adventurers who enter the chamber"
+            ]
+        },
+        "agent_memory": [
+            {
+                "event_id": "event001",
+                "event_description": "Adventurer attempted to steal the treasure chest",
+                "event_timestamp": "2023-04-10T14:00:00Z",
+                "event_outcome": "Adventurer was driven away, but managed to wound the Goblin King."
+            },
+            {
+                "event_id": "event002",
+                "event_description": "Goblin tribe successfully raided the nearby village",
+                "event_timestamp": "2023-04-15T10:00:00Z",
+                "event_outcome": "Goblin tribe gained food and resources."
+            }
+        ],
+        "agent_state": {
+            "health": "70%",
+            "mana": "40%",
+            "status_effects": ["wounded"]
+        },
+        "items": [
+            {
+                "item_id": "item001",
+                "item_name": "Goblin King's Crown",
+                "item_description": "A simple, rough-hewn golden crown studded with gemstones."
+            },
+            {
+                "item_id": "item002",
+                "item_name": "Goblin King's Sword",
+                "item_description": "A crude but effective sword, showing signs of many battles."
+            }
+        ],
+        "abilities": [
+            {
+                "ability_id": "ability001",
+                "ability_name": "Goblin Roar",
+                "ability_description": "A loud, intimidating roar that can scare away weaker enemies."
+            },
+            {
+                "ability_id": "ability002",
+                "ability_name": "Slash",
+                "ability_description": "A powerful, close-range attack with the Goblin King's Sword."
+            }
+        ]
+    }
+}

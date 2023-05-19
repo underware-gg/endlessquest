@@ -1,0 +1,31 @@
+{
+    "item": {
+        "item_id": "item001",
+        "item_name": "Goblin King's Crown",
+        "item_type": "Equipment",
+        "item_subtype": "Headwear",
+        "item_description": "A simple, rough-hewn golden crown studded with gemstones. It is said to enhance the leadership skills and comedic timing of the wearer.",
+        "item_properties": {
+            "durability": "80%",
+            "weight": "0.5 kg",
+            "value": "100 gold"
+        },
+        "item_effects": {
+            "charisma_boost": "+10",
+            "joke_boost": "+20"
+        },
+        "item_history": [
+            {
+                "event_id": "event001",
+                "event_description": "Crown was created by the Goblin King's personal jester.",
+                "event_timestamp": "2023-01-01T00:00:00Z"
+            },
+            {
+                "event_id": "event002",
+                "event_description": "Crown was worn during the successful standup night of the nearby village.",
+                "event_timestamp": "2023-04-15T10:00:00Z"
+            }
+        ],
+        "item_location": "chamber01"
+    }
+}

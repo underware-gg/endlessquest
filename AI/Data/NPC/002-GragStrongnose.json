@@ -1,0 +1,59 @@
+{
+    "agent": {
+        "agent_id": "NPC002",
+        "agent_type": "NPC",
+        "agent_name": "Grag Strongnose",
+        "agent_description": "A robust warrior with a flair for adventure and a nose for danger. Known for his unruly beard and fearsome battle cry.",
+        "agent_goal": {
+            "primary_goal": "Defeat the Goblin King and claim the treasure",
+            "secondary_goals": [
+                "Become the strongest warrior in the land",
+                "Tell the Goblin King he isn't funny",
+                "Burn the Goblin King's joke scrolls"
+            ]
+        },
+        "agent_memory": [
+            {
+                "event_id": "event001",
+                "event_description": "Encountered a goblin patrol in the dungeon's entrance",
+                "event_timestamp": "2023-05-18T14:00:00Z",
+                "event_outcome": "Defeated the goblins and found a map to the Goblin King's chamber."
+            },
+            {
+                "event_id": "event002",
+                "event_description": "Discovered a secret door in Chamber 5",
+                "event_timestamp": "2023-05-18T16:00:00Z",
+                "event_outcome": "Found a cache of healing potions."
+            }
+        ],
+        "agent_state": {
+            "health": "90%",
+            "mana": "40%",
+            "status_effects": []
+        },
+        "items": [
+            {
+                "item_id": "item003",
+                "item_name": "Steel Sword",
+                "item_description": "A sturdy and sharp sword. Perfect for goblin slaying."
+            },
+            {
+                "item_id": "item004",
+                "item_name": "Healing Potion",
+                "item_description": "A potion that heals wounds and restores vitality."
+            }
+        ],
+        "abilities": [
+            {
+                "ability_id": "ability003",
+                "ability_name": "Battle Cry",
+                "ability_description": "A fearsome cry that can intimidate enemies."
+            },
+            {
+                "ability_id": "ability004",
+                "ability_name": "Power Strike",
+                "ability_description": "A powerful, close-range attack with the Steel Sword."
+            }
+        ]
+    }
+}

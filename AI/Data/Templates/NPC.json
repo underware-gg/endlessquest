@@ -1,0 +1,23 @@
+{
+    "agent": {
+        "agent_id": "agent01",
+        "agent_type": "NPC",
+        "agent_name": "Goblin King",
+        "agent_goal": "Protect the treasure chest",
+        "agent_memory": [
+            {"event_id": "event01", "event_description": "...", "event_timestamp": "..."},
+            {"event_id": "event02", "event_description": "...", "event_timestamp": "..."},
+            "..."
+        ],
+        "agent_state": {
+            "health": "...",
+            "mana": "...",
+            "status_effects": ["poisoned", "..."]
+        },
+        "items": [
+            {"item_id": "item01", "item_name": "Goblin King's Crown", "item_description": "..."},
+            {"item_id": "item02", "item_name": "Goblin King's Sword", "item_description": "..."},
+            "..."
+        ]
+    }
+}
