@@ -7,7 +7,7 @@ export type SystemCalls = ReturnType<typeof createSystemCalls>;
 
 export function createSystemCalls(
   { worldSend, txReduced$, singletonEntity }: SetupNetworkResult,
-  { Counter }: ClientComponents
+  { Counter, Token, Chamber }: ClientComponents
 ) {
   const increment = async () => {
     const tx = await worldSend("increment", []);
@@ -15,7 +15,20 @@ export function createSystemCalls(
     return getComponentValue(Counter, singletonEntity);
   };
 
+  const tokenIdToCoord = async (tokenId: bigint) => {
+    const tx = await worldSend("tokenIdToCoord", [tokenId]);
+    await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
+    return getComponentValue(Token, singletonEntity);
+  };
+
+  // const tokenURI = async (tokenId: string) => {
+  //   const tx = await worldSend("tokenURI", [tokenId]);
+  //   await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
+  //   return getComponentValue(Chamber, singletonEntity);
+  // };
+
   return {
     increment,
+    tokenIdToCoord,
   };
 }

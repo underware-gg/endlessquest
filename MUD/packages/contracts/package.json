@@ -20,6 +20,7 @@
     "worldtypes": "rimraf types && typechain --target=ethers-v5 out/IWorld.sol/IWorld.json"
   },
   "dependencies": {
+    "@eth-optimism/contracts": "^0.5.40",
     "@ethersproject/abi": "^5.7.0",
     "@ethersproject/bytes": "^5.7.0",
     "@ethersproject/providers": "^5.7.2",
