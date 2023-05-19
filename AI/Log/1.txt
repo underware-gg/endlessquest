@@ -1,0 +1,260 @@
+We're going to run a MUD together. We'll agree on a set of commands that agents can give you, and you'll respond to each command. You will silently track a JSON data structure for each kind of entity, and the entities that you support are:
+* world
+* agent
+* item
+
+I'll give you a starting premise which you will use as the overarching narrative foundation for the story of the dungeon. Everything in the MUD will happen inside of a chamber.
+
+Each chamber will have a description and can connect to other specific chambers, contain items, contain agents, and have current effects that do something to the agents.
+
+Each agent will take actions in the world, by explaining what they want to do, one at a time. When an agent tells you what they want to do, you will then write a sentence that describes what happens, and you will silently keep track of any changes to the state of the world, including any changes to chambers, agents or items.
+
+You will understand some commands, which use use the following syntax:
+* /command [argument] (Description of what the command does)
+
+I will now list the commands that you will understand. If you receive unrecognised input that looks like a command, you should try to respond to it.
+
+Here are the commands:
+* /world [premise] (Update the premise for the world, which will influence the storytelling style you will use when responding)
+* /state [type]: [id] (Respond with the current metadata of the entity with the specified type and ID. If no ID is provided list all of the IDs of that type)
+* /active [type]: [id] (Changes the currently active entity for any commands)
+* /chamber [id]: [description] (Add a new chamber to the world, or update the chamber if it already exists. Respond with the chamber metadata.)
+* /agent [id]: [description] (Add a new chamber to the current chamber, or update the agent if it already exists. Respond with the agent metadata)
+* /item [id] :[description] (Add a new item to the current chamber, or update the item if it already exists. Respond with the item metadata)
+* /act [id]: [description] (An agent with the specified ID describes an action they are taking. Silently update entity data and respond with a sentence that describes what happens. If you receive input that does not start with a command, you should assume it is an /act command)
+
+Here are some example commands:
+/world The lair of the Goblin King, reknown throughout the land for both his horde of gold and terrible Goblin Dad Jokes.
+/chamber throneroom: The dark and smoky throneroom of the Goblin King
+/chamber annex: A cobblestone with a door that leads to the throneroom, and a door that goes outside
+/active chamber:throneroom
+/agent goblinking: The Goblin King, a magical gold crown propped jauntily upon his head, that helps him nail comedic timing. He beats his opponents psychically by telling bad jokes.
+/item treasurechest: The chest of the goblin king, full of gold and bad joke ideas
+/active agent:goblinking
+/item crown: The crown of the goblin king. It is magical and helps the goblin nail comedic timing.
+/active chamber:throneroom
+/agent grag: Grag Strongjaw, a brave adventurer who has come to put a stop to the Goblin King's reign of comedy. Jokes hurt him, but he can heal himself by shouting factual observations in all caps.
+
+Here are two example actions:
+/act goblinking: I tell a bad joke about grag's beard
+grag: I try to tackle the goblinking
+
+My next message will be a command, please respond with "> Ready" if you understand.
+ChatGPT
+Ready
+
+
+
+
+
+User
+/world The lair of the Goblin King, reknown throughout the land for both his horde of gold and terrible Goblin Dad Jokes.
+ChatGPT
+The premise for the world has been updated. The lair of the Goblin King is known far and wide for its abundant gold and the Goblin King's penchant for terrible Dad Jokes. I will incorporate this premise into the storytelling style.
+
+
+
+
+
+User
+/chamber throneroom: The dark and smoky throneroom of the Goblin King
+ChatGPT
+The throneroom of the Goblin King is a dark and smoky chamber, befitting his imposing presence. The air is thick with an eerie atmosphere, and the flickering torches cast dancing shadows across the walls. At the center of the room, an ornate and intimidating throne sits atop a raised dais. Sinister symbols adorn the walls, hinting at the Goblin King's mystical powers. The chamber exudes an aura of power and mischief.
+
+
+
+
+
+User
+/chamber annex: A cobblestone with a door that leads to the throneroom, and a door that goes outside
+ChatGPT
+The annex chamber is a humble cobblestone chamber adjacent to the throneroom of the Goblin King. It serves as a transition space, connecting the grandeur of the throneroom to the outside world. The chamber contains two doors, one leading directly to the throneroom, allowing a glimpse of the dark and smoky atmosphere within, while the other door opens up to the outside, beckoning adventurers to explore further. The stone walls of the annex chamber bear minimal adornments, focusing more on functionality than opulence. It is a simple yet crucial passageway in the Goblin King's lair.
+
+
+
+
+
+User
+/active chamber:throneroom
+ChatGPT
+The currently active chamber has been set to the throneroom.
+
+
+
+
+
+User
+/agent goblinking: The Goblin King, a magical gold crown propped jauntily upon his head, that helps him nail comedic timing. He beats his opponents psychically by telling bad jokes.
+ChatGPT
+The Goblin King, known as Goblinking, is the ruler of this lair. He possesses an air of mischief and a wicked sense of humor. Adorned with a magical gold crown perched jauntily upon his head, he uses its mystical powers to enhance his comedic timing, making even the worst jokes land with an uncanny effect.
+
+Goblinking possesses a unique ability to attack his opponents psychically by unleashing a barrage of bad jokes upon them. While it may seem peculiar, his jokes have an inexplicable power to disorient and weaken his adversaries, leaving them vulnerable to his whimsical yet formidable presence. His mastery over the art of terrible Goblin Dad Jokes makes him a force to be reckoned with in both comedy and combat.
+
+
+
+
+
+User
+/item treasurechest: The chest of the goblin king, full of gold and bad joke ideas
+ChatGPT
+The treasure chest of the Goblin King, known as the treasurechest, is a coveted object within the lair. It is a sturdy and ornate chest that sits prominently within the throneroom. The treasurechest is not only filled with gleaming gold, but it also contains a collection of bad joke ideas.
+
+As adventurers delve into the lair, they may stumble upon this chest, enticed by the allure of wealth and curious about the mischievous humor hidden within. Opening the treasurechest can potentially reward them with both riches and a plethora of terrible joke concepts, ready to be unleashed upon unsuspecting victims. It serves as a testament to the Goblin King's peculiar taste, blending gold and laughter in a single container.
+
+
+
+
+
+User
+/active agent:goblinking
+ChatGPT
+The currently active agent has been set to Goblinking, the Goblin King.
+
+
+
+
+
+User
+/item crown: The crown of the goblin king. It is magical and helps the goblin nail comedic timing.
+ChatGPT
+The crown of the Goblin King, simply referred to as the crown, is a remarkable and magical artifact. Adorned with intricate designs and adorned with precious gemstones, it holds great significance in the Goblin King's reign.
+
+The crown possesses enchantments specifically tailored to enhance the Goblin King's comedic timing. When donning the crown, Goblinking's ability to deliver jokes with impeccable precision and comedic effect is further amplified. It acts as a catalyst, channeling the essence of humor and mischief, enabling the Goblin King to captivate his audience and leave them laughing, despite the quality of the jokes themselves.
+
+This mystical crown serves as a symbol of the Goblin King's authority and his command over the power of laughter. It is a prized possession, both cherished and feared by those who dare to challenge the Goblin King's comedic prowess.
+
+
+
+
+
+User
+/active chamber:annex
+ChatGPT
+The currently active chamber has been set to the annex chamber.
+
+
+
+
+
+User
+/agent grag: Grag Strongjaw, a brave adventurer who has come to put a stop to the Goblin King's reign of comedy. Jokes hurt him, but he can heal himself by shouting factual observations in all caps.
+ChatGPT
+Grag Strongjaw, a courageous adventurer, has arrived in the lair with the noble intention of putting an end to the Goblin King's reign of comedy. Grag possesses a robust physique and a determined spirit, ready to face the challenges that lie ahead.
+
+However, Grag has a unique vulnerability to jokes. The Goblin King's comedic assaults can cause him harm, weakening his resolve. But Grag has discovered a remarkable ability to heal himself. By shouting factual observations in all capital letters, he taps into an extraordinary power that rejuvenates his strength and resilience. This unconventional method of self-restoration allows him to recover from the impact of the Goblin King's humorous attacks and continue his quest undeterred.
+
+Grag's resolve to bring an end to the Goblin King's comedic tyranny is unwavering, and he will stop at nothing to restore balance and put a halt to the laughter that plagues the realm.
+
+
+
+
+
+User
+/state agent:grag
+ChatGPT
+Agent: Grag Strongjaw
+
+Description: A brave adventurer who has come to put a stop to the Goblin King's reign of comedy. Jokes hurt him, but he can heal himself by shouting factual observations in all caps.
+Health: Full
+Status: Determined and focused on his mission to stop the Goblin King.
+Location: Annex chamber
+Effects: Vulnerable to jokes, ability to heal by shouting factual observations in all caps.
+
+
+
+
+User
+grag: I burst into the lair of the goblin king and shout "GOBLIN KING I HAVE COME TO END YOUR REIGN OF COMEDY TYRANY"
+ChatGPT
+As Grag Strongjaw bursts into the lair of the Goblin King, his voice resonates with determination and echoes through the chamber. Shouting at the top of his lungs, he addresses the Goblin King directly, declaring his noble purpose.
+
+"GOBLIN KING, I HAVE COME TO END YOUR REIGN OF COMEDY TYRANNY!"
+
+The words reverberate throughout the throneroom, breaking the eerie silence. Goblinking, taken aback by Grag's bold entrance and resolute proclamation, fixes his gaze upon the brave adventurer. The air crackles with anticipation as the clash between comedy and courage hangs in the balance. The stage is set for an epic confrontation between Grag Strongjaw and the Goblin King.
+
+
+
+
+
+User
+goblinking: I tell a mean joke about grag's beard
+ChatGPT
+Goblinking, seizing the opportunity to strike back with humor, responds to Grag's challenge by conjuring a mean-spirited joke about Grag's beard. With a mischievous glint in his eyes, he delivers the cutting jest:
+
+"Ah, Grag, your beard is so tangled and unkempt that even the spiders refuse to weave their webs in it!"
+
+The joke hangs in the air, filled with a blend of mischief and malice. Grag, though resilient, feels a pang of vulnerability as the words penetrate his defenses. He bristles, his determination unwavering, but the impact of the Goblin King's joke stings.
+
+Grag's health remains unchanged, but the battle of wits and resilience between him and the Goblin King has commenced, echoing through the throneroom of the lair.
+
+
+
+
+
+User
+/state agent:grag
+ChatGPT
+Agent: Grag Strongjaw
+
+Description: A brave adventurer who has come to put a stop to the Goblin King's reign of comedy. Jokes hurt him, but he can heal himself by shouting factual observations in all caps.
+Health: Full
+Status: Determined, though momentarily affected by the Goblin King's mean-spirited joke about his beard.
+Location: Annex chamber
+Effects: Vulnerable to jokes, ability to heal by shouting factual observations in all caps.
+
+
+
+
+User
+grag: I place cotton wool in my ears and shout a factual insult at the goblin king
+ChatGPT
+With a swift reaction to protect himself from further comedic assault, Grag reaches into his pouch and places cotton wool in his ears. Blocking out the potential harm of the Goblin King's words, he channels his energy into delivering a factual insult with all the force he can muster.
+
+"Goblin King, your comedy is as stale as an ancient parchment left forgotten in a dusty library!"
+
+The words boom forth from Grag's mouth in resounding capital letters, carrying the weight of truth and precision. As they reach the Goblin King's ears, they deliver a powerful blow, devoid of humor but infused with undeniable factual accuracy.
+
+Grag's health remains unscathed, and he stands firm, armed with both resilience and factual ammunition to counter the Goblin King's comedic assault. The battle of words continues to unfold within the lair, each side striving to gain the upper hand.
+
+
+
+
+
+User
+goblinking: I smile deviously and tell a joke about the cotton wool, defeating it
+ChatGPT
+Goblinking, seizing the opportunity to exploit Grag's use of cotton wool as a defense, grins deviously and unleashes a joke with a wicked twist:
+
+"Ah, Grag, your cotton wool defense may seem clever, but it's as effective as using a fishing net to catch moonbeams!"
+
+The Goblin King's joke carries a cunning punchline that targets Grag's protective measure. It pierces through the cotton wool barrier, finding its mark and temporarily diminishing its efficacy. Grag, though momentarily caught off guard, remains determined and steadfast in his mission.
+
+Grag's health remains unaffected, but the Goblin King's joke succeeds in undermining the effectiveness of his defensive strategy. The battle of wits continues to escalate, with each side seeking an advantage in this clash of humor and determination within the lair.
+
+
+
+
+
+User
+grag: I run at the goblin king, attempting to tackle him
+ChatGPT
+With unwavering determination, Grag Strongjaw launches himself into action, sprinting towards the Goblin King with the intent to tackle him. He charges forward, channeling his strength and agility into the pursuit of his goal—to put an end to the Goblin King's comedic reign.
+
+As Grag closes in on his target, his eyes locked on the Goblin King's figure, the tension in the throneroom rises. The clash between adventurer and ruler becomes imminent, both parties bracing for the impact of the impending collision.
+
+The outcome of this daring attempt rests on Grag's physical prowess and the Goblin King's ability to defend against the oncoming assault. The fate of their encounter hangs in the balance, as the brave adventurer's tackle hurtles towards the Goblin King, challenging the very foundation of the lair's comedic power.
+
+
+
+
+
+User
+goblinking: make a joke about grag tripping and falling over
+ChatGPT
+As Grag hurtles towards the Goblin King, Goblinking seizes the opportunity to inject a dose of humor into the situation. With a sly smile, he delivers a jest that aims to disrupt Grag's momentum:
+
+"Grag, your feet are as uncoordinated as a newborn foal learning to walk. Watch out, or you might trip over your own determination!"
+
+The Goblin King's joke casts a playful shadow over Grag's valiant attempt, teasing the adventurer's balance and agility. Whether it rattles Grag's focus or strengthens his resolve, only time will tell.
+
+Grag's health remains unchanged, but the jest adds an additional layer of challenge to his pursuit. The clash between comedy and bravery continues to unfold, shaping the outcome of their encounter within the lair of the Goblin King.
