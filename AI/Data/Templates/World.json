@@ -1,0 +1,17 @@
+{
+    "world": {
+        "world_id": "world01",
+        "world_name": "The Dark Abyss",
+        "world_description": "A dark and dangerous world filled with challenging dungeons.",
+        "chambers": ["chamber01", "chamber02", "..."],
+        "global_events": [
+            {"event_id": "event01", "event_description": "...", "event_timestamp": "..."},
+            {"event_id": "event02", "event_description": "...", "event_timestamp": "..."},
+            "..."
+        ],
+        "world_properties": {
+            "time_of_day": "...",
+            "weather": "..."
+        }
+    }
+}

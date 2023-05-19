@@ -1,0 +1,32 @@
+{
+    "chamber": {
+        "chamber_id": "chamber01",
+        "chamber_name": "Goblin King's Throne Room",
+        "chamber_description": "A dimly lit cavernous room filled with the sound of goblin chatter and the jingling of coins. At the end of the room, the Goblin King's throne sits atop a mound of gold.",
+        "items": [
+            {
+                "item_id": "item001",
+                "item_name": "Treasure Chest",
+                "item_description": "A large, ornate chest filled with gold coins and scrolls of the Goblin King's best dad jokes."
+            }
+        ],
+        "agents": ["NPC001"],
+        "chamber_events": [
+            {
+                "event_id": "event01",
+                "event_description": "Adventurer attempted to steal the treasure chest",
+                "event_timestamp": "2023-04-10T14:00:00Z"
+            },
+            {
+                "event_id": "event02",
+                "event_description": "Goblin King held a feast after successful raid",
+                "event_timestamp": "2023-04-15T10:00:00Z"
+            }
+        ],
+        "chamber_properties": {
+            "light_level": "dim",
+            "temperature": "warm",
+            "mood": "funny"
+        }
+    }
+}

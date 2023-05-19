@@ -1,0 +1,23 @@
+{
+    "chamber": {
+        "chamber_id": "chamber01",
+        "chamber_name": "The Goblin's Den",
+        "chamber_description": "A damp and dark room filled with the sound of goblin chatter.",
+        "items": [
+            {"item_id": "item01", "item_name": "Rusty Sword", "item_description": "..."},
+            {"item_id": "item02", "item_name": "Health Potion", "item_description": "..."},
+            "..."
+        ],
+        "agents": ["agent01", "agent02", "..."],
+        "chamber_events": [
+            {"event_id": "event01", "event_description": "...", "event_timestamp": "..."},
+            {"event_id": "event02", "event_description": "...", "event_timestamp": "..."},
+            "..."
+        ],
+        "chamber_properties": {
+            "light_level": "...",
+            "temperature": "...",
+            "mood": "..."
+        }
+    }
+}
