@@ -16,7 +16,7 @@ May 18th to 26th 2023
 
 ## `MUD`
 
-The actual MUD engine
+The React MUD engine
 
 external dependencies:
 
@@ -52,14 +52,27 @@ $ curl -L https://foundry.paradigm.xyz | bash
 $ foundryup
 ```
 
-MUD created with...
+Created with...
 
 ```
 $ node --version
 v18.16.0
 $ npm install -g pnpm
 $ pnpm create mud@canary MUD
+? Template
+> react
 ```
 
+## `MUD2`
+
+The Phaser MUD engine
+
+Created with...
+
+```
+$ pnpm create mud@canary MUD
+? Template
+> phaser
+```
 
 
