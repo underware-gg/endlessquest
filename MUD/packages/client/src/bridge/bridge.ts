@@ -40,6 +40,7 @@ export async function tokenIdToCoord(tokenId: bigint) {
 }
 
 export interface CoordToChamberDataResult {
+  // Stored on Chamber table
   coord: bigint
   tokenId: bigint
   seed: bigint
@@ -53,8 +54,10 @@ export interface CoordToChamberDataResult {
     coins: number
     worth: number
   }
+  // Stored on Tiles table
   bitmap: bigint
   tilemap: string
+  // Stored on Doors table
   doors: number[]
   locks: boolean[]
   // name: string

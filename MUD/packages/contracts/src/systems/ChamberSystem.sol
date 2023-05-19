@@ -3,8 +3,8 @@ pragma solidity >=0.8.0;
 
 import { System } from "@latticexyz/world/src/System.sol";
 import { Chamber, ChamberData } from "../codegen/Tables.sol";
-import { Crawl } from "../utils/Crawl.sol";
-import { ChamberBridge } from "../utils/ChamberBridge.sol";
+// import { Crawl } from "../utils/Crawl.sol";
+// import { ChamberBridge } from "../utils/ChamberBridge.sol";
 
 contract ChamberSystem is System {
 
@@ -19,8 +19,8 @@ contract ChamberSystem is System {
     uint8 entryDir,
     uint8 gemPos,
     uint8 gemType,
-    uint8 coins,
-    uint8 worth
+    uint16 coins,
+    uint16 worth
   ) public {
     Chamber.set(coord,
       ChamberData({

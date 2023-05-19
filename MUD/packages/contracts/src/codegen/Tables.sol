@@ -6,3 +6,5 @@ pragma solidity >=0.8.0;
 import { Counter, CounterTableId } from "./tables/Counter.sol";
 import { Token, TokenTableId } from "./tables/Token.sol";
 import { Chamber, ChamberData, ChamberTableId } from "./tables/Chamber.sol";
+import { Doors, DoorsData, DoorsTableId } from "./tables/Doors.sol";
+import { Tiles, TilesData, TilesTableId } from "./tables/Tiles.sol";

@@ -60,5 +60,45 @@ export function defineContractComponents(world: World) {
         }
       );
     })(),
+    Doors: (() => {
+      const tableId = new TableId("", "Doors");
+      return defineComponent(
+        world,
+        {
+          coord: RecsType.BigInt,
+          index: RecsType.Number,
+          dir: RecsType.Number,
+          locked: RecsType.Boolean,
+          nextCoord: RecsType.BigInt,
+        },
+        {
+          metadata: {
+            contractId: tableId.toHexString(),
+            tableId: tableId.toString(),
+          },
+        }
+      );
+    })(),
+    Tiles: (() => {
+      const tableId = new TableId("", "Tiles");
+      return defineComponent(
+        world,
+        {
+          coord: RecsType.BigInt,
+          index: RecsType.Number,
+          tileType: RecsType.Number,
+          tileX: RecsType.Number,
+          tileY: RecsType.Number,
+          gridX: RecsType.Number,
+          gridY: RecsType.Number,
+        },
+        {
+          metadata: {
+            contractId: tableId.toHexString(),
+            tableId: tableId.toString(),
+          },
+        }
+      );
+    })(),
   };
 }

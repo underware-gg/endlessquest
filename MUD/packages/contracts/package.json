@@ -29,6 +29,7 @@
     "@latticexyz/std-contracts": "2.0.0-alpha.1.159+59588ab6",
     "@latticexyz/store": "2.0.0-alpha.1.159+59588ab6",
     "@latticexyz/world": "2.0.0-alpha.1.159+59588ab6",
+    "@latticexyz/config": "2.0.0-alpha.1.159+59588ab6",
     "ethers": "^5.7.2"
   },
   "devDependencies": {

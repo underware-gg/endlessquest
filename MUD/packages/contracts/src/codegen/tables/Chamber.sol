@@ -30,8 +30,8 @@ struct ChamberData {
   uint8 entryDir;
   uint8 gemPos;
   uint8 gemType;
-  uint8 coins;
-  uint8 worth;
+  uint16 coins;
+  uint16 worth;
 }
 
 library Chamber {
@@ -47,8 +47,8 @@ library Chamber {
     _schema[6] = SchemaType.UINT8;
     _schema[7] = SchemaType.UINT8;
     _schema[8] = SchemaType.UINT8;
-    _schema[9] = SchemaType.UINT8;
-    _schema[10] = SchemaType.UINT8;
+    _schema[9] = SchemaType.UINT16;
+    _schema[10] = SchemaType.UINT16;
 
     return SchemaLib.encode(_schema);
   }
@@ -406,25 +406,25 @@ library Chamber {
   }
 
   /** Get coins */
-  function getCoins(uint256 coord) internal view returns (uint8 coins) {
+  function getCoins(uint256 coord) internal view returns (uint16 coins) {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32(uint256((coord)));
 
     bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 9);
-    return (uint8(Bytes.slice1(_blob, 0)));
+    return (uint16(Bytes.slice2(_blob, 0)));
   }
 
   /** Get coins (using the specified store) */
-  function getCoins(IStore _store, uint256 coord) internal view returns (uint8 coins) {
+  function getCoins(IStore _store, uint256 coord) internal view returns (uint16 coins) {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32(uint256((coord)));
 
     bytes memory _blob = _store.getField(_tableId, _keyTuple, 9);
-    return (uint8(Bytes.slice1(_blob, 0)));
+    return (uint16(Bytes.slice2(_blob, 0)));
   }
 
   /** Set coins */
-  function setCoins(uint256 coord, uint8 coins) internal {
+  function setCoins(uint256 coord, uint16 coins) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32(uint256((coord)));
 
@@ -432,7 +432,7 @@ library Chamber {
   }
 
   /** Set coins (using the specified store) */
-  function setCoins(IStore _store, uint256 coord, uint8 coins) internal {
+  function setCoins(IStore _store, uint256 coord, uint16 coins) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32(uint256((coord)));
 
@@ -440,25 +440,25 @@ library Chamber {
   }
 
   /** Get worth */
-  function getWorth(uint256 coord) internal view returns (uint8 worth) {
+  function getWorth(uint256 coord) internal view returns (uint16 worth) {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32(uint256((coord)));
 
     bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 10);
-    return (uint8(Bytes.slice1(_blob, 0)));
+    return (uint16(Bytes.slice2(_blob, 0)));
   }
 
   /** Get worth (using the specified store) */
-  function getWorth(IStore _store, uint256 coord) internal view returns (uint8 worth) {
+  function getWorth(IStore _store, uint256 coord) internal view returns (uint16 worth) {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32(uint256((coord)));
 
     bytes memory _blob = _store.getField(_tableId, _keyTuple, 10);
-    return (uint8(Bytes.slice1(_blob, 0)));
+    return (uint16(Bytes.slice2(_blob, 0)));
   }
 
   /** Set worth */
-  function setWorth(uint256 coord, uint8 worth) internal {
+  function setWorth(uint256 coord, uint16 worth) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32(uint256((coord)));
 
@@ -466,7 +466,7 @@ library Chamber {
   }
 
   /** Set worth (using the specified store) */
-  function setWorth(IStore _store, uint256 coord, uint8 worth) internal {
+  function setWorth(IStore _store, uint256 coord, uint16 worth) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32(uint256((coord)));
 
@@ -503,8 +503,8 @@ library Chamber {
     uint8 entryDir,
     uint8 gemPos,
     uint8 gemType,
-    uint8 coins,
-    uint8 worth
+    uint16 coins,
+    uint16 worth
   ) internal {
     bytes memory _data = encode(
       opener,
@@ -539,8 +539,8 @@ library Chamber {
     uint8 entryDir,
     uint8 gemPos,
     uint8 gemType,
-    uint8 coins,
-    uint8 worth
+    uint16 coins,
+    uint16 worth
   ) internal {
     bytes memory _data = encode(
       opener,
@@ -619,9 +619,9 @@ library Chamber {
 
     _table.gemType = (uint8(Bytes.slice1(_blob, 89)));
 
-    _table.coins = (uint8(Bytes.slice1(_blob, 90)));
+    _table.coins = (uint16(Bytes.slice2(_blob, 90)));
 
-    _table.worth = (uint8(Bytes.slice1(_blob, 91)));
+    _table.worth = (uint16(Bytes.slice2(_blob, 92)));
   }
 
   /** Tightly pack full data using this table's schema */
@@ -635,8 +635,8 @@ library Chamber {
     uint8 entryDir,
     uint8 gemPos,
     uint8 gemType,
-    uint8 coins,
-    uint8 worth
+    uint16 coins,
+    uint16 worth
   ) internal view returns (bytes memory) {
     return abi.encodePacked(opener, tokenId, seed, yonder, chapter, terrain, entryDir, gemPos, gemType, coins, worth);
   }

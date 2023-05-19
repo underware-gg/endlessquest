@@ -1,11 +1,11 @@
 import { useComponentValue, useEntityQuery, useRow } from "@latticexyz/react";
 import { useMUD } from "./MUDContext";
-import { Has, HasValue } from "@latticexyz/recs";
+import { Has, HasValue, getComponentValueStrict } from "@latticexyz/recs";
 import { useEffect } from "react";
 
 export const App = () => {
   const {
-    components: { Counter, Token },
+    components: { Counter, Doors, Tiles },
     systemCalls: { increment, decrement, bridge_tokenId, bridge_chamber },
     network: { singletonEntity, storeCache },
   } = useMUD();
@@ -13,19 +13,21 @@ export const App = () => {
   const counter = useComponentValue(Counter, singletonEntity);
   const tokenId = BigInt(counter?.value?.toString() ?? '0')
 
-  // query by VALUE
-  // const token = useEntityQuery([HasValue(Token, { coord: BigInt(tokenId) })])
-
+  //
+  // TokenSystem
+  //
   // query by KEY
   const token = useRow(storeCache, { table: "Token", key: { tokenId } });
   const coord = token?.value?.coord ?? 0n
-
   useEffect(() => {
     if (tokenId && !coord) {
       bridge_tokenId(tokenId)
     }
   }, [tokenId, coord])
 
+  //
+  // ChamberSystem
+  //
   useEffect(() => {
     if (coord) {
       bridge_chamber(coord)
@@ -33,6 +35,13 @@ export const App = () => {
   }, [coord])
   const chamberData = useRow(storeCache, { table: "Chamber", key: { coord } });
   const seed = chamberData?.value?.seed?.toString() ?? null
+
+  //
+  // DoorSystem, TilesSystem
+  //
+  // query by VALUE
+  const doors = useEntityQuery([HasValue(Doors, { coord })]) ?? []
+  const tiles = useEntityQuery([HasValue(Tiles, { coord })]) ?? []
 
   return (
     <>
@@ -65,6 +74,17 @@ export const App = () => {
 
       <hr />
       <div>seed: {seed ?? '?'}</div>
+      <div>doors: {
+        [...doors].map(id => {
+          const data = getComponentValueStrict(Doors, id)
+          return <span key={id}>{data.index},</span>
+        })}</div>
+
+      <div>tiles: {
+        [...tiles].map(id => {
+          const data = getComponentValueStrict(Tiles, id)
+          return <span key={id}>{data.tileType},</span>
+        })}</div>
 
     </>
   );

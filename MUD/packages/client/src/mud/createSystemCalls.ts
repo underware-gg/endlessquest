@@ -3,6 +3,7 @@ import { awaitStreamValue } from "@latticexyz/utils";
 import { ClientComponents } from "./createClientComponents";
 import { SetupNetworkResult } from "./setupNetwork";
 import * as bridge from "../bridge/bridge";
+import * as ethers from "ethers";
 
 export type SystemCalls = ReturnType<typeof createSystemCalls>;
 
@@ -53,7 +54,8 @@ export function createSystemCalls(
     // fetch
     const chamberData = await bridge.coordToChamberData(coord)
     console.warn(`BRIDGE_CHAMBER`, chamberData)
-    // store
+    //
+    // store Chamber
     const tx = await worldSend("setChamber", [
       coord,
       chamberData.tokenId,
@@ -70,6 +72,34 @@ export function createSystemCalls(
     await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
     const result = storeCache.tables.Chamber.get({ coord });
     console.warn(`BRIDGED_CHAMBER = `, result)
+    //
+    // store Doors
+    chamberData.doors.forEach(async (door, dir) => {
+      await worldSend("setDoor", [
+        coord,
+        door,
+        dir,
+        chamberData.locks[dir],  // locked
+      ]);
+    })
+    //
+    // store Tiles
+    Object.values(ethers.utils.arrayify(chamberData.tilemap)).forEach(async (tileType, index) => {
+      const tileX = index % 16
+      const tileY = Math.floor(index / 16)
+      const gridX = tileX
+      const gridY = tileY
+      await worldSend("setTile", [
+        coord,
+        index,
+        tileType,
+        tileX,
+        tileY,
+        gridX,
+        gridY,
+      ]);
+    })
+
     return result
   };
 

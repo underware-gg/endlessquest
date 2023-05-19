@@ -1,4 +1,5 @@
 import { mudConfig } from "@latticexyz/world/register";
+import { resolveTableId } from "@latticexyz/config";
 
 export default mudConfig({
   tables: {
@@ -30,9 +31,47 @@ export default mudConfig({
         entryDir: 'uint8',
         gemPos: 'uint8',
         gemType: 'uint8',
-        coins: 'uint8',
-        worth: 'uint8'
+        coins: 'uint16',
+        worth: 'uint16'
+      }
+    },
+    Doors: {
+      keySchema: {
+        key: 'bytes32',
+      },
+      schema: {
+        coord: 'uint256',
+        index: 'uint8',
+        dir: 'uint8',
+        locked: 'bool',
+        nextCoord: 'uint256',
+      }
+    },
+    Tiles: {
+      keySchema: {
+        key: 'bytes32',
+      },
+      schema: {
+        coord: 'uint256',
+        index: 'uint8',
+        tileType: 'uint8',
+        tileX: 'uint8',
+        tileY: 'uint8',
+        gridX: 'uint8',
+        gridY: 'uint8',
       }
     },
   },
+  modules: [
+    {
+      name: "UniqueEntityModule",
+      root: true,
+      args: [resolveTableId("Doors")],
+    },
+    {
+      name: "UniqueEntityModule",
+      root: true,
+      args: [resolveTableId("Tiles")],
+    },
+  ],
 });

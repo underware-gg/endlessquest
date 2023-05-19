@@ -14,7 +14,7 @@ interface IChamberSystem {
     uint8 entryDir,
     uint8 gemPos,
     uint8 gemType,
-    uint8 coins,
-    uint8 worth
+    uint16 coins,
+    uint16 worth
   ) external;
 }
