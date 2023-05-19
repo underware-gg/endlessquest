@@ -1,4 +1,4 @@
-import { getComponentValue } from "@latticexyz/recs";
+import { getComponentValue, getEntitiesWithValue } from "@latticexyz/recs";
 import { awaitStreamValue } from "@latticexyz/utils";
 import { ClientComponents } from "./createClientComponents";
 import { SetupNetworkResult } from "./setupNetwork";
@@ -8,8 +8,7 @@ export type SystemCalls = ReturnType<typeof createSystemCalls>;
 
 export function createSystemCalls(
   { worldSend, txReduced$, singletonEntity, storeCache }: SetupNetworkResult,
-  { Counter, Token, Chamber }: ClientComponents,
-  // { Token: TokenTable }: Tables,
+  { Counter, Token }: ClientComponents,
 ) {
   const increment = async () => {
     const tx = await worldSend("increment", []);
@@ -17,30 +16,59 @@ export function createSystemCalls(
     return getComponentValue(Counter, singletonEntity);
   };
 
-  const set_tokenIdToCoord = async (tokenId: bigint) => {
-
+  const bridge_tokenId = async (tokenId: bigint) => {
+    // check if already bridged
     let stored_coord = storeCache.tables.Token.get({ tokenId });
     if (stored_coord != null) {
-      console.log(`STORED_COORD`, stored_coord)
+      console.log(`STORED_COORD:`, stored_coord)
       return
     }
-    
+    // fetch
     const coord = await bridge.tokenIdToCoord(tokenId)
-    const tx = await worldSend("set_tokenIdToCoord", [tokenId, coord]);
+    console.warn(`BRIDGE_COORD:`, coord)
+    // store
+    const tx = await worldSend("setTokenIdToCoord", [
+      tokenId,
+      coord,
+    ]);
+    // return stored value
     await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
-    const result = getComponentValue(Token, singletonEntity);
-    console.log(`SET_COORD`, coord)
+    return getComponentValue(Token, singletonEntity);
+  };
+
+  const bridge_chamber = async (coord: bigint) => {
+    // check if already bridged
+    let stored_chamber = storeCache.tables.Chamber.get({ coord });
+    if (stored_chamber != null) {
+      console.log(`STORED_CHAMBER:`, stored_chamber)
+      return
+    }
+    // fetch
+    const chamberData = await bridge.coordToChamberData(coord)
+    console.warn(`BRIDGE_CHAMBER`, chamberData)
+    // store
+    const tx = await worldSend("setChamber", [
+      coord,
+      chamberData.tokenId,
+      chamberData.seed,
+      chamberData.yonder,
+      chamberData.chapter,
+      chamberData.terrain,
+      chamberData.entryDir,
+      chamberData.gemPos,
+      chamberData.hoard.gemType,
+      chamberData.hoard.coins,
+      chamberData.hoard.worth,
+    ]);
+    await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
+    const result = storeCache.tables.Chamber.get({ coord });
+    console.warn(`BRIDGED_CHAMBER = `, result)
     return result
   };
 
-  // const tokenURI = async (tokenId: string) => {
-  //   const tx = await worldSend("tokenURI", [tokenId]);
-  //   await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
-  //   return getComponentValue(Chamber, singletonEntity);
-  // };
-
   return {
     increment,
-    set_tokenIdToCoord,
+    bridge_tokenId,
+    bridge_chamber,
   };
 }

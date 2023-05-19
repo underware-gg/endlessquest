@@ -6,28 +6,33 @@ import { useEffect } from "react";
 export const App = () => {
   const {
     components: { Counter, Token },
-    systemCalls: { increment, set_tokenIdToCoord },
+    systemCalls: { increment, bridge_tokenId, bridge_chamber },
     network: { singletonEntity, storeCache },
   } = useMUD();
 
   const counter = useComponentValue(Counter, singletonEntity);
-  const tokenId = counter?.value ?? 0
-
-  // query by KEY
-  const token = useRow(storeCache, { table: "Token", key: { tokenId: BigInt(tokenId) } });
-  const coord = token?.value?.coord?.toString() ?? null
-
-  console.log(`APP`, tokenId, coord, token)
-  useEffect(() => {
-    if (tokenId && coord == null) {
-      console.log(`USE_EFFECT_SET_____`)
-      set_tokenIdToCoord(BigInt(tokenId))
-    }
-  }, [tokenId, coord])
+  const tokenId = BigInt(counter?.value?.toString() ?? '0')
 
   // query by VALUE
   // const token = useEntityQuery([HasValue(Token, { coord: BigInt(tokenId) })])
 
+  // query by KEY
+  const token = useRow(storeCache, { table: "Token", key: { tokenId } });
+  const coord = token?.value?.coord ?? 0n
+
+  useEffect(() => {
+    if (tokenId && !coord) {
+      bridge_tokenId(tokenId)
+    }
+  }, [tokenId, coord])
+
+  useEffect(() => {
+    if (coord) {
+      bridge_chamber(coord)
+    }
+  }, [coord])
+  const chamberData = useRow(storeCache, { table: "Chamber", key: { coord } });
+  const seed = chamberData?.value?.seed?.toString() ?? null
 
   return (
     <>
@@ -43,6 +48,7 @@ export const App = () => {
       >
         Increment
       </button>
+
       <hr />
       {/* <button
         type="button"
@@ -53,7 +59,11 @@ export const App = () => {
       >
         Make coord
       </button> */}
-      <div>coord: {coord ?? '?'}</div>
+      <div>coord: {coord?.toString() ?? '?'}</div>
+
+      <hr />
+      <div>seed: {seed ?? '?'}</div>
+
     </>
   );
 };

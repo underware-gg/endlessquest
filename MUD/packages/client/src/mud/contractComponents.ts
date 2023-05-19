@@ -41,7 +41,16 @@ export function defineContractComponents(world: World) {
         world,
         {
           opener: RecsType.String,
-          bitmap: RecsType.BigInt,
+          tokenId: RecsType.BigInt,
+          seed: RecsType.BigInt,
+          yonder: RecsType.Number,
+          chapter: RecsType.Number,
+          terrain: RecsType.Number,
+          entryDir: RecsType.Number,
+          gemPos: RecsType.Number,
+          gemType: RecsType.Number,
+          coins: RecsType.Number,
+          worth: RecsType.Number,
         },
         {
           metadata: {

@@ -38,3 +38,36 @@ export async function tokenIdToCoord(tokenId: bigint) {
   })
   return data as bigint
 }
+
+export interface CoordToChamberDataResult {
+  coord: bigint
+  tokenId: bigint
+  seed: bigint
+  yonder: bigint
+  chapter: number
+  terrain: number
+  entryDir: number
+  gemPos: number
+  hoard: {
+    gemType: number
+    coins: number
+    worth: number
+  }
+  bitmap: bigint
+  tilemap: string
+  doors: number[]
+  locks: boolean[]
+  // name: string
+  // compass: bigint
+}
+
+export async function coordToChamberData(coord: bigint) {
+  const data = await readContract({
+    abi,
+    address,
+    functionName: 'coordToChamberData',
+    args: [0, coord.toString(), true],
+  }) as CoordToChamberDataResult
+  console.log(data)
+  return data
+}
