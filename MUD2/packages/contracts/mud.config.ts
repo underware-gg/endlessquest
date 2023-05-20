@@ -1,12 +1,22 @@
-import { mudConfig } from "@latticexyz/world/register";
-import { resolveTableId } from "@latticexyz/config";
+import { mudConfig, resolveTableId } from "@latticexyz/world/register";
 
 export default mudConfig({
+  enums: {
+    Direction: [
+      "Unknown",
+      "Up",
+      "Down",
+      "Left",
+      "Right",
+    ]
+  },
   tables: {
+    //-----------------------
     Counter: {
       keySchema: {},
       schema: "uint32",
     },
+    //-----------------------
     Token: {
       keySchema: {
         tokenId: 'uint256'
@@ -15,6 +25,7 @@ export default mudConfig({
         coord: 'uint256'
       }
     },
+    //-----------------------
     Chamber: {
       keySchema: {
         coord: 'uint256'
@@ -35,6 +46,7 @@ export default mudConfig({
         worth: 'uint16'
       }
     },
+    //-----------------------
     Doors: {
       keySchema: {
         key: 'bytes32',
@@ -47,6 +59,7 @@ export default mudConfig({
         nextCoord: 'uint256',
       }
     },
+    //-----------------------
     Tiles: {
       keySchema: {
         key: 'bytes32',
@@ -62,6 +75,22 @@ export default mudConfig({
         gridY: 'int32',
       }
     },
+    //-----------------------
+    Position: {
+      schema: {
+        x: "int32",
+        y: "int32",
+      }
+    },
+    Health: {
+      schema: {
+        current: "int32",
+        max: "int32",
+      },
+    },
+    Strength: {
+      schema: "int32",
+    }
   },
   modules: [
     {
@@ -73,6 +102,11 @@ export default mudConfig({
       name: "UniqueEntityModule",
       root: true,
       args: [resolveTableId("Tiles")],
+    },
+    {
+      name: "KeysWithValueModule",
+      root: true,
+      args: [resolveTableId("Position")],
     },
   ],
 });

@@ -58,13 +58,13 @@ export const phaserConfig = {
       },
       animations: [
         {
-          key: Animations.SwordsmanIdle,
+          key: Animations.GolemIdle,
           assetKey: Assets.MainAtlas,
           startFrame: 0,
           endFrame: 3,
           frameRate: 6,
           repeat: -1,
-          prefix: "sprites/soldier/idle/",
+          prefix: "sprites/golem/idle/",
           suffix: ".png",
         },
       ],

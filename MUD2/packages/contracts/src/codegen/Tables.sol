@@ -8,3 +8,6 @@ import { Token, TokenTableId } from "./tables/Token.sol";
 import { Chamber, ChamberData, ChamberTableId } from "./tables/Chamber.sol";
 import { Doors, DoorsData, DoorsTableId } from "./tables/Doors.sol";
 import { Tiles, TilesData, TilesTableId } from "./tables/Tiles.sol";
+import { Position, PositionData, PositionTableId } from "./tables/Position.sol";
+import { Health, HealthData, HealthTableId } from "./tables/Health.sol";
+import { Strength, StrengthTableId } from "./tables/Strength.sol";

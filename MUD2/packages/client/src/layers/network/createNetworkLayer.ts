@@ -6,7 +6,11 @@ export type NetworkLayer = Awaited<ReturnType<typeof createNetworkLayer>>;
 export const createNetworkLayer = async () => {
   const {
     components,
-    network: { singletonEntity, storeCache },
+    network: {
+      singletonEntity,
+      storeCache,
+      playerEntity,
+    },
     systemCalls,
   } = await setup();
 
@@ -21,5 +25,6 @@ export const createNetworkLayer = async () => {
     systemCalls,
     components,
     storeCache,
+    playerEntity,
   };
 };

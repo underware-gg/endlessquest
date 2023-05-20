@@ -2,6 +2,7 @@ import { getComponentValue, getEntitiesWithValue } from "@latticexyz/recs";
 import { awaitStreamValue } from "@latticexyz/utils";
 import { ClientComponents } from "./createClientComponents";
 import { SetupNetworkResult } from "./setupNetwork";
+import { Direction } from "../layers/phaser/constants";
 import * as Bridge from "../bridge/bridge";
 import * as Compass from "../bridge/compass";
 import * as ethers from "ethers";
@@ -12,8 +13,10 @@ export function createSystemCalls(
   { worldSend, txReduced$, singletonEntity, storeCache }: SetupNetworkResult,
   { Counter, Token }: ClientComponents,
 ) {
-  //
+
+  //-----------------------------------
   // CounterSystem
+  //
   const increment = async () => {
     const tx = await worldSend("increment", []);
     await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
@@ -45,6 +48,9 @@ export function createSystemCalls(
     return getComponentValue(Token, singletonEntity);
   };
 
+  //---------------------------
+  // Crawler
+  //
   const bridge_chamber = async (coord: bigint) => {
     // check if already bridged
     let stored_chamber = storeCache.tables.Chamber.get({ coord });
@@ -123,14 +129,28 @@ export function createSystemCalls(
         gridY,
       ]);
     })
-
     return result
   };
 
+  //---------------------------
+  // Player / Movement
+  //
+  const spawn = (x: number, y: number) => {
+    worldSend("spawn", [x, y]);
+  };
+  const move = (direction: Direction) => {
+    worldSend("move", [direction]);
+  }
+
   return {
+    // Exmaple
     increment,
     decrement,
+    // Crawler
     bridge_tokenId,
     bridge_chamber,
+    // Player
+    spawn,
+    move,
   };
 }
