@@ -8,7 +8,9 @@ import {
   PositionData,
   Health,
   HealthData,
-  Strength
+  Strength,
+  Tiles,
+  TilesData
  } from "../codegen/Tables.sol";
 
 import { addressToEntity } from "../Utils.sol";
@@ -24,8 +26,8 @@ contract PlayerSystem is System {
 
     require(existingPosition.x == 0 && existingPosition.y == 0, "player already spawned");
 
-    bytes32[] memory playersAtPosition = getKeysWithValue(PositionTableId, Position.encode(x, y));
-    require(playersAtPosition.length == 0, "spawn location occupied");
+    // bytes32[] memory playersAtPosition = getKeysWithValue(PositionTableId, Position.encode(x, y));
+    // require(playersAtPosition.length == 0, "spawn location occupied");
     
     Position.set(player, x, y);
     Health.set(player, HealthData({
@@ -54,6 +56,15 @@ contract PlayerSystem is System {
       x -= 1;
     } else if (direction == Direction.Right) {
       x += 1;
+    }
+
+    // check if tile is not 0: can't yet with getKeysWithValue()
+    bytes32[] memory tilesAtPosition = getKeysWithValue(PositionTableId, Position.encode(x, y));
+    for(uint256 i = 0 ; i < tilesAtPosition.length ; ++i) {
+      TilesData memory tile = Tiles.get(tilesAtPosition[i]);
+      if (tile.terrain > 0) {
+        require(tile.tileType != 0, "blocking");
+      }
     }
 
     bytes32[] memory playersAtPosition = getKeysWithValue(PositionTableId, Position.encode(x, y));

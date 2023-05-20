@@ -9,6 +9,7 @@ export function createPlayerSystem(layer: PhaserLayer) {
     networkLayer: {
       components: {
         Position,
+        Strength,
       },
       systemCalls: {
         spawn
@@ -24,19 +25,16 @@ export function createPlayerSystem(layer: PhaserLayer) {
     },
   } = layer;
 
-  input.pointerdown$.subscribe((event) => {
-    if (playerEntity && hasComponent(Position, playerEntity)) return;
+  // input.pointerdown$.subscribe((event) => {
+  //   if (playerEntity && hasComponent(Position, playerEntity)) return;
+  //   const x = event.pointer.worldX;
+  //   const y = event.pointer.worldY;
+  //   const position = pixelCoordToTileCoord({ x, y }, TILE_WIDTH, TILE_HEIGHT);
+  //   if (position.x === 0 && position.y === 0) return;
+  //   spawn(position.x, position.y);
+  // });
 
-    const x = event.pointer.worldX;
-    const y = event.pointer.worldY;
-
-    const position = pixelCoordToTileCoord({ x, y }, TILE_WIDTH, TILE_HEIGHT);
-    if (position.x === 0 && position.y === 0) return;
-
-    spawn(position.x, position.y);
-  });
-
-  defineEnterSystem(world, [Has(Position)], ({ entity }) => {
+  defineEnterSystem(world, [Has(Position), Has(Strength)], ({ entity }) => {
     const playerObj = objectPool.get(entity, "Sprite");
 
     playerObj.setComponent({
@@ -47,7 +45,7 @@ export function createPlayerSystem(layer: PhaserLayer) {
     });
   });
 
-  defineSystem(world, [Has(Position)], ({ entity }) => {
+  defineSystem(world, [Has(Position), Has(Strength)], ({ entity }) => {
     const position = getComponentValueStrict(Position, entity);
     const pixelPosition = tileCoordToPixelCoord(position, TILE_WIDTH, TILE_HEIGHT);
 
@@ -61,6 +59,8 @@ export function createPlayerSystem(layer: PhaserLayer) {
         const isPlayer = entity === playerEntity;
         if (isPlayer) {
           camera.centerOn(pixelPosition.x, pixelPosition.y);
+          // need to expose camera.pan() on phaserx
+          // camera.pan(pixelPosition.x, pixelPosition.y, 0.2, 'Sine');
         }
       }
     });

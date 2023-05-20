@@ -86,8 +86,7 @@ export function defineContractComponents(world: World) {
         {
           terrain: RecsType.Number,
           tileType: RecsType.Number,
-          gridX: RecsType.Number,
-          gridY: RecsType.Number,
+          isEntry: RecsType.Boolean,
         },
         {
           metadata: {

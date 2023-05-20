@@ -112,6 +112,7 @@ export function createSystemCalls(
       }
     })
     map.forEach(async (tileType, index) => {
+      const isEntry = (index == chamberData.doors[chamberData.entryDir])
       let gridX = (index % 20)
       let gridY = Math.floor(index / 20)
       if (compass.east > 0) gridX += ((compass.east - 1) * 20)
@@ -119,12 +120,9 @@ export function createSystemCalls(
       if (compass.south > 0) gridY += ((compass.south - 1) * 20)
       if (compass.north > 0) gridY -= (compass.north * 20)
       await worldSend("setTile", [
-        // coord,
-        // index,
         chamberData.terrain,
         tileType,
-        // tileX,
-        // tileY,
+        isEntry,
         gridX,
         gridY,
       ]);
@@ -136,6 +134,7 @@ export function createSystemCalls(
   // Player / Movement
   //
   const spawn = (x: number, y: number) => {
+    console.warn(`SPAWN@`, x, y)
     worldSend("spawn", [x, y]);
   };
   const move = (direction: Direction) => {

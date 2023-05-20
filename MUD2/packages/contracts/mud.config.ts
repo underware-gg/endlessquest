@@ -65,17 +65,19 @@ export default mudConfig({
         key: 'bytes32',
       },
       schema: {
-        // coord: 'uint256',
-        // index: 'uint8',
         terrain: 'uint8',
         tileType: 'uint8',
-        // tileX: 'uint8',
-        // tileY: 'uint8',
-        gridX: 'int32',
-        gridY: 'int32',
+        isEntry: 'bool',
+        // gridX: 'int32',
+        // gridY: 'int32',
       }
     },
     //-----------------------
+    // Player: {
+    //   schema: {
+    //     y: "int32",
+    //   }
+    // },
     Position: {
       schema: {
         x: "int32",

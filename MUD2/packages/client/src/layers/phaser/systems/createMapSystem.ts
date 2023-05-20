@@ -1,7 +1,8 @@
-import { EntityType } from "@latticexyz/recs";
+import { runQuery, defineQuery, getComponentValueStrict, Has, HasValue, Entity } from "@latticexyz/recs";
 import { Tileset } from "../../../artTypes/world";
 import { PhaserLayer } from "../createPhaserLayer";
-import { createNoise2D } from "simplex-noise";
+// import { createNoise2D } from "simplex-noise";
+// import { map } from "rxjs";
 
 export function createMapSystem(layer: PhaserLayer) {
   const {
@@ -12,50 +13,80 @@ export function createMapSystem(layer: PhaserLayer) {
         },
       },
     },
+    networkLayer: {
+      systemCalls: {
+        spawn
+      },
+      components: {
+        Tiles,
+        Position,
+      },
+    }
   } = layer;
 
   interface singleTile {
     terrain: number,
     tileType: number,
-    gridX: number,
-    gridY: number,
+    isEntry: boolean,
+  }
+  interface singlePosition {
+    x: number,
+    y: number,
   }
 
-  const _addTileToMap = (tile: singleTile) => {
+  const _addTileToMap = (tile: singleTile, position: singlePosition) => {
     const {
       tileType,
       terrain,
-      gridX: x,
-      gridY: y,
     } = tile
-    const coord = { x, y }
-    putTileAt(coord, Tileset.Grass, "Background");
+    putTileAt(position, Tileset.Grass, "Background");
     if (tileType == 0) {
       if (terrain == 1 || terrain == 2) {
-        putTileAt(coord, Tileset.Forest, "Foreground");
+        putTileAt(position, Tileset.Forest, "Foreground");
       } else {
-        putTileAt(coord, Tileset.Mountain, "Foreground");
+        putTileAt(position, Tileset.Mountain, "Foreground");
       }
     }
   }
 
-  const {
-    components: { Counter, Doors, Tiles },
-    systemCalls: { increment, decrement, bridge_tokenId, bridge_chamber },
-    singletonEntity, storeCache,
-  } = layer.networkLayer
+  const _addTileQuery = (entity: Entity) => {
+    const tile = getComponentValueStrict(Tiles, entity)
+    const position = getComponentValueStrict(Position, entity)
+    console.log(`TILES_UPDATE:`, tile, position)
+    if (tile.isEntry) {
+      spawn(position.x, position.y);
+    }
+    _addTileToMap(tile as singleTile, position as singlePosition)
+  }
 
+  const initQuery = runQuery([
+    Has(Tiles),
+    Has(Position),
+  ])
+  console.log(`INIT`, initQuery)
+  initQuery.forEach((entity) => {
+    _addTileQuery(entity)
+  })
 
-  const tiles = storeCache.tables.Tiles.scan({});
-  console.log(`INITIAL TILES:`, tiles)
-  tiles.forEach((tile) => _addTileToMap(tile.value as singleTile))
+  const query = defineQuery([
+    Has(Tiles),
+    Has(Position),
+  ])
 
-  Tiles.update$.subscribe((tile) => {
-    const [nextValue, prevValue] = tile.value;
-    // console.log(`TILES_UPDATE:`, nextValue)
-    _addTileToMap(nextValue as singleTile)
+  query.update$.subscribe((comp) => {
+    _addTileQuery(comp.entity)
   });
 
+
+  // let observable = query.update$.pipe(map(() => [...query.matching]));
+  // observable.subscribe((entities) => {
+  //   entities.forEach((entity) => {
+  //     const tile = getComponentValueStrict(Tiles, entity)
+  //     const position = getComponentValueStrict(Position, entity)
+  //     // console.log(`TILES_UPDATE:`, tile, position)
+  //     _addTileToMap(tile as singleTile, position as singlePosition)
+  //   });
+  // });
 
 
   // const noise = createNoise2D();
