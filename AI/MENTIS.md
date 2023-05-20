@@ -27,7 +27,7 @@ SDK Libraries available:
 
 https://api-documentation.blockadelabs.com/api/sdk.html
 
-## Scenario.gg
+# Scenario.gg
 AI-generated game assets
 
 https://www.scenario.com/
@@ -36,3 +36,16 @@ Extensive API:
 
 https://docs.scenario.com/reference/putimageserasebackground
 
+#Prompt Engineering / Agents / AI Notes
+
+Stanford Generative Agents:
+
+https://www.artisana.ai/articles/generative-agents-stanfords-groundbreaking-ai-study-simulates-authentic
+
+SOLID Prompt Framework for a PM (GM/DM?):
+
+https://flashy-theory-704.notion.site/AutoGPT-Prompt-4d4f803bf334437faf1538541a6bc6c3
+
+# Possibly Plug-and-play collaborator? Marvin
+
+https://docs.google.com/document/d/1fhe7kcAQVa3ZrPCj_jPEWZKo8_YTebxUAtHqJc4LbT8/edit#heading=h.17z81yr34fg
