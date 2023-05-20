@@ -20,5 +20,85 @@ export function defineContractComponents(world: World) {
         }
       );
     })(),
+    Token: (() => {
+      const tableId = new TableId("", "Token");
+      return defineComponent(
+        world,
+        {
+          coord: RecsType.BigInt,
+        },
+        {
+          metadata: {
+            contractId: tableId.toHexString(),
+            tableId: tableId.toString(),
+          },
+        }
+      );
+    })(),
+    Chamber: (() => {
+      const tableId = new TableId("", "Chamber");
+      return defineComponent(
+        world,
+        {
+          opener: RecsType.String,
+          tokenId: RecsType.BigInt,
+          seed: RecsType.BigInt,
+          yonder: RecsType.Number,
+          chapter: RecsType.Number,
+          terrain: RecsType.Number,
+          entryDir: RecsType.Number,
+          gemPos: RecsType.Number,
+          gemType: RecsType.Number,
+          coins: RecsType.Number,
+          worth: RecsType.Number,
+        },
+        {
+          metadata: {
+            contractId: tableId.toHexString(),
+            tableId: tableId.toString(),
+          },
+        }
+      );
+    })(),
+    Doors: (() => {
+      const tableId = new TableId("", "Doors");
+      return defineComponent(
+        world,
+        {
+          coord: RecsType.BigInt,
+          index: RecsType.Number,
+          dir: RecsType.Number,
+          locked: RecsType.Boolean,
+          nextCoord: RecsType.BigInt,
+        },
+        {
+          metadata: {
+            contractId: tableId.toHexString(),
+            tableId: tableId.toString(),
+          },
+        }
+      );
+    })(),
+    Tiles: (() => {
+      const tableId = new TableId("", "Tiles");
+      return defineComponent(
+        world,
+        {
+          coord: RecsType.BigInt,
+          index: RecsType.Number,
+          tileType: RecsType.Number,
+          tileX: RecsType.Number,
+          tileY: RecsType.Number,
+          gridX: RecsType.Number,
+          gridY: RecsType.Number,
+        },
+        {
+          metadata: {
+            contractId: tableId.toHexString(),
+            tableId: tableId.toString(),
+          },
+        }
+      );
+    })(),
   };
 }

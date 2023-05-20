@@ -1,5 +1,6 @@
 import { useStore } from "../store";
 import { LoadingScreen } from "./LoadingScreen";
+import { TestBridge } from "./TestBridge";
 import { Wrapper } from "./Wrapper";
 
 export const UIRoot = () => {
@@ -14,6 +15,7 @@ export const UIRoot = () => {
 
   return (
     <Wrapper>
+      <TestBridge />
       <LoadingScreen />
     </Wrapper>
   );

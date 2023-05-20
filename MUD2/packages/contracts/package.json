@@ -20,10 +20,12 @@
     "worldtypes": "rimraf types && typechain --target=ethers-v5 out/IWorld.sol/IWorld.json"
   },
   "dependencies": {
+    "@eth-optimism/contracts": "^0.5.40",
     "@ethersproject/abi": "^5.7.0",
     "@ethersproject/bytes": "^5.7.0",
     "@ethersproject/providers": "^5.7.2",
     "@latticexyz/cli": "2.0.0-alpha.1.170+76be5d21",
+    "@latticexyz/config": "2.0.0-alpha.1.159+59588ab6",
     "@latticexyz/schema-type": "2.0.0-alpha.1.170+76be5d21",
     "@latticexyz/std-contracts": "2.0.0-alpha.1.170+76be5d21",
     "@latticexyz/store": "2.0.0-alpha.1.170+76be5d21",
