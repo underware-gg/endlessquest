@@ -1,9 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 export enum Tileset {
-  Grass = 0,
-  Mountain = 1,
-  Forest = 2,
+  Dark = 0,
+  Darker = 1,
+  Grass = 2,
+  Mountain = 3,
+  Forest = 4,
 }
-export enum TileAnimationKey {}
-export const TileAnimations: { [key in TileAnimationKey]: number[] } = {};
+export enum TileAnimationKey {
+}
+export const TileAnimations: { [key in TileAnimationKey]: number[] } = {
+};
