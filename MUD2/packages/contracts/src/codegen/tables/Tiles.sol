@@ -23,8 +23,8 @@ bytes32 constant TilesTableId = _tableId;
 struct TilesData {
   uint8 terrain;
   uint8 tileType;
-  uint32 gridX;
-  uint32 gridY;
+  int32 gridX;
+  int32 gridY;
 }
 
 library Tiles {
@@ -33,8 +33,8 @@ library Tiles {
     SchemaType[] memory _schema = new SchemaType[](4);
     _schema[0] = SchemaType.UINT8;
     _schema[1] = SchemaType.UINT8;
-    _schema[2] = SchemaType.UINT32;
-    _schema[3] = SchemaType.UINT32;
+    _schema[2] = SchemaType.INT32;
+    _schema[3] = SchemaType.INT32;
 
     return SchemaLib.encode(_schema);
   }
@@ -147,25 +147,25 @@ library Tiles {
   }
 
   /** Get gridX */
-  function getGridX(bytes32 key) internal view returns (uint32 gridX) {
+  function getGridX(bytes32 key) internal view returns (int32 gridX) {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32((key));
 
     bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 2);
-    return (uint32(Bytes.slice4(_blob, 0)));
+    return (int32(uint32(Bytes.slice4(_blob, 0))));
   }
 
   /** Get gridX (using the specified store) */
-  function getGridX(IStore _store, bytes32 key) internal view returns (uint32 gridX) {
+  function getGridX(IStore _store, bytes32 key) internal view returns (int32 gridX) {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32((key));
 
     bytes memory _blob = _store.getField(_tableId, _keyTuple, 2);
-    return (uint32(Bytes.slice4(_blob, 0)));
+    return (int32(uint32(Bytes.slice4(_blob, 0))));
   }
 
   /** Set gridX */
-  function setGridX(bytes32 key, uint32 gridX) internal {
+  function setGridX(bytes32 key, int32 gridX) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32((key));
 
@@ -173,7 +173,7 @@ library Tiles {
   }
 
   /** Set gridX (using the specified store) */
-  function setGridX(IStore _store, bytes32 key, uint32 gridX) internal {
+  function setGridX(IStore _store, bytes32 key, int32 gridX) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32((key));
 
@@ -181,25 +181,25 @@ library Tiles {
   }
 
   /** Get gridY */
-  function getGridY(bytes32 key) internal view returns (uint32 gridY) {
+  function getGridY(bytes32 key) internal view returns (int32 gridY) {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32((key));
 
     bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 3);
-    return (uint32(Bytes.slice4(_blob, 0)));
+    return (int32(uint32(Bytes.slice4(_blob, 0))));
   }
 
   /** Get gridY (using the specified store) */
-  function getGridY(IStore _store, bytes32 key) internal view returns (uint32 gridY) {
+  function getGridY(IStore _store, bytes32 key) internal view returns (int32 gridY) {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32((key));
 
     bytes memory _blob = _store.getField(_tableId, _keyTuple, 3);
-    return (uint32(Bytes.slice4(_blob, 0)));
+    return (int32(uint32(Bytes.slice4(_blob, 0))));
   }
 
   /** Set gridY */
-  function setGridY(bytes32 key, uint32 gridY) internal {
+  function setGridY(bytes32 key, int32 gridY) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32((key));
 
@@ -207,7 +207,7 @@ library Tiles {
   }
 
   /** Set gridY (using the specified store) */
-  function setGridY(IStore _store, bytes32 key, uint32 gridY) internal {
+  function setGridY(IStore _store, bytes32 key, int32 gridY) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32((key));
 
@@ -233,7 +233,7 @@ library Tiles {
   }
 
   /** Set the full data using individual values */
-  function set(bytes32 key, uint8 terrain, uint8 tileType, uint32 gridX, uint32 gridY) internal {
+  function set(bytes32 key, uint8 terrain, uint8 tileType, int32 gridX, int32 gridY) internal {
     bytes memory _data = encode(terrain, tileType, gridX, gridY);
 
     bytes32[] memory _keyTuple = new bytes32[](1);
@@ -243,7 +243,7 @@ library Tiles {
   }
 
   /** Set the full data using individual values (using the specified store) */
-  function set(IStore _store, bytes32 key, uint8 terrain, uint8 tileType, uint32 gridX, uint32 gridY) internal {
+  function set(IStore _store, bytes32 key, uint8 terrain, uint8 tileType, int32 gridX, int32 gridY) internal {
     bytes memory _data = encode(terrain, tileType, gridX, gridY);
 
     bytes32[] memory _keyTuple = new bytes32[](1);
@@ -268,13 +268,13 @@ library Tiles {
 
     _table.tileType = (uint8(Bytes.slice1(_blob, 1)));
 
-    _table.gridX = (uint32(Bytes.slice4(_blob, 2)));
+    _table.gridX = (int32(uint32(Bytes.slice4(_blob, 2))));
 
-    _table.gridY = (uint32(Bytes.slice4(_blob, 6)));
+    _table.gridY = (int32(uint32(Bytes.slice4(_blob, 6))));
   }
 
   /** Tightly pack full data using this table's schema */
-  function encode(uint8 terrain, uint8 tileType, uint32 gridX, uint32 gridY) internal view returns (bytes memory) {
+  function encode(uint8 terrain, uint8 tileType, int32 gridX, int32 gridY) internal view returns (bytes memory) {
     return abi.encodePacked(terrain, tileType, gridX, gridY);
   }
 

@@ -31,7 +31,7 @@ export function createMapSystem(layer: PhaserLayer) {
     const coord = { x, y }
     putTileAt(coord, Tileset.Grass, "Background");
     if (tileType == 0) {
-      if (terrain == 1) {
+      if (terrain == 1 || terrain == 2) {
         putTileAt(coord, Tileset.Forest, "Foreground");
       } else {
         putTileAt(coord, Tileset.Mountain, "Foreground");
@@ -47,17 +47,14 @@ export function createMapSystem(layer: PhaserLayer) {
 
 
   const tiles = storeCache.tables.Tiles.scan({});
-  console.log(`TILES:`, tiles)
+  console.log(`INITIAL TILES:`, tiles)
   tiles.forEach((tile) => _addTileToMap(tile.value as singleTile))
 
   Tiles.update$.subscribe((tile) => {
     const [nextValue, prevValue] = tile.value;
-    console.log(`TILES_UPDATE:`, nextValue)
+    // console.log(`TILES_UPDATE:`, nextValue)
     _addTileToMap(nextValue as singleTile)
-    // console.log("Counter updated", update, { nextValue, prevValue });
-    // document.getElementById("counter")!.innerHTML = String(nextValue?.value ?? "unset");
   });
-
 
 
 

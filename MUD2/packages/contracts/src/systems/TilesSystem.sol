@@ -16,8 +16,8 @@ contract TilesSystem is System {
     uint8 tileType,
     // uint8 tileX,
     // uint8 tileY,
-    uint8 gridX,
-    uint8 gridY
+    int32 gridX,
+    int32 gridY
   ) public {
     bytes32 key = getUniqueEntity();
     Tiles.set(key,

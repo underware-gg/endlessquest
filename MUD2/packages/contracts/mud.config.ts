@@ -58,8 +58,8 @@ export default mudConfig({
         tileType: 'uint8',
         // tileX: 'uint8',
         // tileY: 'uint8',
-        gridX: 'uint32',
-        gridY: 'uint32',
+        gridX: 'int32',
+        gridY: 'int32',
       }
     },
   },

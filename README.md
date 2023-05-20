@@ -14,15 +14,16 @@ May 18th to 26th 2023
 
 # Repo Structure
 
-## `MUD`
-
-The React MUD engine
-
 external dependencies:
 
 * @lattice packages
 * Endless Crawler [mainnet contracts](https://etherscan.io/address/0x8e70b94c57b0cbc9807c0f58bc251f4cd96acdb0#code)
+* Endless Crawler [mainnet contracts](https://etherscan.io/address/0x8e70b94c57b0cbc9807c0f58bc251f4cd96acdb0#code)
 
+
+## `MUD`
+
+A React MUD engine
 
 ### Run local server
 
@@ -65,7 +66,7 @@ $ pnpm create mud@canary MUD
 
 ## `MUD2`
 
-The Phaser MUD engine
+A Phaser MUD engine
 
 Created with...
 
