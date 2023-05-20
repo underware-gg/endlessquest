@@ -43,7 +43,7 @@ export const TestBridge = () => {
   //
   // query by VALUE
   const doors = useEntityQuery([HasValue(Doors, { coord })]) ?? []
-  const tiles = useEntityQuery([HasValue(Tiles, { coord })]) ?? []
+  const tiles = useEntityQuery([HasValue(Tiles, { terrain: chamberData?.value?.terrain })]) ?? []
 
   return (
     <div style={{

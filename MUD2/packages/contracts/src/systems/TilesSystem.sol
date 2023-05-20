@@ -10,22 +10,24 @@ contract TilesSystem is System {
 
   // Bridge setters
   function setTile(
-    uint256 coord,
-    uint8 index,
+    // uint256 coord,
+    // uint8 index,
+    uint8 terrain,
     uint8 tileType,
-    uint8 tileX,
-    uint8 tileY,
+    // uint8 tileX,
+    // uint8 tileY,
     uint8 gridX,
     uint8 gridY
   ) public {
     bytes32 key = getUniqueEntity();
     Tiles.set(key,
       TilesData({
-        coord: coord,
-        index: index,
+        // coord: coord,
+        // index: index,
+        terrain: terrain,
         tileType: tileType,
-        tileX: tileX,
-        tileY: tileY,
+        // tileX: tileX,
+        // tileY: tileY,
         gridX: gridX,
         gridY: gridY
       })

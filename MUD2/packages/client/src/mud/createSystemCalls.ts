@@ -84,17 +84,24 @@ export function createSystemCalls(
     })
     //
     // store Tiles
+    let map = Array(20 * 20).fill(0);
+    console.log(`MAP_0`, map)
     Object.values(ethers.utils.arrayify(chamberData.tilemap)).forEach(async (tileType, index) => {
-      const tileX = index % 16
-      const tileY = Math.floor(index / 16)
-      const gridX = tileX
-      const gridY = tileY
+      const x = 2 + index % 16
+      const y = 2 + Math.floor(index / 16)
+      map[y * 20 + x] = tileType
+    })
+    console.log(`MAP_1`, map)
+    map.forEach(async (tileType, index) => {
+      const gridX = index % 20
+      const gridY = Math.floor(index / 20)
       await worldSend("setTile", [
-        coord,
-        index,
+        // coord,
+        // index,
+        chamberData.terrain,
         tileType,
-        tileX,
-        tileY,
+        // tileX,
+        // tileY,
         gridX,
         gridY,
       ]);

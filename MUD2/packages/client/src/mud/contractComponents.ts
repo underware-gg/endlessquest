@@ -84,11 +84,8 @@ export function defineContractComponents(world: World) {
       return defineComponent(
         world,
         {
-          coord: RecsType.BigInt,
-          index: RecsType.Number,
+          terrain: RecsType.Number,
           tileType: RecsType.Number,
-          tileX: RecsType.Number,
-          tileY: RecsType.Number,
           gridX: RecsType.Number,
           gridY: RecsType.Number,
         },
