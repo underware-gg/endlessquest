@@ -9,7 +9,17 @@ export enum Maps {
 export enum Animations {
   GolemIdle = "GolemIdle",
   GolemGhost = "GolemGhost",
-  FishermanIdle = "FishermanIdle",
+  // Player
+  PlayerIdle = "PlayerIdle",
+  PlayerGhost = "PlayerGhost",
+  // Agents
+  AgentsBlacksmith = "AgentsBlacksmith",
+  AgentsDancer = "AgentsDancer",
+  AgentsFisherman = "AgentsFisherman",
+  AgentsHerbalist = "AgentsHerbalist",
+  AgentsMilady = "AgentsMilady",
+  AgentsMiner = "AgentsMiner",
+  AgentsPotionMaker = "AgentsPotionMaker",
 }
 export enum Sprites {
   Soldier,

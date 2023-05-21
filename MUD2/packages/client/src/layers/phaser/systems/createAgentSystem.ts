@@ -38,12 +38,20 @@ export function createAgentSystem(layer: PhaserLayer) {
     const position = getComponentValueStrict(Position, entity);
     const pixelPosition = tileCoordToPixelCoord(position, TILE_WIDTH, TILE_HEIGHT);
 
+    // const spr = Animations.AgentsBlacksmith
+    const spr = Animations.AgentsDancer
+    // const spr = Animations.AgentsFisherman
+    // const spr = Animations.AgentsHerbalist
+    // const spr = Animations.AgentsMilady
+    // const spr = Animations.AgentsMiner
+    // const spr = Animations.AgentsPotionMaker
+
     const agentObj = objectPool.get(entity, "Sprite");
     agentObj.setComponent({
       id: 'animation',
       once: (sprite) => {
         sprite.setPosition(pixelPosition.x, pixelPosition.y);
-        sprite.play(Animations.FishermanIdle);
+        sprite.play(spr);
       }
     });
   });

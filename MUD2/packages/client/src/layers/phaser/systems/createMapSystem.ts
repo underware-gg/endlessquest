@@ -79,9 +79,12 @@ export function createMapSystem(layer: PhaserLayer) {
       } else if (terrain == 2) { // Water
         putTileAt(position, Tileset.Water1, "Background");
         t = _random_array(seed, [
-          null, null, null, null, null, null,
-          Tileset.Water2, Tileset.Water3, Tileset.Water4,
-          Tileset.Floater1, Tileset.Floater2, Tileset.Floater3, Tileset.Floater4
+          null, null, null, null, null, null, null, null, null,
+          Tileset.Water2, Tileset.Water2, Tileset.Water2, Tileset.Water2,
+          Tileset.Water3, 
+          Tileset.Water4, // skull
+          Tileset.Floater1, Tileset.Floater2, Tileset.Floater3, Tileset.Floater4,
+          Tileset.Floater1, Tileset.Floater2, Tileset.Floater3, Tileset.Floater4,
         ])
       } else if (terrain == 3) { // Air
         putTileAt(position, Tileset.AirPath3, "Background");

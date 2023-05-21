@@ -78,7 +78,8 @@ export function createPlayerSystem(layer: PhaserLayer) {
     playerObj.setComponent({
       id: 'animation',
       once: (sprite) => {
-        sprite.play(Animations.GolemIdle);
+        sprite.play(Animations.PlayerIdle);
+        // sprite.setScale(1.25)
       }
     });
   });
