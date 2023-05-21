@@ -8,6 +8,7 @@ export enum Maps {
 
 export enum Animations {
   GolemIdle = "GolemIdle",
+  GolemGhost = "GolemGhost",
   FishermanIdle = "FishermanIdle",
 }
 export enum Sprites {

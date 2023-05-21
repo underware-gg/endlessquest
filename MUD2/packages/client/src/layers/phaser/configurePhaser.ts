@@ -79,6 +79,16 @@ export const phaserConfig = {
           suffix: ".png",
         },
         {
+          key: Animations.GolemGhost,
+          assetKey: Assets.MainAtlas,
+          startFrame: 0,
+          endFrame: 0,
+          frameRate: 6,
+          repeat: 0,
+          prefix: "sprites/golem/ghost/",
+          suffix: ".png",
+        },
+        {
           key: Animations.FishermanIdle,
           assetKey: Assets.MainAtlas,
           startFrame: 0,
