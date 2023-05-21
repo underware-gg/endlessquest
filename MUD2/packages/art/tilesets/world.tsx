@@ -163,17 +163,17 @@
  </tile>
  <tile id="32">
   <properties>
-   <property name="name" value=""/>
+   <property name="name" value="Grass1"/>
   </properties>
  </tile>
  <tile id="33">
   <properties>
-   <property name="name" value=""/>
+   <property name="name" value="Grass2"/>
   </properties>
  </tile>
  <tile id="34">
   <properties>
-   <property name="name" value=""/>
+   <property name="name" value="Grass3"/>
   </properties>
  </tile>
  <tile id="35">
@@ -203,57 +203,57 @@
  </tile>
  <tile id="40">
   <properties>
-   <property name="name" value=""/>
+   <property name="name" value="Water1"/>
   </properties>
  </tile>
  <tile id="41">
   <properties>
-   <property name="name" value=""/>
+   <property name="name" value="Water2"/>
   </properties>
  </tile>
  <tile id="42">
   <properties>
-   <property name="name" value=""/>
+   <property name="name" value="Water3"/>
   </properties>
  </tile>
  <tile id="43">
   <properties>
-   <property name="name" value=""/>
+   <property name="name" value="Water4"/>
   </properties>
  </tile>
  <tile id="44">
   <properties>
-   <property name="name" value=""/>
+   <property name="name" value="Floater1"/>
   </properties>
  </tile>
  <tile id="45">
   <properties>
-   <property name="name" value=""/>
+   <property name="name" value="Floater2"/>
   </properties>
  </tile>
  <tile id="46">
   <properties>
-   <property name="name" value=""/>
+   <property name="name" value="Floater3"/>
   </properties>
  </tile>
  <tile id="47">
   <properties>
-   <property name="name" value=""/>
+   <property name="name" value="Floater4"/>
   </properties>
  </tile>
  <tile id="48">
   <properties>
-   <property name="name" value=""/>
+   <property name="name" value="AirPath1"/>
   </properties>
  </tile>
  <tile id="49">
   <properties>
-   <property name="name" value="Grass"/>
+   <property name="name" value="AirPath2"/>
   </properties>
  </tile>
  <tile id="50">
   <properties>
-   <property name="name" value=""/>
+   <property name="name" value="AirPath3"/>
   </properties>
  </tile>
  <tile id="51">
@@ -283,32 +283,32 @@
  </tile>
  <tile id="56">
   <properties>
-   <property name="name" value=""/>
+   <property name="name" value="FirePath1"/>
   </properties>
  </tile>
  <tile id="57">
   <properties>
-   <property name="name" value=""/>
+   <property name="name" value="FirePath2"/>
   </properties>
  </tile>
  <tile id="58">
   <properties>
-   <property name="name" value=""/>
+   <property name="name" value="Debris1"/>
   </properties>
  </tile>
  <tile id="59">
   <properties>
-   <property name="name" value=""/>
+   <property name="name" value="Debris2"/>
   </properties>
  </tile>
  <tile id="60">
   <properties>
-   <property name="name" value=""/>
+   <property name="name" value="Debris3"/>
   </properties>
  </tile>
  <tile id="61">
   <properties>
-   <property name="name" value=""/>
+   <property name="name" value="Debris4"/>
   </properties>
  </tile>
  <tile id="62">
