@@ -95,7 +95,8 @@ export function createMapSystem(layer: PhaserLayer) {
         t = _random_array(seed, [
           null, null,
           Tileset.Debris1, Tileset.Debris2,
-          Tileset.Debris3, Tileset.Debris4, Tileset.Debris3, Tileset.Debris4,
+          Tileset.Debris3, Tileset.Debris3,
+          // Tileset.Debris4, Tileset.Debris4,
           Tileset.Foliage1, Tileset.Foliage5, Tileset.Foliage6,
         ])
       }
