@@ -79,7 +79,6 @@ export function createPlayerSystem(layer: PhaserLayer) {
       id: 'animation',
       once: (sprite) => {
         sprite.play(Animations.GolemIdle);
-        console.log(`SPRITE CONTAINER`,sprite.parentContainer)
       }
     });
   });

@@ -20,6 +20,15 @@ pragma solidity ^0.8.0;
 
 library Crawl {
 
+  // Tiles
+	bytes1 internal constant TILE_VOID = 0x00;
+	bytes1 internal constant TILE_ENTRY = 0x01;
+	bytes1 internal constant TILE_EXIT = 0x02;
+	bytes1 internal constant TILE_LOCKED = 0x03;
+	bytes1 internal constant TILE_GEM = 0x04;
+	bytes1 internal constant TILE_EMPTY = 0xfe;
+	bytes1 internal constant TILE_PATH = 0xff;
+
   //-----------------------------------
   // ChamberSeed, per token static data
   // generated on mint, stored on-chain

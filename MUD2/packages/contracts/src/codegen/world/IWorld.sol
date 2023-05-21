@@ -5,6 +5,7 @@ pragma solidity >=0.8.0;
 
 import { IBaseWorld } from "@latticexyz/world/src/interfaces/IBaseWorld.sol";
 
+import { IAgentSystem } from "./IAgentSystem.sol";
 import { IChamberSystem } from "./IChamberSystem.sol";
 import { IDoorsSystem } from "./IDoorsSystem.sol";
 import { IIncrementSystem } from "./IIncrementSystem.sol";
@@ -18,6 +19,7 @@ import { ITokenSystem } from "./ITokenSystem.sol";
  */
 interface IWorld is
   IBaseWorld,
+  IAgentSystem,
   IChamberSystem,
   IDoorsSystem,
   IIncrementSystem,

@@ -47,6 +47,21 @@ export default mudConfig({
       }
     },
     //-----------------------
+    Agent: {
+      keySchema: {
+        key: 'bytes32',
+      },
+      schema: {
+        coord: 'uint256',
+        tokenId: 'uint256',
+        seed: 'uint256',
+        yonder: 'uint8',
+        gemType: 'uint8',
+        coins: 'uint16',
+        worth: 'uint16'
+      }
+    },
+    //-----------------------
     Doors: {
       keySchema: {
         key: 'bytes32',
@@ -97,6 +112,11 @@ export default mudConfig({
     },
   },
   modules: [
+    {
+      name: "UniqueEntityModule",
+      root: true,
+      args: [resolveTableId("Agent")],
+    },
     {
       name: "UniqueEntityModule",
       root: true,

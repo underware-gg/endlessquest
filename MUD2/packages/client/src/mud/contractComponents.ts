@@ -60,6 +60,27 @@ export function defineContractComponents(world: World) {
         }
       );
     })(),
+    Agent: (() => {
+      const tableId = new TableId("", "Agent");
+      return defineComponent(
+        world,
+        {
+          coord: RecsType.BigInt,
+          tokenId: RecsType.BigInt,
+          seed: RecsType.BigInt,
+          yonder: RecsType.Number,
+          gemType: RecsType.Number,
+          coins: RecsType.Number,
+          worth: RecsType.Number,
+        },
+        {
+          metadata: {
+            contractId: tableId.toHexString(),
+            tableId: tableId.toString(),
+          },
+        }
+      );
+    })(),
     Doors: (() => {
       const tableId = new TableId("", "Doors");
       return defineComponent(

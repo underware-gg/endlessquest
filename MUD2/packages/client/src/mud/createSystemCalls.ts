@@ -102,6 +102,7 @@ export function createSystemCalls(
     })
     //
     // store Tiles
+    let gemPos = { gridX: 0, gridY: 0 }
     const tilemap = ethers.utils.arrayify(chamberData.tilemap)
     let map = Array(20 * 20).fill({ tileType: 0 });
     Object.values(tilemap).forEach(async (tileType, index) => {
@@ -131,6 +132,7 @@ export function createSystemCalls(
       if (compass.west > 0) gridX -= (compass.west * 20)
       if (compass.south > 0) gridY += ((compass.south - 1) * 20)
       if (compass.north > 0) gridY -= (compass.north * 20)
+      if (tile.tileType == 4) gemPos = { gridX, gridY }
       await worldSend("setTile", [
         chamberData.terrain,
         tile.tileType,
@@ -141,6 +143,19 @@ export function createSystemCalls(
         coord
       ]);
     })
+    //
+    // Create Agent
+    await worldSend("setAgent", [
+      coord,
+      chamberData.tokenId,
+      chamberData.seed,
+      chamberData.yonder,
+      chamberData.hoard.gemType,
+      chamberData.hoard.coins,
+      chamberData.hoard.worth,
+      gemPos.gridX,
+      gemPos.gridY,
+    ]);
     return result
   };
 
@@ -148,7 +163,7 @@ export function createSystemCalls(
   // Player / Movement
   //
   const spawn = (x: number, y: number) => {
-    console.warn(`SPAWN@`, x, y)
+    console.warn(`SPAWN @`, x, y)
     worldSend("spawn", [playerName, x, y]);
   };
   const move = (direction: Direction) => {
