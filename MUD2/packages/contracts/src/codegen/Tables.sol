@@ -11,5 +11,4 @@ import { Tiles, TilesData, TilesTableId } from "./tables/Tiles.sol";
 import { Door, DoorTableId } from "./tables/Door.sol";
 import { Player, PlayerData, PlayerTableId } from "./tables/Player.sol";
 import { Position, PositionData, PositionTableId } from "./tables/Position.sol";
-import { Health, HealthData, HealthTableId } from "./tables/Health.sol";
-import { Strength, StrengthTableId } from "./tables/Strength.sol";
+import { Blocker, BlockerTableId } from "./tables/Blocker.sol";

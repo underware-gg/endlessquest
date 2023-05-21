@@ -38,7 +38,7 @@ export function createPlayerSystem(layer: PhaserLayer) {
   } = layer;
 
   const _playerHasSpawned = () => {
-    return (playerEntity && hasComponent(Position, playerEntity))
+    return (playerEntity && hasComponent(Player, playerEntity))
   }
 
   // spawn by click
@@ -74,11 +74,12 @@ export function createPlayerSystem(layer: PhaserLayer) {
 
   defineEnterSystem(world, [Has(Position), Has(Player)], ({ entity }) => {
     const playerObj = objectPool.get(entity, "Sprite");
-
+ 
     playerObj.setComponent({
       id: 'animation',
       once: (sprite) => {
         sprite.play(Animations.GolemIdle);
+        console.log(`SPRITE CONTAINER`,sprite.parentContainer)
       }
     });
   });
@@ -99,7 +100,7 @@ export function createPlayerSystem(layer: PhaserLayer) {
       id: 'position',
       once: (sprite) => {
         sprite.setPosition(pixelPosition.x, pixelPosition.y);
-        const isPlayer = entity === playerEntity;
+        const isPlayer = (entity === playerEntity);
         if (isPlayer) {
           // camera.centerOn(pixelPosition.x, pixelPosition.y);
           // need to expose camera.pan() on phaserx

@@ -90,15 +90,11 @@ export default mudConfig({
         y: "int32",
       }
     },
-    Health: {
+    Blocker: {
       schema: {
-        current: "int32",
-        max: "int32",
-      },
+        enabled: "bool",
+      }
     },
-    Strength: {
-      schema: "int32",
-    }
   },
   modules: [
     {

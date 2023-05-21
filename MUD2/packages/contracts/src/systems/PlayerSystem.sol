@@ -4,10 +4,8 @@ pragma solidity >=0.8.0;
 import { System } from "@latticexyz/world/src/System.sol";
 import {
   Player, PlayerData,
-  PositionTableId,
-  Position, PositionData,
-  Health, HealthData,
-  Strength,
+  Position, PositionData, PositionTableId,
+  Blocker,
   Tiles, TilesData
  } from "../codegen/Tables.sol";
 
@@ -28,11 +26,7 @@ contract PlayerSystem is System {
     
     Player.set(player, 1, name);
     Position.set(player, x, y);
-    Health.set(player, HealthData({
-      max: 100,
-      current: 100
-    }));
-    Strength.set(player, 25);
+    Blocker.set(player, true);
   }
 
   function move(Direction direction) public {
@@ -60,35 +54,21 @@ contract PlayerSystem is System {
 
     // check if there is a tile and it is not 0
     bool isTile = false;
-    bytes32 otherPlayerKey = 0;
     bytes32[] memory thingsAtPosition = getKeysWithValue(PositionTableId, Position.encode(x, y));
     for(uint256 i = 0 ; i < thingsAtPosition.length; ++i) {
+      //
+      // Find Blockers at position
+      bool blocker = Blocker.get(thingsAtPosition[i]);
+      require(blocker == false, "--- BLOCKER! ---");
+      //
+      // Find Tiles at position
       TilesData memory tile = Tiles.get(thingsAtPosition[i]);
       if (tile.terrain > 0) {
         isTile = true;
-        require(tile.tileType != 0, "blocking");
-      }
-      PlayerData memory otherPlayer = Player.get(thingsAtPosition[i]);
-      if (otherPlayer.level > 0) {
-        otherPlayerKey = thingsAtPosition[i];
       }
     }
-    require(isTile, "no tile at destination");
+    require(isTile, "--- OUT OF BOUNDS! ---");
 
-    if(otherPlayerKey == 0) {
-      Position.set(player, x, y);
-    } else {
-        int32 myStrength = Strength.get(player);
-        HealthData memory otherPlayerHealth = Health.get(otherPlayerKey);
-        int32 newHealth = otherPlayerHealth.current - myStrength;
-
-        if(newHealth <= 0) {
-          Health.deleteRecord(otherPlayerKey);
-          Position.deleteRecord(otherPlayerKey);
-          Strength.deleteRecord(otherPlayerKey);
-        } else {
-          Health.setCurrent(otherPlayerKey  , newHealth);
-        }
-    }
+    Position.set(player, x, y);
   }
 }

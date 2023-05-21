@@ -143,28 +143,12 @@ export function defineContractComponents(world: World) {
         }
       );
     })(),
-    Health: (() => {
-      const tableId = new TableId("", "Health");
+    Blocker: (() => {
+      const tableId = new TableId("", "Blocker");
       return defineComponent(
         world,
         {
-          current: RecsType.Number,
-          max: RecsType.Number,
-        },
-        {
-          metadata: {
-            contractId: tableId.toHexString(),
-            tableId: tableId.toString(),
-          },
-        }
-      );
-    })(),
-    Strength: (() => {
-      const tableId = new TableId("", "Strength");
-      return defineComponent(
-        world,
-        {
-          value: RecsType.Number,
+          enabled: RecsType.Boolean,
         },
         {
           metadata: {
