@@ -1,8 +1,18 @@
 import { runQuery, defineQuery, getComponentValueStrict, Has, HasValue, Entity } from "@latticexyz/recs";
 import { Tileset } from "../../../artTypes/world";
 import { PhaserLayer } from "../createPhaserLayer";
-// import { createNoise2D } from "simplex-noise";
+import { createNoise2D } from "simplex-noise";
 // import { map } from "rxjs";
+
+const noise = createNoise2D();
+
+const _random_int = (r: number, maxNonInclusive: number) => {
+  return Math.floor(r * maxNonInclusive)
+}
+const _random_array = (r: number, array: any[]) => {
+  return array[_random_int(r, array.length)]
+}
+
 
 export function createMapSystem(layer: PhaserLayer) {
   const {
@@ -39,21 +49,28 @@ export function createMapSystem(layer: PhaserLayer) {
       tileType,
       terrain,
     } = tile
+    let seed = noise(position.x, position.y); // -1 .. 1
+    seed = ((seed + 1) / 2); //0..1
 
-    // tiles
+    if (tileType != 0) {
+      // tiles
+      putTileAt(position, Tileset.Grass, "Background");
+    }
     if (tileType == 1 || tileType == 2) {
       // doors / portals / pathways
-      putTileAt(position, Tileset.Darker, "Background");
-    } else {
-      putTileAt(position, Tileset.Grass, "Background");
+      putTileAt(position, Tileset.Rocks3, "Foreground");
     }
 
     // walls
     if (tileType == 0) {
+      let t = null
       if (terrain == 1 || terrain == 2) {
-        putTileAt(position, Tileset.Forest, "Foreground");
+        t = _random_array(seed, [Tileset.Tree1, Tileset.Tree1, Tileset.Tree2, Tileset.Moss5, Tileset.Moss4, null, null])
       } else {
-        putTileAt(position, Tileset.Mountain, "Foreground");
+        t = _random_array(seed, [Tileset.Rock1, Tileset.Rock2, Tileset.Rock3, Tileset.Rock4, Tileset.Rock5, Tileset.Rock5, null, null])
+      }
+      if (t !== null) {
+        putTileAt(position, t, "Foreground");
       }
     }
   }
