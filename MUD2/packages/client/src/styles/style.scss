@@ -1,0 +1,53 @@
+@import 'googlefonts';
+
+html, body {
+  // all: initial;
+  // margin: 0;
+  // padding: 0;
+  // border: none;
+  // background-color: #1a3a1e;
+  background-color: #000;
+  font-family: 'Noto Sans Mono';
+  color: #fff;
+  overflow: hidden;
+}
+
+canvas {
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+.Canvas {
+  @extend canvas;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+}
+
+.FillParent {
+  width: 100%;
+  height: 100%;
+  min-width: 100%;
+  min-height: 100%;
+}
+
+.Absolute {
+  position: absolute !important;
+  top: 0;
+  left: 0;
+}
+
+.NoPadding {
+  padding: 0 !important;
+}
+
+.NoMargin {
+  margin: 0 !important;
+}
+
+.NoBorder {
+  border: none !important;
+}

@@ -16,5 +16,5 @@ export const PhaserLayer = ({ networkLayer }: Props) => {
     }
   }, [phaserLayer]);
 
-  return <div ref={phaserRef} />;
+  return <div className='Canvas' ref={phaserRef} />;
 };

@@ -31,6 +31,7 @@
     "nanoid": "^4.0.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "sass": "^1.62.1",
     "simplex-noise": "^4.0.1",
     "styled-components": "^5.3.10",
     "universal-cookie": "^4.0.4",
