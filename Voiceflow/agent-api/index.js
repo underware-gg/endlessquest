@@ -2,7 +2,8 @@
 const axios = require("axios");
 const { cli } = require("cli-ux");
 
-const API_KEY = "YOUR_API_KEY_HERE"; // it should look like this: VF.DM.XXXXXXX.XXXXXX... keep this a secret!
+// z0MG IT'S NOT A SECRET (but we'll delete it)
+const API_KEY = "VF.DM.6469b4e5909a470007b96250.k4ip0SMy84jWlCsf"; // it should look like this: VF.DM.XXXXXXX.XXXXXX... keep this a secret!
 
 // send an interaction to the Voiceflow API, and log the response, returns true if there is a next step
 async function interact(userID, request) {
