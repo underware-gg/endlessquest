@@ -96,6 +96,37 @@ export function defineContractComponents(world: World) {
         }
       );
     })(),
+    Door: (() => {
+      const tableId = new TableId("", "Door");
+      return defineComponent(
+        world,
+        {
+          nextCoord: RecsType.BigInt,
+        },
+        {
+          metadata: {
+            contractId: tableId.toHexString(),
+            tableId: tableId.toString(),
+          },
+        }
+      );
+    })(),
+    Player: (() => {
+      const tableId = new TableId("", "Player");
+      return defineComponent(
+        world,
+        {
+          level: RecsType.Number,
+          name: RecsType.String,
+        },
+        {
+          metadata: {
+            contractId: tableId.toHexString(),
+            tableId: tableId.toString(),
+          },
+        }
+      );
+    })(),
     Position: (() => {
       const tableId = new TableId("", "Position");
       return defineComponent(

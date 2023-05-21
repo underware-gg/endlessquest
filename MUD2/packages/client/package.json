@@ -28,10 +28,12 @@
     "contracts": "workspace:*",
     "ethers": "^5.7.2",
     "lodash": "^4.17.21",
+    "nanoid": "^4.0.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "simplex-noise": "^4.0.1",
     "styled-components": "^5.3.10",
+    "universal-cookie": "^4.0.4",
     "use-resize-observer": "^9.1.0",
     "viem": "^0.3.30",
     "zustand": "^4.3.8"

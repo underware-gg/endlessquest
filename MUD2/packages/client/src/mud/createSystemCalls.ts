@@ -6,13 +6,23 @@ import { Direction } from "../layers/phaser/constants";
 import * as Bridge from "../bridge/bridge";
 import * as Compass from "../bridge/compass";
 import * as ethers from "ethers";
+import Cookies from 'universal-cookie';
+import { nanoid } from 'nanoid'
 
 export type SystemCalls = ReturnType<typeof createSystemCalls>;
+
+const cookies = new Cookies();
 
 export function createSystemCalls(
   { worldSend, txReduced$, singletonEntity, storeCache }: SetupNetworkResult,
   { Counter, Token }: ClientComponents,
 ) {
+
+  let playerName = cookies.get('playerName')
+  if (!playerName || playerName == '') {
+    playerName = nanoid()
+    cookies.set('playerName', playerName, { path: '/' });
+  }
 
   //-----------------------------------
   // CounterSystem
@@ -92,27 +102,29 @@ export function createSystemCalls(
     })
     //
     // store Tiles
-    let map = Array(20 * 20).fill(0);
-    Object.values(ethers.utils.arrayify(chamberData.tilemap)).forEach(async (tileType, index) => {
+    const tilemap = ethers.utils.arrayify(chamberData.tilemap)
+    let map = Array(20 * 20).fill({ tileType: 0 });
+    Object.values(tilemap).forEach(async (tileType, index) => {
       const x = 2 + index % 16
       const y = 2 + Math.floor(index / 16)
-      map[y * 20 + x] = tileType
+      map[y * 20 + x] = { tileType, index }
       if (index == chamberData.doors[0] && !chamberData.locks[0]) {
-        map[(y - 1) * 20 + x] = 255
-        map[(y - 2) * 20 + x] = 255
+        map[(y - 1) * 20 + x] = { tileType: 2 } // exit door
+        map[(y - 2) * 20 + x] = { tileType: 2 } // exit door
       } else if (index == chamberData.doors[1] && !chamberData.locks[1]) {
-        map[y * 20 + x + 1] = 255
-        map[y * 20 + x + 2] = 255
+        map[y * 20 + x + 1] = { tileType: 2 } // exit door
+        map[y * 20 + x + 2] = { tileType: 2 } // exit door
       } else if (index == chamberData.doors[2] && !chamberData.locks[2]) {
-        map[y * 20 + x - 1] = 255
-        map[y * 20 + x - 2] = 255
+        map[y * 20 + x - 1] = { tileType: 2 } // exit door
+        map[y * 20 + x - 2] = { tileType: 2 } // exit door
       } else if (index == chamberData.doors[3] && !chamberData.locks[3]) {
-        map[(y + 1) * 20 + x] = 255
-        map[(y + 2) * 20 + x] = 255
+        map[(y + 1) * 20 + x] = { tileType: 2 } // exit door
+        map[(y + 2) * 20 + x] = { tileType: 2 } // exit door
       }
     })
-    map.forEach(async (tileType, index) => {
-      const isEntry = (index == chamberData.doors[chamberData.entryDir])
+    map.forEach(async (tile, index) => {
+      const doorDir = chamberData.doors.findIndex((i) => i > 0 && i == tile.index)
+      const isEntry = (doorDir == chamberData.entryDir)
       let gridX = (index % 20)
       let gridY = Math.floor(index / 20)
       if (compass.east > 0) gridX += ((compass.east - 1) * 20)
@@ -121,10 +133,12 @@ export function createSystemCalls(
       if (compass.north > 0) gridY -= (compass.north * 20)
       await worldSend("setTile", [
         chamberData.terrain,
-        tileType,
+        tile.tileType,
         isEntry,
         gridX,
         gridY,
+        doorDir,
+        coord
       ]);
     })
     return result
@@ -135,7 +149,7 @@ export function createSystemCalls(
   //
   const spawn = (x: number, y: number) => {
     console.warn(`SPAWN@`, x, y)
-    worldSend("spawn", [x, y]);
+    worldSend("spawn", [playerName, x, y]);
   };
   const move = (direction: Direction) => {
     worldSend("move", [direction]);

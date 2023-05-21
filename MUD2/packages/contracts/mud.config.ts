@@ -72,12 +72,18 @@ export default mudConfig({
         // gridY: 'int32',
       }
     },
+    Door: {
+      schema: {
+        nextCoord: 'uint256',
+      }
+    },
     //-----------------------
-    // Player: {
-    //   schema: {
-    //     y: "int32",
-    //   }
-    // },
+    Player: {
+      schema: {
+        level: "uint8",
+        name: "string",
+      }
+    },
     Position: {
       schema: {
         x: "int32",

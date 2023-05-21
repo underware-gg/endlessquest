@@ -14,9 +14,9 @@ export function createMapSystem(layer: PhaserLayer) {
       },
     },
     networkLayer: {
-      systemCalls: {
-        spawn
-      },
+      // systemCalls: {
+      //   spawn
+      // },
       components: {
         Tiles,
         Position,
@@ -39,7 +39,16 @@ export function createMapSystem(layer: PhaserLayer) {
       tileType,
       terrain,
     } = tile
-    putTileAt(position, Tileset.Grass, "Background");
+
+    // tiles
+    if (tileType == 1 || tileType == 2) {
+      // doors / portals / pathways
+      putTileAt(position, Tileset.Darker, "Background");
+    } else {
+      putTileAt(position, Tileset.Grass, "Background");
+    }
+
+    // walls
     if (tileType == 0) {
       if (terrain == 1 || terrain == 2) {
         putTileAt(position, Tileset.Forest, "Foreground");
@@ -52,10 +61,7 @@ export function createMapSystem(layer: PhaserLayer) {
   const _addTileQuery = (entity: Entity) => {
     const tile = getComponentValueStrict(Tiles, entity)
     const position = getComponentValueStrict(Position, entity)
-    console.log(`TILES_UPDATE:`, tile, position)
-    if (tile.isEntry) {
-      spawn(position.x, position.y);
-    }
+    // console.log(`TILES_UPDATE:`, tile, position)
     _addTileToMap(tile as singleTile, position as singlePosition)
   }
 
@@ -63,7 +69,7 @@ export function createMapSystem(layer: PhaserLayer) {
     Has(Tiles),
     Has(Position),
   ])
-  console.log(`INIT`, initQuery)
+  console.log(`INIT TILES QUERY`, initQuery)
   initQuery.forEach((entity) => {
     _addTileQuery(entity)
   })
