@@ -4,7 +4,7 @@ import { ClientComponents } from "./createClientComponents";
 import { SetupNetworkResult } from "./setupNetwork";
 import { Direction } from "../layers/phaser/constants";
 import * as Bridge from "../quest/bridge/bridge";
-import * as Compass from "../quest/bridge/compass";
+import * as Crawl from "../quest/bridge/Crawl";
 import * as ethers from "ethers";
 import Cookies from 'universal-cookie';
 import { nanoid } from 'nanoid'
@@ -70,7 +70,7 @@ export function createSystemCalls(
     }
     // fetch
     const chamberData = await Bridge.coordToChamberData(coord)
-    const compass = Compass.coordToCompass(coord)
+    const compass = Crawl.coordToCompass(coord)
     console.warn(`BRIDGE_CHAMBER`, compass, chamberData)
     //
     // store Chamber
