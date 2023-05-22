@@ -9,7 +9,7 @@ Endless Quest should generate the following art assets:
 
 We will use AI prompts to generate art.
 
-Every asset should have a 
+Every type of asset should have a universal prefix and suffix that are unique to that asset type
 * `[STANDARD_PREFIX]` -- A universal prefix added to the start of every prompt, that tunes towards NPC portraits
 * `[STANDARD_SUFFIX]` -- A standard suffix added to the end of every prompt, that tunes for art quality.
 
@@ -55,14 +55,17 @@ They should be a square aspect ratio.
 
 # Prefixes and suffixes
 
-Standard Prefix: `"A fantasy art portrait of an NPC in a video game"`
-Standard Suffix: `", roleplaying game, video game, high definition, 4k"`
+Standard Prefix (Chamber): `"A fantastical fantasy art landscape"`
+Standard Suffix (Chamber): `", fantasy art, roleplaying game art, video game art, high definition, 4k"`
+
+Standard Prefix (NPC): `"A fantasy art portrait of an NPC in a video game"`
+Standard Suffix (NPC): `", portrait, fantasy art, roleplaying game art, video game art, high definition, 4k"`
 
 Terrain Prefixes:
-* `Fire` - ``
-* `Water` - `watercolour`
-* `Earth` - `oil painting portrait by zdzislaw beksinski and mark rothko`
-* `Air` - ``
+* `Fire` - `fiery expressionist style, by Edvard Munch`
+* `Water` - `watercolour style by J. M. W. Turner`
+* `Earth` - `oil painting by zdzislaw beksinski and mark rothko`
+* `Air` - `bright impressionist style by claude monet`
 
 ## Realm examples
 
@@ -96,12 +99,30 @@ Format: `Behaviour Mode (Gem): Name - Description`
 
 # Sample Prompts (DALL-E)
 
+## Chamber
+
+Fire: `A fantastical fantasy art landscape, fiery expressionist style, by Edvard Munch: The Dragon's Lair - A grand cavern filled with the glint of treasure, the heat of molten lava, and the imposing presence of Fafnir the Timeless Dragon.;fantasy art, roleplaying game art, video game art, high definition, 4k`
+![The Dragon's Lair -- Fire](/Assets/art/Chambers/the-dragons-lair--fire.png)
+
+Water: `A fantastical fantasy art landscape, watercolour style by J. M. W. Turner: The Luminous Grove - A mystical grove bathed in an ethereal glow, filled with luminescent flora and fauna. The air is filled with a soothing melody, as if the grove itself is singing;fantasy art, roleplaying game art, video game art, high definition, 4k`
+![The Luminous Grove -- Water](/Assets/art/Chambers/the_luminous_grove--water.png)
+
+Earth: `A fantastical fantasy art landscape, oil painting by zdzislaw beksinski and mark rothko: The Shadowed Vault - A mysterious vault, half-swallowed by the enveloping darkness of the Spire. Ancient carvings depict shadowy figures performing cryptic rituals. The air is heavy with a foreboding presence; fantasy art, roleplaying game art, video game art, high definition, 4k`
+![The Shadowed Vault -- Earth](/Assets/art/Chambers/the-shadowed-vault--earth.png)
+
+Air: `A fantastical fantasy art landscape, bright impressionist style by claude monet: The Echoing Caverns - A vast network of echoing caverns, filled with stalactites and stalagmites. The echoes of dripping water and distant rumbles create an eerie atmosphere;fantasy art, roleplaying game art, video game art, high definition, 4k`
+![The Echoing Caverns -- Air](/Assets/art/Chambers/the-echoing-caverns--air.png)
+
 ## NPC
 
-Fire: `A fantasy art portrait of an NPC in a video game, XXX: An ancient dragon, renowned for his wisdom and might. He guards a powerful artifact and only bestows it upon those who prove their valor; portrait, fantasy, roleplaying game, video game, high definition, 4k`
+Fire: `A fantasy art portrait of an NPC in a video game, fiery expressionist style by Edvard Munch: Fafnir the Timeless - An ancient dragon, renowned for his wisdom and might. He guards a powerful artifact and only bestows it upon those who prove their valor; portrait, fantasy art, roleplaying game art, video game art, high definition, 4k`
+![Fafnir the Timeless -- Fire](/Assets/art/NPCs/fafnir-the-timeless--fire.png)
 
-Water: `A fantasy art portrait of an NPC in a video game, watercolour: Seraphina the Cursed Dancer - Once a famous dancer, Seraphina is now trapped in an endless dance by a jealous witch. She is friendly but forlorn, always moving to a silent rhythm; portrait, fantasy, roleplaying game, video game, high definition, 4k`
+Water: `A fantasy art portrait of an NPC in a video game, watercolour style by J. M. W. Turner: Seraphina the Cursed Dancer - Once a famous dancer, Seraphina is now trapped in an endless dance by a jealous witch. She is friendly but forlorn, always moving to a silent rhythm; portrait, fantasy art, roleplaying game art, video game art, high definition, 4k`
+![Seraphina the Cursed Dancer -- Water](/Assets/art/NPCs/seraphina-the-cursed-dancer--water.png)
 
-Earth: `A fantasy art portrait of an NPC in a video game, oil painting portrait by zdzislaw beksinski and mark rothko: Gorthak the Relentless - A colossal troll known for his insatiable appetite and ferocity in battle. His armor is adorned with the bones of his victims.; portrait, fantasy, roleplaying game, video game, high definition, 4k`
+Earth: `A fantasy art portrait of an NPC in a video game, oil painting by zdzislaw beksinski and mark rothko: Gorthak the Relentless - A colossal troll known for his insatiable appetite and ferocity in battle. His armor is adorned with the bones of his victims; portrait, fantasy art, roleplaying game art, video game art, high definition, 4k`
+![Gorthak The Relentless -- Earth](/Assets/art/NPCs/gorthak-the-relentless--earth.png)
 
-Air: `A fantasy art portrait of an NPC in a video game, XXX: The Whispering Chamber - An eerily quiet room filled with ancient inscriptions. When the wind blows, it seems to whisper secrets; portrait, fantasy, roleplaying game, video game, high definition, 4k`
+Air: `A fantasy art portrait of an NPC in a video game, impressionist style by claude monet: The Whispering Chamber - An eerily quiet room filled with ancient inscriptions. When the wind blows, it seems to whisper secrets; portrait, fantasy art, roleplaying game art, video game art, high definition, 4k`
+![The Whispering Chamber -- Air](/Assets/art/NPCs/the-whispering-chamber--air.png)
