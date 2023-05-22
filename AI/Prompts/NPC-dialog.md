@@ -72,3 +72,45 @@ When the player says "finish", respond with the status code "finish", whether it
 Before you begin:
 Remember to follow the three phases, and remember that your goal is to create an engaging and challenging experience for the player, while accurately representing the NPC's characteristics and behaviour. Good luck!
 ```
+
+## Configuration prompt
+
+When you receive the `[Awaiting Configuration]` response, you should send the configuration to the session. Below is the expected format that we tested with, however, note that this is quite flexible and you should be able to change it or provide it in a completely different format. The important bits of information are the setting_description, NPC_name, NPC_description and behaviour_mode, and it is likely you could provide these in plain English too.
+
+The expected `"Briefing"` configuration structure should be JSON metadata (as stored) related to the chamber:
+
+```
+{
+    "NPC" : {
+    	"name": "Fafnir the Timeless",
+    	"description": "An ancient dragon, renowned for his wisdom and might. He guards a powerful artifact and only bestows it upon those who prove their valor.",
+    	"behaviour_mode": "A grand mythical beast who tests if the player is worthy",
+    	"quirk": "Fafnir has a soft spot for poetry. Those who recite an original verse might just sway his judgment."
+    },
+    "world_description": "The Undergloom is a vast, subterranean network of caves filled with goblins and dominated by the formidable lair of their sardonic king.",
+	"setting_description": "The treacherous, decaying ruins of a once proud city",
+	"PC_description":"A meek and mild, middle-aged man with a nondescript face, who happens to secretly be  a wizard of repute"
+}
+```
+
+You could also just submit the entire chamber metadata structure like this. Note that in this structure, the "setting_description" should come from the "chamber_description". This should work, or you can just add "chamber_description" to the root with the label "setting_description". The AI should be able to generate a "briefing" data structure too, but the prompt might need tweaking for that to work correctly.
+```
+{
+    "chamber" : {
+        "chamber_name": "The Echoing Caverns",
+        "chamber_description": "A vast network of echoing caverns, filled with stalactites and stalagmites. The echoes of dripping water and distant rumbles create an eerie atmosphere.",
+        "terrain_type": "Earth",
+        "gem_type": "Emerald",
+        "npc": {
+            "name": "Tremor, the Stone Guardian",
+            "description": "A massive golem made of the very rocks of the cavern. It guards the caverns fiercely, attacking any who disturb the peace.",
+            "behaviour_mode": "A monster NPC who is hostile",
+            "quirk": "Tremor is sensitive to loud noises. A loud enough sound can stun it momentarily."
+        },
+        "coins": 750,
+        "yonder": 3
+    },
+    "world_description": "The Undergloom is a vast, subterranean network of caves filled with goblins and dominated by the formidable lair of their sardonic king.",
+	"PC_description":"An ant with a lion's head who is always hungry"
+}
+```
