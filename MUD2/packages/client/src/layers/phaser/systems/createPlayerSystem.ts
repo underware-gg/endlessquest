@@ -7,10 +7,13 @@ import {
   setComponent,
   defineQuery,
   runQuery,
+  Entity,
  } from "@latticexyz/recs";
 import { PhaserLayer } from "../createPhaserLayer";
-import { Animations, TILE_HEIGHT, TILE_WIDTH } from "../constants";
+import { Animations, Sprites, Assets, TILE_HEIGHT, TILE_WIDTH } from "../constants";
 import { pixelCoordToTileCoord, tileCoordToPixelCoord } from "@latticexyz/phaserx";
+import { phaserConfig } from "../../../layers/phaser/configurePhaser";
+import atlasJson from "../../../../public/assets/atlases/atlas.json";
 
 export function createPlayerSystem(layer: PhaserLayer) {
   const {
@@ -33,12 +36,18 @@ export function createPlayerSystem(layer: PhaserLayer) {
         objectPool,
         input,
         camera,
+        phaserScene,
       },
     },
   } = layer;
 
+  let _ghost: Phaser.GameObjects.Sprite
+
   const _playerHasSpawned = () => {
     return (playerEntity && hasComponent(Player, playerEntity))
+  }
+  const _isPlayer = (entity:Entity) => {
+    return (entity == playerEntity)
   }
 
   // spawn by click
@@ -82,6 +91,15 @@ export function createPlayerSystem(layer: PhaserLayer) {
         // sprite.setScale(1.25)
       }
     });
+
+    if (_isPlayer(entity) && _ghost == null) {
+      const spriteName = phaserConfig.sceneConfig.Main.sprites[Sprites.PlayerGhost].frame
+      // const spriteIndex = atlasJson.textures[0].frames.findIndex((atlasFrame) => atlasFrame.filename === spriteName);
+      _ghost = phaserScene.add.sprite(playerObj.position.x, playerObj.position.y, Assets.MainAtlas, spriteName)
+      _ghost.setAlpha(0.4)
+      _ghost.setName(`Ghost`)
+      _ghost.setVisible(false)
+    }
   });
 
   defineSystem(world, [Has(Position), Has(Player)], ({ entity }) => {
@@ -100,11 +118,12 @@ export function createPlayerSystem(layer: PhaserLayer) {
       id: 'position',
       once: (sprite) => {
         sprite.setPosition(pixelPosition.x, pixelPosition.y);
-        const isPlayer = (entity === playerEntity);
-        if (isPlayer) {
+        if (_isPlayer(entity)) {
           // camera.centerOn(pixelPosition.x, pixelPosition.y);
           // need to expose camera.pan() on phaserx
           camera.phaserCamera.pan(pixelPosition.x, pixelPosition.y, 3000, 'Sine');
+          _ghost.setPosition(pixelPosition.x + TILE_WIDTH / 2, pixelPosition.y + TILE_HEIGHT/2)
+          _ghost.setVisible(false)
         }
       }
     });

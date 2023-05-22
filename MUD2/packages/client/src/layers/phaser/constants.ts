@@ -8,10 +8,8 @@ export enum Maps {
 
 export enum Animations {
   GolemIdle = "GolemIdle",
-  GolemGhost = "GolemGhost",
   // Player
   PlayerIdle = "PlayerIdle",
-  PlayerGhost = "PlayerGhost",
   // Agents
   AgentsBlacksmith = "AgentsBlacksmith",
   AgentsDancer = "AgentsDancer",
@@ -21,8 +19,10 @@ export enum Animations {
   AgentsMiner = "AgentsMiner",
   AgentsPotionMaker = "AgentsPotionMaker",
 }
+
 export enum Sprites {
   Soldier,
+  PlayerGhost,
 }
 
 export enum Assets {

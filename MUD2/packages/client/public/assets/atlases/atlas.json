@@ -5,7 +5,7 @@
     },
     "textures": [
         {
-            "image": "atlas.png?timestamp=1684707504921",
+            "image": "atlas.png?timestamp=1684734606790",
             "format": "RGBA8888",
             "size": {
                 "w": 2048,
@@ -1379,27 +1379,6 @@
                     }
                 },
                 {
-                    "filename": "sprites/golem/ghost/0.png",
-                    "rotated": false,
-                    "trimmed": false,
-                    "sourceSize": {
-                        "w": 32,
-                        "h": 32
-                    },
-                    "spriteSourceSize": {
-                        "x": 0,
-                        "y": 0,
-                        "w": 32,
-                        "h": 32
-                    },
-                    "frame": {
-                        "x": 256,
-                        "y": 0,
-                        "w": 32,
-                        "h": 32
-                    }
-                },
-                {
                     "filename": "sprites/golem/idle/0.png",
                     "rotated": false,
                     "trimmed": false,
@@ -1415,7 +1394,7 @@
                     },
                     "frame": {
                         "x": 256,
-                        "y": 128,
+                        "y": 0,
                         "w": 32,
                         "h": 32
                     }
@@ -1436,7 +1415,7 @@
                     },
                     "frame": {
                         "x": 256,
-                        "y": 32,
+                        "y": 128,
                         "w": 32,
                         "h": 32
                     }
@@ -1457,28 +1436,7 @@
                     },
                     "frame": {
                         "x": 256,
-                        "y": 160,
-                        "w": 32,
-                        "h": 32
-                    }
-                },
-                {
-                    "filename": "sprites/player/ghost/0.png",
-                    "rotated": false,
-                    "trimmed": false,
-                    "sourceSize": {
-                        "w": 32,
-                        "h": 32
-                    },
-                    "spriteSourceSize": {
-                        "x": 0,
-                        "y": 0,
-                        "w": 32,
-                        "h": 32
-                    },
-                    "frame": {
-                        "x": 256,
-                        "y": 64,
+                        "y": 32,
                         "w": 32,
                         "h": 32
                     }
@@ -1499,7 +1457,7 @@
                     },
                     "frame": {
                         "x": 256,
-                        "y": 192,
+                        "y": 160,
                         "w": 32,
                         "h": 32
                     }
@@ -1520,13 +1478,55 @@
                     },
                     "frame": {
                         "x": 256,
-                        "y": 224,
+                        "y": 64,
                         "w": 32,
                         "h": 32
                     }
                 },
                 {
                     "filename": "sprites/player/idle/2.png",
+                    "rotated": false,
+                    "trimmed": false,
+                    "sourceSize": {
+                        "w": 32,
+                        "h": 32
+                    },
+                    "spriteSourceSize": {
+                        "x": 0,
+                        "y": 0,
+                        "w": 32,
+                        "h": 32
+                    },
+                    "frame": {
+                        "x": 256,
+                        "y": 192,
+                        "w": 32,
+                        "h": 32
+                    }
+                },
+                {
+                    "filename": "sprites/player/idle/3.png",
+                    "rotated": false,
+                    "trimmed": false,
+                    "sourceSize": {
+                        "w": 32,
+                        "h": 32
+                    },
+                    "spriteSourceSize": {
+                        "x": 0,
+                        "y": 0,
+                        "w": 32,
+                        "h": 32
+                    },
+                    "frame": {
+                        "x": 256,
+                        "y": 224,
+                        "w": 32,
+                        "h": 32
+                    }
+                },
+                {
+                    "filename": "sprites/player/idle/4.png",
                     "rotated": false,
                     "trimmed": false,
                     "sourceSize": {
@@ -1547,48 +1547,6 @@
                     }
                 },
                 {
-                    "filename": "sprites/player/idle/3.png",
-                    "rotated": false,
-                    "trimmed": false,
-                    "sourceSize": {
-                        "w": 32,
-                        "h": 32
-                    },
-                    "spriteSourceSize": {
-                        "x": 0,
-                        "y": 0,
-                        "w": 32,
-                        "h": 32
-                    },
-                    "frame": {
-                        "x": 0,
-                        "y": 256,
-                        "w": 32,
-                        "h": 32
-                    }
-                },
-                {
-                    "filename": "sprites/player/idle/4.png",
-                    "rotated": false,
-                    "trimmed": false,
-                    "sourceSize": {
-                        "w": 32,
-                        "h": 32
-                    },
-                    "spriteSourceSize": {
-                        "x": 0,
-                        "y": 0,
-                        "w": 32,
-                        "h": 32
-                    },
-                    "frame": {
-                        "x": 224,
-                        "y": 256,
-                        "w": 32,
-                        "h": 32
-                    }
-                },
-                {
                     "filename": "sprites/agents/herbalist/4.png",
                     "rotated": false,
                     "trimmed": false,
@@ -1603,7 +1561,7 @@
                         "h": 30
                     },
                     "frame": {
-                        "x": 256,
+                        "x": 0,
                         "y": 256,
                         "w": 31,
                         "h": 30

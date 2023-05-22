@@ -66,6 +66,10 @@ export const phaserConfig = {
           assetKey: Assets.MainAtlas,
           frame: "sprites/soldier/idle/0.png",
         },
+        [Sprites.PlayerGhost]: {
+          assetKey: Assets.MainAtlas,
+          frame: "sprites/player/idle/0.png",
+        },
       },
       animations: [
         {
@@ -78,16 +82,6 @@ export const phaserConfig = {
           prefix: "sprites/golem/idle/",
           suffix: ".png",
         },
-        {
-          key: Animations.GolemGhost,
-          assetKey: Assets.MainAtlas,
-          startFrame: 0,
-          endFrame: 0,
-          frameRate: 6,
-          repeat: 0,
-          prefix: "sprites/golem/ghost/",
-          suffix: ".png",
-        },
         //
         // Player
         {
@@ -98,16 +92,6 @@ export const phaserConfig = {
           frameRate: 6,
           repeat: -1,
           prefix: "sprites/player/idle/",
-          suffix: ".png",
-        },
-        {
-          key: Animations.PlayerGhost,
-          assetKey: Assets.MainAtlas,
-          startFrame: 0,
-          endFrame: 0,
-          frameRate: 6,
-          repeat: 0,
-          prefix: "sprites/player/ghost/",
           suffix: ".png",
         },
         //
