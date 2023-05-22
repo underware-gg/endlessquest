@@ -28,6 +28,14 @@ canvas {
   height: 100vh;
 }
 
+.NoMouse {
+  pointer-events: none;
+}
+
+.WithMouse {
+  pointer-events: all;
+}
+
 .FillParent {
   width: 100%;
   height: 100%;
@@ -61,16 +69,17 @@ canvas {
 }
 
 .UI {
-  padding: 0.3em;
+  pointer-events: all;
+  position: relative;
   border: 1px solid #ddd;
   background-color: #0008;
-  position: relative;
+  padding: 0.3em;
 }
 
 .Main {
   @extend .UI;
-  width: 600px;
-  height: 150px;
+  width: 400px;
+  height: 600px;
 }
 
 .Loader {

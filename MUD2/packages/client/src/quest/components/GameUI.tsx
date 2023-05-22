@@ -5,7 +5,7 @@ import { Loader } from "./Loader";
 export const GameUI = () => {
 
   return (
-    <div className='GameUI'>
+    <div className='GameUI NoMouse'>
       {/* <TestBridge /> */}
       <Main />
       <Loader />

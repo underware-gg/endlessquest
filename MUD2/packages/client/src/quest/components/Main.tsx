@@ -1,21 +1,18 @@
-import { useComponentValue, useEntityQuery, useRow } from "@latticexyz/react";
-import { useMUD } from "../../store";
-import { Has, HasValue, getComponentValueStrict } from "@latticexyz/recs";
-import { useEffect } from "react";
+import { useGenerator } from '../openai/hooks'
 
 export const Main = () => {
-  const {
-    networkLayer: {
-      components: { Counter, Doors, Tiles },
-      systemCalls: { increment, decrement, bridge_tokenId, bridge_chamber },
-      singletonEntity, storeCache,
-    }
-  } = useMUD();
 
+  const { result, error } = useGenerator('dog')
 
   return (
     <div className='Main'>
+      {result &&
+        <div>AIResult: {result}</div>
+      }
+      {error &&
+        <div>AIError: {error}</div>
+      }
 
     </div>
-  );
-};
+  )
+}

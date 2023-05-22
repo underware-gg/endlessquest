@@ -1,6 +1,6 @@
 import { useComponentValue, useEntityQuery, useRow } from "@latticexyz/react";
-import { useMUD } from "../../store";
 import { Has, HasValue, getComponentValueStrict } from "@latticexyz/recs";
+import { useMUD } from "../store";
 import { useEffect } from "react";
 
 export const TestBridge = () => {
