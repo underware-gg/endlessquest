@@ -75,11 +75,43 @@ Remember to follow the three phases, and remember that your goal is to create an
 
 ## Configuration prompt
 
-When you receive the `[Awaiting Configuration]` response, you should send the configuration to the session. Below is the expected format that we tested with, however, note that this is quite flexible and you should be able to change it or provide it in a completely different format. The important bits of information are the setting_description, NPC_name, NPC_description and behaviour_mode, and it is likely you could provide these in plain English too.
+When you receive the `[Awaiting Configuration]` response, you should send the configuration to the session.
 
-The expected `"Briefing"` configuration structure should be JSON metadata (as stored) related to the chamber:
+The configuration should be `"Briefing"` that tells the bot the key information about the scenario, which should be a JSON data structure so that it can be persisted and used programmatically. However, for the sake of clarity, any briefing structure in any format that contains the information should work - it's quite versatile and you should be able to describe the information in English. Anything you don't provide, the bot will tend to make up for you. The most important bits of information are:
+* setting_description (chamber_description)
+* NPC_name
+* NPC_description
+* behaviour_mode
 
+The best way to generate the `"Briefing"` structure is:
+1. Generate a chamber data structure
+2. Add the "world_description" (from the world data), and the "pc_description" from the current player's data to it at runtime.
+3. Pass the marked up structure to the AI.
+
+That structure looks like this, which you can request the metadata bot generates with the prompt `generate a briefing`.
+
+```json
+"briefing": {
+  "chamber_name": "The Smouldering Altar",
+  "chamber_description": "A fiery chamber that exists as a stark contrast within the Shadowed Vault. Here, an eternal flame dances menacingly, casting long, flickering shadows on the vault walls.",
+  "terrain_type": "Fire",
+  "gem_type": "kao",
+  "npc": {
+    "name": "Pyre, the Flame Warden",
+    "description": "A blazing specter forged from the ceaseless flames of the Altar. Pyre ceaselessly patrols, ready to immolate any intruder in its fiery embrace.",
+    "behaviour_mode": "A monster NPC who is hostile",
+    "quirk": "Pyre has an intense fascination with anything cold and is momentarily distracted when confronted with it."
+  },
+  "coins": 400,
+  "yonder": 7,
+  "world_description": "The Silver Spire, unseen against the dark expanse of the Netherrealms, hides within its shadowy walls the labyrinthine chambers, one of which is the Shadowed Vault.",
+  "PC_description": "Raised by monks in a secluded monastery, Thorn has mastered the art of silence. He communicates through gestures and expressions."
+}
 ```
+
+This next one is an earlier, manually produced `"Briefing"` configuration format that we tested the dialog prompt with the most. Note that the `chamber_description` is described as `setting_description`, but if you provide this as `chamber_description` it still seems to work fine.
+
+```json
 {
     "NPC" : {
     	"name": "Fafnir the Timeless",
@@ -93,8 +125,8 @@ The expected `"Briefing"` configuration structure should be JSON metadata (as st
 }
 ```
 
-You could also just submit the entire chamber metadata structure like this. Note that in this structure, the "setting_description" should come from the "chamber_description". This should work, or you can just add "chamber_description" to the root with the label "setting_description". The AI should be able to generate a "briefing" data structure too, but the prompt might need tweaking for that to work correctly.
-```
+This is the format that I'd recommend using, just because it's cleanly structured, and easy to grab just the "chamber" structure for persistence.
+```json
 {
     "chamber" : {
         "chamber_name": "The Echoing Caverns",
