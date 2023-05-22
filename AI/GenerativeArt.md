@@ -5,7 +5,22 @@ Endless Quest generates art assets dynamically based upon the descriptions of di
 * Chamber dialog: Chamber Background image
 * Chamber dialog: NPC Portrait image
 
-This document describes how to construct the generative prompts intended for `DALL-E•2`, which can be accessed via the [OpenAI Image API](https://platform.openai.com/docs/api-reference/images/create)
+This document describes how to construct the generative prompts intended for `DALL-E•2`, which can be accessed via the [OpenAI Image API](https://platform.openai.com/docs/api-reference/images/create). **WARNING**: OpenAI does not support rectangular images, so you will need to generate a square image and crop it with an image library or in browser.
+
+For example, lets generate a profile image of Fafnir the Timeless as a baby dragon:
+
+```node
+const { Configuration, OpenAIApi } = require("openai");
+const configuration = new Configuration({
+  apiKey: process.env.OPENAI_API_KEY,
+});
+const openai = new OpenAIApi(configuration);
+const response = await openai.createImage({
+  prompt: "A cute baby dragon breathing fire",
+  n: 1,
+  size: "1024x1024",
+});
+```
 
 ## Prompt Structure
 
@@ -20,7 +35,8 @@ This image is used as the background image on the loading screen for each Realm.
 The prompt should pass the `[STANDARD_PREFIX]` + `[REALM_DESCRIPTION]` + `[STANDARD_SUFFIX]`:
 * `[REALM_DESCRIPTION]` -- The description field from the realm metadata, with any leading/trailing whitespace+punctuation stripped.
 
-This should be a rectangular aspect ratio, e.g. 1536x1024 and generated at a higher quality, as it's intended to be used as a page background.
+This should be a rectangular aspect ratio, e.g. 1536x1024, and intended to be used as a page background.
+WARNING: 
 
 ### Chamber Assets
 
@@ -47,7 +63,7 @@ NPC Portrait Picture are displayed in the chamber dialog UI, to depict the NPC f
 * Generated images do not need a specific background, and likely work better if portraits are requested in a consistent art style
 * Each terrain type should specify a custom prefix and a suffix, which it can use to guide the generation towards a distinctive but consistent art style for that room type.
 
-They should be a square aspect ratio, e.g. 512x512, and is intended to be used as an NPC portrait.
+They should be a square aspect ratio, e.g. 256x256 or 512x512, and is intended to be used as an NPC portrait.
 
 # Example Prompts (DALL-E)
 
