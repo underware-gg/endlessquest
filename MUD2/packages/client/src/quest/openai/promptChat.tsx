@@ -1,5 +1,6 @@
 import * as Chat from './generateChat'
-import { prompts } from '../prompts/propmps'
+import { prompts } from '../prompts/prompts'
+import { ChatCompletionRequestMessageRoleEnum } from 'openai'
 
 export interface PromptAgentOptions {
   history: Chat.ChatHistory
@@ -19,14 +20,14 @@ export default async function promptChat(options: PromptAgentOptions): Promise<P
   // 1st interaction
   if (messages.length == 0) {
     messages = [
-      { role: 'system', content: prompts.chatSystemPrompt },
-      { role: 'user', content: 'Begin' },
-      { role: 'assistant', content: '[Awaiting Configuration]' },
-      { role: 'user', content: prompts.fafnir },
+      { role: ChatCompletionRequestMessageRoleEnum.System, content: prompts.chatSystemPrompt },
+      { role: ChatCompletionRequestMessageRoleEnum.User, content: 'Begin' },
+      { role: ChatCompletionRequestMessageRoleEnum.Assistant, content: '[Awaiting Configuration]' },
+      { role: ChatCompletionRequestMessageRoleEnum.User, content: prompts.fafnir },
     ]
   } else {
     messages.push({
-      role: 'user',
+      role: ChatCompletionRequestMessageRoleEnum.User,
       content: options.prompt ?? 'Hello',
     })
   }
@@ -47,7 +48,7 @@ export default async function promptChat(options: PromptAgentOptions): Promise<P
   }
 
   messages.push({
-    role: 'assistant',
+    role: ChatCompletionRequestMessageRoleEnum.Assistant,
     content: response.response,
   })
   // console.log('Chat new history:', messages)

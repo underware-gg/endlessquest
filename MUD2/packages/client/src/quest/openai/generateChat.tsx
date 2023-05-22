@@ -1,4 +1,9 @@
-import { ChatCompletionRequestMessage, Configuration, OpenAIApi } from 'openai'
+import {
+  Configuration,
+  OpenAIApi,
+  ChatCompletionRequestMessage,
+  ChatCompletionRequestMessageRoleEnum,
+ } from 'openai'
 import Cookies from 'universal-cookie'
 
 const cookies = new Cookies()
@@ -78,7 +83,7 @@ export async function generateChat(options: ChatOptions): Promise<ChatResponse> 
     }
   }
 
-  if (options.messages[options.messages.length-1].role != 'user') {
+  if (options.messages[options.messages.length - 1].role != ChatCompletionRequestMessageRoleEnum.User) {
     return {
       error: 'OpenAI Chat: Last message must be from user',
     }
@@ -100,26 +105,20 @@ export async function generateChat(options: ChatOptions): Promise<ChatResponse> 
 
     const message = chat.data.choices[0].message
 
-    if(!message) {
+    if (!message) {
       return {
         error: 'No message in response',
       }
     }
-    
+
     return {
       response: message?.content
     }
   } catch (error: any) {
     console.warn(`OpenAI Chat exception:`, error)
-    if (error.response) {
-      return {
-        error: error.response.data,
-        status: error.response.status,
-      }
-    } else {
-      return {
-        error: 'An error occurred during your request',
-      }
+    return {
+      error: error.message ?? error.error.message ?? error.response.data ?? 'An error occurred during your request',
+      status: error.status ?? error.response.status ?? null,
     }
   }
 }
