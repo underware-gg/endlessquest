@@ -1,6 +1,6 @@
 import { useStore } from "../store";
+import { GameUI } from "../quest/components/GameUI";
 import { LoadingScreen } from "./LoadingScreen";
-import { TestBridge } from "./TestBridge";
 import { Wrapper } from "./Wrapper";
 
 export const UIRoot = () => {
@@ -14,9 +14,11 @@ export const UIRoot = () => {
   if (!layers.networkLayer || !layers.phaserLayer) return <></>;
 
   return (
-    <Wrapper>
-      <TestBridge />
-      <LoadingScreen />
-    </Wrapper>
+    <div className='FillParent'>
+      <Wrapper>
+        <LoadingScreen />
+      </Wrapper>
+      <GameUI />
+    </div>
   );
 };

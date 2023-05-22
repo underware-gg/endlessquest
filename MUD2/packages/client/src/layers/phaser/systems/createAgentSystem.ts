@@ -39,9 +39,9 @@ export function createAgentSystem(layer: PhaserLayer) {
     const pixelPosition = tileCoordToPixelCoord(position, TILE_WIDTH, TILE_HEIGHT);
 
     // const spr = Animations.AgentsBlacksmith
-    const spr = Animations.AgentsDancer
+    // const spr = Animations.AgentsDancer
     // const spr = Animations.AgentsFisherman
-    // const spr = Animations.AgentsHerbalist
+    const spr = Animations.AgentsHerbalist
     // const spr = Animations.AgentsMilady
     // const spr = Animations.AgentsMiner
     // const spr = Animations.AgentsPotionMaker

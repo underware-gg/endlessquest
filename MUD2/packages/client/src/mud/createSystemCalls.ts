@@ -3,8 +3,8 @@ import { awaitStreamValue } from "@latticexyz/utils";
 import { ClientComponents } from "./createClientComponents";
 import { SetupNetworkResult } from "./setupNetwork";
 import { Direction } from "../layers/phaser/constants";
-import * as Bridge from "../bridge/bridge";
-import * as Compass from "../bridge/compass";
+import * as Bridge from "../quest/bridge/bridge";
+import * as Compass from "../quest/bridge/compass";
 import * as ethers from "ethers";
 import Cookies from 'universal-cookie';
 import { nanoid } from 'nanoid'

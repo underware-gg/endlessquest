@@ -7,8 +7,9 @@ html, body {
   // border: none;
   // background-color: #1a3a1e;
   background-color: #000;
-  font-family: 'Noto Sans Mono';
   color: #fff;
+  font-family: 'Noto Sans Mono';
+  font-size: 12px;
   overflow: hidden;
 }
 
@@ -50,4 +51,30 @@ canvas {
 
 .NoBorder {
   border: none !important;
+}
+
+.GameUI {
+  @extend .FillParent;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.UI {
+  padding: 0.3em;
+  border: 1px solid #ddd;
+  background-color: #0008;
+  position: relative;
+}
+
+.Main {
+  @extend .UI;
+  width: 600px;
+  height: 150px;
+}
+
+.Loader {
+  @extend .UI;
+  width: 200px;
+  height: 20px;
 }

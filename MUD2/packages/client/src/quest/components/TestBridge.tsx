@@ -1,5 +1,5 @@
 import { useComponentValue, useEntityQuery, useRow } from "@latticexyz/react";
-import { useMUD } from "../store";
+import { useMUD } from "../../store";
 import { Has, HasValue, getComponentValueStrict } from "@latticexyz/recs";
 import { useEffect } from "react";
 
