@@ -47,7 +47,7 @@ export function createSystemCalls(
     }
     // fetch
     const coord = await Bridge.tokenIdToCoord(tokenId)
-    console.warn(`BRIDGE_COORD:`, coord)
+    console.warn(`BRIDGE_tokenIdToCoord:`, tokenId, coord)
     // store
     const tx = await worldSend("setTokenIdToCoord", [
       tokenId,

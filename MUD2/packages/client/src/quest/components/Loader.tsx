@@ -1,8 +1,8 @@
-import { useComponentValue, useEntityQuery, useRow } from "@latticexyz/react";
-import { Has, HasValue, getComponentValueStrict } from "@latticexyz/recs";
-import { useMUD } from "../../store";
-import { useEffect } from "react";
-import * as Compass from "../bridge/compass";
+import { useComponentValue, useEntityQuery, useRow } from '@latticexyz/react';
+import { Has, HasValue, getComponentValueStrict } from '@latticexyz/recs';
+import { useMUD } from '../../store';
+import { useEffect } from 'react';
+import * as Compass from '../bridge/compass';
 
 export const Loader = () => {
   const {
@@ -21,7 +21,7 @@ export const Loader = () => {
   // TokenSystem
   //
   // query by KEY
-  const token = useRow(storeCache, { table: "Token", key: { tokenId } });
+  const token = useRow(storeCache, { table: 'Token', key: { tokenId } });
   const coord = token?.value?.coord ?? 0n
   useEffect(() => {
     if (tokenId && !coord) {
@@ -35,12 +35,13 @@ export const Loader = () => {
   //
   // ChamberSystem
   //
+  console.log(`Loader coord:`, coord)
   useEffect(() => {
     if (coord) {
       bridge_chamber(coord)
     }
   }, [coord])
-  const chamberData = useRow(storeCache, { table: "Chamber", key: { coord } });
+  const chamberData = useRow(storeCache, { table: 'Chamber', key: { coord } });
   const seed = chamberData?.value?.seed?.toString() ?? null
 
   //
@@ -57,7 +58,7 @@ export const Loader = () => {
 
   return (
     <div className='Loader'>
-      Load <span>{tokenId.toString() ?? "??"}</span>: 
+      Load <span>{tokenId.toString() ?? '??'}</span>: 
       {coordOk ? 'x' : '.'}
       {chamberOk ? 'x' : '.'}
       {doorsOk ? 'x' : '.'}

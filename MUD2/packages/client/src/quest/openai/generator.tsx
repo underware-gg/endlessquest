@@ -1,5 +1,6 @@
 import { Configuration, OpenAIApi } from 'openai'
 import Cookies from 'universal-cookie';
+import { prompts } from '..//prompts/propmps';
 
 const cookies = new Cookies();
 
@@ -25,8 +26,9 @@ export interface GenerateResult {
   error?: string,
   status?: string,
 }
+
 export default async function generate({
-  animal = '',
+  prompt = '',
   apiKey = null,
 }): Promise<GenerateResult> {
 
@@ -42,25 +44,36 @@ export default async function generate({
     }
   }
 
-  if (animal.trim().length === 0) {
+  if (prompt.trim().length === 0) {
     return {
-      error: 'Please enter a valid animal',
+      error: 'Please enter a valid prompt',
     }
   }
 
   try {
-    const completion = await _openai.createCompletion({
-      model: 'text-davinci-003',
-      prompt: generatePrompt(animal),
-      temperature: 0.6,
+    // https://platform.openai.com/docs/api-reference/chat/create
+    const chat = await _openai.createChatCompletion({
+      model: 'gpt-3.5-turbo',
+      messages: [
+        { role: `system`, content: prompts.system },
+        { role: `user`, content: `Begin` },
+        { role: `assistant`, content: `[Awaiting Configuration]` },
+        { role: `user`, content: prompts.fafnir },
+      ],
     })
+    console.log(`OpenAI response:`, chat)
+    const message = chat.data.choices[0].message
+    if(!message) {
+      return {
+        error: 'No message in response',
+      }
+    }
     return {
-      result: completion.data.choices[0].text
+      result: message?.content
     }
   } catch (error: any) {
-    // Consider adjusting the error handling logic for your use case
+    console.warn(`AI exception:`, error)
     if (error.response) {
-      console.error(error.response.status, error.response.data)
       return {
         error: error.response.data,
         status: error.response.status,
@@ -72,17 +85,4 @@ export default async function generate({
       }
     }
   }
-}
-
-function generatePrompt(animal: string) {
-  const capitalizedAnimal =
-    animal[0].toUpperCase() + animal.slice(1).toLowerCase()
-  return `Suggest three names for an animal that is a superhero.
-
-Animal: Cat
-Names: Captain Sharpclaw, Agent Fluffball, The Incredible Feline
-Animal: Dog
-Names: Ruff the Protector, Wonder Canine, Sir Barks-a-Lot
-Animal: ${capitalizedAnimal}
-Names:`
 }

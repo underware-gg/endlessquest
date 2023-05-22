@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import generate from './generator'
 
 export const useGenerator = (prompt: string) => {
+  const [isWaiting, setIsWaiting] = useState<boolean>(false)
   const [result, setResult] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
 
@@ -10,14 +11,18 @@ export const useGenerator = (prompt: string) => {
 
     const _generate = async () => {
       const response = await generate({
-        animal: prompt
+        prompt
       })
       if (_mounted) {
+        setIsWaiting(false)
         setResult(response.result ?? null)
         setError(response.error ?? null)
       }
     }
 
+    setIsWaiting(true)
+    setResult(null)
+    setError(null)
     _generate()
 
     return () => {
@@ -25,8 +30,16 @@ export const useGenerator = (prompt: string) => {
     }
   }, [prompt])
 
+  const message = useMemo(() => {
+    return isWaiting ? 'Waiting...' :
+      error ? 'Unfortunate error ¯\_(ツ)_/¯' :
+      result
+  }, [isWaiting, result, error])
+
   return {
+    isWaiting,
     result,
     error,
+    message,
   };
 };
