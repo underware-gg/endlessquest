@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useComponentValue } from '@latticexyz/react';
 import { useMUD } from '../../store';
-import * as Crawl from '../bridge/Crawl';
+import { useCoord } from './useCoord';
 
 export const usePlayer = () => {
   const {
@@ -15,16 +15,14 @@ export const usePlayer = () => {
   const player = useComponentValue(Player, playerEntity);
   const position = useComponentValue(Position, playerEntity);
   const location = useComponentValue(Location, playerEntity);
-
-  const compass = useMemo(() => (Crawl.coordToCompass(location?.coord ?? 0n)), [location])
-  const slug = useMemo(() => (Crawl.compassToSlug(compass)), [compass])
+  const { compass, slug } = useCoord(location?.coord ?? 0n)
 
   return {
     position,
-    name: player?.name ?? '?',
-    level: player?.level ?? '?',
-    coord: location?.coord ?? '?',
-    agent: location?.agent ?? '?',
+    name: player?.name ?? null,
+    level: player?.level ?? null,
+    coord: location?.coord ?? null,
+    agent: location?.agent ?? undefined,
     compass,
     slug,
   }

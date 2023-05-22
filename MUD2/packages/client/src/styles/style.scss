@@ -87,10 +87,22 @@ canvas {
   height: 200px;
 }
 
+.ChamberLocation {
+  @extend .UI;
+  width: 400px;
+  height: 160px;
+}
+
 .PlayerLocation {
   @extend .UI;
   width: 400px;
-  height: 200px;
+  height: 130px;
+}
+
+.AgentLocation {
+  @extend .UI;
+  width: 400px;
+  height: 130px;
 }
 
 .Loader {

@@ -13,21 +13,19 @@ export const PlayerLocation = () => {
     name,
     level,
     position,
-    coord, compass, slug,
+    coord, slug,
     agent,
   } = usePlayer()
-
 
   return (
     <div className='PlayerLocation'>
       <h2>Player</h2>
-      <div>Name: {name}</div>
-      <div>Level: {level}</div>
-      <div>Pos: {position?.x},{position?.y}</div>
-      <div>coord: {coord?.toString()}</div>
-      <div>chamber: {slug}</div>
-      <div>agent: {agent}</div>
-
+      <div>Name: {name ?? '?'}</div>
+      <div>Level: {level ?? '?'}</div>
+      <div>Pos: {position?.x ?? '?'},{position?.y ?? '?'}</div>
+      <div>coord: {coord?.toString() ?? '?'}</div>
+      <div>chamber: {slug ?? '?'}</div>
+      <div>agent: {BigInt(agent ? agent as string : 0).toString() ?? '?'}</div>
     </div>
   )
 }

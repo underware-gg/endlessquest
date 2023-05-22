@@ -5,9 +5,10 @@ import { System } from "@latticexyz/world/src/System.sol";
 import {
   Player, PlayerData,
   Position, PositionData, PositionTableId,
+  Tiles, TilesData,
+  Agent, AgentData,
   Location,
-  Blocker,
-  Tiles, TilesData
+  Blocker
  } from "../codegen/Tables.sol";
 
 import { addressToEntity } from "../Utils.sol";
@@ -73,7 +74,7 @@ contract PlayerSystem is System {
     goToPosition(player, x, y);
   }
 
-  function goToPosition(bytes32 player, int32 x, int32 y) public {
+  function goToPosition(bytes32 player, int32 x, int32 y) private {
     Position.set(player, x, y);
 
     int256 north = (y < 0) ? int256((-y -1) / 20) + 1 : int256(0);
@@ -83,7 +84,22 @@ contract PlayerSystem is System {
     uint256 coord = Crawl.makeCoord(uint256(north), uint256(east), uint256(west), uint256(south));
 
     // TODO: Find agent close by!
-    bytes32 agent = 0;
+    bytes32 agent = findAgentAtPosition(x - 1, y);
+    if (agent == 0) agent = findAgentAtPosition(x + 1, y);
+    if (agent == 0) agent = findAgentAtPosition(x, y - 1);
+    if (agent == 0) agent = findAgentAtPosition(x, y + 1);
     Location.set(player, coord, agent);
   }
+
+  function findAgentAtPosition(int32 x, int32 y) private view returns (bytes32) {
+    bytes32[] memory thingsAtPosition = getKeysWithValue(PositionTableId, Position.encode(x, y));
+    for(uint256 i = 0 ; i < thingsAtPosition.length; ++i) {
+      AgentData memory agent = Agent.get(thingsAtPosition[i]);
+      if (agent.coord > 0) {
+        return thingsAtPosition[i];
+      }
+    }
+    return 0;
+  }
+
 }
