@@ -7,10 +7,13 @@ These prompts are intended specifically for use with ChatGPT4.0
 ## Usage
 
 If you run this prompt in ChatGPT4.0 it should respond with `[Ready]`. You should then be able to send messages asking it to generate different kinds of metadata, such as:
-* World
-* Chamber
-* NPC
-* PC
+* World (`generate world`)
+* Chamber (`generate chamber`)
+* NPC (`generate NPC`)
+* PC (`generate PC`)
+* Briefing (`generate briefing`)
+
+e.g.
 
 When generating a chamber, you will need to provide the correct `terrain_type`, `gem_type`, `coins` and `yonder` for that chamber - these are not details that the AI should be allowed to make up (it would if you let it!). These structures should be cognizant of the correct behaviour modes, etc. There are some edge cases where it doesn't generate correctly currently, for example, sometimes it makes up gems that don't exist, if you give it enough rope.
 

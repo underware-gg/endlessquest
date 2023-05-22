@@ -26,6 +26,8 @@ Play Session:
     - The scenario will be over, and you can stop the chat session
     - Even if the chat session continues, the bot should refuse to continue the scenario
 
+Note: sometimes the AI will return the `[Finish]` status code without being asked, and/or in a message which already has a status code. You should scan the blob of text for multiple status codes, and stop the scenario if there is a `[Finish]` code anywhere in the return text.
+
 ## Initialisation prompt
 
 ```
