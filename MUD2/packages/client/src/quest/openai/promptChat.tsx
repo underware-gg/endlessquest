@@ -12,14 +12,14 @@ export interface PromptAgentResponse {
   error: string | null
 }
 
-export default async function promptAgent(options: PromptAgentOptions): Promise<PromptAgentResponse> {
+export default async function promptChat(options: PromptAgentOptions): Promise<PromptAgentResponse> {
 
   let messages = [...options.history]
 
   // 1st interaction
   if (messages.length == 0) {
     messages = [
-      { role: 'system', content: prompts.system },
+      { role: 'system', content: prompts.chatSystemPrompt },
       { role: 'user', content: 'Begin' },
       { role: 'assistant', content: '[Awaiting Configuration]' },
       { role: 'user', content: prompts.fafnir },

@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from 'react'
-import promptAgent from './promptAgent'
+import promptChat from './promptChat'
 
-export const useGenerator = (prompt: string) => {
+export const usePrompChat = (prompt: string) => {
   const [isWaiting, setIsWaiting] = useState<boolean>(false)
   const [message, setMessage] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
@@ -10,7 +10,7 @@ export const useGenerator = (prompt: string) => {
     let _mounted = true
 
     const _generate = async () => {
-      const response = await promptAgent({
+      const response = await promptChat({
         history: [],
         prompt: null,
       })

@@ -1,8 +1,8 @@
-import { useGenerator } from '../openai/hooks'
+import { usePrompChat } from '../openai/hooks'
 
 export const Main = () => {
 
-  const { isWaiting, message, error } = useGenerator('Hello')
+  const { isWaiting, message, error } = usePrompChat('Hello')
 
   return (
     <div className='Main'>
