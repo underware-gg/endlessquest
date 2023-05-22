@@ -1,27 +1,28 @@
 import { useState, useEffect, useMemo } from 'react'
-import generate from './generator'
+import promptAgent from './promptAgent'
 
 export const useGenerator = (prompt: string) => {
   const [isWaiting, setIsWaiting] = useState<boolean>(false)
-  const [result, setResult] = useState<string | null>(null)
+  const [message, setMessage] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     let _mounted = true
 
     const _generate = async () => {
-      const response = await generate({
-        prompt
+      const response = await promptAgent({
+        history: [],
+        prompt: null,
       })
       if (_mounted) {
         setIsWaiting(false)
-        setResult(response.result ?? null)
+        setMessage(response.message ?? null)
         setError(response.error ?? null)
       }
     }
 
     setIsWaiting(true)
-    setResult(null)
+    setMessage('Waiting...')
     setError(null)
     _generate()
 
@@ -30,16 +31,9 @@ export const useGenerator = (prompt: string) => {
     }
   }, [prompt])
 
-  const message = useMemo(() => {
-    return isWaiting ? 'Waiting...' :
-      error ? 'Unfortunate error ¯\_(ツ)_/¯' :
-      result
-  }, [isWaiting, result, error])
-
   return {
     isWaiting,
-    result,
-    error,
     message,
-  };
-};
+    error,
+  }
+}
