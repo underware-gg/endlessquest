@@ -105,6 +105,12 @@ export default mudConfig({
         y: "int32",
       }
     },
+    Location: {
+      schema: {
+        coord: "uint256",
+        agent: 'bytes32',
+      }
+    },
     Blocker: {
       schema: {
         enabled: "bool",

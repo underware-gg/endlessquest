@@ -164,6 +164,22 @@ export function defineContractComponents(world: World) {
         }
       );
     })(),
+    Location: (() => {
+      const tableId = new TableId("", "Location");
+      return defineComponent(
+        world,
+        {
+          coord: RecsType.BigInt,
+          agent: RecsType.String,
+        },
+        {
+          metadata: {
+            contractId: tableId.toHexString(),
+            tableId: tableId.toString(),
+          },
+        }
+      );
+    })(),
     Blocker: (() => {
       const tableId = new TableId("", "Blocker");
       return defineComponent(

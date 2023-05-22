@@ -1,5 +1,6 @@
 // import { TestBridge } from "./TestBridge";
 import { Main } from "./Main";
+import { PlayerLocation } from "./PlayerLocation";
 import { Loader } from "./Loader";
 
 export const GameUI = () => {
@@ -8,6 +9,7 @@ export const GameUI = () => {
     <div className='GameUI NoMouse'>
       {/* <TestBridge /> */}
       <Main />
+      <PlayerLocation />
       <Loader />
     </div>
   );

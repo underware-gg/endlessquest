@@ -13,6 +13,11 @@ html, body {
   overflow: hidden;
 }
 
+h1, h2, h3, h4, h5 {
+  line-height: 1em;
+  margin: 0.1em;
+}
+
 canvas {
   margin: 0;
   padding: 0;
@@ -79,7 +84,13 @@ canvas {
 .Main {
   @extend .UI;
   width: 400px;
-  height: 600px;
+  height: 200px;
+}
+
+.PlayerLocation {
+  @extend .UI;
+  width: 400px;
+  height: 200px;
 }
 
 .Loader {

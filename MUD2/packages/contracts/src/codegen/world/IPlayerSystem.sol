@@ -9,4 +9,6 @@ interface IPlayerSystem {
   function spawn(string memory name, int32 x, int32 y) external;
 
   function move(Direction direction) external;
+
+  function goToPosition(bytes32 player, int32 x, int32 y) external;
 }
