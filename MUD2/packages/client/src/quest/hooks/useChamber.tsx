@@ -25,7 +25,7 @@ export const useChamber = () => {
     seed: chamber?.value?.seed ?? null,
     yonder: chamber?.value?.yonder ?? null,
     gemType: chamber?.value?.gemType ?? null,
-    gemName: chamber?.value?.gemType ? GemNames[chamber?.value.gemType] : '?',
+    gemName: chamber?.value?.gemType != null ? GemNames[chamber?.value.gemType] : '?',
     coins: chamber?.value?.coins ?? null,
     worth: chamber?.value?.worth ?? null,
   }

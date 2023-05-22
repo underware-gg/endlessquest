@@ -4,6 +4,7 @@ import { useMUD } from '../../store';
 import { usePlayer } from '../hooks/usePlayer';
 import { useAgent } from '../hooks/useAgent';
 
+
 export const AgentLocation = () => {
   // const {
   //   components: { Position, Location },
@@ -19,14 +20,16 @@ export const AgentLocation = () => {
     gemName,
     coins,
     worth,
-  } = useAgent(agent as Entity)
+  } = useAgent(agent)
+
 
   return (
     <div className='AgentLocation'>
       <h2>Agent</h2>
       {/* <div>coord: {coord?.toString() ?? '?'}</div> */}
       <div>entity: {BigInt(agent ? agent as string : 0).toString() ?? '?'}</div>
-      <div>coord: {slug ?? '?'}</div>
+      {/* <div>coord:{coord?.toString() ?? '?'}</div> */}
+      <div>chamber: {slug ?? '?'}</div>
       <div>yonder: {yonder ?? '?'}</div>
       <div>gem: {gemName ?? '?'}</div>
       <div>coins: {coins ?? '?'}</div>

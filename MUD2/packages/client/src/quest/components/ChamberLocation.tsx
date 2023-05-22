@@ -23,7 +23,7 @@ export const ChamberLocation = () => {
   return (
     <div className='ChamberLocation'>
       <h2>Chamber</h2>
-      <div>coord: {coord?.toString() ?? '?'}</div>
+      <div>coord:{coord?.toString() ?? '?'}</div>
       <div>chamber: {slug ?? '?'}</div>
       <div>tokenId: {tokenId?.toString() ?? '?'}</div>
       <div>yonder: {yonder ?? '?'}</div>

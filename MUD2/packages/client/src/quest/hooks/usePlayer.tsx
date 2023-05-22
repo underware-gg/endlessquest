@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { useComponentValue } from '@latticexyz/react';
+import { normalizeEntityID } from '@latticexyz/network';
 import { useMUD } from '../../store';
 import { useCoord } from './useCoord';
 
@@ -22,7 +23,7 @@ export const usePlayer = () => {
     name: player?.name ?? null,
     level: player?.level ?? null,
     coord: location?.coord ?? null,
-    agent: location?.agent ?? undefined,
+    agent: normalizeEntityID(location?.agent ?? '0'),
     compass,
     slug,
   }

@@ -23,7 +23,7 @@ export const PlayerLocation = () => {
       <div>Name: {name ?? '?'}</div>
       <div>Level: {level ?? '?'}</div>
       <div>Pos: {position?.x ?? '?'},{position?.y ?? '?'}</div>
-      <div>coord: {coord?.toString() ?? '?'}</div>
+      {/* <div>coord:{coord?.toString() ?? '?'}</div> */}
       <div>chamber: {slug ?? '?'}</div>
       <div>agent: {BigInt(agent ? agent as string : 0).toString() ?? '?'}</div>
     </div>

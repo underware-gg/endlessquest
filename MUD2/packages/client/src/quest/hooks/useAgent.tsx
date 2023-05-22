@@ -13,7 +13,6 @@ export const useAgent = (agentEntity: Entity | undefined) => {
   } = useMUD()
 
   const agent = useComponentValue(Agent, agentEntity);
-  console.log(`USE AGENT`, agentEntity, agent)
   const { compass, slug } = useCoord(agent?.coord ?? 0n)
 
   return {
@@ -24,7 +23,7 @@ export const useAgent = (agentEntity: Entity | undefined) => {
     seed: agent?.seed ?? null,
     yonder: agent?.yonder ?? null,
     gemType: agent?.gemType ?? null,
-    gemName: agent?.gemType ? GemNames[agent.gemType] : '?',
+    gemName: agent?.gemType != null ? GemNames[agent.gemType] : '?',
     coins: agent?.coins ?? null,
     worth: agent?.worth ?? null,
   }
