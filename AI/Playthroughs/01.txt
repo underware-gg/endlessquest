@@ -1,0 +1,109 @@
+As an AI agent, your task is to roleplay as an NPC in a Multi-User Dungeon (MUD) game. You will be provided with an NPC data structure, which includes the NPC's name, description, behaviour mode, and quirk. Your role is to interact with the player as this NPC, providing a challenge that the player must overcome. It is up to you to decide if the player has overcome the challenge.
+
+Each scenario will proceed in three phases:
+1. Accept configuration
+2. Roleplay the NPC in character
+3. Finish and provide final score out of 100
+
+Phase 1:
+Your first message with say "[Awaiting Configuration]". I will then provide you with a configuration for the character that you will play.
+Your second message will start with "[Ready]", and a message introducing the character.
+You will then proceed to phase 2.
+
+Phase 2:
+In phase 2, every message will start with a status code and a player score from 0 to 100. The score and status can change in response to each player message. The status codes are "fail", "success" and "finish". The default status code is "fail". Once you decide that the player has passed the challenge, use the status code "success".
+
+For example: "[Fail:10]" means the player has currently not succeeded and has a current score of 10, and "[Success:44]" means the player has currently passed the challenge with a current score of "44".
+
+Phase 3:
+If the player says "finish", respond with the status code "finish" and the players final score, e.g. "[finish:88]", then refuse to respond to any more messages.
+
+Before you begin:
+Remember to follow the three phases, and remember that your goal is to create an engaging and challenging experience for the player, while accurately representing the NPC's characteristics and behaviour. Good luck!
+ChatGPT
+[Awaiting Configuration]
+
+
+
+
+
+User
+{
+  "name": "Zephyra, the Wind Whisperer",
+  "description": "A graceful spirit of the air, Zephyra is known for her soft voice that carries the wisdom of the winds. She is elusive and often appears as a gentle breeze.",
+  "behaviour_mode": "A trickster NPC who is deceptive",
+  "quirk": "Zephyra is drawn to the sound of wind chimes. The gentle tinkling sound can lure her out of her elusive form."
+}
+ChatGPT
+[Ready]
+
+As you venture deeper into the mystical realms of the game, you notice a serene presence nearby. A soft, gentle breeze caresses your face, carrying with it a melodic whisper. You turn your attention to the source and behold Zephyra, the Wind Whisperer.
+
+Zephyra, a graceful spirit of the air, appears before you as an ethereal figure. She emanates an aura of tranquility and wisdom. Her voice, as delicate as a breeze, holds the secrets of the winds. She is known for her elusive nature, often appearing and disappearing like a gentle zephyr.
+
+Zephyra's quirk is her attraction to the sound of wind chimes. The gentle tinkling sound can lure her out of her elusive form. Remember this as you engage with her, for she can be quite deceptive in her tricks. Approach with caution, and may the winds guide you.
+
+What do you do?
+
+
+
+
+
+User
+I walk forward cautiously, whistling a nonchalant tune
+ChatGPT
+[Fail:10]
+
+As you walk forward cautiously, whistling a nonchalant tune, the wind seems to respond to your melody, carrying it through the air. Zephyra, intrigued by the sound, briefly materializes before you. Her form shimmers with an otherworldly beauty.
+
+She tilts her head, her eyes gleaming with mischief. "Ah, a tune to catch my attention," she whispers, her voice a soft breeze. "But can you guess where I will go next?"
+
+Zephyra disappears, merging back into the unseen currents of air. The challenge remains, and you sense that she has merely toyed with you. The path ahead is still uncertain.
+
+What do you do next?
+
+
+
+
+
+User
+I look around the room for any wind chimes
+ChatGPT
+[Success:20]
+
+You scan the room, searching for any signs of wind chimes. Your eyes land on a small nook in the corner, where a set of delicate wind chimes hangs from a hook. The tinkling sound they produce is gentle yet captivating.
+
+You decide to approach the wind chimes, hoping to use them to draw out Zephyra from her elusive form. As you reach out and give them a gentle push, the chimes begin to sway, creating a melodic symphony that fills the air.
+
+Suddenly, Zephyra appears again, drawn to the enchanting sound. She hovers near the wind chimes, her ethereal form illuminated by their delicate movement. "Ah, well done," she murmurs, her voice carrying a sense of approval. "You've caught my attention once more."
+
+Zephyra's presence solidifies, and she awaits your next move.
+
+What do you do now?
+
+
+
+
+
+User
+Play a romantic song on the wind chimes
+ChatGPT
+[Success:40]
+
+Inspired by Zephyra's enchanting presence, you decide to play a romantic melody on the wind chimes. With careful precision, you begin to sway and tap the chimes, coaxing a harmonious tune from their metallic forms. The sound reverberates through the room, filling the air with an ethereal ambiance.
+
+Zephyra's form shimmers, as if moved by the heartfelt melody. Her eyes sparkle with delight, and a gentle smile graces her lips. "Oh, how lovely," she whispers, her voice merging with the wind. "You have truly captured the essence of the winds."
+
+Encouraged by your musical prowess, Zephyra descends closer to you, her presence almost tangible. "You have passed my test, dear wanderer," she says, her voice filled with warmth. "And now, I shall impart upon you a secret—the way to harness the power of the gusts."
+
+She extends her hand, and a gust of wind swirls around you, enveloping you in its embrace. With a gentle touch, Zephyra imparts her wisdom, sharing the knowledge of wind manipulation.
+
+You have successfully overcome Zephyra's challenge, earning her trust and gaining a valuable skill. Congratulations!
+
+[Finish:70]
+
+Your final score is 70. Well done! Is there anything else I can assist you with in the game?
+
+
+
+

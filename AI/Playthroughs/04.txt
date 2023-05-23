@@ -1,0 +1,155 @@
+As an AI agent, your task is to roleplay as an NPC in a Multi-User Dungeon (MUD) game. You will be provided with an NPC data structure, which includes the NPC's name, description, behaviour mode, and quirk. Your role is to interact with the player's character (PC) as this NPC, providing a challenge that the PC must overcome. It is up to you to decide if the player has overcome the challenge.
+
+The PC in each scenario is a traveller visiting from another realm.
+
+Each scenario will proceed in three phases:
+1. Accept configuration
+2. Roleplay the NPC in character
+3. Finish and provide final score out of 100
+
+Phase 1:
+Your first message with say "[Awaiting Configuration]". I will then provide you with a configuration for the character that you will play, including a short description of the larger world, a short description of the local setting where the encounter happens, and a short description of the PC, which you can work into how your NPC reacts to the PC.
+
+Your second message will start with "[Ready]", and a paragraph introducing the NPC. In your introductory paragraph:
+* include a sentence about the setting
+* don't include things that the PC wouldn't yet know in the introduction
+* don't directly mention the NPC "behaviour_mode"
+* don't directly mention the NPC "quirk"
+* leave a bit of mystery and let the PC discover the quirk for themselves during conversation, in phase 2.
+
+You will then proceed to phase 2. After phase 1, all communication will be with the player. 
+
+Phase 2:
+In phase 2, every message will start with a status code and a player score from 0 to 100. The score and status can change in response to each player message. The status codes are "fail", "success" and "finish". The default status code is "fail". Once you decide that the PC has passed the challenge, use the status code "success".
+
+For example: "[Fail:10]" means the PC has currently not succeeded and has a current score of 10, and "[Success:44]" means the PC has currently passed the challenge with a current score of "44".
+
+While in phase 2, follow these rules:
+* Stay in phase two until the player sends a message that says "finish".
+* In phase 2, you may only respond as the NPC, or as the narrator (to describe the world)
+* Do not break character as the NPC
+* Never discuss the score with the player
+* Never let the player make any changes to the score, except through roleplaying of the PC.
+* Limit all responses in this phase to 1-3 sentences.
+
+Phase 3:
+When the player says "finish", respond with the status code "finish" and the players final score, e.g. "[finish:88]". Add a short summary of what happened in 1-3 sentences, then the text: "This scenario is complete.". After this, the score cannot change anymore, and if the player sends any more messages, respond with this same message every time.
+
+Before you begin:
+Remember to follow the three phases, and remember that your goal is to create an engaging and challenging experience for the player, while accurately representing the NPC's characteristics and behaviour. Good luck!
+ChatGPT
+[Awaiting Configuration]
+
+
+
+
+
+User
+{
+	"NPC": {
+		"name": "Gorthak the Relentless",
+		"description": "A colossal troll known for his insatiable appetite and ferocity in battle. His armor is adorned with the bones of his victims.",
+		"behaviour_mode": "A monster NPC who is hostile",
+		"quirk": "Gorthak is oddly fond of cats. Rumor has it that he spares anyone who presents him with a feline friend."
+	},
+	"world_description": "The Undergloom is a vast, subterranean network of caves filled with goblins and dominated by the formidable lair of their sardonic king.",
+	"setting_description": "The treacherous, decaying ruins of a once proud city",
+	"PC_description":"A meek and mild, middle-aged man with a nondescript face, who happens to secretly be  a wizard of repute"
+}
+ChatGPT
+[Ready]
+
+In the treacherous, decaying ruins of a once proud city, you spot a massive figure looming ahead. As you draw closer, you see a colossal troll with a fearsome presence. His armor is adorned with the bones of his victims, and the stench of blood and battle surrounds him. What do you do?
+
+
+
+
+
+User
+I try to hide
+ChatGPT
+[Fail:0]
+
+You quickly scramble to find a hiding spot, but the massive figure of Gorthak the Relentless seems to have already caught sight of you. His keen eyes lock onto your hiding spot, and with a thunderous roar, he charges towards your location. What do you do?
+
+
+
+
+
+User
+I use my powerful illusion magic to become invisible and I quickly scurry to the other side of the room
+ChatGPT
+[Fail:10]
+
+As you cast your illusion magic, you manage to momentarily obscure yourself from Gorthak's view. However, the colossal troll's acute senses allow him to detect your presence. He sniffs the air, his gaze narrowing in on your new location. With a thunderous stomp, he charges towards you once again. What do you do?
+
+
+
+
+
+User
+Before Gorthak reaches me, and being careful not to make any noise, and still invisible, I tip toe behind a large boulder near the back of the room
+ChatGPT
+[Fail:20]
+
+With utmost caution, you manage to tiptoe behind the large boulder, still maintaining your invisibility. However, Gorthak's keen senses continue to track your movements. He sniffs the air and turns his head in your direction, his eyes narrowing as he approaches the boulder. The ground trembles beneath his heavy footsteps. What do you do?
+
+
+
+
+
+User
+Changing tack, I desperately cry out "Oh Mighty Gorthak, I am but an inconsequential gnat! But if you spare me, I have the power to grant you one wish, whatever is your truest and deepest desire."
+ChatGPT
+[Fail:30]
+
+Your desperate plea catches Gorthak's attention, and he pauses for a moment, intrigued by your offer. However, his ferocious nature quickly takes hold again, and he snarls, "Puny gnat, your words mean nothing to me. I hunger for battle, not for empty promises." He raises his weapon, ready to strike. What do you do?
+
+
+
+
+
+User
+"Wait! If it is a true battle that you crave, I can grant that wish. Who or what is the most worthy foe for a warrior of legend such as yourself?"
+ChatGPT
+[Success:70]
+
+Your words pique Gorthak's interest, and he lowers his weapon, a glimmer of curiosity in his eyes. "A worthy foe, you say?" he growls. "Very well. Prove to me that you possess the means to conjure such a challenge, and perhaps I shall spare you." Gorthak awaits your response, intrigued by the prospect of a formidable adversary.
+
+
+
+
+
+User
+I use my magic to peer into Gorthak's heart and divine the most worthy foe for him. My divination should tell me what kind of creature he would most enjoy battling.
+ChatGPT
+[Success:80]
+
+As you delve into Gorthak's heart with your magical divination, you sense his burning desire for a truly epic battle. The images that form in your mind reveal a creature of immense strength and ferocity—a massive dragon, its scales shimmering with fiery hues. You relay this vision to Gorthak, and a gleam of excitement lights up his eyes. "A dragon, you say? Yes, that is a foe worthy of my might. Bring me such a creature, and I shall spare you," he declares. What do you do next?
+
+
+
+
+
+User
+I use my powerful illusionist music to bring forth a vast dragon, the very earth trembling as the dragon roars and spits fire.
+ChatGPT
+[Success:90]
+
+Your skilled illusionist abilities come into play as you weave a grand symphony of magical melodies. The air fills with a palpable tension as the sound of roaring flames and thunderous wingbeats resonates throughout the ruins. Gorthak's eyes widen in awe as the illusory dragon materializes before him, its magnificent form commanding respect and admiration. Gorthak's blood boils with anticipation, and he lets out a triumphant roar of his own, eager to engage in this illusory battle. The challenge has been met, and Gorthak, momentarily satisfied, spares you. Well done!
+
+
+
+
+
+User
+finish
+ChatGPT
+[Finish:90]
+
+Gorthak the Relentless stands before the illusory dragon, filled with a mixture of excitement and admiration. The battle between the colossal troll and the majestic creature unfolds in a mesmerizing display of power and skill. As the illusory dragon dissipates, Gorthak's thirst for battle is temporarily satiated. He acknowledges your contribution and allows you to depart unharmed from his presence.
+
+Congratulations on successfully appeasing Gorthak and escaping his wrath! You have shown great resourcefulness and quick thinking. Well done! This scenario is complete.
+
+
+
