@@ -1,0 +1,37 @@
+{
+	"realm_name": "Emerald Enclave, The Verdant Sanctuary of the Elf Queen",
+	"realm_description": "Emerald Enclave is a lush, green world of ancient forests and timeless mysteries, home to elves, precious emeralds, and enigmatic riddles",
+	"realm_premise": "The Emerald Enclave is a dense forest realm, filled with towering trees, winding paths, and serene glades. This is the domain of elves who live in harmony with the natural world. In the heart of this green world, in an elaborate palace carved from a giant tree, dwells the Elf Queen. Her realm reverberates with the soft whispers of the wind, the gentle rustle of leaves, and the cryptic riddles that test the wisdom of those who dare to venture here. Only those who respect the balance of nature and solve the Enclave's mysteries are allowed to leave with their lives and sanity intact.", 
+	"realm_boss": {
+		"name": "Ellesméra, The Elf Queen",
+		"description": "An enchanting elf of unparalleled beauty and wisdom, revered for her serene demeanor, love for emeralds, and her perplexing riddles that challenge the minds of the bravest adventurers.",
+		"behaviour_mode": "A demanding encounter with the serene ruler of this realm which cannot be overcome without the realm treasure",
+		"quirk": "She carries an enchanted emerald-studded tiara that amplifies her wisdom and riddle-making abilities, without which her riddles are rather simple."
+	},
+	"realm_treasure": "The Emerald of Veracity, a dazzling emerald that when held, reveals the truth hidden in any spoken or written word, nullifying the power of any riddle or enigma",
+	"realm_dictionary": {
+		"fire": {"name":"PuzzlePyre", "description": "A community of passionate puzzle solvers and riddle enthusiasts"},
+		"water": {"name":"Verity Creek", "description": "A babbling brook where the water whispers truthful answers to those who listen closely"},
+		"earth": {"name":"The Labyrinthine Roots", "description": "A complex maze formed by the intertwined roots of ancient trees that teases the mind with natural puzzles"},
+		"air": {"name":"The Whispers of the Wind", "description": "An omnipresent gust that carries the enigmatic riddles of the Enclave"}
+	},
+    "realm_gems": {
+        "silver": { "label": "quest", "behaviour": "A friendly NPC who needs help" },
+        "gold": { "label": "mystery", "behaviour": "An intriguing riddle inscribed on a tree bark" },
+        "sapphire": { "label": "fight", "behaviour": "A territorial forest beast who protects its turf fiercely" },
+        "emerald": { "label": "trickster", "behaviour": "An elusive fae creature who speaks in deceptive riddles" },
+        "ruby": { "label": "trial", "behaviour": "A wise old treant who tests the wisdom of travelers with intricate puzzles" },
+        "diamond": { "label": "artefact", "behaviour": "An ancient Elven artefact of great magic" },
+        "ethernite": { "label": "ruler", "behaviour": "A challenging encounter with the serene ruler of this realm which cannot be passed without the realm treasure" },
+        "kao": { "label": "treasure", "behaviour": "A complex riddle-guarded vault containing the realm treasure" }
+    },
+	"realm_art_prompts": {
+		"realm_suffix": "fantasy elven art, vibrant watercolor, classic book illustration",
+		"chamber_prefix": "An old parchment sketch of an idyllic forest scene",
+		"npc_prefix": "A watercolor portrait of an ethereal elf",
+		"fire": "charcoal sketch, graphic novel art",
+		"water": "impressionist painting, Monet's Water Lilies",
+		"earth": "classic landscape painting, Caspar David Friedrich",
+		"air": "minimalist digital art, calming pastel colors"
+	}
+}

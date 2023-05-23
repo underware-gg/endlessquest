@@ -15,6 +15,16 @@
 		"earth": {"name":"The Macbeth Mode Club", "description": "An undererground comedy club that exclusively performs comedic interpretations of Shakespeare's Macbeth that are so funny... they might just kill you"},
 		"air": {"name":"The Ill E-quip Show", "description": "An online channel that televises bad jokes 24x7"}
 	},
+	"realm_gems": {
+		"silver": { "label": "dilemma", "behaviour": "A goblin who is debating whether to tell a dangerous joke. Help him decide." },
+		"gold": { "label": "enigma", "behaviour": "A room with a joke inscribed on the wall. Can you solve the riddle and laugh?" },
+		"sapphire": { "label": "duel", "behaviour": "A goblin jester who challenges you to a duel of wits." },
+		"emerald": { "label": "prankster", "behaviour": "A deceptive goblin who loves playing tricks on visitors. Beware!" },
+		"ruby": { "label": "audience", "behaviour": "A room full of goblins who demand to be entertained. Can you impress them?" },
+		"diamond": { "label": "humourous artefact", "behaviour": "A magical joke book that can make anyone laugh. But can you control its power?" },
+		"ethernite": { "label": "ruler", "behaviour": "A challenging encounter with the powerful ruler of this realm which cannot be passed without the realm treasure" },
+		"kao": { "label": "treasure", "behaviour": "A challenging and unpredictable encounter with the guardian of the world treasure" }
+	},
 	"realm_art_prompts": {
 		"realm_suffix": "fantasy heavy metal art, grainy polaroid, retro album cover",
 		"chamber_prefix": "A grainy old photo of an empty rock venue",

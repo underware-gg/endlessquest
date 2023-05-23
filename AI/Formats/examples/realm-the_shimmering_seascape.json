@@ -15,7 +15,17 @@
 		"earth": {"name":"Shellmound Bazaar", "description": "A bustling marketplace selling underwater relics and exotic sea produce"},
 		"air": {"name":"Skywave Symphony", "description": "A spectacular performance by airborne sea creatures, harmonizing with the ocean's rhythm"}
 	},
-	"realm_art_prompts": {
+    "realm_gems": {
+        "silver": { "label": "rescue", "behaviour": "An endangered sea creature that needs rescuing from a perilous situation" },
+        "gold": { "label": "enigma", "behaviour": "A cryptic riddle or marine anomaly that requires solving or investigation" },
+        "sapphire": { "label": "predator", "behaviour": "A hostile marine predator that poses a threat to the player" },
+        "emerald": { "label": "illusionist", "behaviour": "A deceptive sea spirit who misleads the player with illusionary magic" },
+        "ruby": { "label": "leviathan", "behaviour": "A colossal sea creature who challenges the player's courage and strength" },
+        "diamond": { "label": "relic", "behaviour": "A mysterious maritime relic that possesses magical properties" },
+        "ethernite": { "label": "ruler", "behaviour": "A challenging encounter with the powerful ruler of this realm which cannot be passed without the realm treasure" },
+        "kao": { "label": "treasure", "behaviour": "A challenging and unpredictable encounter with the guardian of the world treasure" }
+    },
+    "realm_art_prompts": {
 		"realm_suffix": "nautical steampunk art, watercolor marine landscape, vintage nautical charts",
 		"chamber_prefix": "A faded naval blueprint of a mysterious undersea structure",
 		"npc_prefix": "A watercolor portrait of a maritime figure",

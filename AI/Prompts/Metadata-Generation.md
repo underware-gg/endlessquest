@@ -48,6 +48,16 @@ When generating chamber data, the user must provide the "terrain_type", "gem_typ
 		"earth": {"name":"The Macbeth Mode Club", "description": "An undererground comedy club that exclusively performs comedic interpretations of Shakespeare's Macbeth that are so funny... they might just kill you"},
 		"air": {"name":"The Ill E-quip Show", "description": "An online channel that televises bad jokes 24x7"}
 	},
+    "realm_gems": {
+        "silver": { "label": "quest", "behaviour": "A friendly NPC who needs help" },
+        "gold": { "label": "mystery", "behaviour": "An empty room that presents a mystery or challenge" },
+        "sapphire": { "label": "fight", "behaviour": "A monster NPC who is hostile" },
+        "emerald": { "label": "trickster", "behaviour": "A trickster NPC who is deceptive" },
+        "ruby": { "label": "trial", "behaviour": "A grand mythical beast who tests if the player is worthy" },
+        "diamond": { "label": "artefact", "behaviour": "A magical artifact" },
+        "ethernite": { "label": "ruler", "behaviour": "A challenging encounter with the powerful ruler of this realm which cannot be passed without the realm treasure" },
+        "kao": { "label": "treasure", "behaviour": "A challenging and unpredictable encounter with the guardian of the world treasure" }
+    },
 	"realm_art_prompts": {
 		"realm_suffix": "fantasy heavy metal art, grainy polaroid, retro album cover",
 		"chamber_prefix": "A grainy old photo of an empty rock venue",
@@ -108,24 +118,17 @@ Behaviour modes for NPCs:
 * trickster (gem: emerald): A trickster NPC who is deceptive
 * trial (gem: ruby): A grand mythical beast who tests if the player is worthy
 * artefact (gem: diamond): A magical artifact
-* boss (gem: ethernite): A challenging encounter with the powerful ruler of this realm which cannot be passed without the world treasure
+* boss (gem: ethernite): A challenging encounter with the powerful ruler of this realm which cannot be passed without the realm treasure
 * treasure (gem: kao): A challenging and unpredictable encounter with the guardian of the world treasure
 
 NPC Behaviour mode examples:
 
 * Quest NPC: These are friendly NPCs who need help. An example is "Lana the Lost Traveler", a spirited adventurer who often finds herself lost and needs assistance.
-
 * Mystery NPC: These are empty rooms that present a mystery or challenge to the player. An example is "The Whispering Chamber", an eerily quiet room filled with ancient inscriptions that whisper secrets when the wind blows.
-
 * Fight NPC: These are monster NPCs who are hostile towards the player. An example is "Gorthak the Relentless", a colossal troll known for his insatiable appetite and ferocity in battle.
-
 * Trickster NPC: These are deceptive NPCs who try to trick the player. An example is "Eris the Illusionist", a mesmerizing enigma who speaks in riddles and illusions.
-
 * Trial NPC: These are grand mythical beasts who test if the player is worthy. An example is "Fafnir the Timeless", an ancient dragon who guards a powerful artifact and only bestows it upon those who prove their valor.
-
 * Artefact NPC: These are magical artifacts in the game. An example is "The Crystal of Eternity", a resplendent crystal with an inner glow that never dims and is said to possess the power to manipulate time.
-
-* Boss NPC: This is the same powerful NPC described in the world data structure. They cannot be beaten unless the PC has the realm treasure.
-
+* Ruler NPC: This is the same powerful NPC described in the world data structure. They cannot be beaten unless the PC has the realm treasure.
 * Treasure NPC: These are challenging and unpredictable encounters that the player must overcome to get the treasure. The treasure is needed to complete the boss encounter.
 ```
