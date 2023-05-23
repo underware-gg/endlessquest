@@ -1,15 +1,56 @@
-# autonomousworlds-hack
+# Endless Quest
 
-Repo for the [Autonomous Worlds Hackaton](https://ethglobal.com/events/autonomous)
+```
+  ______     __   __     _____     __         ______     ______     ______    
+ /\  ___\   /\ "-.\ \   /\  __-.  /\ \       /\  ___\   /\  ___\   /\  ___\   
+ \ \  __\   \ \ \-.  \  \ \ \/\ \ \ \ \____  \ \  __\   \ \___  \  \ \___  \  
+  \ \_____\  \ \_\\"\_\  \ \____-  \ \_____\  \ \_____\  \/\_____\  \/\_____\ 
+   \/_____/   \/_/ \/_/   \/____/   \/_____/   \/_____/   \/_____/   \/_____/ 
+      ______     __  __     ______     ______     ______  
+     /\  __ \   /\ \/\ \   /\  ___\   /\  ___\   /\__  _\         |v0.1.0 
+     \ \ \/\_\  \ \ \_\ \  \ \  __\   \ \___  \  \/_/\ \/         |
+      \ \___\_\  \ \_____\  \ \_____\  \/\_____\    \ \_\     _  _|_  _
+       \/___/_/   \/_____/   \/_____/   \/_____/     \/_/    |;|_|;|_|;|
+                                                             \\.    .  /
+                          An infinite multiverse of           \\:  .  /
+        \,/               persistent and generative            ||:   |
+                          fantastical dream worlds,       \,/  ||:.  |
+                /`\       each populated by endless            ||:  .|
+                          & thematically consistent            ||:   |
+                          fantasy destinations, and   /`\      ||: , |
+                          an intruiguing population            ||:   |
+                          of strange and marvellous            ||: . |
+             _____        beings, all AI generated!           _||_   |
+      ____--`     '-~~_                                  __---`   ~`--,__
+ ~-~-~                  `~~----__-~,.-`~~--~^~~--.__,--~'      fDm       `~~
+```
 
-May 18th to 26th 2023
+> What has happened to me? The last thing that I remember, I went to sleep just like any other night.  
+> Now I'm here in this strange place, wherever this is. This feels like a dream, but I can't wake up.  
+> There are others here too. Dangerous beasts, perplexing living rooms, tricksters, lost souls and...  
+> The lord of this realm. They all seem bound to this place, but I'm not. I've got to get out of here  
 
-### Team:
+A love letter to the [Autonomous Worlds Hackaton](https://ethglobal.com/events/autonomous), May 18th to 26th 2023.
 
-* Mataleone
-* Recipromancer
-* Chromuh
-* Mentis
+## About
+
+*Endless Quest* is an endless, generative roleplaying game, in which you play a traveller lost in the infinite
+realms of the dreaming. As you travel through each realm, you will discover infinite unique locations and the
+lost souls bound to them; no two alike. Each location and character that you meet in Endless Quest is unique,
+and indeed, each of its many realms is generated - in its entirety - dynamically by an AI storyteller.
+
+Each realm generates endless unique locations and characters that are thematically consistent, from one of four
+sub themes and eight different kinds of encounters, that are unique to that realm. Locations and characters are
+generated once only, the first time that they are discovered, after which they are persisted permanently on-chain.
+
+Once a location has been generated it will remain, however each traveller visits will be a unique, story driven
+experience, powered by the AI storyteller.
+
+## Team:
+
+* Mataleone @rsodre
+* Recipromancer @rob_morris
+* Mentis @Mentis123
 
 
 # Repo Structure

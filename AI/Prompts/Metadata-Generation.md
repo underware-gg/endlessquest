@@ -32,21 +32,21 @@ When generating chamber data, the user must provide the "terrain_type", "gem_typ
 "Realm" (world) data structure example:
 
 {
-	"realm_name": "The Undergloom, Sunless Citadel of the Goblin King",
-	"realm_desription": "The Undergloom is a vast, subterranean network of dank caves and danker jokes, populated with goblins, ill-gotten gold, and dangerously bad jokes",
-	"realm_premise": "The Undergloom is a sprawling network of dank caves, narrow passageways, and spacious caverns teeming with goblins of all sorts. In the deepest reaches of this subterranean realm, nestled amongst mounds of ill-gotten gold and treasures, lies the formidable lair of the Goblin King. Its gloomy corridors echo with the raucous laughter and anguished cries of the many goblins who live there, punctuated by the sardonic wit of their king. Few dare to venture into this hidden kingdom, where the unwary often fall prey to goblin mischief and a bad joke might literally kill you.", 
+	"realm_name": "The Elemental Convergence",
+	"realm_description": "The Elemental Convergence is a vibrant maelstrom of the four cardinal elements. Whether blazing with fiery determination, flourishing with ceaseless life-giving rains, standing with unyielding earthbound strength, or murmuring the secretive wisdom of the winds, it is an ever-shifting tumult of elemental power.",
+  	"realm_premise": "Deep within the maw of the universe, where the four cardinal elements of fire, water, earth, and air converge, there lies a unique realm known as the Elemental Convergence. Here, the elements do not merely exist alongside each other, but interact in a vibrant maelstrom of ever-shifting balance and conflict, creating a breathtaking spectacle of natural power. It offers visitors an ever-changing environment born from the ceaseless dance of clashing element forces, where survival hinges upon understanding and harnessing the symbiotic relationships between fire, water, earth, and air.", 
 	"realm_boss": {
-		"name": "Goblout the Goblin King",
-		"description": "A formidable goblin of dimunitive stature, reknown for his fearsome temper, fondness for gold, and his terrible Goblin Dad Jokes which he uses to subjugate friend and foe alike.",
+		"name": "Elema, Guardian of Elemental Harmony",
+		"description": "Elema is a shapeshifting entity that embodies the essence of all four elements. Her presence constantly shifts between fiery resolve, flowing grace, grounded strength, and ephemeral wisdom.",
 		"behaviour_mode": "A challenging encounter with the powerful ruler of this realm which cannot be passed without the world treasure",
-		"quirk": "He wears a magical rough-hewn golden crown studded with gemstones, which enhances his wit and comedic timing, and without which he's not very funny."
+		"quirk": "Elema communicates through the language of the elements - a gust of wind, a flicker of flame, a droplet of water, or a rumble of earth."
 	},
-	"realm_treasure": "The Horn of Ill-Humoured Pedantry, a great horn that when blown, will loudly and pedantically rebut any joke with a serious, tone-deaf and factual proclamation that completely ruins the joke",
+	"realm_treasure": "The Orb of Elemental Harmony, an extraordinary artifact that pulses with raw elemental energy. It allows the wielder to master the smouldering heat of the Flameheart Caldera, the flowing rains of the Torrential Canopy, the stoic weight of the Shadowed Vault, and the elusive whispering winds of the Whispering Maze.",
 	"realm_dictionary": {
-		"fire": {"name":"JokeDAO", "description": "A decentralised community who run a weekly on-chain joke competition"},
-		"water": {"name":"Rap Battle Alley", "description": "An alley where aspiring comedy rappers face off in epic rap battles"},
-		"earth": {"name":"The Macbeth Mode Club", "description": "An undererground comedy club that exclusively performs comedic interpretations of Shakespeare's Macbeth that are so funny... they might just kill you"},
-		"air": {"name":"The Ill E-quip Show", "description": "An online channel that televises bad jokes 24x7"}
+		"fire": {"name":"The Flameheart Caldera", "description": "A fiery volcanic landscape of lava and eternally flickering fires, hot walls licked by soot"},
+		"water": {"name":"The Torrential Canopy", "description": "A living landscape of verdant foliage, caressed by ceaseless rains and ever-shifting veins of water"},
+		"earth": {"name":"The Shadowed Vault", "description": "A dark, sprawling catacomb of ever-changing earth, entombed in eternal gloom and shadow"},
+		"air": {"name":"The Whispering Maze", "description": "An eerily quiet maze of chambers, filled with ancient inscriptions and the secretive caress of whispering winds"}
 	},
     "realm_gems": {
         "silver": { "label": "quest", "behaviour": "A friendly NPC who needs help" },
