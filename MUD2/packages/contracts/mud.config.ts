@@ -47,6 +47,14 @@ export default mudConfig({
         agent: 'bytes32'
       }
     },
+    ChamberMetadata: {
+      keySchema: {
+        coord: 'uint256'
+      },
+      schema: {
+        metadata: "string",
+      }
+    },
     //-----------------------
     Agent: {
       keySchema: {
@@ -61,6 +69,11 @@ export default mudConfig({
         gemType: 'uint8',
         coins: 'uint16',
         worth: 'uint16'
+      }
+    },
+    Metadata: {
+      schema: {
+        metadata: "string",
       }
     },
     //-----------------------
@@ -116,11 +129,6 @@ export default mudConfig({
     Blocker: {
       schema: {
         enabled: "bool",
-      }
-    },
-    Metadata: {
-      schema: {
-        metadata: "string",
       }
     },
   },

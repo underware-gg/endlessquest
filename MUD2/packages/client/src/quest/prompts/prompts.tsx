@@ -78,12 +78,6 @@ Chamber data example (JSON):
     "gem_type": "Emerald",
     "coins": 750,
     "yonder": 3,
-    "npc": {
-      "name": "Tremor, the Stone Guardian",
-      "description": "A massive golem made of the very rocks of the cavern. It guards the caverns fiercely, attacking any who disturb the peace.",
-      "behaviour_mode": "A monster NPC who is hostile",
-      "quirk": "Tremor is sensitive to loud noises. A loud enough sound can stun it momentarily."
-    }
   }
 }
 

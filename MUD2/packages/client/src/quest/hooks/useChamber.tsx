@@ -4,6 +4,7 @@ import { useMUD } from '../../store';
 import { useCoord } from './useCoord';
 import { usePlayer } from './usePlayer';
 import { GemNames } from '../bridge/Crawl';
+import { useChamberMetadata } from './useMetadata'
 
 export const useChamber = () => {
   const {
@@ -17,6 +18,8 @@ export const useChamber = () => {
   const chamber = useRow(storeCache, { table: 'Chamber', key: { coord: (coord ?? 0n) } });
   const { compass, slug } = useCoord(coord ?? 0n)
 
+  const { metadata, isWaiting } = useChamberMetadata(coord ?? 0n)
+
   return {
     coord: coord ?? null,
     compass,
@@ -28,5 +31,7 @@ export const useChamber = () => {
     gemName: chamber?.value?.gemType != null ? GemNames[chamber?.value.gemType] : '?',
     coins: chamber?.value?.coins ?? null,
     worth: chamber?.value?.worth ?? null,
+    metadata: metadata ?? null,
+    isWaiting,
   }
 }

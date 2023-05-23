@@ -18,6 +18,8 @@ export const ChamberLocation = () => {
     gemName,
     coins,
     worth,
+    metadata,
+    isWaiting,
   } = useChamber()
 
   return (
@@ -30,6 +32,8 @@ export const ChamberLocation = () => {
       <div>gem: {gemName ?? '?'}</div>
       <div>coins: {coins ?? '?'}</div>
       <div>worth: {worth ?? '?'}</div>
+      <div>name: {isWaiting ? '...' : (metadata?.name ?? '?')}</div>
+      <div>description: {isWaiting ? '...' : (metadata?.description ?? '?')}</div>
     </div>
   )
 }

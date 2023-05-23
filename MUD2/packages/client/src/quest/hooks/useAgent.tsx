@@ -16,7 +16,7 @@ export const useAgent = (agentEntity: Entity | undefined) => {
   const agent = useComponentValue(Agent, agentEntity)
   const { compass, slug } = useCoord(agent?.coord ?? 0n)
 
-  const { metadata } = useAgentMetadata(agentEntity)
+  const { metadata, isWaiting } = useAgentMetadata(agentEntity)
 
   return {
     coord: agent?.coord ?? null,
@@ -30,5 +30,6 @@ export const useAgent = (agentEntity: Entity | undefined) => {
     coins: agent?.coins ?? null,
     worth: agent?.worth ?? null,
     metadata: metadata ?? null,
+    isWaiting,
   }
 }

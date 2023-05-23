@@ -17,4 +17,6 @@ interface IChamberSystem {
     uint16 coins,
     uint16 worth
   ) external;
+
+  function setChamberMetadata(uint256 coord, string memory metadata) external;
 }

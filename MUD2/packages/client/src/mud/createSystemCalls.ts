@@ -165,8 +165,14 @@ export function createSystemCalls(
   };
 
   //---------------------------
-  // Agents
+  // Metadata
   //
+  const setChamberMetadata = (coord: bigint, metadata: string) => {
+    if (coord && metadata) {
+      console.warn(`STORE CHAMBER METADATA @`, coord, metadata)
+      worldSend("setChamberMetadata", [coord, metadata]);
+    }
+  };
   const setAgentMetadata = (key: Entity, metadata: string) => {
     if (key && metadata) {
       const id = _entityToBytes32(key)
@@ -193,7 +199,8 @@ export function createSystemCalls(
     // Crawler
     bridge_tokenId,
     bridge_chamber,
-    // Agents
+    // Metadata
+    setChamberMetadata,
     setAgentMetadata,
     // Player
     spawn,

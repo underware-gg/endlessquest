@@ -21,6 +21,7 @@ export const AgentLocation = () => {
     coins,
     worth,
     metadata,
+    isWaiting,
   } = useAgent(agentEntity)
 
 
@@ -35,8 +36,8 @@ export const AgentLocation = () => {
       <div>gem: {gemName ?? '?'}</div>
       <div>coins: {coins ?? '?'}</div>
       <div>worth: {worth ?? '?'}</div>
-      <div>name: {metadata?.name ?? '?'}</div>
-      <div>description: {metadata?.description ?? '?'}</div>
+      <div>name: {isWaiting ? '...' : (metadata?.name ?? '?')}</div>
+      <div>description: {isWaiting ? '...' : (metadata?.description ?? '?')}</div>
     </div>
   )
 }
