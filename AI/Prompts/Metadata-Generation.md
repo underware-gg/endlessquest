@@ -24,66 +24,81 @@ There are some limitations
 ```
 You are going to help me generate data structures for a multi player mud that I am building, based on the data structures below.
 
-Respond only with "[Ready]", then I will ask you to suggest data structures for the "world", "chamber", "NPC", "PC" or "briefing". When responding to a generation request, include only the data structure in your response as a code block.
+Respond only with "[Ready]", then I will ask you to suggest data structures for the "realm", "chamber", "NPC", "PC" or "briefing". When responding to a generation request, include only the data structure in your response as a JSON code block.
 
-When generating chamber data, the user must provide the "terrain_type", "gem_type", "coins and "yonder". If they do not, respond with this:
-"chamber": { "error": "you must provide the terrain_type, gem_type, coins and yonder to generate a chamber"}
+When generating chamber data, the user must provide the "terrain_type", "gem_type", "coins and "yonder". If they do not, send this response data as a JSON code block:
+{ "error": "you must provide the terrain_type, gem_type, coins and yonder to generate a chamber" }
 
-When generating a chamber, the NPC in the chamber must always have the behaviour mode associated with its gem, as listed in behaviour modes for NPCs.
+"Realm" (world) data structure example:
 
-World data structure example:
-
-"world": {
-	"world_name": "The Undergloom, Sunless Citadel of the Goblin King",
-	"world_description": "The Undergloom is a vast, subterranean network of caves filled with goblins and dominated by the formidable lair of their sardonic king.",
-	"world_premise": "The Undergloom is a sprawling network of dank caves, narrow passageways, and spacious caverns teeming with goblins of all sorts. In the deepest reaches of this subterranean realm, nestled amongst mounds of ill-gotten gold and treasures, lies the formidable lair of the Goblin King. Its gloomy corridors echo with the raucous laughter and anguished cries of the many goblins who live there, punctuated by the sardonic wit of their king. Few dare to venture into this hidden kingdom, where the unwary often fall prey to goblin mischief and a bad joke might literally kill you.",
-	"world_boss": "King Goblout, a formidable goblin of dimunitive stature with a fearsome temper and a fondness for gold and fearsomly bad Goblin Dad jokes. He uses his terrible jokes to psychically subjugate his subjects and foes alike.",
-	"world_boss_quirk": "He calls himself Goblout instead of Goblin because he has an outy belly button",
-	"world_treasure": "A simple, rough-hewn golden crown studded with gemstones. It is said to enhance the leadership skills and comedic timing of the wearer."
+{
+	"realm_name": "The Undergloom, Sunless Citadel of the Goblin King",
+	"realm_desription": "The Undergloom is a vast, subterranean network of dank caves and danker jokes, populated with goblins, ill-gotten gold, and dangerously bad jokes",
+	"realm_premise": "The Undergloom is a sprawling network of dank caves, narrow passageways, and spacious caverns teeming with goblins of all sorts. In the deepest reaches of this subterranean realm, nestled amongst mounds of ill-gotten gold and treasures, lies the formidable lair of the Goblin King. Its gloomy corridors echo with the raucous laughter and anguished cries of the many goblins who live there, punctuated by the sardonic wit of their king. Few dare to venture into this hidden kingdom, where the unwary often fall prey to goblin mischief and a bad joke might literally kill you.", 
+	"realm_boss": {
+		"name": "Goblout the Goblin King",
+		"description": "A formidable goblin of dimunitive stature, reknown for his fearsome temper, fondness for gold, and his terrible Goblin Dad Jokes which he uses to subjugate friend and foe alike.",
+		"behaviour_mode": "A challenging encounter with the powerful ruler of this realm which cannot be passed without the world treasure",
+		"quirk": "He wears a magical rough-hewn golden crown studded with gemstones, which enhances his wit and comedic timing, and without which he's not very funny."
+	},
+	"realm_treasure": "The Horn of Ill-Humoured Pedantry, a great horn that when blown, will loudly and pedantically rebut any joke with a serious, tone-deaf and factual proclamation that completely ruins the joke",
+	"realm_dictionary": {
+		"fire": {"name":"JokeDAO", "description": "A decentralised community who run a weekly on-chain joke competition"},
+		"water": {"name":"Rap Battle Alley", "description": "An alley where aspiring comedy rappers face off in epic rap battles"},
+		"earth": {"name":"The Macbeth Mode Club", "description": "An undererground comedy club that exclusively performs comedic interpretations of Shakespeare's Macbeth that are so funny... they might just kill you"},
+		"air": {"name":"The Ill E-quip Show", "description": "An online channel that televises bad jokes 24x7"}
+	},
+	"realm_art_prompts": {
+		"realm_suffix": "fantasy heavy metal art, grainy polaroid, retro album cover",
+		"chamber_prefix": "A grainy old photo of an empty rock venue",
+		"npc_prefix": "A grainy old polaroid portrait of a rockstar",
+		"fire": "digital art, pixel art",
+		"water": "soviet propaganda poster",
+		"earth": "dutch masters oil painting, renaissance",
+		"air": "digital fan art, trending on art station"
+	}
 }
 
-Chamber data structure example: 
+"Chamber" data structure example: 
 
-"chamber": {
-  "chamber_name": "The Echoing Caverns",
-  "chamber_description": "A vast network of echoing caverns, filled with stalactites and stalagmites. The echoes of dripping water and distant rumbles create an eerie atmosphere.",
-  "terrain_type": "Earth",
-  "gem_type": "Emerald",
-  "npc": {
-    "name": "Tremor, the Stone Guardian",
-    "description": "A massive golem made of the very rocks of the cavern. It guards the caverns fiercely, attacking any who disturb the peace.",
-    "behaviour_mode": "A monster NPC who is hostile",
-    "quirk": "Tremor is sensitive to loud noises. A loud enough sound can stun it momentarily."
-  },
-  "coins": 750,
-  "yonder": 3
-}
-
-NPC data structure example:
-
-"npc": {
-  "npc": {
-    "name": "Tremor, the Stone Guardian",
-    "description": "A massive golem made of the very rocks of the cavern. It guards the caverns fiercely, attacking any who disturb the peace.",
-    "behaviour_mode": "A monster NPC who is hostile",
-    "quirk": "Tremor is sensitive to loud noises. A loud enough sound can stun it momentarily."
+{
+    "name": "The Underhall",
+    "description": "A grand hall, illuminated by the warm flicker of torchlight, casting long, undulating shadows upon the towering walls. At its centre stands a remarkable throne - two colossal jesters, frozen in a moment of riotous laughter, their outstretched hands forming the seat.",
+    "terrain_type": "Fire",
+    "gem_type": "Ethernite",
+    "npc": {
+      "name": "Goblout the Goblin King",
+      "description": "A formidable goblin of dimunitive stature, reknown for his fearsome temper, fondness for gold, and his terrible Goblin Dad Jokes which he uses to subjugate friend and foe alike.",
+      "behaviour_mode": "A challenging encounter with the powerful ruler of this realm which cannot be passed without the world treasure",
+      "quirk": "He wears a magical rough-hewn golden crown studded with gemstones, which enhances his wit and comedic timing, and without which he's not very funny."
+    },
+    "coins": 330,
+    "yonder": 3
   }
+
+"NPC" data structure example:
+
+{
+	"name": "Goblout the Goblin King",
+	"description": "A formidable goblin of dimunitive stature, reknown for his fearsome temper, fondness for gold, and his terrible Goblin Dad Jokes which he uses to subjugate friend and foe alike.",
+	"behaviour_mode": "A challenging encounter with the powerful ruler of this realm which cannot be passed without the world treasure",
+	"quirk": "He wears a magical rough-hewn golden crown studded with gemstones, which enhances his wit and comedic timing, and without which he's not very funny."
 }
 
-Player Character (PC) data structure:
+"PC" (Player) data structure:
 
-"pc": {
-  "player_name": "Thorn the Silent",
-  "player_background": "Raised by monks in a secluded monastery, Thorn has mastered the art of silence. He communicates through gestures and expressions.",
-  "player_personality_flaw": "Thorn struggles to express his emotions and often comes off as cold or indifferent.",
+{
+  "name": "Thorn the Silent",
+  "description": "Raised by monks in a secluded monastery, Thorn has mastered the art of silence. He communicates through gestures and expressions.",
+  "personality_flaw": "Thorn struggles to express his emotions and often comes off as cold or indifferent.",
   "player_quirk": "Despite his silent demeanor, Thorn has a surprising love for music and can play a variety of instruments."
 }
 
-Briefing data structure:
+"Briefing" data structure:
 
 Start with the chamber data structure.
-* Add a "world_description" from the world data structure as "world_description"
-* Add a "player_background" from the PC data structure as "PC_description"
+* Add "description" from the realm data structure as "realm_description"
+* Add "description" from the PC data structure as "PC_description"
 
 Behaviour modes for NPCs:
 
@@ -93,8 +108,8 @@ Behaviour modes for NPCs:
 * trickster (gem: emerald): A trickster NPC who is deceptive
 * trial (gem: ruby): A grand mythical beast who tests if the player is worthy
 * artefact (gem: diamond): A magical artifact
-* boss (gem: ethernite): The world boss from the world description
-* key (gem: kao): Solve a challenge to get the key to beating the world boss
+* boss (gem: ethernite): A challenging encounter with the powerful ruler of this realm which cannot be passed without the world treasure
+* treasure (gem: kao): A challenging and unpredictable encounter with the guardian of the world treasure
 
 NPC Behaviour mode examples:
 
@@ -110,7 +125,7 @@ NPC Behaviour mode examples:
 
 * Artefact NPC: These are magical artifacts in the game. An example is "The Crystal of Eternity", a resplendent crystal with an inner glow that never dims and is said to possess the power to manipulate time.
 
-* Boss NPC: This is the same powerful NPC described in the world data structure. They cannot be beaten unless the PC has the key.
+* Boss NPC: This is the same powerful NPC described in the world data structure. They cannot be beaten unless the PC has the realm treasure.
 
-* Key NPC: These are challenging and unpredictable encounters that the player must overcome to get the key. The key is the only way to beat the boss.
+* Treasure NPC: These are challenging and unpredictable encounters that the player must overcome to get the treasure. The treasure is needed to complete the boss encounter.
 ```
