@@ -40,26 +40,30 @@ export const AgentLocation = ({
   }, [canChat])
 
   return (
-    <div className='AgentLocation'>
-      <div className='LocationImage'>
-        <img className='LocationImg' src={url ?? ''} />
+    <div>
+      <div className='AgentLocation'>
+
+        <h2>Encounter</h2>
+        <p className='Important'>{isWaiting ? 'dreaming...' : (metadata?.name ?? '?')}</p>
+        <p>{isWaiting ? '...' : (metadata?.description ?? '?')}</p>
+
+        <div className='Infos'>
+          {/* <div>coord: {coord?.toString() ?? '?'}</div> */}
+          <div>Entity: {agentId.toString()}</div>
+          {/* <div>coord:{coord?.toString() ?? '?'}</div> */}
+          {/* <div>chamber: {slug ?? '?'}</div> */}
+          <div>Yonder: {yonder ?? '?'}</div>
+          <div>Gem: {gemName ?? '?'}</div>
+          <div>Coins: {coins ?? '?'}</div>
+          <div>Url: {url?.slice(0, 20) ?? '?'}</div>
+          {/* <div>Worth: {worth ?? '?'}</div> */}
+          <button className='ChatButton' disabled={!canChat} onClick={() => onChat(true, metadata?.name, metadata ? JSON.stringify(metadata) : '')}>CHAT</button>
+        </div>
+
       </div>
 
-      <h2>Agent</h2>
-      <p>{isWaiting ? 'dreaming...' : (metadata?.name ?? '?')}</p>
-      <p>{isWaiting ? '...' : (metadata?.description ?? '?')}</p>
-
-      <div className='Infos'>
-        {/* <div>coord: {coord?.toString() ?? '?'}</div> */}
-        <div>Entity: {agentId.toString()}</div>
-        {/* <div>coord:{coord?.toString() ?? '?'}</div> */}
-        {/* <div>chamber: {slug ?? '?'}</div> */}
-        <div>Yonder: {yonder ?? '?'}</div>
-        <div>Gem: {gemName ?? '?'}</div>
-        <div>Coins: {coins ?? '?'}</div>
-        <div>Url: {url?.slice(0,20) ?? '?'}</div>
-        {/* <div>Worth: {worth ?? '?'}</div> */}
-        <button className='ChatButton' disabled={!canChat} onClick={() => onChat(true, metadata?.name, metadata ? JSON.stringify(metadata) : '')}>CHAT</button>
+      <div className='AgentLocation'>
+          <img className='FillParent' src={url ?? ''} />
       </div>
 
     </div>

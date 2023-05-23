@@ -27,13 +27,21 @@ export const GameUI = () => {
   }, [isChatting])
 
   return (
-    <div className='GameUI NoMouse'>
-      {/* <TestBridge /> */}
-      {/* <Main /> */}
-      <ChamberLocation />
-      <AgentLocation onChat={_onChat} />
-      <PlayerLocation />
-      <Loader />
+    <div className='NoMouse'>
+      
+      <div className='GameUILeft'>
+        <ChamberLocation />
+        <Loader />
+      </div>
+
+      <div className='GameUILeft'>
+      </div>
+
+      <div className='GameUIRight'>
+        <PlayerLocation />
+        <AgentLocation onChat={_onChat} />
+      </div>
+
       {isChatting &&
         <ChatDialog onChat={setIsChatting} agentName={agentName ?? 'Agent'} agentMetadata={agentMetadata ?? ''} />
       }

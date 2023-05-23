@@ -24,27 +24,30 @@ export const ChamberLocation = () => {
   } = useChamber()
 
   return (
-    <div className='ChamberLocation'>
+    <div>
+      <div className='ChamberLocation'>
 
-      <h2>Chamber</h2>
-      <p>{isWaiting ? 'dreaming...' : (metadata?.name ?? '?')}</p>
-      <p>{isWaiting ? '...' : (metadata?.description ?? '?')}</p>
+        <h2>Location</h2>
+        <p className='Important'>{isWaiting ? 'dreaming...' : (metadata?.name ?? '?')}</p>
+        <p>{isWaiting ? '...' : (metadata?.description ?? '?')}</p>
 
-      <div className='Infos'>
-        <div>Token Id: {tokenId?.toString() ?? '?'}</div>
-        <div>Chamber: {slug ?? '?'}</div>
-        <div>Coord:{coord?.toString() ?? '?'}</div>
-        <div>Yonder: {yonder ?? '?'}</div>
-        <div>Gem: {gemName ?? '?'}</div>
-        <div>Coins: {coins ?? '?'}</div>
-        {/* <div>Worth: {worth ?? '?'}</div> */}
-        <div>Url: {url?.slice(0,20) ?? '?'}</div>
+        <div className='Infos'>
+          <div>Token Id: {tokenId?.toString() ?? '?'}</div>
+          <div>Chamber: {slug ?? '?'}</div>
+          {/* <div>Coord:{coord?.toString() ?? '?'}</div> */}
+          <div>Yonder: {yonder ?? '?'}</div>
+          <div>Gem: {gemName ?? '?'}</div>
+          <div>Coins: {coins ?? '?'}</div>
+          {/* <div>Worth: {worth ?? '?'}</div> */}
+          <div>Url: {url?.slice(0, 20) ?? '?'}</div>
+        </div>
       </div>
 
-      <div className='LocationImage'>
-        <img className='LocationImg' src={url ?? ''} />
-      </div>
-
+      {url &&
+        <div className='ChamberLocation'>
+          <img className='FillParent' src={url} />
+        </div>
+      }
     </div>
   )
 }

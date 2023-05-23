@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { ChatHistory } from '../openai/generateChat'
 import { usePrompChat } from '../openai/hooks'
 
@@ -24,9 +24,11 @@ export const ChatRequest = ({
     }
   }, [isWaiting, message, error,  newHistory])
 
+  const meta = useMemo(() => JSON.parse(agentMetadata), [agentMetadata])
+
   return (
     <div>
-      <div>{isWaiting ? (previousHistory.length == 0 ? 'Starting chat...' : 'Waiting...') : 'got it'}</div>
+      <div>{isWaiting ? (previousHistory.length == 0 ? `Starting chat with ${meta.name}...` : 'Waiting...') : 'got it'}</div>
       {error &&
         <div>{error}</div>
       }
