@@ -1,4 +1,4 @@
-import { getComponentValue, getEntitiesWithValue } from "@latticexyz/recs";
+import { Entity, getComponentValue, getEntitiesWithValue } from "@latticexyz/recs";
 import { awaitStreamValue } from "@latticexyz/utils";
 import { ClientComponents } from "./createClientComponents";
 import { SetupNetworkResult } from "./setupNetwork";
@@ -8,6 +8,10 @@ import * as Crawl from "../quest/bridge/Crawl";
 import * as ethers from "ethers";
 import Cookies from 'universal-cookie';
 import { nanoid } from 'nanoid'
+
+const _entityToBytes32 = (entity: string) => {
+  return "0x" + entity.replace("0x", "").padStart(64, "0");
+};
 
 export type SystemCalls = ReturnType<typeof createSystemCalls>;
 
@@ -150,6 +154,7 @@ export function createSystemCalls(
       chamberData.tokenId,
       chamberData.seed,
       chamberData.yonder,
+      chamberData.terrain,
       chamberData.hoard.gemType,
       chamberData.hoard.coins,
       chamberData.hoard.worth,
@@ -157,6 +162,17 @@ export function createSystemCalls(
       gemPos.gridY,
     ]);
     return result
+  };
+
+  //---------------------------
+  // Agents
+  //
+  const setAgentMetadata = (key: Entity, metadata: string) => {
+    if (key && metadata) {
+      const id = _entityToBytes32(key)
+      console.warn(`STORE AGENT METADATA @`, id, metadata)
+      worldSend("setAgentMetadata", [id, metadata]);
+    }
   };
 
   //---------------------------
@@ -177,6 +193,8 @@ export function createSystemCalls(
     // Crawler
     bridge_tokenId,
     bridge_chamber,
+    // Agents
+    setAgentMetadata,
     // Player
     spawn,
     move,

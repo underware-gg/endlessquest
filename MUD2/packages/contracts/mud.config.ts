@@ -56,6 +56,7 @@ export default mudConfig({
         tokenId: 'uint256',
         seed: 'uint256',
         yonder: 'uint8',
+        terrain: 'uint8',
         gemType: 'uint8',
         coins: 'uint16',
         worth: 'uint16'
@@ -114,6 +115,11 @@ export default mudConfig({
     Blocker: {
       schema: {
         enabled: "bool",
+      }
+    },
+    Metadata: {
+      schema: {
+        metadata: "string",
       }
     },
   },

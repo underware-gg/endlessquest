@@ -5,6 +5,7 @@ import { ChatCompletionRequestMessageRoleEnum } from 'openai'
 
 
 export enum MetadataType {
+  None = 'None', // should not compute
   World = 'World',
   Chamber = 'Chamber',
   NPC = 'NPC',
@@ -28,16 +29,24 @@ export interface PromptMetadataResponse {
 
 export default async function promptMetadata(options: PromptMetadataOptions): Promise<PromptMetadataResponse> {
 
-  let prompt = `Please generate the metadata for a ${options.type}`
-  if (options.terrain != null) prompt += `, terrain_type=${Crawl.TerrainNames[options.terrain]}`
-  if (options.yonder != null) prompt += `, yonder=${options.yonder}`
-  if (options.gemType != null) prompt += `, gem_type=${Crawl.GemNames[options.gemType]}`
-  if (options.coins != null) prompt += `, coins=${options.coins}`
+  if(options.type == MetadataType.None) {
+    return {
+      response: null,
+      metadata: {},
+      error: 'No MetadataType!',
+    }
+  }
+
+  let prompt = `Please generate the metadata for a "${options.type}"`
+  if (options.terrain != null) prompt += `, terrain_type:${Crawl.TerrainNames[options.terrain]}`
+  if (options.gemType != null) prompt += `, gem_type:${Crawl.GemNames[options.gemType]}`
+  if (options.coins != null) prompt += `, coins:${options.coins}`
+  if (options.yonder != null) prompt += `, yonder:${options.yonder}`
 
   console.log('Metadata Chat prompt:', prompt)
 
   const messages = [
-    { role: ChatCompletionRequestMessageRoleEnum.System, content: prompts.metadataSystemPrompt },
+    { role: ChatCompletionRequestMessageRoleEnum.System, content: prompts.metadataSystemPromptGPT4 },
     { role: ChatCompletionRequestMessageRoleEnum.User, content: 'Are you ready?' },
     { role: ChatCompletionRequestMessageRoleEnum.Assistant, content: '[Ready]' },
     { role: ChatCompletionRequestMessageRoleEnum.User, content: prompt },
@@ -47,7 +56,7 @@ export default async function promptMetadata(options: PromptMetadataOptions): Pr
 
   // https://platform.openai.com/docs/api-reference/chat/create
   const response = await Chat.generateChat({
-    model: Chat.GPTModel.GPT3,
+    model: Chat.GPTModel.GPT4,
     messages,
   })
   console.log('Metadata Chat response:', response)
@@ -60,10 +69,19 @@ export default async function promptMetadata(options: PromptMetadataOptions): Pr
     }
   }
 
+  let metadata
+  try {
+    metadata = JSON.parse(response.response)
+  } catch(e) {
+    metadata = {
+      error: `Metadata parse exception: [${e}]`
+    }
+  }
+  console.log('Metadata Chat metadata:', metadata)
+
   return {
     response: response.response,
-    // metadata: JSON.parse(response.response),
-    metadata: {},
+    metadata,
     error: null,
   }
 }

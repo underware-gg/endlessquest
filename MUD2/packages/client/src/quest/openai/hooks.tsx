@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react'
 import promptChat from './promptChat'
-import prompMetadata, { PromptMetadataOptions } from './promptMetadata'
+import prompMetadata, { MetadataType, PromptMetadataOptions } from './promptMetadata'
 
 export const usePrompMetadata = (options: PromptMetadataOptions) => {
   const [isWaiting, setIsWaiting] = useState<boolean>(false)
@@ -28,12 +28,14 @@ export const usePrompMetadata = (options: PromptMetadataOptions) => {
     setResponse(null)
     setMetadata({})
     setError(null)
-    _generate()
+    if(options.type != MetadataType.None) {
+      _generate()
+    }
 
     return () => {
       _mounted = false
     }
-  }, [prompt])
+  }, [options])
 
   return {
     isWaiting,

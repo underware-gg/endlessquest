@@ -2,13 +2,13 @@
 pragma solidity >=0.8.0;
 
 import { System } from "@latticexyz/world/src/System.sol";
-import { Chamber, ChamberData } from "../codegen/Tables.sol";
-// import { Crawl } from "../utils/Crawl.sol";
-// import { ChamberBridge } from "../utils/ChamberBridge.sol";
+import {
+  Chamber, ChamberData,
+  Metadata
+} from "../codegen/Tables.sol";
 
 contract ChamberSystem is System {
 
-  // Bridge setters
   function setChamber(
     uint256 coord,
     uint256 tokenId,
@@ -38,4 +38,8 @@ contract ChamberSystem is System {
       })
     );
   }
+
+  // function setMetadata(uint256 coord, string memory metadata) public {
+  //   Metadata.set(coord, metadata);
+  // }
 }

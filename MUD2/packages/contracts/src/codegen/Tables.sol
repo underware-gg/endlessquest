@@ -14,3 +14,4 @@ import { Player, PlayerData, PlayerTableId } from "./tables/Player.sol";
 import { Position, PositionData, PositionTableId } from "./tables/Position.sol";
 import { Location, LocationData, LocationTableId } from "./tables/Location.sol";
 import { Blocker, BlockerTableId } from "./tables/Blocker.sol";
+import { Metadata, MetadataTableId } from "./tables/Metadata.sol";

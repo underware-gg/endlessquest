@@ -11,7 +11,7 @@ export const AgentLocation = () => {
   //   network: { playerEntity },
   // } = useMUD()
 
-  const { agent } = usePlayer()
+  const { agentEntity } = usePlayer()
   const {
     coord,
     slug,
@@ -20,20 +20,23 @@ export const AgentLocation = () => {
     gemName,
     coins,
     worth,
-  } = useAgent(agent)
+    metadata,
+  } = useAgent(agentEntity)
 
 
   return (
     <div className='AgentLocation'>
       <h2>Agent</h2>
       {/* <div>coord: {coord?.toString() ?? '?'}</div> */}
-      <div>entity: {BigInt(agent ? agent as string : 0).toString() ?? '?'}</div>
+      <div>entity: {BigInt(agentEntity ? agentEntity as string : 0).toString() ?? '?'}</div>
       {/* <div>coord:{coord?.toString() ?? '?'}</div> */}
-      <div>chamber: {slug ?? '?'}</div>
+      {/* <div>chamber: {slug ?? '?'}</div> */}
       <div>yonder: {yonder ?? '?'}</div>
       <div>gem: {gemName ?? '?'}</div>
       <div>coins: {coins ?? '?'}</div>
       <div>worth: {worth ?? '?'}</div>
+      <div>name: {metadata?.name ?? '?'}</div>
+      <div>description: {metadata?.description ?? '?'}</div>
     </div>
   )
 }

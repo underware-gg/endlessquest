@@ -69,6 +69,7 @@ export function defineContractComponents(world: World) {
           tokenId: RecsType.BigInt,
           seed: RecsType.BigInt,
           yonder: RecsType.Number,
+          terrain: RecsType.Number,
           gemType: RecsType.Number,
           coins: RecsType.Number,
           worth: RecsType.Number,
@@ -186,6 +187,21 @@ export function defineContractComponents(world: World) {
         world,
         {
           enabled: RecsType.Boolean,
+        },
+        {
+          metadata: {
+            contractId: tableId.toHexString(),
+            tableId: tableId.toString(),
+          },
+        }
+      );
+    })(),
+    Metadata: (() => {
+      const tableId = new TableId("", "Metadata");
+      return defineComponent(
+        world,
+        {
+          metadata: RecsType.String,
         },
         {
           metadata: {

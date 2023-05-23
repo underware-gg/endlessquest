@@ -18,12 +18,14 @@ export const usePlayer = () => {
   const location = useComponentValue(Location, playerEntity);
   const { compass, slug } = useCoord(location?.coord ?? 0n)
 
+  const agentEntity = useMemo(() => (normalizeEntityID(location?.agent ?? '0')), [location])
+
   return {
     position,
     name: player?.name ?? null,
     level: player?.level ?? null,
     coord: location?.coord ?? null,
-    agent: normalizeEntityID(location?.agent ?? '0'),
+    agentEntity,
     compass,
     slug,
   }

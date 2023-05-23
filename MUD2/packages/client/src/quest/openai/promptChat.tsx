@@ -34,7 +34,7 @@ export default async function promptChat(options: PromptAgentOptions): Promise<P
 
   // https://platform.openai.com/docs/api-reference/chat/create
   const response = await Chat.generateChat({
-    model: Chat.GPTModel.GPT3,
+    model: Chat.GPTModel.GPT4,
     messages,
   })
   console.log('Chat response:', response)
