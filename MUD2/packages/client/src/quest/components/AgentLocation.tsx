@@ -31,7 +31,7 @@ export const AgentLocation = ({
     url,
   } = useAgent(agentEntity)
 
-  const canChat = (agentId != 0n)
+  const canChat = (agentId != 0n && metadata?.name)
 
   useEffect(() => {
     if (!canChat) {

@@ -47,7 +47,7 @@ export const useAgentMetadata = (agentEntity: Entity | undefined) => {
   useEffect(() => {
     if (agentEntity && agent && generatedMetadata && !metadata) {
       // @ts-ignore: accept any property
-      const npc = generatedMetadata.npc ?? generatedMetadata.chamber.npc ?? null
+      const npc = generatedMetadata.npc ?? generatedMetadata.chamber?.npc ?? null
       if (!npc) {
         console.warn(`No NPC in metadata!`, generatedMetadata)
         return
@@ -116,6 +116,10 @@ export const useChamberMetadata = (coord: bigint) => {
       const meta = {
         name: cham.chamber_name ?? cham.name ?? '[name]',
         description: cham.chamber_description ?? cham.description ?? '[description]',
+        terrain: chamber.terrain,
+        yonder: chamber.yonder,
+        gemType: chamber.gemType,
+        coins: chamber.coins,
       }
       console.log(`meta store...:`, coord, meta)
       setChamberMetadata(coord, JSON.stringify(meta))

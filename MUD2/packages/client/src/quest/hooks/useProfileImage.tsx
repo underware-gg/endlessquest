@@ -1,12 +1,13 @@
-import { useImage } from '../openai/hooks'
+import { useGeneratedImage } from '../openai/hooks'
 import { useEffect, useMemo } from 'react'
 import { useComponentValue, useRow } from '@latticexyz/react'
 import { Entity } from '@latticexyz/recs'
 import { useMUD } from '../../store'
+import { Terrain } from '../bridge/Crawl'
 
 
 export const useProfileImage = (prompt: string | null) => {
-  const { isWaiting, url, error } = useImage(prompt)
+  const { isWaiting, url, error } = useGeneratedImage(prompt)
   return {
     isWaiting,
     url,
@@ -34,7 +35,8 @@ export const useAgentProfileImage = (agentEntity: Entity | undefined) => {
   const prompt = useMemo(() => {
     if(agent && metadata) {
       const meta = JSON.parse(metadata.metadata)
-      return `${meta.name}, ${meta.description}`
+      return `A watercolor portrait of a maritime figure, digital neon art, luminescent deep sea creatures: ${meta.description}; nautical steampunk art, watercolor marine landscape, vintage nautical charts`
+      // return `${meta.name}, ${meta.description}`
     }
     return null
   }, [agent, metadata])
@@ -58,6 +60,15 @@ export const useAgentProfileImage = (agentEntity: Entity | undefined) => {
 //---------------------
 // Chambers ProfileImage
 //
+const _chamberPrompts = {
+  //   "realm_suffix": "nautical steampunk art, watercolor marine landscape, vintage nautical charts",
+  //   "chamber_prefix": "A faded naval blueprint of a mysterious undersea structure",
+  //   "npc_prefix": "A watercolor portrait of a maritime figure",
+    [Terrain.Fire]: "digital neon art, luminescent deep sea creatures",
+    [Terrain.Water]: "art nouveau poster, mythological sea battles",
+    [Terrain.Earth]: "medieval manuscript illumination, bustling seaport",
+    [Terrain.Air]: "digital fantasy art, flight of the sea creatures"
+}
 export const useChamberProfileImage = (coord: bigint) => {
   const {
     networkLayer: {
@@ -79,7 +90,10 @@ export const useChamberProfileImage = (coord: bigint) => {
   const prompt = useMemo(() => {
     if (chamber && metadata) {
       const meta = JSON.parse(metadata)
-      return `${meta.name}, ${meta.description}`
+      const pertype = _chamberPrompts[meta?.terrain ?? 0] ?? ''
+      console.log(`++++++++++++++++ GEN IMAGE CHAMBER META:`, metadata, pertype)
+      return `${pertype}; ${meta.description}`
+      // return `${meta.name}, ${meta.description}`
     }
     return null
   }, [chamber, metadata])

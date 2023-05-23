@@ -91,7 +91,7 @@ export const usePrompMetadata = (options: PromptMetadataOptions) => {
 }
 
 
-export const useImage = (prompt: string | null) => {
+export const useGeneratedImage = (prompt: string | null) => {
   const [isWaiting, setIsWaiting] = useState<boolean>(false)
   const [url, setUrl] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)

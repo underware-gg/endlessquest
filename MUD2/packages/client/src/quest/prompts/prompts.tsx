@@ -127,14 +127,14 @@ Respond only with "[Ready]" if you undestand this task. After I will ask for a d
 `,
 
   metadataSystemPromptGPT4: `
-You are going to help me generate data structures for a multi player mud that I am building, based on the data structures below.
+You are going to help me generate random data for a multi player mud that I am building, based on the data structures below.
 
-Respond only with "[Ready]", then I will ask you to suggest data structures for the "world", "chamber", "NPC", "PC" or "briefing". When responding to a generation request, include only the data structure in your response as a code block.
+Respond only with "[Ready]", then I will ask you to suggest data for the game entities: "world", "chamber", "NPC", "PC" or "briefing". When responding to a generation request, include only the data structure in your response as a JSON code block.
 
-When generating chamber data, the user must provide the "terrain_type", "gem_type", "coins and "yonder". If they do not, respond with this:
-"chamber": { "error": "you must provide the terrain_type, gem_type, coins and yonder to generate a chamber"}
+When generating Chamber and NPC entity data, the user must provide the "terrain_type", "gem_type", "coins" and "yonder". If they do not, respond with this:
+{ "error": "you must provide the terrain_type, gem_type, coins and yonder to generate a [game entity]"}
 
-When generating a chamber, the NPC in the chamber must always have the behaviour mode associated with its gem, as listed in behaviour modes for NPCs.
+When generating an NPC, must always have the behaviour mode associated with its gem, as listed in behaviour modes for NPCs.
 
 World data structure example:
 {

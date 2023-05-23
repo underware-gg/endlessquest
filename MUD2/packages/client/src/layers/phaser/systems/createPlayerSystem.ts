@@ -122,7 +122,7 @@ export function createPlayerSystem(layer: PhaserLayer) {
         if (_isPlayer(entity)) {
           // camera.centerOn(pixelPosition.x, pixelPosition.y);
           // need to expose camera.pan() on phaserx
-          camera.phaserCamera.pan(pixelPosition.x, pixelPosition.y, 3000, 'Sine');
+          camera.phaserCamera.pan(pixelPosition.x, pixelPosition.y, 1500, 'Sine');
           _ghost.setPosition(pixelPosition.x + TILE_WIDTH / 2, pixelPosition.y + TILE_HEIGHT/2)
           _ghost.setVisible(false)
         }
