@@ -13,6 +13,16 @@ html, body {
   overflow: hidden;
 }
 
+h1, h2, h3, h4, h5 {
+  line-height: 1em;
+  margin: 0.2em;
+}
+
+p {
+  line-height: 1.5em;
+  margin: 0.1em;
+}
+
 canvas {
   margin: 0;
   padding: 0;
@@ -76,10 +86,33 @@ canvas {
   padding: 0.3em;
 }
 
+.Infos {
+  color: #bbb;
+  padding: 0.5em;
+}
+
 .Main {
   @extend .UI;
   width: 400px;
-  height: 600px;
+  height: 200px;
+}
+
+.ChamberLocation {
+  @extend .UI;
+  width: 400px;
+  height: 230px;
+}
+
+.PlayerLocation {
+  @extend .UI;
+  width: 400px;
+  height: 120px;
+}
+
+.AgentLocation {
+  @extend .UI;
+  width: 400px;
+  height: 200px;
 }
 
 .Loader {
@@ -87,3 +120,80 @@ canvas {
   width: 200px;
   height: 20px;
 }
+
+.ChatButton {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 50%;
+  height: 40px;
+}
+
+.ChatCover {
+  @extend .FillParent;
+  background-color: #0008;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: all;
+}
+
+.ChatDialog {
+  @extend .UI;
+  position: absolute;
+  left: calc(50% - 250px);
+  top: calc(50% - 350px);
+  width: 500px;
+  height: 700px;
+  padding: 0;
+  margin: 0;
+}
+
+.ChatContent {
+  padding: 1em;
+  overflow-y: scroll;
+  width: calc(100% - 20px);
+  height: 625px;
+}
+
+.ChatInputRow {
+  @extend .UI;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: calc(100% - 25px);
+  height: 15px;
+  padding: 1em;
+}
+
+.ChatInput {
+  position: absolute;
+  bottom: 5px;
+  left: 5px;
+  width: calc(100% - 100px);
+  height: 20px;
+}
+
+.ChatSubmit {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  width: 70px;
+  height: 28px;
+}
+
+.ChatName {
+  color: #fa0;
+}
+
+.UserTopic {
+  margin-bottom: 1em;
+}
+
+.AgentTopic {
+  @extend .UserTopic;
+  background-color: #fff2;
+}
+

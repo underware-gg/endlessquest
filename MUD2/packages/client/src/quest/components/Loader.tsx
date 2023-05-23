@@ -2,7 +2,7 @@ import { useComponentValue, useEntityQuery, useRow } from '@latticexyz/react';
 import { Has, HasValue, getComponentValueStrict } from '@latticexyz/recs';
 import { useMUD } from '../../store';
 import { useEffect } from 'react';
-import * as Compass from '../bridge/compass';
+import * as Crawl from '../bridge/Crawl';
 
 export const Loader = () => {
   const {
@@ -28,9 +28,9 @@ export const Loader = () => {
       bridge_tokenId(tokenId)
     }
   }, [tokenId, coord])
-  // const compass = Compass.coordToCompass(coord)
-  // const slug = Compass.compassToSlug(compass)
-  const slug = Compass.coordToSlug(coord)
+  // const compass = Crawl.coordToCompass(coord)
+  // const slug = Crawl.compassToSlug(compass)
+  const slug = Crawl.coordToSlug(coord)
 
   //
   // ChamberSystem
@@ -57,13 +57,13 @@ export const Loader = () => {
   const tilesOk = tiles.length > 0
 
   return (
-    <div className='Loader'>
-      Load <span>{tokenId.toString() ?? '??'}</span>: 
+    <div className='Loader Infos'>
+      Loader(<span>{tokenId.toString() ?? '??'})</span>
+      {` [${slug}] `}
       {coordOk ? 'x' : '.'}
       {chamberOk ? 'x' : '.'}
       {doorsOk ? 'x' : '.'}
       {tilesOk ? 'x' : '.'}
-      {` ${slug}`}
     </div>
   );
 };

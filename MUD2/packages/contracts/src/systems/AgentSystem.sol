@@ -6,7 +6,8 @@ import { getUniqueEntity } from "@latticexyz/world/src/modules/uniqueentity/getU
 import {
   Agent, AgentData,
   Position,
-  Blocker
+  Blocker,
+  Metadata
 } from "../codegen/Tables.sol";
 // import { Crawl } from "../utils/Crawl.sol";
 
@@ -16,6 +17,7 @@ contract AgentSystem is System {
     uint256 tokenId,
     uint256 seed,
     uint8 yonder,
+    uint8 terrain,
     uint8 gemType,
     uint16 coins,
     uint16 worth,
@@ -29,6 +31,7 @@ contract AgentSystem is System {
         tokenId: tokenId,
         seed: seed,
         yonder: yonder,
+        terrain: terrain,
         gemType: gemType,
         coins: coins,
         worth: worth
@@ -36,5 +39,13 @@ contract AgentSystem is System {
     );
     Blocker.set(key, true);
     Position.set(key, gridX, gridY);
+
+    // TODO: assign agent to chamber
+    // get chamber with key: coord
+    // set agent
+  }
+
+  function setAgentMetadata(bytes32 key, string memory metadata) public {
+    Metadata.set(key, metadata);
   }
 }

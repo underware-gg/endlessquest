@@ -38,13 +38,18 @@ export function createAgentSystem(layer: PhaserLayer) {
     const position = getComponentValueStrict(Position, entity);
     const pixelPosition = tileCoordToPixelCoord(position, TILE_WIDTH, TILE_HEIGHT);
 
-    // const spr = Animations.AgentsBlacksmith
-    // const spr = Animations.AgentsDancer
-    // const spr = Animations.AgentsFisherman
-    const spr = Animations.AgentsHerbalist
-    // const spr = Animations.AgentsMilady
-    // const spr = Animations.AgentsMiner
-    // const spr = Animations.AgentsPotionMaker
+    const agent = getComponentValueStrict(Agent, entity);
+
+    const spriteList = [
+      Animations.AgentsFisherman,
+      Animations.AgentsBlacksmith,
+      Animations.AgentsDancer,
+      Animations.AgentsHerbalist,
+      Animations.AgentsMilady,
+      Animations.AgentsMiner,
+      Animations.AgentsPotionMaker,
+    ]
+    const spr = spriteList[(agent.gemType) % spriteList.length]
 
     const agentObj = objectPool.get(entity, "Sprite");
     agentObj.setComponent({

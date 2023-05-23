@@ -5,14 +5,16 @@ import { System } from "@latticexyz/world/src/System.sol";
 import {
   Player, PlayerData,
   Position, PositionData, PositionTableId,
-  Blocker,
-  Tiles, TilesData
+  Tiles, TilesData,
+  Agent, AgentData,
+  Location,
+  Blocker
  } from "../codegen/Tables.sol";
 
 import { addressToEntity } from "../Utils.sol";
 import { getKeysWithValue } from "@latticexyz/world/src/modules/keyswithvalue/getKeysWithValue.sol";
-
 import { Direction } from "../codegen/Types.sol";
+import { Crawl } from "../utils/Crawl.sol";
 
 contract PlayerSystem is System {
   function spawn(string memory name, int32 x, int32 y) public {
@@ -25,8 +27,8 @@ contract PlayerSystem is System {
     // require(playersAtPosition.length == 0, "spawn location occupied");
     
     Player.set(player, 1, name);
-    Position.set(player, x, y);
     Blocker.set(player, true);
+    goToPosition(player, x, y);
   }
 
   function move(Direction direction) public {
@@ -69,6 +71,35 @@ contract PlayerSystem is System {
     }
     require(isTile, "--- OUT OF BOUNDS! ---");
 
-    Position.set(player, x, y);
+    goToPosition(player, x, y);
   }
+
+  function goToPosition(bytes32 player, int32 x, int32 y) private {
+    Position.set(player, x, y);
+
+    int256 north = (y < 0) ? int256((-y -1) / 20) + 1 : int256(0);
+    int256 south = (y >= 0) ? int256(y / 20) + 1 : int256(0);
+    int256 west = (x < 0) ? int256((-x -1) / 20) + 1 : int256(0);
+    int256 east = (x >= 0) ? int256(x / 20) + 1 : int256(0);
+    uint256 coord = Crawl.makeCoord(uint256(north), uint256(east), uint256(west), uint256(south));
+
+    // TODO: Find agent close by!
+    bytes32 agent = findAgentAtPosition(x - 1, y);
+    if (agent == 0) agent = findAgentAtPosition(x + 1, y);
+    if (agent == 0) agent = findAgentAtPosition(x, y - 1);
+    if (agent == 0) agent = findAgentAtPosition(x, y + 1);
+    Location.set(player, coord, agent);
+  }
+
+  function findAgentAtPosition(int32 x, int32 y) private view returns (bytes32) {
+    bytes32[] memory thingsAtPosition = getKeysWithValue(PositionTableId, Position.encode(x, y));
+    for(uint256 i = 0 ; i < thingsAtPosition.length; ++i) {
+      AgentData memory agent = Agent.get(thingsAtPosition[i]);
+      if (agent.coord > 0) {
+        return thingsAtPosition[i];
+      }
+    }
+    return 0;
+  }
+
 }

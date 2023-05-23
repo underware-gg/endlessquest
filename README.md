@@ -33,6 +33,15 @@ You need Foundry! (see below)
 $ pnpm run dev
 ```
 
+### OpenAI API Keys
+
+OpenAI API keys enabled for `GPT-4` need to be on cookies. The first time the app is loaded on a browser, empty cookies will be created for editing, if they are not present.
+
+```
+OPENAI_API_KEY:<api_key>
+OPENAI_ORG_ID:<org_id>
+```
+
 
 
 ### How MUD was installed (FYI)

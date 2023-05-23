@@ -2,13 +2,13 @@
 pragma solidity >=0.8.0;
 
 import { System } from "@latticexyz/world/src/System.sol";
-import { Chamber, ChamberData } from "../codegen/Tables.sol";
-// import { Crawl } from "../utils/Crawl.sol";
-// import { ChamberBridge } from "../utils/ChamberBridge.sol";
+import {
+  Chamber, ChamberData,
+  ChamberMetadata
+} from "../codegen/Tables.sol";
 
 contract ChamberSystem is System {
 
-  // Bridge setters
   function setChamber(
     uint256 coord,
     uint256 tokenId,
@@ -34,8 +34,13 @@ contract ChamberSystem is System {
         gemPos: gemPos,
         gemType: gemType,
         coins: coins,
-        worth: worth
+        worth: worth,
+        agent: 0
       })
     );
+  }
+
+  function setChamberMetadata(uint256 coord, string memory metadata) public {
+    ChamberMetadata.set(coord, metadata);
   }
 }

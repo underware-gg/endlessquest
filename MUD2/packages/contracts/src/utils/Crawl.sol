@@ -223,7 +223,7 @@ library Crawl {
 		} else if(south > 0) {
 			result += south;
 		} else {
-			revert("Crawl.makeCoord(): need North or South");
+			revert(string.concat("Crawl.makeCoord(): need North or South N=", toString(north), " S=", toString(south)));
 		}
 		// West or East need to be positive, but not both
 		if(east > 0) {
@@ -232,7 +232,7 @@ library Crawl {
 		} else if(west > 0) {
 			result += (west << 64);
 		} else {
-			revert("Crawl.makeCoord(): need West or East");
+			revert(string.concat("Crawl.makeCoord(): need West or East W=", toString(west), " E=", toString(east)));
 		}
 	}
 

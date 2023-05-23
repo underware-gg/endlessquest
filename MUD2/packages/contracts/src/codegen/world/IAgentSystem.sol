@@ -9,10 +9,13 @@ interface IAgentSystem {
     uint256 tokenId,
     uint256 seed,
     uint8 yonder,
+    uint8 terrain,
     uint8 gemType,
     uint16 coins,
     uint16 worth,
     int32 gridX,
     int32 gridY
   ) external;
+
+  function setAgentMetadata(bytes32 key, string memory metadata) external;
 }

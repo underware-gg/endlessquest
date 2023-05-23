@@ -1,13 +1,17 @@
-import { getComponentValue, getEntitiesWithValue } from "@latticexyz/recs";
+import { Entity, getComponentValue, getEntitiesWithValue } from "@latticexyz/recs";
 import { awaitStreamValue } from "@latticexyz/utils";
 import { ClientComponents } from "./createClientComponents";
 import { SetupNetworkResult } from "./setupNetwork";
 import { Direction } from "../layers/phaser/constants";
 import * as Bridge from "../quest/bridge/bridge";
-import * as Compass from "../quest/bridge/compass";
+import * as Crawl from "../quest/bridge/Crawl";
 import * as ethers from "ethers";
 import Cookies from 'universal-cookie';
 import { nanoid } from 'nanoid'
+
+const _entityToBytes32 = (entity: string) => {
+  return "0x" + entity.replace("0x", "").padStart(64, "0");
+};
 
 export type SystemCalls = ReturnType<typeof createSystemCalls>;
 
@@ -70,7 +74,7 @@ export function createSystemCalls(
     }
     // fetch
     const chamberData = await Bridge.coordToChamberData(coord)
-    const compass = Compass.coordToCompass(coord)
+    const compass = Crawl.coordToCompass(coord)
     console.warn(`BRIDGE_CHAMBER`, compass, chamberData)
     //
     // store Chamber
@@ -150,6 +154,7 @@ export function createSystemCalls(
       chamberData.tokenId,
       chamberData.seed,
       chamberData.yonder,
+      chamberData.terrain,
       chamberData.hoard.gemType,
       chamberData.hoard.coins,
       chamberData.hoard.worth,
@@ -157,6 +162,23 @@ export function createSystemCalls(
       gemPos.gridY,
     ]);
     return result
+  };
+
+  //---------------------------
+  // Metadata
+  //
+  const setChamberMetadata = (coord: bigint, metadata: string) => {
+    if (coord && metadata) {
+      console.warn(`STORE CHAMBER METADATA @`, coord, metadata)
+      worldSend("setChamberMetadata", [coord, metadata]);
+    }
+  };
+  const setAgentMetadata = (key: Entity, metadata: string) => {
+    if (key && metadata) {
+      const id = _entityToBytes32(key)
+      console.warn(`STORE AGENT METADATA @`, id, metadata)
+      worldSend("setAgentMetadata", [id, metadata]);
+    }
   };
 
   //---------------------------
@@ -177,6 +199,9 @@ export function createSystemCalls(
     // Crawler
     bridge_tokenId,
     bridge_chamber,
+    // Metadata
+    setChamberMetadata,
+    setAgentMetadata,
     // Player
     spawn,
     move,

@@ -43,7 +43,16 @@ export default mudConfig({
         gemPos: 'uint8',
         gemType: 'uint8',
         coins: 'uint16',
-        worth: 'uint16'
+        worth: 'uint16',
+        agent: 'bytes32'
+      }
+    },
+    ChamberMetadata: {
+      keySchema: {
+        coord: 'uint256'
+      },
+      schema: {
+        metadata: "string",
       }
     },
     //-----------------------
@@ -56,9 +65,15 @@ export default mudConfig({
         tokenId: 'uint256',
         seed: 'uint256',
         yonder: 'uint8',
+        terrain: 'uint8',
         gemType: 'uint8',
         coins: 'uint16',
         worth: 'uint16'
+      }
+    },
+    Metadata: {
+      schema: {
+        metadata: "string",
       }
     },
     //-----------------------
@@ -103,6 +118,12 @@ export default mudConfig({
       schema: {
         x: "int32",
         y: "int32",
+      }
+    },
+    Location: {
+      schema: {
+        coord: "uint256",
+        agent: 'bytes32',
       }
     },
     Blocker: {

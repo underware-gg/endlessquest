@@ -51,6 +51,22 @@ export function defineContractComponents(world: World) {
           gemType: RecsType.Number,
           coins: RecsType.Number,
           worth: RecsType.Number,
+          agent: RecsType.String,
+        },
+        {
+          metadata: {
+            contractId: tableId.toHexString(),
+            tableId: tableId.toString(),
+          },
+        }
+      );
+    })(),
+    ChamberMetadata: (() => {
+      const tableId = new TableId("", "ChamberMetadata");
+      return defineComponent(
+        world,
+        {
+          metadata: RecsType.String,
         },
         {
           metadata: {
@@ -69,9 +85,25 @@ export function defineContractComponents(world: World) {
           tokenId: RecsType.BigInt,
           seed: RecsType.BigInt,
           yonder: RecsType.Number,
+          terrain: RecsType.Number,
           gemType: RecsType.Number,
           coins: RecsType.Number,
           worth: RecsType.Number,
+        },
+        {
+          metadata: {
+            contractId: tableId.toHexString(),
+            tableId: tableId.toString(),
+          },
+        }
+      );
+    })(),
+    Metadata: (() => {
+      const tableId = new TableId("", "Metadata");
+      return defineComponent(
+        world,
+        {
+          metadata: RecsType.String,
         },
         {
           metadata: {
@@ -155,6 +187,22 @@ export function defineContractComponents(world: World) {
         {
           x: RecsType.Number,
           y: RecsType.Number,
+        },
+        {
+          metadata: {
+            contractId: tableId.toHexString(),
+            tableId: tableId.toString(),
+          },
+        }
+      );
+    })(),
+    Location: (() => {
+      const tableId = new TableId("", "Location");
+      return defineComponent(
+        world,
+        {
+          coord: RecsType.BigInt,
+          agent: RecsType.String,
         },
         {
           metadata: {
