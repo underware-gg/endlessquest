@@ -93,21 +93,23 @@ The best way to generate the `"Briefing"` structure is:
 That structure looks like this, which you can request the metadata bot generates with the prompt `generate a briefing`.
 
 ```json
-"briefing": {
-  "chamber_name": "The Smouldering Altar",
-  "chamber_description": "A fiery chamber that exists as a stark contrast within the Shadowed Vault. Here, an eternal flame dances menacingly, casting long, flickering shadows on the vault walls.",
-  "terrain_type": "Fire",
-  "gem_type": "kao",
-  "npc": {
-    "name": "Pyre, the Flame Warden",
-    "description": "A blazing specter forged from the ceaseless flames of the Altar. Pyre ceaselessly patrols, ready to immolate any intruder in its fiery embrace.",
-    "behaviour_mode": "A monster NPC who is hostile",
-    "quirk": "Pyre has an intense fascination with anything cold and is momentarily distracted when confronted with it."
-  },
-  "coins": 400,
-  "yonder": 7,
-  "world_description": "The Silver Spire, unseen against the dark expanse of the Netherrealms, hides within its shadowy walls the labyrinthine chambers, one of which is the Shadowed Vault.",
-  "PC_description": "Raised by monks in a secluded monastery, Thorn has mastered the art of silence. He communicates through gestures and expressions."
+{
+    "chamber": {
+        "name": "The Smouldering Altar",
+        "description": "A fiery chamber that exists as a stark contrast within the Shadowed Vault. Here, an eternal flame dances menacingly, casting long, flickering shadows on the vault walls.",
+        "terrain_type": "Fire",
+        "gem_type": "kao",
+        "npc": {
+            "name": "Pyre, the Flame Warden",
+            "description": "A blazing specter forged from the ceaseless flames of the Altar. Pyre ceaselessly patrols, ready to immolate any intruder in its fiery embrace.",
+            "behaviour_mode": "A monster NPC who is hostile",
+            "quirk": "Pyre has an intense fascination with anything cold and is momentarily distracted when confronted with it."
+        },
+        "coins": 400,
+        "yonder": 7,
+    },
+    "world_description": "The Silver Spire, unseen against the dark expanse of the Netherrealms, hides within its shadowy walls the labyrinthine chambers, one of which is the Shadowed Vault.",
+    "PC_description": "Raised by monks in a secluded monastery, Thorn has mastered the art of silence. He communicates through gestures and expressions."
 }
 ```
 

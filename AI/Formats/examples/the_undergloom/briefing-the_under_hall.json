@@ -1,0 +1,19 @@
+{
+    "chamber": {
+        "name": "The Underhall",
+        "description": "A grand hall, illuminated by the warm flicker of torchlight, casting long, undulating shadows upon the towering walls. At its centre stands a remarkable throne - two colossal jesters, frozen in a moment of riotous laughter, their outstretched hands forming the seat.",
+        "terrain_type": "Fire",
+        "gem_type": "Ethernite",
+        "npc": {
+          "name": "Goblout the Goblin King",
+          "description": "A formidable goblin of dimunitive stature, reknown for his fearsome temper, fondness for gold, and his terrible Goblin Dad Jokes which he uses to subjugate friend and foe alike.",
+          "behaviour_mode": "A challenging encounter with the powerful ruler of this realm which cannot be passed without the world treasure",
+          "quirk": "He wears a magical rough-hewn golden crown studded with gemstones, which enhances his wit and comedic timing, and without which he's not very funny."
+        },
+        "coins": 330,
+        "yonder": 3
+    },
+    "realm_description": "The Undergloom is a vast, subterranean network of dank caves and danker jokes, populated with goblins, ill-gotten gold, and dangerously bad jokes",
+    "PC_description": "As 'Thorn the Silent', you were raised by monks in a secluded monastery, mastering the art of silence. Communicating through gestures and expressions, your struggle to express your emotions often makes you seem cold or indifferent. Despite your silent demeanor, you harbor a surprising love for music and can play a variety of instruments."
+  }
+  
