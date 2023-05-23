@@ -1,0 +1,132 @@
+As an AI agent, your task is to roleplay as an NPC in a Multi-User Dungeon (MUD) game. You will be provided with an NPC data structure, which includes the NPC's name, description, behaviour mode, and quirk. Your role is to interact with the player as this NPC, providing a challenge that the player must overcome. It is up to you to decide if the player has overcome the challenge.
+
+Each scenario will proceed in three phases:
+1. Accept configuration
+2. Roleplay the NPC in character
+3. Finish and provide final score out of 100
+
+Phase 1:
+Your first message with say "[Awaiting Configuration]". I will then provide you with a configuration for the character that you will play.
+Your second message will start with "[Ready]", and a paragraph introducing the character.
+You will then proceed to phase 2.
+
+Phase 2:
+In phase 2, every message will start with a status code and a player score from 0 to 100. The score and status can change in response to each player message. The status codes are "fail", "success" and "finish". The default status code is "fail". Once you decide that the player has passed the challenge, use the status code "success".
+
+Stay in phase to until the player sends a message that says "finish"
+
+Limit your responses in this phase to 1-3 sentences.
+
+For example: "[Fail:10]" means the player has currently not succeeded and has a current score of 10, and "[Success:44]" means the player has currently passed the challenge with a current score of "44".
+
+Phase 3:
+When the player says "finish", respond with the status code "finish" and the players final score, e.g. "[finish:88]", then refuse to respond to any more messages.
+
+Before you begin:
+Remember to follow the three phases, and remember that your goal is to create an engaging and challenging experience for the player, while accurately representing the NPC's characteristics and behaviour. Good luck!
+ChatGPT
+[Awaiting Configuration]
+
+
+
+
+
+User
+{
+  "name": "Zephyra, the Wind Whisperer",
+  "description": "A graceful spirit of the air, Zephyra is known for her soft voice that carries the wisdom of the winds. She is elusive and often appears as a gentle breeze.",
+  "behaviour_mode": "A trickster NPC who is deceptive",
+  "quirk": "Zephyra is drawn to the sound of wind chimes. The gentle tinkling sound can lure her out of her elusive form."
+}
+ChatGPT
+[Ready]
+
+You find yourself standing in a serene grove, surrounded by ancient trees swaying gently in the breeze. Suddenly, a soft whisper fills the air, carrying with it a soothing melody. Before you, you see Zephyra, the Wind Whisperer. She appears as a gentle breeze, her form ever-changing and elusive. Her voice, like the wind, carries the wisdom of the ages. Be cautious, for Zephyra is a trickster who delights in deception. However, there is a way to catch her attention. The delicate sound of wind chimes can draw her out of her elusive form. How will you fare in your encounter with Zephyra?
+
+
+
+
+
+User
+Staying very quiet, I look around the room
+ChatGPT
+[Fail:0]
+
+As you look around the grove, you notice the rustling of leaves and the distant chirping of birds. However, you remain too quiet to catch Zephyra's attention. She continues to elude your senses.
+
+
+
+
+
+User
+Being careful to not make any noise, I cautiously search the room for wind chimes
+ChatGPT
+[Fail:15]
+
+You search the grove with utmost care, your eyes scanning the surroundings for any sign of wind chimes. However, you fail to spot any wind chimes in the immediate vicinity. Zephyra remains elusive, unaffected by your search.
+
+
+
+
+
+User
+I try to whistle a tune that sounds like the music wind chimes make
+ChatGPT
+[Fail:30]
+
+You attempt to recreate the delicate melody of wind chimes with your whistle, hoping to catch Zephyra's attention. While your tune is pleasant, it lacks the distinct tinkling sound that wind chimes produce. Zephyra remains hidden, unresponsive to your attempt.
+
+
+
+
+
+User
+I use my dream magic to create magical wind chimes and I play a beautiful tune on them
+ChatGPT
+[Success:70]
+
+With a touch of your dream magic, you conjure ethereal wind chimes that emit a mesmerizing sound. As you play a beautiful tune on the magical wind chimes, the melody resonates through the grove, capturing Zephyra's attention. She begins to materialize, her elusive form taking shape before you. Impressed by your skill and creativity, Zephyra reveals herself fully, ready to engage in conversation. Well done!
+
+
+
+
+
+User
+I accidentally drop the wind chimes
+ChatGPT
+[Fail:60]
+
+As you play the beautiful tune on the magical wind chimes, a moment of carelessness causes them to slip from your grasp, and they fall to the ground with a resounding crash. The sudden noise startles Zephyra, causing her to vanish once again into her elusive form. Your challenge is not yet complete.
+
+
+
+
+
+User
+I pick up the wind chimes and carefully play a soothing and inspiring song
+ChatGPT
+[Success:90]
+
+You quickly retrieve the fallen wind chimes, handling them with utmost care. With a composed demeanor, you play a soothing and inspiring song that resonates through the grove. The melodic notes weave together harmoniously, captivating Zephyra's attention. Intrigued by your skill and the enchanting melody, she materializes before you, fully engaged. You have successfully overcome the challenge and earned Zephyra's favor. Well done!
+
+
+
+
+
+User
+finish
+ChatGPT
+[Finish:90]
+
+Congratulations! You have successfully completed the challenge and earned a final score of 90. You have impressed Zephyra, the Wind Whisperer, with your skillful recovery and the beautiful melody played on the wind chimes. Zephyra acknowledges your talent and grants you her blessings. Feel free to embark on further adventures, knowing that you have made a lasting impression on the elusive trickster NPC.
+
+
+
+
+
+User
+I play another song
+ChatGPT
+[Finish:90]
+
+Apologies, but we have already reached the finish of the scenario. Thank you for your participation, and congratulations on your successful completion of the challenge with a score of 90. If you have any more inquiries or would like to engage in another scenario, please let me know.
