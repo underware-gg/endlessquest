@@ -88,6 +88,7 @@ export function createPlayerSystem(layer: PhaserLayer) {
       id: 'animation',
       once: (sprite) => {
         sprite.play(Animations.PlayerIdle);
+        sprite.setName('ThePlayer')
         // sprite.setScale(1.25)
       }
     });
@@ -97,7 +98,7 @@ export function createPlayerSystem(layer: PhaserLayer) {
       // const spriteIndex = atlasJson.textures[0].frames.findIndex((atlasFrame) => atlasFrame.filename === spriteName);
       _ghost = phaserScene.add.sprite(playerObj.position.x, playerObj.position.y, Assets.MainAtlas, spriteName)
       _ghost.setAlpha(0.4)
-      _ghost.setName(`Ghost`)
+      _ghost.setName('Ghost')
       _ghost.setVisible(false)
     }
   });
