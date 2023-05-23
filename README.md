@@ -13,10 +13,10 @@
        \/___/_/   \/_____/   \/_____/   \/_____/     \/_/    |;|_|;|_|;|
                                                              \\.    .  /
                           An infinite multiverse of           \\:  .  /
-                          persistent and generative            ||:   |
-                          fantastical dream worlds,            ||:.  |
-                          each populated by endless            ||:  .|
-                          & thematically consistent       \,/  ||:   |
+        \,/               persistent and generative            ||:   |
+                          fantastical dream worlds,       \,/  ||:.  |
+                /`\       each populated by endless            ||:  .|
+                          & thematically consistent            ||:   |
                           fantasy destinations, and   /`\      ||: , |
                           an intruiguing population            ||:   |
                           of strange and marvellous            ||: . |
