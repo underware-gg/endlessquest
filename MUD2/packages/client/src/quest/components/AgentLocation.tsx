@@ -55,16 +55,18 @@ export const AgentLocation = ({
           <div>Yonder: {yonder ?? '?'}</div>
           <div>Gem: {gemName ?? '?'}</div>
           <div>Coins: {coins ?? '?'}</div>
-          <div>Url: {url?.slice(0, 20) ?? '?'}</div>
+          {/* <div>Url: {url?.slice(0, 20) ?? '?'}</div> */}
           {/* <div>Worth: {worth ?? '?'}</div> */}
           <button className='ChatButton' disabled={!canChat} onClick={() => onChat(true, metadata?.name, metadata ? JSON.stringify(metadata) : '')}>CHAT</button>
         </div>
 
       </div>
 
-      <div className='AgentLocation'>
+      {url &&
+        <div className='AgentLocation'>
           <img className='FillParent' src={url ?? ''} />
-      </div>
+        </div>
+      }
 
     </div>
   )

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Main } from "./Main";
+import { RealmLocation } from "./RealmLocation";
 import { ChamberLocation } from "./ChamberLocation";
 import { PlayerLocation } from "./PlayerLocation";
 import { AgentLocation } from "./AgentLocation";
@@ -30,6 +31,7 @@ export const GameUI = () => {
     <div className='NoMouse'>
       
       <div className='GameUILeft'>
+        <RealmLocation />
         <ChamberLocation />
         <Loader />
       </div>

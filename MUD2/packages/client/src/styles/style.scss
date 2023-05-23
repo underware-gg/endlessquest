@@ -117,10 +117,16 @@ canvas {
   height: 250px;
 }
 
+.RealmLocation {
+  @extend .UI;
+  width: 250px;
+  height: 180px;
+}
+
 .PlayerLocation {
   @extend .UI;
   width: 250px;
-  height: 130px;
+  height: 180px;
   margin-left: auto;
   margin-right: 0;
 }

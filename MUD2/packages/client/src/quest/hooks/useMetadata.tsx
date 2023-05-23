@@ -128,3 +128,61 @@ export const useChamberMetadata = (coord: bigint) => {
   }
 }
 
+
+
+//---------------------
+// Realm metadata
+//
+export const useRealmMetadata = (coord: bigint) => {
+  const {
+    networkLayer: {
+      components: { Chamber, ChamberMetadata },
+      systemCalls: {
+        setChamberMetadata,
+      },
+      storeCache,
+    }
+  } = useMUD()
+
+  const metadataRow = useRow(storeCache, { table: 'ChamberMetadata', key: { coord } });
+
+  const metadata = useMemo(() => (metadataRow?.value?.metadata ?? null), [metadataRow])
+
+  const options = useMemo(() => ({
+    type: (!metadata) ? MetadataType.World : MetadataType.None,
+    terrain: null,
+    gemType: null,
+    coins: null,
+    yonder: null,
+  }), [metadata])
+  const { isWaiting, metadata: generatedMetadata } = useMetadata(options)
+
+  useEffect(() => { console.log(`REALM META:`, metadata) }, [metadata])
+  // useEffect(() => { console.log(`REALM META GENERATED:`, isWaiting, generatedMetadata) }, [generatedMetadata])
+
+  useEffect(() => {
+    if (generatedMetadata && !metadata) {
+      // @ts-ignore: accept any property
+      const world = generatedMetadata.world ?? null
+      if (!world) {
+        console.warn(`No World Realm in metadata!`, generatedMetadata)
+        return
+      }
+      const meta = {
+        name: world.world_name ?? world.name ?? '[name]',
+        description: world.world_description ?? world.description ?? '[description]',
+        premise: world.world_premise ?? world.premise ?? '[premise]',
+        boss: world.world_boss ?? world.boss ?? '[boss]',
+        quirk: world.world_boss_quirk ?? world.quirk ?? '[quirk]',
+        treasure: world.world_treasure ?? world.treasure ?? '[treasure]',
+      }
+      console.log(`meta store...:`, coord, meta)
+      setChamberMetadata(coord, JSON.stringify(meta))
+    }
+  }, [generatedMetadata])
+
+  return {
+    isWaiting: (isWaiting && !metadata),
+    metadata: metadata ? JSON.parse(metadata) : 'no metadata yet!',
+  }
+}

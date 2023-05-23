@@ -30,13 +30,13 @@ export function createControlsSystem(layer: PhaserLayer) {
     const ghost = phaserScene.children.getChildren().find((object) => object.name === 'Ghost') as Phaser.GameObjects.Sprite
     if (player && ghost) {
       if (direction == Direction.Up) {
-        player.setY(player.y - TILE_HEIGHT)
+        ghost.setY(ghost.y - TILE_HEIGHT)
       } else if (direction == Direction.Down) {
-        player.setY(player.y + TILE_HEIGHT)
+        ghost.setY(ghost.y + TILE_HEIGHT)
       } else if (direction == Direction.Left) {
-        player.setX(player.x - TILE_WIDTH)
+        ghost.setX(ghost.x - TILE_WIDTH)
       } else if (direction == Direction.Right) {
-        player.setX(player.x + TILE_WIDTH)
+        ghost.setX(ghost.x + TILE_WIDTH)
       }
       ghost.setVisible(true)
     }

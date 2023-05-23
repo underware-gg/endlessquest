@@ -39,7 +39,7 @@ export const ChamberLocation = () => {
           <div>Gem: {gemName ?? '?'}</div>
           <div>Coins: {coins ?? '?'}</div>
           {/* <div>Worth: {worth ?? '?'}</div> */}
-          <div>Url: {url?.slice(0, 20) ?? '?'}</div>
+          {/* <div>Url: {url?.slice(0, 20) ?? '?'}</div> */}
         </div>
       </div>
 
