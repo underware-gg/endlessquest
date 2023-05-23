@@ -26,10 +26,10 @@
 ```
 For the [Autonomous Worlds Hackaton](https://ethglobal.com/events/autonomous), May 18th to 26th 2023
 
-What has happened to me? The last thing that I remember, I went to sleep just like any other night.
-Now I'm here in this strange place, wherever this is. This feels like a dream, but I can't wake up.
-There are others here too. Dangerous beasts, perplexing living rooms, tricksters, lost souls and...
-The lord of this realm. They all seem bound to this place, but I'm not. I've got to get out of here
+> What has happened to me? The last thing that I remember, I went to sleep just like any other night.  
+> Now I'm here in this strange place, wherever this is. This feels like a dream, but I can't wake up.  
+> There are others here too. Dangerous beasts, perplexing living rooms, tricksters, lost souls and...  
+> The lord of this realm. They all seem bound to this place, but I'm not. I've got to get out of here  
 
 ### Team:
 
