@@ -1,0 +1,17 @@
+{
+    "chamber_name": "The Contemplative Cavern",
+    "chamber_description": "A quiet cavern, dimly lit with the soft glow of bioluminescent fungi. In the center, a troubled goblin paces back and forth, muttering to himself.",
+    "terrain_type": "Mushroom",
+    "gem_type": "Silver",
+    "npc": {
+      "name": "Grubnik the Doubtful",
+      "description": "A goblin jester torn between his desire to make others laugh and the fear of the dangerous consequence of his next joke. Will you help him make the right decision?",
+      "behaviour_mode": "A goblin who is debating whether to tell a dangerous joke. Help him decide.",
+      "quirk": "Despite his funny nature, Grubnik worries about the potential harm his jokes can cause."
+    },
+    "coins": 200,
+    "yonder": 2,
+    "realm_description": "The Undergloom is a vast, subterranean network of dank caves and danker jokes, populated with goblins, ill-gotten gold, and dangerously bad jokes",
+    "PC_description": "Introducing 'Eris the Joyful', a charismatic bard with an infectious laugh. Raised in a traveling circus, she learned to spread joy and laughter from a young age. While generally cheerful and optimistic, Eris struggles with her fear of silence, driven by a fear of loneliness. Despite her cheerful demeanor, Eris has a surprising talent for strategy and excels in games of wit and cunning."
+  }
+  

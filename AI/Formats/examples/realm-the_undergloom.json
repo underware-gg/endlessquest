@@ -1,0 +1,37 @@
+{
+	"realm_name": "The Undergloom, Sunless Citadel of the Goblin King",
+	"realm_desription": "The Undergloom is a vast, subterranean network of dank caves and danker jokes, populated with goblins, ill-gotten gold, and dangerously bad jokes",
+	"realm_premise": "The Undergloom is a sprawling network of dank caves, narrow passageways, and spacious caverns teeming with goblins of all sorts. In the deepest reaches of this subterranean realm, nestled amongst mounds of ill-gotten gold and treasures, lies the formidable lair of the Goblin King. Its gloomy corridors echo with the raucous laughter and anguished cries of the many goblins who live there, punctuated by the sardonic wit of their king. Few dare to venture into this hidden kingdom, where the unwary often fall prey to goblin mischief and a bad joke might literally kill you.", 
+	"realm_boss": {
+		"name": "Goblout the Goblin King",
+		"description": "A formidable goblin of dimunitive stature, reknown for his fearsome temper, fondness for gold, and his terrible Goblin Dad Jokes which he uses to subjugate friend and foe alike.",
+		"behaviour_mode": "A challenging encounter with the powerful ruler of this realm which cannot be passed without the world treasure",
+		"quirk": "He wears a magical rough-hewn golden crown studded with gemstones, which enhances his wit and comedic timing, and without which he's not very funny."
+	},
+	"realm_treasure": "The Horn of Ill-Humoured Pedantry, a great horn that when blown, will loudly and pedantically rebut any joke with a serious, tone-deaf and factual proclamation that completely ruins the joke",
+	"realm_dictionary": {
+		"fire": {"name":"JokeDAO", "description": "A decentralised community who run a weekly on-chain joke competition"},
+		"water": {"name":"Rap Battle Alley", "description": "An alley where aspiring comedy rappers face off in epic rap battles"},
+		"earth": {"name":"The Macbeth Mode Club", "description": "An undererground comedy club that exclusively performs comedic interpretations of Shakespeare's Macbeth that are so funny... they might just kill you"},
+		"air": {"name":"The Ill E-quip Show", "description": "An online channel that televises bad jokes 24x7"}
+	},
+	"realm_gems": {
+		"silver": { "label": "dilemma", "behaviour": "A goblin who is debating whether to tell a dangerous joke. Help him decide." },
+		"gold": { "label": "enigma", "behaviour": "A room with a joke inscribed on the wall. Can you solve the riddle and laugh?" },
+		"sapphire": { "label": "duel", "behaviour": "A goblin jester who challenges you to a duel of wits." },
+		"emerald": { "label": "prankster", "behaviour": "A deceptive goblin who loves playing tricks on visitors. Beware!" },
+		"ruby": { "label": "audience", "behaviour": "A room full of goblins who demand to be entertained. Can you impress them?" },
+		"diamond": { "label": "humourous artefact", "behaviour": "A magical joke book that can make anyone laugh. But can you control its power?" },
+		"ethernite": { "label": "ruler", "behaviour": "A challenging encounter with the powerful ruler of this realm which cannot be passed without the realm treasure" },
+		"kao": { "label": "treasure", "behaviour": "A challenging and unpredictable encounter with the guardian of the world treasure" }
+	},
+	"realm_art_prompts": {
+		"realm_suffix": "fantasy heavy metal art, grainy polaroid, retro album cover",
+		"chamber_prefix": "A grainy old photo of an empty rock venue",
+		"npc_prefix": "A grainy old polaroid portrait of a rockstar",
+		"fire": "digital art, pixel art",
+		"water": "soviet propaganda poster",
+		"earth": "dutch masters oil painting, renaissance",
+		"air": "digital fan art, trending on art station"
+	}
+}
