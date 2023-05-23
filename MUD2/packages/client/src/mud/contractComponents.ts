@@ -51,6 +51,7 @@ export function defineContractComponents(world: World) {
           gemType: RecsType.Number,
           coins: RecsType.Number,
           worth: RecsType.Number,
+          agent: RecsType.String,
         },
         {
           metadata: {

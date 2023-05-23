@@ -34,7 +34,8 @@ contract ChamberSystem is System {
         gemPos: gemPos,
         gemType: gemType,
         coins: coins,
-        worth: worth
+        worth: worth,
+        agent: 0
       })
     );
   }

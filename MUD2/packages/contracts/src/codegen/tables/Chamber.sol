@@ -32,12 +32,13 @@ struct ChamberData {
   uint8 gemType;
   uint16 coins;
   uint16 worth;
+  bytes32 agent;
 }
 
 library Chamber {
   /** Get the table's schema */
   function getSchema() internal pure returns (Schema) {
-    SchemaType[] memory _schema = new SchemaType[](11);
+    SchemaType[] memory _schema = new SchemaType[](12);
     _schema[0] = SchemaType.ADDRESS;
     _schema[1] = SchemaType.UINT256;
     _schema[2] = SchemaType.UINT256;
@@ -49,6 +50,7 @@ library Chamber {
     _schema[8] = SchemaType.UINT8;
     _schema[9] = SchemaType.UINT16;
     _schema[10] = SchemaType.UINT16;
+    _schema[11] = SchemaType.BYTES32;
 
     return SchemaLib.encode(_schema);
   }
@@ -62,7 +64,7 @@ library Chamber {
 
   /** Get the table's metadata */
   function getMetadata() internal pure returns (string memory, string[] memory) {
-    string[] memory _fieldNames = new string[](11);
+    string[] memory _fieldNames = new string[](12);
     _fieldNames[0] = "opener";
     _fieldNames[1] = "tokenId";
     _fieldNames[2] = "seed";
@@ -74,6 +76,7 @@ library Chamber {
     _fieldNames[8] = "gemType";
     _fieldNames[9] = "coins";
     _fieldNames[10] = "worth";
+    _fieldNames[11] = "agent";
     return ("Chamber", _fieldNames);
   }
 
@@ -473,6 +476,40 @@ library Chamber {
     _store.setField(_tableId, _keyTuple, 10, abi.encodePacked((worth)));
   }
 
+  /** Get agent */
+  function getAgent(uint256 coord) internal view returns (bytes32 agent) {
+    bytes32[] memory _keyTuple = new bytes32[](1);
+    _keyTuple[0] = bytes32(uint256((coord)));
+
+    bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 11);
+    return (Bytes.slice32(_blob, 0));
+  }
+
+  /** Get agent (using the specified store) */
+  function getAgent(IStore _store, uint256 coord) internal view returns (bytes32 agent) {
+    bytes32[] memory _keyTuple = new bytes32[](1);
+    _keyTuple[0] = bytes32(uint256((coord)));
+
+    bytes memory _blob = _store.getField(_tableId, _keyTuple, 11);
+    return (Bytes.slice32(_blob, 0));
+  }
+
+  /** Set agent */
+  function setAgent(uint256 coord, bytes32 agent) internal {
+    bytes32[] memory _keyTuple = new bytes32[](1);
+    _keyTuple[0] = bytes32(uint256((coord)));
+
+    StoreSwitch.setField(_tableId, _keyTuple, 11, abi.encodePacked((agent)));
+  }
+
+  /** Set agent (using the specified store) */
+  function setAgent(IStore _store, uint256 coord, bytes32 agent) internal {
+    bytes32[] memory _keyTuple = new bytes32[](1);
+    _keyTuple[0] = bytes32(uint256((coord)));
+
+    _store.setField(_tableId, _keyTuple, 11, abi.encodePacked((agent)));
+  }
+
   /** Get the full data */
   function get(uint256 coord) internal view returns (ChamberData memory _table) {
     bytes32[] memory _keyTuple = new bytes32[](1);
@@ -504,7 +541,8 @@ library Chamber {
     uint8 gemPos,
     uint8 gemType,
     uint16 coins,
-    uint16 worth
+    uint16 worth,
+    bytes32 agent
   ) internal {
     bytes memory _data = encode(
       opener,
@@ -517,7 +555,8 @@ library Chamber {
       gemPos,
       gemType,
       coins,
-      worth
+      worth,
+      agent
     );
 
     bytes32[] memory _keyTuple = new bytes32[](1);
@@ -540,7 +579,8 @@ library Chamber {
     uint8 gemPos,
     uint8 gemType,
     uint16 coins,
-    uint16 worth
+    uint16 worth,
+    bytes32 agent
   ) internal {
     bytes memory _data = encode(
       opener,
@@ -553,7 +593,8 @@ library Chamber {
       gemPos,
       gemType,
       coins,
-      worth
+      worth,
+      agent
     );
 
     bytes32[] memory _keyTuple = new bytes32[](1);
@@ -576,7 +617,8 @@ library Chamber {
       _table.gemPos,
       _table.gemType,
       _table.coins,
-      _table.worth
+      _table.worth,
+      _table.agent
     );
   }
 
@@ -595,7 +637,8 @@ library Chamber {
       _table.gemPos,
       _table.gemType,
       _table.coins,
-      _table.worth
+      _table.worth,
+      _table.agent
     );
   }
 
@@ -622,6 +665,8 @@ library Chamber {
     _table.coins = (uint16(Bytes.slice2(_blob, 90)));
 
     _table.worth = (uint16(Bytes.slice2(_blob, 92)));
+
+    _table.agent = (Bytes.slice32(_blob, 94));
   }
 
   /** Tightly pack full data using this table's schema */
@@ -636,9 +681,11 @@ library Chamber {
     uint8 gemPos,
     uint8 gemType,
     uint16 coins,
-    uint16 worth
+    uint16 worth,
+    bytes32 agent
   ) internal view returns (bytes memory) {
-    return abi.encodePacked(opener, tokenId, seed, yonder, chapter, terrain, entryDir, gemPos, gemType, coins, worth);
+    return
+      abi.encodePacked(opener, tokenId, seed, yonder, chapter, terrain, entryDir, gemPos, gemType, coins, worth, agent);
   }
 
   /** Encode keys as a bytes32 array using this table's schema */

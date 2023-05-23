@@ -43,7 +43,8 @@ export default mudConfig({
         gemPos: 'uint8',
         gemType: 'uint8',
         coins: 'uint16',
-        worth: 'uint16'
+        worth: 'uint16',
+        agent: 'bytes32'
       }
     },
     //-----------------------
