@@ -32,7 +32,7 @@
 
 A love letter to the [Autonomous Worlds Hackaton](https://ethglobal.com/events/autonomous), May 18th to 26th 2023.
 
----
+## About
 
 *Endless Quest* is an endless, generative roleplaying game, in which you play a traveller lost in the infinite
 realms of the dreaming. As you travel through each realm, you will discover infinite unique locations and the
@@ -46,9 +46,7 @@ generated once only, the first time that they are discovered, after which they a
 Once a location has been generated it will remain, however each traveller visits will be a unique, story driven
 experience, powered by the AI storyteller.
 
-*Endless Quest* 
-
-### Team:
+## Team:
 
 * Mataleone @rsodre
 * Recipromancer @rob_morris
