@@ -3,15 +3,21 @@ import { Entity, Has, HasValue, getComponentValueStrict } from '@latticexyz/recs
 import { useMUD } from '../../store';
 import { usePlayer } from '../hooks/usePlayer';
 import { useAgent } from '../hooks/useAgent';
+import { useMemo } from 'react';
 
 
-export const AgentLocation = () => {
+export const AgentLocation = ({
+  onChat = (e: boolean) => { },
+}) => {
   // const {
   //   components: { Position, Location },
   //   network: { playerEntity },
   // } = useMUD()
 
-  const { agentEntity } = usePlayer()
+  const {
+    agentEntity,
+    agentId,
+  } = usePlayer()
   const {
     coord,
     slug,
@@ -24,20 +30,25 @@ export const AgentLocation = () => {
     isWaiting,
   } = useAgent(agentEntity)
 
+  const canChat = (agentId != 0n)
 
   return (
     <div className='AgentLocation'>
       <h2>Agent</h2>
-      {/* <div>coord: {coord?.toString() ?? '?'}</div> */}
-      <div>entity: {BigInt(agentEntity ? agentEntity as string : 0).toString() ?? '?'}</div>
-      {/* <div>coord:{coord?.toString() ?? '?'}</div> */}
-      {/* <div>chamber: {slug ?? '?'}</div> */}
-      <div>yonder: {yonder ?? '?'}</div>
-      <div>gem: {gemName ?? '?'}</div>
-      <div>coins: {coins ?? '?'}</div>
-      <div>worth: {worth ?? '?'}</div>
-      <div>name: {isWaiting ? '...' : (metadata?.name ?? '?')}</div>
-      <div>description: {isWaiting ? '...' : (metadata?.description ?? '?')}</div>
+      <p>{isWaiting ? 'dreaming...' : (metadata?.name ?? '?')}</p>
+      <p>{isWaiting ? '...' : (metadata?.description ?? '?')}</p>
+
+      <div className='Infos'>
+        {/* <div>coord: {coord?.toString() ?? '?'}</div> */}
+        <div>Entity: {agentId.toString()}</div>
+        {/* <div>coord:{coord?.toString() ?? '?'}</div> */}
+        {/* <div>chamber: {slug ?? '?'}</div> */}
+        <div>Yonder: {yonder ?? '?'}</div>
+        <div>Gem: {gemName ?? '?'}</div>
+        <div>Coins: {coins ?? '?'}</div>
+        {/* <div>Worth: {worth ?? '?'}</div> */}
+        <button className='ChatButton' disabled={!canChat} onClick={() => onChat(true)}>CHAT</button>
+      </div>
     </div>
   )
 }

@@ -42,7 +42,7 @@ export const useAgentMetadata = (agentEntity: Entity | undefined) => {
   console.log(`AGENT META GENERATED:`, generatedMetadata)
 
   useEffect(() => { console.log(`AGENT META:`, metadata) }, [metadata])
-  useEffect(() => { console.log(`AGENT META GENERATED:`, isWaiting, generatedMetadata) }, [generatedMetadata])
+  // useEffect(() => { console.log(`AGENT META GENERATED:`, isWaiting, generatedMetadata) }, [generatedMetadata])
 
   useEffect(() => {
     if (agentEntity && agent && generatedMetadata && !metadata) {
@@ -99,7 +99,7 @@ export const useChamberMetadata = (coord: bigint) => {
   const { isWaiting, metadata: generatedMetadata } = useMetadata(options)
   
   useEffect(() => { console.log(`CHAMBER META:`, chamber?.tokenId, metadata) }, [chamber, metadata])
-  useEffect(() => { console.log(`CHAMBER META GENERATED:`, chamber?.tokenId, isWaiting, generatedMetadata) }, [chamber, generatedMetadata])
+  // useEffect(() => { console.log(`CHAMBER META GENERATED:`, chamber?.tokenId, isWaiting, generatedMetadata) }, [chamber, generatedMetadata])
 
   useEffect(() => {
     if (chamber && generatedMetadata && !metadata) {

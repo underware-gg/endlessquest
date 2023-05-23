@@ -57,13 +57,13 @@ export const Loader = () => {
   const tilesOk = tiles.length > 0
 
   return (
-    <div className='Loader'>
-      Load <span>{tokenId.toString() ?? '??'}</span>: 
+    <div className='Loader Infos'>
+      Loader(<span>{tokenId.toString() ?? '??'})</span>
+      {` [${slug}] `}
       {coordOk ? 'x' : '.'}
       {chamberOk ? 'x' : '.'}
       {doorsOk ? 'x' : '.'}
       {tilesOk ? 'x' : '.'}
-      {` ${slug}`}
     </div>
   );
 };

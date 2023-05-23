@@ -19,6 +19,7 @@ export const usePlayer = () => {
   const { compass, slug } = useCoord(location?.coord ?? 0n)
 
   const agentEntity = useMemo(() => (normalizeEntityID(location?.agent ?? '0')), [location])
+  const agentId = useMemo(() => (BigInt(agentEntity ? agentEntity as string : 0)), [agentEntity])
 
   return {
     position,
@@ -26,6 +27,7 @@ export const usePlayer = () => {
     level: player?.level ?? null,
     coord: location?.coord ?? null,
     agentEntity,
+    agentId,
     compass,
     slug,
   }

@@ -15,17 +15,21 @@ export const PlayerLocation = () => {
     position,
     coord, slug,
     agentEntity,
+    agentId,
   } = usePlayer()
 
   return (
     <div className='PlayerLocation'>
       <h2>Player</h2>
-      <div>Name: {name ?? '?'}</div>
+      <div>Id: {name ?? '?'}</div>
       <div>Level: {level ?? '?'}</div>
-      <div>Pos: {position?.x ?? '?'},{position?.y ?? '?'}</div>
-      {/* <div>coord:{coord?.toString() ?? '?'}</div> */}
-      <div>chamber: {slug ?? '?'}</div>
-      <div>agent: {BigInt(agentEntity ? agentEntity as string : 0).toString() ?? '?'}</div>
+
+      <div className='Infos'>
+        <div>World Position: {position?.x ?? '?'},{position?.y ?? '?'}</div>
+        {/* <div>coord:{coord?.toString() ?? '?'}</div> */}
+        <div>chamber: {slug ?? '?'}</div>
+        <div>agent: {agentId.toString()}</div>
+      </div>
     </div>
   )
 }

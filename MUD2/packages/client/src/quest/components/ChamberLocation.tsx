@@ -25,15 +25,18 @@ export const ChamberLocation = () => {
   return (
     <div className='ChamberLocation'>
       <h2>Chamber</h2>
-      <div>coord:{coord?.toString() ?? '?'}</div>
-      <div>chamber: {slug ?? '?'}</div>
-      <div>tokenId: {tokenId?.toString() ?? '?'}</div>
-      <div>yonder: {yonder ?? '?'}</div>
-      <div>gem: {gemName ?? '?'}</div>
-      <div>coins: {coins ?? '?'}</div>
-      <div>worth: {worth ?? '?'}</div>
-      <div>name: {isWaiting ? '...' : (metadata?.name ?? '?')}</div>
-      <div>description: {isWaiting ? '...' : (metadata?.description ?? '?')}</div>
+      <p>{isWaiting ? 'dreaming...' : (metadata?.name ?? '?')}</p>
+      <p>{isWaiting ? '...' : (metadata?.description ?? '?')}</p>
+
+      <div className='Infos'>
+        <div>Token Id: {tokenId?.toString() ?? '?'}</div>
+        <div>Chamber: {slug ?? '?'}</div>
+        <div>Coord:{coord?.toString() ?? '?'}</div>
+        <div>Yonder: {yonder ?? '?'}</div>
+        <div>Gem: {gemName ?? '?'}</div>
+        <div>Coins: {coins ?? '?'}</div>
+        {/* <div>Worth: {worth ?? '?'}</div> */}
+      </div>
     </div>
   )
 }
