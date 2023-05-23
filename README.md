@@ -1,15 +1,41 @@
-# autonomousworlds-hack
+# Endless Quest
 
-Repo for the [Autonomous Worlds Hackaton](https://ethglobal.com/events/autonomous)
+```
+  ______     __   __     _____     __         ______     ______     ______    
+ /\  ___\   /\ "-.\ \   /\  __-.  /\ \       /\  ___\   /\  ___\   /\  ___\   
+ \ \  __\   \ \ \-.  \  \ \ \/\ \ \ \ \____  \ \  __\   \ \___  \  \ \___  \  
+  \ \_____\  \ \_\\"\_\  \ \____-  \ \_____\  \ \_____\  \/\_____\  \/\_____\ 
+   \/_____/   \/_/ \/_/   \/____/   \/_____/   \/_____/   \/_____/   \/_____/ 
+      ______     __  __     ______     ______     ______  
+     /\  __ \   /\ \/\ \   /\  ___\   /\  ___\   /\__  _\         |v0.1.0 
+     \ \ \/\_\  \ \ \_\ \  \ \  __\   \ \___  \  \/_/\ \/         |
+      \ \___\_\  \ \_____\  \ \_____\  \/\_____\    \ \_\     _  _|_  _
+       \/___/_/   \/_____/   \/_____/   \/_____/     \/_/    |;|_|;|_|;|
+                                                             \\.    .  /
+                          An infinite multiverse of           \\:  .  /
+                          persistent and generative            ||:   |
+                          fantastical dream worlds,            ||:.  |
+                          each populated by endless            ||:  .|
+                          & thematically consistent       \,/  ||:   |
+                          fantasy destinations, and   /`\      ||: , |
+                          an intruiguing population            ||:   |
+                          of strange and marvellous            ||: . |
+             _____        beings, all AI generated!           _||_   |
+      ____--`     '-~~_                                  __---`   ~`--,__
+ ~-~-~                  `~~----__-~,.-`~~--~^~~--.__,--~'      fDm       `~~
+```
+For the [Autonomous Worlds Hackaton](https://ethglobal.com/events/autonomous), May 18th to 26th 2023
 
-May 18th to 26th 2023
+What has happened to me? The last thing that I remember, I went to sleep just like any other night.
+Now I'm here in this strange place, wherever this is. This feels like a dream, but I can't wake up.
+There are others here too. Dangerous beasts, perplexing living rooms, tricksters, lost souls and...
+The lord of this realm. They all seem bound to this place, but I'm not. I've got to get out of here
 
 ### Team:
 
-* Mataleone
-* Recipromancer
-* Chromuh
-* Mentis
+* Mataleone @rsodre
+* Recipromancer @rob_morris
+* Mentis @Mentis123
 
 
 # Repo Structure
