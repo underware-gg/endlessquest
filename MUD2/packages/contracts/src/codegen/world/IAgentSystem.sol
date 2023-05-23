@@ -18,4 +18,6 @@ interface IAgentSystem {
   ) external;
 
   function setAgentMetadata(bytes32 key, string memory metadata) external;
+
+  function setAgentProfileImage(bytes32 key, string memory url) external;
 }

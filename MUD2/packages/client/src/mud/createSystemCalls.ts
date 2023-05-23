@@ -181,6 +181,20 @@ export function createSystemCalls(
     }
   };
 
+  const setChamberProfileImage = (coord: bigint, url: string) => {
+    if (coord && url) {
+      console.warn(`STORE CHAMBER IMAGE @`, coord, url)
+      worldSend("setChamberProfileImage", [coord, url]);
+    }
+  };
+  const setAgentProfileImage = (key: Entity, url: string) => {
+    if (key && url) {
+      const id = _entityToBytes32(key)
+      console.warn(`STORE AGENT IMAGE @`, id, url)
+      worldSend("setAgentProfileImage", [id, url]);
+    }
+  };
+
   //---------------------------
   // Player / Movement
   //
@@ -202,6 +216,8 @@ export function createSystemCalls(
     // Metadata
     setChamberMetadata,
     setAgentMetadata,
+    setChamberProfileImage,
+    setAgentProfileImage,
     // Player
     spawn,
     move,

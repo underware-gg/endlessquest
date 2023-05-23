@@ -7,7 +7,8 @@ import {
   Agent, AgentData,
   Position,
   Blocker,
-  Metadata
+  Metadata,
+  ProfileImage
 } from "../codegen/Tables.sol";
 // import { Crawl } from "../utils/Crawl.sol";
 
@@ -47,5 +48,9 @@ contract AgentSystem is System {
 
   function setAgentMetadata(bytes32 key, string memory metadata) public {
     Metadata.set(key, metadata);
+  }
+
+  function setAgentProfileImage(bytes32 key, string memory url) public {
+    ProfileImage.set(key, url);
   }
 }
