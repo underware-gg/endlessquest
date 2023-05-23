@@ -2,6 +2,10 @@ import { Direction } from "../constants";
 import { PhaserLayer } from "../createPhaserLayer";
 import { TILE_HEIGHT, TILE_WIDTH } from "../constants";
 
+declare global {
+  interface Window { QuestNamespace: any; }
+}
+
 export function createControlsSystem(layer: PhaserLayer) {
   const {
     scenes: {
@@ -16,6 +20,10 @@ export function createControlsSystem(layer: PhaserLayer) {
       },
     },
   } = layer;
+
+  window.QuestNamespace = {
+    controlsEnabled: true
+  }
 
   const _moveGhost = (direction: Direction) => {
     const player = phaserScene.children.getChildren().find((object) => object.name === 'ThePlayer') as Phaser.GameObjects.Sprite
@@ -37,6 +45,7 @@ export function createControlsSystem(layer: PhaserLayer) {
   input.onKeyPress(
     keys => keys.has("W"),
     () => {
+      if (!window.QuestNamespace.controlsEnabled) return
       move(Direction.Up);
       _moveGhost(Direction.Up);
     });
@@ -44,6 +53,7 @@ export function createControlsSystem(layer: PhaserLayer) {
   input.onKeyPress(
     keys => keys.has("A"),
     () => {
+      if (!window.QuestNamespace.controlsEnabled) return
       move(Direction.Left);
       _moveGhost(Direction.Left);
     }
@@ -52,6 +62,7 @@ export function createControlsSystem(layer: PhaserLayer) {
   input.onKeyPress(
     keys => keys.has("S"),
     () => {
+      if (!window.QuestNamespace.controlsEnabled) return
       move(Direction.Down);
       _moveGhost(Direction.Down);
     }
@@ -60,6 +71,7 @@ export function createControlsSystem(layer: PhaserLayer) {
   input.onKeyPress(
     keys => keys.has("D"),
     () => {
+      if (!window.QuestNamespace.controlsEnabled) return
       move(Direction.Right);
       _moveGhost(Direction.Right);
     }

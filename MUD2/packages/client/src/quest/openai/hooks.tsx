@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo } from 'react'
 import promptChat from './promptChat'
 import prompMetadata, { MetadataType, PromptMetadataOptions } from './promptMetadata'
+import { ChatHistory } from './generateChat'
 
 export const usePrompMetadata = (options: PromptMetadataOptions) => {
   const [isWaiting, setIsWaiting] = useState<boolean>(false)
@@ -46,9 +47,10 @@ export const usePrompMetadata = (options: PromptMetadataOptions) => {
   }
 }
 
-export const usePrompChat = (prompt: string) => {
+export const usePrompChat = (previousHistory: ChatHistory, prompt: string, agentMetadata: string) => {
   const [isWaiting, setIsWaiting] = useState<boolean>(false)
   const [message, setMessage] = useState<string | null>(null)
+  const [history, setHistory] = useState<ChatHistory>([])
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
@@ -56,12 +58,14 @@ export const usePrompChat = (prompt: string) => {
 
     const _generate = async () => {
       const response = await promptChat({
-        history: [],
-        prompt: null,
+        history: previousHistory,
+        prompt,
+        agentMetadata,
       })
       if (_mounted) {
         setIsWaiting(false)
         setMessage(response.message ?? null)
+        setHistory(response.history ?? [])
         setError(response.error ?? null)
       }
     }
@@ -79,6 +83,7 @@ export const usePrompChat = (prompt: string) => {
   return {
     isWaiting,
     message,
+    history,
     error,
   }
 }

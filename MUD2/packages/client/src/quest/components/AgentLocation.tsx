@@ -3,11 +3,11 @@ import { Entity, Has, HasValue, getComponentValueStrict } from '@latticexyz/recs
 import { useMUD } from '../../store';
 import { usePlayer } from '../hooks/usePlayer';
 import { useAgent } from '../hooks/useAgent';
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 
 
 export const AgentLocation = ({
-  onChat = (e: boolean) => { },
+  onChat = (e: boolean, name: string, description: string) => { },
 }) => {
   // const {
   //   components: { Position, Location },
@@ -32,6 +32,12 @@ export const AgentLocation = ({
 
   const canChat = (agentId != 0n)
 
+  useEffect(() => {
+    if (!canChat) {
+      onChat(false, '', '')
+    }
+  }, [canChat])
+
   return (
     <div className='AgentLocation'>
       <h2>Agent</h2>
@@ -47,7 +53,7 @@ export const AgentLocation = ({
         <div>Gem: {gemName ?? '?'}</div>
         <div>Coins: {coins ?? '?'}</div>
         {/* <div>Worth: {worth ?? '?'}</div> */}
-        <button className='ChatButton' disabled={!canChat} onClick={() => onChat(true)}>CHAT</button>
+        <button className='ChatButton' disabled={!canChat} onClick={() => onChat(true, metadata?.name, metadata ? JSON.stringify(metadata) : '')}>CHAT</button>
       </div>
     </div>
   )

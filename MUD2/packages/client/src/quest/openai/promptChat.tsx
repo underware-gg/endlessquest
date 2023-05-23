@@ -4,6 +4,7 @@ import { ChatCompletionRequestMessageRoleEnum } from 'openai'
 
 export interface PromptAgentOptions {
   history: Chat.ChatHistory
+  agentMetadata: string
   prompt: string | null
 }
 
@@ -23,9 +24,10 @@ export default async function promptChat(options: PromptAgentOptions): Promise<P
       { role: ChatCompletionRequestMessageRoleEnum.System, content: prompts.chatSystemPrompt },
       { role: ChatCompletionRequestMessageRoleEnum.User, content: 'Begin' },
       { role: ChatCompletionRequestMessageRoleEnum.Assistant, content: '[Awaiting Configuration]' },
-      { role: ChatCompletionRequestMessageRoleEnum.User, content: prompts.fafnir },
+      { role: ChatCompletionRequestMessageRoleEnum.User, content: options.agentMetadata },
     ]
   } else {
+    if (!options.prompt) console.log('Chat MISSING PROMPT!')
     messages.push({
       role: ChatCompletionRequestMessageRoleEnum.User,
       content: options.prompt ?? 'Hello',

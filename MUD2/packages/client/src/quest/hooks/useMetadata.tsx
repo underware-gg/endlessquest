@@ -57,6 +57,10 @@ export const useAgentMetadata = (agentEntity: Entity | undefined) => {
         description: npc.description ?? '[description]',
         behaviour_mode: npc.behaviour_mode ?? '[behaviour]',
         quirk: npc.quirk ?? '[quirk]',
+        terrain: agent.terrain,
+        yonder: agent.yonder,
+        gemType: agent.gemType,
+        coins: agent.coins,
       }
       console.log(`meta store...:`, agentEntity, meta)
       setAgentMetadata(agentEntity, JSON.stringify(meta))
