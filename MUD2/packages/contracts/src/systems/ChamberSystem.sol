@@ -4,7 +4,8 @@ pragma solidity >=0.8.0;
 import { System } from "@latticexyz/world/src/System.sol";
 import {
   Chamber, ChamberData,
-  ChamberMetadata
+  ChamberMetadata,
+  ChamberProfileImage
 } from "../codegen/Tables.sol";
 
 contract ChamberSystem is System {
@@ -42,5 +43,9 @@ contract ChamberSystem is System {
 
   function setChamberMetadata(uint256 coord, string memory metadata) public {
     ChamberMetadata.set(coord, metadata);
+  }
+
+  function setChamberProfileImage(uint256 coord, string memory url) public {
+    ChamberProfileImage.set(coord, url);
   }
 }

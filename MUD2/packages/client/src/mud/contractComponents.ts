@@ -76,6 +76,21 @@ export function defineContractComponents(world: World) {
         }
       );
     })(),
+    ChamberProfileImage: (() => {
+      const tableId = new TableId("", "ChamberProfileIm");
+      return defineComponent(
+        world,
+        {
+          url: RecsType.String,
+        },
+        {
+          metadata: {
+            contractId: tableId.toHexString(),
+            tableId: tableId.toString(),
+          },
+        }
+      );
+    })(),
     Agent: (() => {
       const tableId = new TableId("", "Agent");
       return defineComponent(
@@ -104,6 +119,21 @@ export function defineContractComponents(world: World) {
         world,
         {
           metadata: RecsType.String,
+        },
+        {
+          metadata: {
+            contractId: tableId.toHexString(),
+            tableId: tableId.toString(),
+          },
+        }
+      );
+    })(),
+    ProfileImage: (() => {
+      const tableId = new TableId("", "ProfileImage");
+      return defineComponent(
+        world,
+        {
+          url: RecsType.String,
         },
         {
           metadata: {

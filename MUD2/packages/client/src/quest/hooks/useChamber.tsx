@@ -5,6 +5,7 @@ import { useCoord } from './useCoord';
 import { usePlayer } from './usePlayer';
 import { GemNames } from '../bridge/Crawl';
 import { useChamberMetadata } from './useMetadata'
+import { useChamberProfileImage } from './useProfileImage';
 
 export const useChamber = () => {
   const {
@@ -20,6 +21,8 @@ export const useChamber = () => {
 
   const { metadata, isWaiting } = useChamberMetadata(coord ?? 0n)
 
+  const { url } = useChamberProfileImage(coord ?? 0n)
+
   return {
     coord: coord ?? null,
     compass,
@@ -32,6 +35,7 @@ export const useChamber = () => {
     coins: chamber?.value?.coins ?? null,
     worth: chamber?.value?.worth ?? null,
     metadata: metadata ?? null,
+    url: url ?? null,
     isWaiting,
   }
 }

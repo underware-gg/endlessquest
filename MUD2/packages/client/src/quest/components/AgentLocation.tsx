@@ -28,6 +28,7 @@ export const AgentLocation = ({
     worth,
     metadata,
     isWaiting,
+    url,
   } = useAgent(agentEntity)
 
   const canChat = (agentId != 0n)
@@ -40,6 +41,10 @@ export const AgentLocation = ({
 
   return (
     <div className='AgentLocation'>
+      <div className='LocationImage'>
+        <img className='LocationImg' src={url ?? ''} />
+      </div>
+
       <h2>Agent</h2>
       <p>{isWaiting ? 'dreaming...' : (metadata?.name ?? '?')}</p>
       <p>{isWaiting ? '...' : (metadata?.description ?? '?')}</p>
@@ -52,9 +57,11 @@ export const AgentLocation = ({
         <div>Yonder: {yonder ?? '?'}</div>
         <div>Gem: {gemName ?? '?'}</div>
         <div>Coins: {coins ?? '?'}</div>
+        <div>Url: {url?.slice(0,20) ?? '?'}</div>
         {/* <div>Worth: {worth ?? '?'}</div> */}
         <button className='ChatButton' disabled={!canChat} onClick={() => onChat(true, metadata?.name, metadata ? JSON.stringify(metadata) : '')}>CHAT</button>
       </div>
+
     </div>
   )
 }

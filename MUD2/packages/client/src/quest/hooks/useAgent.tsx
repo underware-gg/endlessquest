@@ -5,6 +5,7 @@ import { useMUD } from '../../store'
 import { useCoord } from './useCoord'
 import { GemNames } from '../bridge/Crawl'
 import { useAgentMetadata } from './useMetadata'
+import { useAgentProfileImage } from './useProfileImage'
 
 export const useAgent = (agentEntity: Entity | undefined) => {
   const {
@@ -18,6 +19,8 @@ export const useAgent = (agentEntity: Entity | undefined) => {
 
   const { metadata, isWaiting } = useAgentMetadata(agentEntity)
 
+  const { url } = useAgentProfileImage(agentEntity)
+
   return {
     coord: agent?.coord ?? null,
     compass: compass,
@@ -30,6 +33,7 @@ export const useAgent = (agentEntity: Entity | undefined) => {
     coins: agent?.coins ?? null,
     worth: agent?.worth ?? null,
     metadata: metadata ?? null,
+    url: url ?? null,
     isWaiting,
   }
 }
