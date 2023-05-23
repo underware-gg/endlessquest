@@ -100,7 +100,7 @@ canvas {
 .ChamberLocation {
   @extend .UI;
   width: 400px;
-  height: 250px;
+  height: 280px;
 }
 
 .PlayerLocation {
@@ -112,7 +112,7 @@ canvas {
 .AgentLocation {
   @extend .UI;
   width: 400px;
-  height: 200px;
+  height: 280px;
 }
 
 .LocationImage {
@@ -136,7 +136,7 @@ canvas {
 .ChatButton {
   position: absolute;
   bottom: 0;
-  right: 0;
+  left: 0;
   width: 50%;
   height: 40px;
 }
