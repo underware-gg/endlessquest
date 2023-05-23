@@ -1,0 +1,27 @@
+{
+	"realm_name": "The Shimmering Seascape, Luminary Domain of the Mariner Queen",
+	"realm_desription": "The Shimmering Seascape is a boundless maritime expanse of radiant oceans and dazzling aquatic life, inhabited by seafarers, merfolk, and a treasury of underwater relics, dominated by the enigmatic tales and tidal riddles of its ruling sovereign.",
+	"realm_premise": "The Shimmering Seascape is an enigmatic domain of shimmering coral reefs, labyrinthine undersea caves, and sprawling oceanic expanses teeming with mythical sea creatures. In the deepest abyss of this maritime kingdom, amidst a trove of sunken treasures, resides the formidable Mariner Queen. Her aqueous domain resonates with the melodious chants and cryptic riddles of the undersea populace, punctuated by the Mariner Queen's inscrutable wisdom. Few dare to delve into this mesmerizing realm, where wanderers often get entrapped in the hypnotic depths and a wrong answer to a riddle can lead to an eternal aquatic curse.", 
+	"realm_boss": {
+		"name": "Aquaeria the Mariner Queen",
+		"description": "An enigmatic mermaid of great beauty and allure, known for her cryptic riddles, obsession with maritime relics, and her powerful Tidal Chants which she uses to control the ocean currents and sea creatures alike.",
+		"behaviour_mode": "A challenging encounter with the enigmatic ruler of this realm which cannot be passed without the world treasure",
+		"quirk": "She dons a majestic crown of coral and pearl, which amplifies her underwater command, and without which she is at the mercy of her own ocean."
+	},
+	"realm_treasure": "The Echo of the Abyss, a mystical conch shell that, when blown, can command the sea creatures and manipulate ocean currents",
+	"realm_dictionary": {
+		"fire": {"name":"Mariner's Flame", "description": "An ancient lighthouse that guides the lost seafarers with its mystical flame"},
+		"water": {"name":"Neptune's Arena", "description": "A grand colosseum where sea creatures engage in breathtaking battles"},
+		"earth": {"name":"Shellmound Bazaar", "description": "A bustling marketplace selling underwater relics and exotic sea produce"},
+		"air": {"name":"Skywave Symphony", "description": "A spectacular performance by airborne sea creatures, harmonizing with the ocean's rhythm"}
+	},
+	"realm_art_prompts": {
+		"realm_suffix": "nautical steampunk art, watercolor marine landscape, vintage nautical charts",
+		"chamber_prefix": "A faded naval blueprint of a mysterious undersea structure",
+		"npc_prefix": "A watercolor portrait of a maritime figure",
+		"fire": "digital neon art, luminescent deep sea creatures",
+		"water": "art nouveau poster, mythological sea battles",
+		"earth": "medieval manuscript illumination, bustling seaport",
+		"air": "digital fantasy art, flight of the sea creatures"
+	}
+}
