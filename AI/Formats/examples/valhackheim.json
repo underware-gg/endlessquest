@@ -1,0 +1,37 @@
+{
+	"realm_name": "Valhackheim, Eternal Hackathon of the Gods",
+	"realm_description": "Valhackheim is a celestial domain of infinite codebases, home to the heavy metal Norse gods of Ethereum, who judge the hack projects of mortal participants. Here, the boundaries between code and metal, human and god, blur in a cacophony of creation and chaos.",
+	"realm_premise": "In Valhackheim, the divine hackathon never ends. Participants labor under the stern gaze of Viking deities, their coding skills put to the ultimate test. Only projects that exemplify innovation, mastery and a true understanding of the Ethereum blockchain earn the gods' favor. Those who fail to impress are sent back to the mortal realm to refine their skills, while the worthy ascend to join the pantheon of Hackathonic Champions.", 
+	"realm_boss": {
+		"name": "Odhack, God of Wisdom and Blockchain",
+		"description": "Odhack, master of wisdom, language, and foresight, commands the codebases of Valhackheim. He wields the power of blockchain and judges if mortal hacks are worthy.",
+		"behaviour_mode": "A challenging encounter with the powerful ruler of this realm which cannot be passed without the world treasure",
+		"quirk": "Odhack is never without his two companions: Huginn, his raven of Thought, and Muninn, his raven of Memory, symbolising the wisdom and knowledge required to master blockchain technology."
+	},
+	"realm_treasure": "The Hammer of Finality, a legendary mallet that, when struck, finalizes all pending Ethereum transactions instantly, symbolising the completion and success of a project",
+	"realm_dictionary": {
+		"fire": {"name":"Gitgard", "description": "A fiery forge where code is created and reforged"},
+		"water": {"name":"Etherfrost", "description": "A frosty realm of complex Ethereum smart contracts"},
+		"earth": {"name":"Solidityrock", "description": "A realm where solidity codes are as strong as bedrock"},
+		"air": {"name":"DeFiwind", "description": "The brisk realm of decentralized finance"}
+	},
+	"realm_gems": {
+        "silver": { "label": "quest", "behaviour": "A friendly NPC who needs help" },
+        "gold": { "label": "mystery", "behaviour": "An empty room that presents a mystery or challenge" },
+        "sapphire": { "label": "fight", "behaviour": "A monster NPC who is hostile" },
+        "emerald": { "label": "trickster", "behaviour": "A trickster NPC who is deceptive" },
+        "ruby": { "label": "trial", "behaviour": "A grand mythical beast who tests if the player is worthy" },
+        "diamond": { "label": "artefact", "behaviour": "A magical artifact" },
+        "ethernite": { "label": "ruler", "behaviour": "A challenging encounter with the powerful ruler of this realm which cannot be passed without the realm treasure" },
+        "kao": { "label": "treasure", "behaviour": "A challenging and unpredictable encounter with the guardian of the world treasure" }
+    },
+	"realm_art_prompts": {
+		"realm_suffix": "viking heavy metal art, concert poster, album cover",
+		"chamber_prefix": "A shadowy hackathon space, lit by the glow of many screens",
+		"npc_prefix": "A stylized Norse god, rendered in heavy metal art style",
+		"fire": "fiery code forge, molten metal",
+		"water": "icy landscape of smart contracts, crystalline structures",
+		"earth": "solid bedrock of code, sturdy construction",
+		"air": "wind-swept open space, papers flying"
+	}
+}
