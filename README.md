@@ -27,10 +27,17 @@
 
 > What has happened to me? The last thing that I remember, I went to sleep just like any other night.  
 > Now I'm here in this strange place, wherever this is. This feels like a dream, but I can't wake up.  
-> There are others here too. Dangerous beasts, perplexing living rooms, tricksters, lost souls and...  
-> The lord of this realm. They all seem bound to this place, but I'm not. I've got to get out of here  
+> There are others here too. Deadly beasts, sentient artefacts, devious tricksters, lost souls, and...
+> the Lord of this Realm. They all seem bound to this place, but I'm not. I've got to get out of here!  
 
 A love letter to the [Autonomous Worlds Hackaton](https://ethglobal.com/events/autonomous), May 18th to 26th 2023.
+
+
+## TLDR
+
+*Endless Quest* is an an autonomous world engine for generating infinite, dynamic roleplaying challenges; no two the same. Quest encounters are powered by a sophisticated, behavioural AI storytelling system that ensures narrative and stylistic consistency.
+
+Each world is built with MUD2 and Optimism on top of the on-chain Ethereum hyperstructure of Endless Crawler chambers, with both world metadata generation and NPC encounters powered by ChatGPT and DALL-E 2.
 
 ## About
 
@@ -40,11 +47,12 @@ lost souls bound to them; no two alike. Each location and character that you mee
 and indeed, each of its many realms is generated - in its entirety - dynamically by an AI storyteller.
 
 Each realm generates endless unique locations and characters that are thematically consistent, from one of four
-sub themes and eight different kinds of encounters, that are unique to that realm. Locations and characters are
+sub-themes and eight different kinds of encounters that are unique to that realm. Locations and characters are
 generated once only, the first time that they are discovered, after which they are persisted permanently on-chain.
 
-Once a location has been generated it will remain, however each traveller visits will be a unique, story driven
-experience, powered by the AI storyteller.
+Once a location has been generated it will remain, however each traveller's visit will be a dynamic, story driven
+experience that responds to the player, powered by the AI storyteller.
+
 
 ## Team:
 
