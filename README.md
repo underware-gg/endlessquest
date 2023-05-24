@@ -59,39 +59,20 @@ external dependencies:
 
 * @lattice packages
 * Endless Crawler [mainnet contracts](https://etherscan.io/address/0x8e70b94c57b0cbc9807c0f58bc251f4cd96acdb0#code)
-* Endless Crawler [mainnet contracts](https://etherscan.io/address/0x8e70b94c57b0cbc9807c0f58bc251f4cd96acdb0#code)
 
 
-## `MUD`
+## `MUD2`
 
-A React MUD engine
+A Phaser MUD engine
 
 ### Run local server
 
-You need Foundry! (see below)
+Install [Node.js 16+](https://nodejs.org/en/download) (we use version 18)
+
+Install pnpm
 
 ```
-$ pnpm run dev
-```
-
-### OpenAI API Keys
-
-OpenAI API keys enabled for `GPT-4` need to be on cookies. The first time the app is loaded on a browser, empty cookies will be created for editing, if they are not present.
-
-```
-OPENAI_API_KEY:<api_key>
-OPENAI_ORG_ID:<org_id>
-```
-
-
-
-### How MUD was installed (FYI)
-
-Install [Node.js 18](https://nodejs.org/en/download)
-
-```
-$ node --version
-v18.16.0
+$ npm install --global pnpm
 ```
 
 Install [Foundry](https://github.com/foundry-rs) ([docs](https://book.getfoundry.sh/getting-started/installation))
@@ -103,24 +84,33 @@ $ curl -L https://foundry.paradigm.xyz | bash
 $ foundryup
 ```
 
-Created with...
+Run local server
 
 ```
-$ node --version
-v18.16.0
+$ cd MUD2
+$ pnpm install
+$ pnpm initialize
+$ pnpm run dev
+```
+
+#### OpenAI API Keys
+
+OpenAI API keys enabled for `GPT-4` need to be on cookies. The first time the app is loaded on a browser, empty cookies will be created for editing, if they are not present.
+
+|cookie |value|
+|-----|--------|
+| `OPENAI_API_KEY` | `<api_key>` |
+| `OPENAI_ORG_ID`  | `<org_id>` |
+
+
+### How MUD was installed (FYI)
+
+According to [getting-started](https://mud.dev/quick-start)
+
+Need Node 18 and Foundry (see above)
+
+```
 $ npm install -g pnpm
-$ pnpm create mud@canary MUD
-? Template
-> react
-```
-
-## `MUD2`
-
-A Phaser MUD engine
-
-Created with...
-
-```
 $ pnpm create mud@canary MUD
 ? Template
 > phaser
