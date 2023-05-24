@@ -12,7 +12,7 @@
 	"realm_dictionary": {
 		"fire": {"name":"JokeDAO", "description": "A decentralised community who run a weekly on-chain joke competition"},
 		"water": {"name":"Rap Battle Alley", "description": "An alley where aspiring comedy rappers face off in epic rap battles"},
-		"earth": {"name":"The Macbeth Mode Club", "description": "An undererground comedy club that exclusively performs comedic interpretations of Shakespeare's Macbeth that are so funny... they might just kill you"},
+		"earth": {"name":"The Macbeth Mode Club", "description": "An underground comedy club that exclusively performs comedic interpretations of Shakespeare's Macbeth that are so funny... they might just kill you"},
 		"air": {"name":"The Ill E-quip Show", "description": "An online channel that televises bad jokes 24x7"}
 	},
 	"realm_gems": {
