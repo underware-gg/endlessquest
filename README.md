@@ -65,17 +65,17 @@ external dependencies:
 
 A Phaser MUD engine
 
-### Run local server
+### Running a local server
 
 Install [Node.js 16+](https://nodejs.org/en/download) (we use version 18)
 
-Install pnpm
+* Install pnpm
 
 ```
 $ npm install --global pnpm
 ```
 
-Install [Foundry](https://github.com/foundry-rs) ([docs](https://book.getfoundry.sh/getting-started/installation))
+* Install [Foundry](https://github.com/foundry-rs) ([docs](https://book.getfoundry.sh/getting-started/installation))
 
 ```
 $ brew install libusb
@@ -84,14 +84,23 @@ $ curl -L https://foundry.paradigm.xyz | bash
 $ foundryup
 ```
 
-Run local server
+* Run this setup...
+
+Edit `MUD2/env.contracts` if you want to use your own Anvil private key.
 
 ```
 $ cd MUD2
 $ pnpm install
 $ pnpm initialize
+$ cp env.contracts packages/contracts/.env
+```
+
+* Start local server
+
+```
 $ pnpm run dev
 ```
+
 
 #### OpenAI API Keys
 
