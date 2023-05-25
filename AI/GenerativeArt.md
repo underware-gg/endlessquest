@@ -1,9 +1,9 @@
 # Generating Art assets
 
 Endless Quest generates art assets dynamically based upon the descriptions of different kinds of entities. These are the current types of generated asset:
-* Realm loading screen: Background image
-* Chamber dialog: Chamber Background image
-* Chamber dialog: NPC Portrait image
+* ~Realm loading screen: Background image~
+* Chamber dialog: Chamber image
+* Chamber dialog: NPC image
 
 This document describes how to construct the generative prompts intended for `DALL-E•2`, which can be accessed via the [OpenAI Image API](https://platform.openai.com/docs/api-reference/images/create). **WARNING**: OpenAI does not support rectangular images, so you will need to generate a square image and crop it with an image library or in browser.
 
@@ -23,6 +23,20 @@ const response = await openai.createImage({
 ```
 
 ## Prompt Structure
+
+Each `Realm` (world) should generate an art prompt tuning structure that looks like this:
+
+```json
+"realm_art_prompts": {
+        "realm_suffix": "nautical steampunk art, watercolor marine landscape, vintage nautical charts",
+        "chamber_prefix": "A faded naval blueprint of a mysterious undersea structure",
+        "npc_prefix": "A watercolor portrait of a maritime figure",
+        "fire": "digital neon art, luminescent deep sea creatures",
+        "water": "art nouveau poster, mythological sea battles",
+        "earth": "medieval manuscript illumination, bustling seaport",
+        "air": "digital fantasy art, flight of the sea creatures"
+    }
+```
 
 We will use AI prompts to generate art. Every type of asset should have a universal prefix and suffix that are unique to that asset type
 * `[STANDARD_PREFIX]` -- A universal prefix added to the start of every prompt, that tunes towards NPC portraits
@@ -70,9 +84,11 @@ They should be a square aspect ratio, e.g. 256x256 or 512x512, and is intended t
 ## Prefixes and suffixes
 
 **Standard Prefix (Chamber)**: `"A fantastical fantasy art landscape"`
+
 **Standard Suffix (Chamber)**: `", fantasy art, roleplaying game art, video game art, high definition, 4k"`
 
 **Standard Prefix (NPC)**: `"A fantasy art portrait of an NPC in a video game"`
+
 **Standard Suffix (NPC)**: `", portrait, fantasy art, roleplaying game art, video game art, high definition, 4k"`
 
 **Terrain Prefixes**:

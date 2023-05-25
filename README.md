@@ -37,7 +37,7 @@ A love letter to the [Autonomous Worlds Hackaton](https://ethglobal.com/events/a
 
 *Endless Quest* is an an autonomous world engine for generating infinite, dynamic roleplaying challenges; no two the same. Quest encounters are powered by a sophisticated, behavioural AI storytelling system that ensures narrative and stylistic consistency.
 
-Each world is built with MUD2 and Optimism on top of the on-chain Ethereum hyperstructure of Endless Crawler chambers, with both world metadata generation and NPC encounters powered by ChatGPT and DALL-E 2.
+Endless Crawler is used to generate each realm map, with encounters generated and persisted as they are first explored by players. Realms allowing endless re-interpretation of the Endless Crawler chambers across an infinite number of thematically consistent worlds.
 
 ## About
 
@@ -53,7 +53,6 @@ generated once only, the first time that they are discovered, after which they a
 Once a location has been generated it will remain, however each traveller's visit will be a dynamic, story driven
 experience that responds to the player, powered by the AI storyteller.
 
-
 ## Team:
 
 * Mataleone @rsodre
@@ -67,8 +66,14 @@ external dependencies:
 
 * @lattice packages
 * Endless Crawler [mainnet contracts](https://etherscan.io/address/0x8e70b94c57b0cbc9807c0f58bc251f4cd96acdb0#code)
-* Endless Crawler [mainnet contracts](https://etherscan.io/address/0x8e70b94c57b0cbc9807c0f58bc251f4cd96acdb0#code)
 
+## AI
+
+The core of the generative experience is run by two GPT prompts, both detailed in `/AI/Prompts/`:
+* [Metadata-Generation.md](https://github.com/funDAOmental/endlessquest/blob/main/AI/Prompts/Metadata-Generation.md) -- Generates the metadata for each world, chamber and encounter
+* [NPC-dialog.md](https://github.com/funDAOmental/endlessquest/blob/main/AI/Prompts/Metadata-Generation.md) -- Runs the interaction with each NPC
+
+Art Assets are generated using DALL-E via OpenAI API, as detailed in [GenerativeArt.md](https://github.com/funDAOmental/endlessquest/blob/main/AI/GenerativeArt.md)
 
 ## `MUD`
 
@@ -90,8 +95,6 @@ OpenAI API keys enabled for `GPT-4` need to be on cookies. The first time the ap
 OPENAI_API_KEY:<api_key>
 OPENAI_ORG_ID:<org_id>
 ```
-
-
 
 ### How MUD was installed (FYI)
 
