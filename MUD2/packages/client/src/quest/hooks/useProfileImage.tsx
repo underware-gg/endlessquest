@@ -2,8 +2,8 @@ import { useGeneratedImage } from '../openai/hooks'
 import { useEffect, useMemo } from 'react'
 import { useComponentValue, useRow } from '@latticexyz/react'
 import { Entity } from '@latticexyz/recs'
+import { prompts } from '../prompts/prompts'
 import { useMUD } from '../../store'
-import { Terrain } from '../bridge/Crawl'
 
 
 export const useProfileImage = (prompt: string | null) => {
@@ -63,15 +63,6 @@ export const useAgentProfileImage = (agentEntity: Entity | undefined) => {
 //---------------------
 // Chambers ProfileImage
 //
-const _chamberPrompts = {
-  //   "realm_suffix": "nautical steampunk art, watercolor marine landscape, vintage nautical charts",
-  //   "chamber_prefix": "A faded naval blueprint of a mysterious undersea structure",
-  //   "npc_prefix": "A watercolor portrait of a maritime figure",
-  [Terrain.Fire]: "digital neon art, luminescent deep sea creatures",
-  [Terrain.Water]: "art nouveau poster, mythological sea battles",
-  [Terrain.Earth]: "medieval manuscript illumination, bustling seaport",
-  [Terrain.Air]: "digital fantasy art, flight of the sea creatures"
-}
 export const useChamberProfileImage = (coord: bigint) => {
   const {
     networkLayer: {
@@ -95,7 +86,7 @@ export const useChamberProfileImage = (coord: bigint) => {
   const prompt = useMemo(() => {
     if (chamber && metadata && !url) {
       const meta = JSON.parse(metadata)
-      const pertype = _chamberPrompts[meta?.terrain ?? 0] ?? ''
+      const pertype = prompts.chamberPrompts[meta?.terrain ?? 0] ?? ''
       return `${pertype}; ${meta.description}`
       // return `${meta.name}, ${meta.description}`
     }

@@ -1,3 +1,5 @@
+import { Terrain } from '../bridge/Crawl'
+
 export const prompts = {
 
   // https://www.notion.so/fundaomental/AI-Design-b7a68959b308443e84b5f264cf228837?pvs=4#f22ef5fccde94d059ee248843549b387
@@ -222,7 +224,17 @@ NPC Behaviour mode examples:
     "description": "An ancient dragon, renowned for his wisdom and might. He guards a powerful artifact and only bestows it upon those who prove their valor.",
     "behaviour_mode": "A grand mythical beast who tests if the player is worthy",
     "quirk": "Fafnir has a soft spot for poetry. Those who recite an original verse might just sway his judgment."
-  })
+  }),
+
+  chamberPrompts: {
+    //   "realm_suffix": "nautical steampunk art, watercolor marine landscape, vintage nautical charts",
+    //   "chamber_prefix": "A faded naval blueprint of a mysterious undersea structure",
+    //   "npc_prefix": "A watercolor portrait of a maritime figure",
+    [Terrain.Fire]: "digital neon art, luminescent deep sea creatures",
+    [Terrain.Water]: "art nouveau poster, mythological sea battles",
+    [Terrain.Earth]: "medieval manuscript illumination, bustling seaport",
+    [Terrain.Air]: "digital fantasy art, flight of the sea creatures"
+  },
 
 }
 
