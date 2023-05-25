@@ -3,6 +3,7 @@ pragma solidity >=0.8.0;
 
 import { System } from "@latticexyz/world/src/System.sol";
 import {
+  Token,
   Chamber, ChamberData,
   ChamberMetadata, ChamberMetadataData
 } from "../codegen/Tables.sol";
@@ -22,6 +23,7 @@ contract ChamberSystem is System {
     uint16 coins,
     uint16 worth
   ) public {
+    Token.set(tokenId, coord);
     Chamber.set(coord,
       ChamberData({
         opener: _msgSender(),
