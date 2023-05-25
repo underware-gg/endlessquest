@@ -67,20 +67,6 @@ export function defineContractComponents(world: World) {
         world,
         {
           metadata: RecsType.String,
-        },
-        {
-          metadata: {
-            contractId: tableId.toHexString(),
-            tableId: tableId.toString(),
-          },
-        }
-      );
-    })(),
-    ChamberProfileImage: (() => {
-      const tableId = new TableId("", "ChamberProfileIm");
-      return defineComponent(
-        world,
-        {
           url: RecsType.String,
         },
         {
@@ -119,20 +105,6 @@ export function defineContractComponents(world: World) {
         world,
         {
           metadata: RecsType.String,
-        },
-        {
-          metadata: {
-            contractId: tableId.toHexString(),
-            tableId: tableId.toString(),
-          },
-        }
-      );
-    })(),
-    ProfileImage: (() => {
-      const tableId = new TableId("", "ProfileImage");
-      return defineComponent(
-        world,
-        {
           url: RecsType.String,
         },
         {

@@ -53,13 +53,6 @@ export default mudConfig({
       },
       schema: {
         metadata: "string",
-      }
-    },
-    ChamberProfileImage: {
-      keySchema: {
-        coord: 'uint256'
-      },
-      schema: {
         url: "string",
       }
     },
@@ -82,10 +75,6 @@ export default mudConfig({
     Metadata: {
       schema: {
         metadata: "string",
-      }
-    },
-    ProfileImage: {
-      schema: {
         url: "string",
       }
     },

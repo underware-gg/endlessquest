@@ -22,7 +22,7 @@ export const useProfileImage = (prompt: string | null) => {
 export const useAgentProfileImage = (agentEntity: Entity | undefined) => {
   const {
     networkLayer: {
-      components: { Agent, Metadata, ProfileImage },
+      components: { Agent, Metadata },
       systemCalls: {
         setAgentProfileImage,
       },
@@ -30,14 +30,15 @@ export const useAgentProfileImage = (agentEntity: Entity | undefined) => {
   } = useMUD()
 
   const agent = useComponentValue(Agent, agentEntity)
-  const metadata = useComponentValue(Metadata, agentEntity)
-  const url = useComponentValue(ProfileImage, agentEntity)
+  const metadataData = useComponentValue(Metadata, agentEntity)
+  const metadata = metadataData?.metadata ?? null
+  const url = metadataData?.url ?? null
 
   useEffect(() => { console.log(`AGENT IMAGE:`, url) }, [url])
 
   const prompt = useMemo(() => {
     if (agent && metadata && !url) {
-      const meta = JSON.parse(metadata.metadata)
+      const meta = JSON.parse(metadata)
       return `A watercolor portrait of a maritime figure, digital neon art, luminescent deep sea creatures: ${meta.description}; nautical steampunk art, watercolor marine landscape, vintage nautical charts`
       // return `${meta.name}, ${meta.description}`
     }
@@ -55,7 +56,7 @@ export const useAgentProfileImage = (agentEntity: Entity | undefined) => {
 
   return {
     isWaiting: (isWaiting && !metadata),
-    url: url?.url,
+    url,
   }
 }
 
@@ -83,27 +84,23 @@ export const useChamberProfileImage = (coord: bigint) => {
 
   const chamberRow = useRow(storeCache, { table: 'Chamber', key: { coord } });
   const metadataRow = useRow(storeCache, { table: 'ChamberMetadata', key: { coord } });
-  const profileImageRow = useRow(storeCache, { table: 'ChamberProfileImage', key: { coord } });
 
   const chamber = useMemo(() => (chamberRow?.value ?? null), [chamberRow])
   const metadata = useMemo(() => (metadataRow?.value?.metadata ?? null), [metadataRow])
-  const url = useMemo(() => (profileImageRow?.value?.url ?? null), [profileImageRow])
+  const url = useMemo(() => (metadataRow?.value?.url ?? null), [metadataRow])
 
   // @ts-ignore
   useEffect(() => { console.log(`CHAMBER IMAGE:`, chamber?.tokenId, coord, metadata?.name ?? null, url) }, [chamber, url])
 
   const prompt = useMemo(() => {
     if (chamber && metadata && !url) {
-      console.log(`____image_make_prompt...`, chamber?.tokenId, chamber, metadata, url)
       const meta = JSON.parse(metadata)
       const pertype = _chamberPrompts[meta?.terrain ?? 0] ?? ''
       return `${pertype}; ${meta.description}`
       // return `${meta.name}, ${meta.description}`
     }
-    console.log(`____image_clear_prompt...`, chamber?.tokenId, chamber, metadata, url)
     return null
   }, [chamber, metadata, url])
-  console.log(`____image_current prompt:`, chamber?.tokenId, prompt)
   const { isWaiting, url: generatedUrl } = useProfileImage(prompt)
 
   useEffect(() => { console.log(`CHAMBER IMAGE GENERATED:`, chamber?.tokenId, isWaiting, generatedUrl) }, [chamber, generatedUrl])
@@ -116,7 +113,7 @@ export const useChamberProfileImage = (coord: bigint) => {
 
   return {
     isWaiting: (isWaiting && !metadata),
-    url: generatedUrl ?? url,
+    url: url,
   }
 }
 
