@@ -48,18 +48,24 @@ experience, powered by the AI storyteller.
 
 ## Team:
 
-* Mataleone @rsodre
-* Recipromancer @rob_morris
-* Mentis @Mentis123
+* Mataleone [@rsodre](https://github.com/rsodre)
+* Recipromancer [@Rob-Morris](https://github.com/Rob-Morris)
+* Mentis [@Mentis123](https://github.com/Mentis123)
+* The amazing art of [PixiVan](https://pixivan.itch.io/)
+
+![Endless Quest](Assets/screenshots/screenshot2.png)
+more [screenshots](Assets/screenshots/)
+
+
+## Made with...
+
+* Lattice [MUD](https://github.com/latticexyz/mud)
+* [Endless Crawler](https://endlesscrawler.io/) chambers from mainnet [contracts](https://etherscan.io/address/0x8e70b94c57b0cbc9807c0f58bc251f4cd96acdb0#code)
+* [OpenAI API](https://platform.openai.com/docs)
+* [wagmi](https://wagmi.sh/)
 
 
 # Repo Structure
-
-external dependencies:
-
-* @lattice packages
-* Endless Crawler [mainnet contracts](https://etherscan.io/address/0x8e70b94c57b0cbc9807c0f58bc251f4cd96acdb0#code)
-
 
 ## `MUD2`
 
@@ -84,7 +90,7 @@ $ curl -L https://foundry.paradigm.xyz | bash
 $ foundryup
 ```
 
-* Run this setup...
+* Do this setup...
 
 Edit `MUD2/env.contracts` if you want to use your own Anvil private key.
 
