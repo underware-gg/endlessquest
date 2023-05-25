@@ -11,6 +11,7 @@ export const useProfileImage = (prompt: string | null) => {
   return {
     isWaiting,
     url,
+    error,
   }
 }
 
@@ -32,17 +33,18 @@ export const useAgentProfileImage = (agentEntity: Entity | undefined) => {
   const metadata = useComponentValue(Metadata, agentEntity)
   const url = useComponentValue(ProfileImage, agentEntity)
 
+  useEffect(() => { console.log(`AGENT IMAGE:`, url) }, [url])
+
   const prompt = useMemo(() => {
-    if(agent && metadata) {
+    if (agent && metadata && !url) {
       const meta = JSON.parse(metadata.metadata)
       return `A watercolor portrait of a maritime figure, digital neon art, luminescent deep sea creatures: ${meta.description}; nautical steampunk art, watercolor marine landscape, vintage nautical charts`
       // return `${meta.name}, ${meta.description}`
     }
     return null
-  }, [agent, metadata])
+  }, [agent, metadata, url])
   const { isWaiting, url: generatedUrl } = useProfileImage(prompt)
 
-  useEffect(() => { console.log(`AGENT IMAGE:`, url) }, [url])
   useEffect(() => { console.log(`AGENT META IMAGE:`, isWaiting, generatedUrl) }, [generatedUrl])
 
   useEffect(() => {
@@ -64,10 +66,10 @@ const _chamberPrompts = {
   //   "realm_suffix": "nautical steampunk art, watercolor marine landscape, vintage nautical charts",
   //   "chamber_prefix": "A faded naval blueprint of a mysterious undersea structure",
   //   "npc_prefix": "A watercolor portrait of a maritime figure",
-    [Terrain.Fire]: "digital neon art, luminescent deep sea creatures",
-    [Terrain.Water]: "art nouveau poster, mythological sea battles",
-    [Terrain.Earth]: "medieval manuscript illumination, bustling seaport",
-    [Terrain.Air]: "digital fantasy art, flight of the sea creatures"
+  [Terrain.Fire]: "digital neon art, luminescent deep sea creatures",
+  [Terrain.Water]: "art nouveau poster, mythological sea battles",
+  [Terrain.Earth]: "medieval manuscript illumination, bustling seaport",
+  [Terrain.Air]: "digital fantasy art, flight of the sea creatures"
 }
 export const useChamberProfileImage = (coord: bigint) => {
   const {
@@ -87,19 +89,23 @@ export const useChamberProfileImage = (coord: bigint) => {
   const metadata = useMemo(() => (metadataRow?.value?.metadata ?? null), [metadataRow])
   const url = useMemo(() => (profileImageRow?.value?.url ?? null), [profileImageRow])
 
+  // @ts-ignore
+  useEffect(() => { console.log(`CHAMBER IMAGE:`, chamber?.tokenId, coord, metadata?.name ?? null, url) }, [chamber, url])
+
   const prompt = useMemo(() => {
-    if (chamber && metadata) {
+    if (chamber && metadata && !url) {
+      console.log(`____image_make_prompt...`, chamber?.tokenId, chamber, metadata, url)
       const meta = JSON.parse(metadata)
       const pertype = _chamberPrompts[meta?.terrain ?? 0] ?? ''
-      console.log(`++++++++++++++++ GEN IMAGE CHAMBER META:`, metadata, pertype)
       return `${pertype}; ${meta.description}`
       // return `${meta.name}, ${meta.description}`
     }
+    console.log(`____image_clear_prompt...`, chamber?.tokenId, chamber, metadata, url)
     return null
-  }, [chamber, metadata])
+  }, [chamber, metadata, url])
+  console.log(`____image_current prompt:`, chamber?.tokenId, prompt)
   const { isWaiting, url: generatedUrl } = useProfileImage(prompt)
 
-  useEffect(() => { console.log(`CHAMBER IMAGE:`, chamber?.tokenId, metadata) }, [chamber, url])
   useEffect(() => { console.log(`CHAMBER IMAGE GENERATED:`, chamber?.tokenId, isWaiting, generatedUrl) }, [chamber, generatedUrl])
 
   useEffect(() => {
