@@ -44,7 +44,7 @@ export const AgentLocation = ({
       <div className='AgentLocation'>
 
         <h2>Encounter</h2>
-        <p className='Important'>{isWaiting ? 'dreaming...' : (metadata?.name ?? 'please come closer...')}</p>
+        <p className='Important'>{isWaiting ? 'dreaming...' : (metadata?.name ?? 'come closer...')}</p>
         <p>{isWaiting ? 'don\'t move!' : (metadata?.description ?? '?')}</p>
 
         <div className='Infos'>

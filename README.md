@@ -71,7 +71,7 @@ more [screenshots](Assets/screenshots/)
 
 A Phaser MUD engine
 
-### Running a local server
+### Setting up a local server
 
 Install [Node.js 16+](https://nodejs.org/en/download) (we use version 18)
 
@@ -101,7 +101,7 @@ $ pnpm initialize
 $ cp env.contracts packages/contracts/.env
 ```
 
-* Start local server
+### Start local server
 
 ```shell
 $ pnpm run dev
@@ -120,7 +120,7 @@ OpenAI API keys enabled for `GPT-4` need to be on cookies. The first time the ap
 
 ## MUD development notes
 
-### How to install MUD (FYI)
+### Install a fresh MUD game
 
 According to [getting-started](https://mud.dev/quick-start)
 
@@ -133,7 +133,7 @@ $ pnpm create mud@canary MUD
 > phaser
 ```
 
-### How to upgrade MUD
+### Upgrade MUD
 
 Check latest version [here](https://www.npmjs.com/package/@latticexyz/cli?activeTab=versions)
 
@@ -157,7 +157,7 @@ $ cd -
 $ pnpm install
 ```
 
-### How to deploy MUD
+### Deploy MUD
 
 (not tested)
 

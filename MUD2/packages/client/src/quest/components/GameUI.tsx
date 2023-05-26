@@ -28,7 +28,7 @@ export const GameUI = () => {
   }, [isChatting])
 
   return (
-    <div className='NoMouse'>
+    <div className='NoMouse Relative'>
       
       <div className='GameUILeft'>
         <RealmLocation />

@@ -176,15 +176,28 @@ canvas {
   height: 40px;
 }
 
-.ChatCover {
-  @extend .FillParent;
-  // background-color: #0008;
+.ClearCover {
+  // @extend .FillParent;
   position: absolute;
   top: 0;
   right: 0;
   width: 100vw;
   height: 100vh;
   pointer-events: all;
+}
+.FadedCover {
+  @extend .ClearCover;
+  background-color: #0008;
+}
+
+.FullscreenProfileImage {
+  @extend .UI;
+  position: absolute;
+  left: calc(50% - 512px);
+  top: calc(50% - 512px);
+  width: 1024px;
+  height: 1024px;
+  pointer-events: none;
 }
 
 .ChatDialog {
