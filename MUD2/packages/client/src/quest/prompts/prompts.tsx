@@ -57,7 +57,7 @@ Generation responses must contain only the JSON-compatible data structure, inclu
 When generating chamber data, the user must provide the "terrain_type", "gem_type", "coins and "yonder". If they do not, respond with this:
 "chamber": { "error": "you must provide the terrain_type, gem_type, coins and yonder to generate a chamber"}
 
-When generating a chamber, the NPC in the chamber must always have the behaviour mode associated with its gem, as listed in behaviour modes for NPCs.
+When generating an NPC, its behaviour mode is associated with its gem, as listed in behaviour modes for NPCs.
 
 World data example (JSON):
 {
@@ -102,6 +102,8 @@ Player data example (JSON):
     "player_quirk": "Despite his silent demeanor, Thorn has a surprising love for music and can play a variety of instruments."
   }
 }
+
+Use the examples structures, but not their data. Generate completely new data.
 
 Behaviour modes for NPCs:
 
