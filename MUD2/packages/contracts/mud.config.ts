@@ -57,6 +57,19 @@ export default mudConfig({
       }
     },
     //-----------------------
+    Doors: {
+      keySchema: {
+        key: 'bytes32',
+      },
+      schema: {
+        coord: 'uint256',
+        index: 'uint8',
+        dir: 'uint8',
+        locked: 'bool',
+        nextCoord: 'uint256',
+      }
+    },
+    //-----------------------
     Agent: {
       keySchema: {
         key: 'bytes32',
@@ -76,19 +89,6 @@ export default mudConfig({
       schema: {
         metadata: "string",
         url: "string",
-      }
-    },
-    //-----------------------
-    Doors: {
-      keySchema: {
-        key: 'bytes32',
-      },
-      schema: {
-        coord: 'uint256',
-        index: 'uint8',
-        dir: 'uint8',
-        locked: 'bool',
-        nextCoord: 'uint256',
       }
     },
     //-----------------------

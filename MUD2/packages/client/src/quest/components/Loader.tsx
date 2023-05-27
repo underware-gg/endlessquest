@@ -27,7 +27,9 @@ export const Loader = () => {
 
   return (
     <div className='Loader Infos'>
-      {loaders}
+      <div className='LoaderContent'>
+        {loaders}
+      </div>
     </div>
   )
 }

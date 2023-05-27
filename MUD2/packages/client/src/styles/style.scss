@@ -167,6 +167,12 @@ canvas {
   bottom: 0;
   left: 0;
 }
+.LoaderContent {
+  padding: 0 0.5em;
+  overflow-y: scroll;
+  width: calc(100% - 1em);
+  height: calc(80px - 1em);
+}
 
 .ChatButton {
   position: absolute;
