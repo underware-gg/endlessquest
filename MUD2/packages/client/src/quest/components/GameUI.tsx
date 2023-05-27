@@ -6,7 +6,6 @@ import { PlayerLocation } from "./PlayerLocation";
 import { AgentLocation } from "./AgentLocation";
 import { ChatDialog } from "./ChatDialog";
 import { Loader } from "./Loader";
-// import { TestBridge } from "./TestBridge";
 
 declare global {
   interface Window { QuestNamespace: any; }

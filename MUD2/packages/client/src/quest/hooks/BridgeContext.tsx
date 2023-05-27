@@ -1,4 +1,4 @@
-import React, { createContext, useReducer, useContext, ReactNode } from 'react'
+import React, { ReactNode, createContext, useReducer, useContext, useEffect } from 'react'
 
 //
 // React + Typescript + Context
@@ -9,10 +9,8 @@ import React, { createContext, useReducer, useContext, ReactNode } from 'react'
 // Constants
 //
 export const initialState = {
-  tokens: {
-  },
-  chambers: {
-  },
+  tokens: [],
+  chambers: [],
 }
 
 const BridgeActions = {
@@ -24,16 +22,8 @@ const BridgeActions = {
 // Types
 //
 type BridgeStateType = {
-  tokens: {
-    [tokenId: string]: boolean
-  },
-  chambers: {
-    [coord: string]: boolean
-  }
-}
-
-type PropsType = {
-  children: string | JSX.Element | JSX.Element[] | ReactNode
+  tokens: Array<bigint>,
+  chambers: Array<bigint>,
 }
 
 type ActionType =
@@ -50,24 +40,41 @@ const BridgeContext = createContext<{
   dispatch: React.Dispatch<any>
 }>({
   state: initialState,
-  dispatch: () => null
+  dispatch: () => null,
 })
 
 //--------------------------------
 // Provider
 //
+interface BridgeProviderProps {
+  children: string | JSX.Element | JSX.Element[] | ReactNode
+  systemCalls: any,
+}
 const BridgeProvider = ({
-  children
-}: PropsType) => {
+  children,
+  systemCalls,
+}: BridgeProviderProps) => {
+  const { bridge_tokenId, bridge_chamber } = systemCalls
+
   const [state, dispatch] = useReducer((state: BridgeStateType, action: ActionType) => {
     let newState = { ...state }
     switch (action.type) {
-      case BridgeActions.BRIDGE_TOKEN:
-        // newState.error = action.payload
+      case BridgeActions.BRIDGE_TOKEN: {
+        const tokenId = action.payload
+        if (tokenId > 0n && !state.tokens.includes(tokenId)) {
+          state.tokens.push(tokenId)
+          bridge_tokenId(tokenId)
+        }
         break
-      case BridgeActions.BRIDGE_CHAMBER:
-        // newState.nonce = action.payload
+      }
+      case BridgeActions.BRIDGE_CHAMBER: {
+        const coord = action.payload
+        if (coord > 0n && !state.chambers.includes(coord)) {
+          state.chambers.push(coord)
+          bridge_chamber(coord)
+        }
         break
+      }
       default:
         console.warn(`BridgeProvider: Unknown action [${action.type}]`)
         return state
@@ -88,6 +95,37 @@ const BridgeProvider = ({
 
 export { BridgeProvider, BridgeContext, BridgeActions }
 
+
+
+//--------------------------------
+// Dispatches
+//
+
+export const useBridgeToken = (tokenId: bigint) => {
+  const { state, dispatch } = useContext(BridgeContext)
+  useEffect(() => {
+    if (tokenId) {
+      dispatch({
+        type: BridgeActions.BRIDGE_TOKEN,
+        payload: tokenId,
+      })
+    }
+  }, [tokenId])
+  return state.tokens.includes(tokenId)
+}
+
+export const useBridgeChamber = (coord: bigint) => {
+  const { state, dispatch } = useContext(BridgeContext)
+  useEffect(() => {
+    if (coord) {
+      dispatch({
+        type: BridgeActions.BRIDGE_CHAMBER,
+        payload: coord,
+      })
+    }
+  }, [coord])
+  return state.chambers.includes(coord)
+}
 
 //--------------------------------
 // Hooks

@@ -19,7 +19,7 @@ export const UIRoot = () => {
       <Wrapper>
         <LoadingScreen />
       </Wrapper>
-      <BridgeProvider>
+      <BridgeProvider systemCalls={layers.networkLayer.systemCalls}>
         <GameUI />
       </BridgeProvider>
     </div>
