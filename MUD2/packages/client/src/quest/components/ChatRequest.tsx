@@ -28,7 +28,7 @@ export const ChatRequest = ({
 
   return (
     <div>
-      <div>{isWaiting ? (previousHistory.length == 0 ? `Starting chat with ${meta.name}...` : 'Waiting...') : 'got it'}</div>
+      <div>{isWaiting ? (previousHistory.length == 0 ? <span>Starting chat with <span className='Important'>{meta.name}</span>...</span> : 'Waiting...') : 'got it'}</div>
       {error &&
         <div>{error}</div>
       }

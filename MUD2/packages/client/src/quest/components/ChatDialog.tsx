@@ -54,7 +54,7 @@ export const ChatDialog = ({
 
   return (
     <div>
-      <div className='ChatCover' onClick={() => onChat(false)} />
+      <div className='ClearCover' onClick={() => onChat(false)} />
       <div className='ChatDialog'>
 
         <div className='ChatContent'>

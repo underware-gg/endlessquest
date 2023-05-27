@@ -83,7 +83,7 @@ contract PlayerSystem is System {
     int256 east = (x >= 0) ? int256(x / 20) + 1 : int256(0);
     uint256 coord = Crawl.makeCoord(uint256(north), uint256(east), uint256(west), uint256(south));
 
-    // TODO: Find agent close by!
+    // Find agent close by!
     bytes32 agent = findAgentAtPosition(x - 1, y);
     if (agent == 0) agent = findAgentAtPosition(x + 1, y);
     if (agent == 0) agent = findAgentAtPosition(x, y - 1);

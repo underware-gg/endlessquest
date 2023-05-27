@@ -55,17 +55,25 @@ experience that responds to the player, powered by the AI storyteller.
 
 ## Team:
 
-* Mataleone @rsodre
-* Recipromancer @rob_morris
-* Mentis @Mentis123
+* Mataleone [@rsodre](https://github.com/rsodre)
+* Recipromancer [@Rob-Morris](https://github.com/Rob-Morris)
+* Mentis [@Mentis123](https://github.com/Mentis123)
+* The amazing art of [PixiVan](https://pixivan.itch.io/)
+
+![Endless Quest](Assets/screenshots/screenshot2.png)
+more [screenshots](Assets/screenshots/)
+
+
+## Made with...
+
+* Lattice [MUD](https://github.com/latticexyz/mud)
+* [Endless Crawler](https://endlesscrawler.io/) chambers from mainnet [contracts](https://etherscan.io/address/0x8e70b94c57b0cbc9807c0f58bc251f4cd96acdb0#code)
+* [OpenAI API](https://platform.openai.com/docs)
+* [wagmi](https://wagmi.sh/)
 
 
 # Repo Structure
 
-external dependencies:
-
-* @lattice packages
-* Endless Crawler [mainnet contracts](https://etherscan.io/address/0x8e70b94c57b0cbc9807c0f58bc251f4cd96acdb0#code)
 
 ## AI
 
@@ -75,66 +83,106 @@ The core of the generative experience is run by two GPT prompts, both detailed i
 
 Art Assets are generated using DALL-E via OpenAI API, as detailed in [GenerativeArt.md](https://github.com/funDAOmental/endlessquest/blob/main/AI/GenerativeArt.md)
 
-## `MUD`
 
-A React MUD engine
+## `MUD2`
 
-### Run local server
+A Phaser MUD engine
 
-You need Foundry! (see below)
+### Setting up a local server
 
-```
-$ pnpm run dev
-```
+Install [Node.js 16+](https://nodejs.org/en/download) (we use version 18)
 
-### OpenAI API Keys
+* Install pnpm
 
-OpenAI API keys enabled for `GPT-4` need to be on cookies. The first time the app is loaded on a browser, empty cookies will be created for editing, if they are not present.
-
-```
-OPENAI_API_KEY:<api_key>
-OPENAI_ORG_ID:<org_id>
+```shell
+$ npm install --global pnpm
 ```
 
-### How MUD was installed (FYI)
+* Install [Foundry](https://github.com/foundry-rs) ([docs](https://book.getfoundry.sh/getting-started/installation))
 
-Install [Node.js 18](https://nodejs.org/en/download)
-
-```
-$ node --version
-v18.16.0
-```
-
-Install [Foundry](https://github.com/foundry-rs) ([docs](https://book.getfoundry.sh/getting-started/installation))
-
-```
+```shell
 $ brew install libusb
 $ curl -L https://foundry.paradigm.xyz | bash
 # restart the terminal or open a new one
 $ foundryup
 ```
 
-Created with...
+* Do this setup...
 
+Edit `MUD2/env.contracts` if you want to use your own Anvil private key.
+
+```shell
+$ cd MUD2
+$ pnpm install
+$ pnpm initialize
+$ cp env.contracts packages/contracts/.env
 ```
-$ node --version
-v18.16.0
+
+### Start local server
+
+```shell
+$ pnpm run dev
+```
+
+
+#### OpenAI API Keys
+
+OpenAI API keys enabled for `GPT-4` need to be on cookies. The first time the app is loaded on a browser, empty cookies will be created for editing, if they are not present.
+
+|cookie |value|
+|-----|--------|
+| `OPENAI_API_KEY` | `<api_key>` |
+| `OPENAI_ORG_ID`  | `<org_id>` |
+
+
+## MUD development notes
+
+### Install a fresh MUD game
+
+According to [getting-started](https://mud.dev/quick-start)
+
+Need Node 18 and Foundry (see above)
+
+```shell
 $ npm install -g pnpm
-$ pnpm create mud@canary MUD
-? Template
-> react
-```
-
-## `MUD2`
-
-A Phaser MUD engine
-
-Created with...
-
-```
 $ pnpm create mud@canary MUD
 ? Template
 > phaser
 ```
+
+### Upgrade MUD
+
+Check latest version [here](https://www.npmjs.com/package/@latticexyz/cli?activeTab=versions)
+
+```shell
+$ cd MUD2
+$ pnpm mud set-version -v 2.0.0-alpha.1.197
+$ pnpm mud:up
+```
+
+Or manually...
+
+```shell
+$ cd MUD2
+$ pnpm mud set-version -v 2.0.0-alpha.1.197
+$ cd packages/client
+$ pnpm mud set-version -v 2.0.0-alpha.1.197
+$ cd -
+$ cd packages/contracts
+$ pnpm mud set-version -v 2.0.0-alpha.1.197
+$ cd -
+$ pnpm install
+```
+
+### Deploy MUD
+
+(not tested)
+
+```
+$ pnpm deploy:testnet in contracts
+> chainId 4242
+
+```
+
 
 

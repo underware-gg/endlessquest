@@ -53,14 +53,20 @@ export default mudConfig({
       },
       schema: {
         metadata: "string",
+        url: "string",
       }
     },
-    ChamberProfileImage: {
+    //-----------------------
+    Doors: {
       keySchema: {
-        coord: 'uint256'
+        key: 'bytes32',
       },
       schema: {
-        url: "string",
+        coord: 'uint256',
+        index: 'uint8',
+        dir: 'uint8',
+        locked: 'bool',
+        nextCoord: 'uint256',
       }
     },
     //-----------------------
@@ -82,24 +88,7 @@ export default mudConfig({
     Metadata: {
       schema: {
         metadata: "string",
-      }
-    },
-    ProfileImage: {
-      schema: {
         url: "string",
-      }
-    },
-    //-----------------------
-    Doors: {
-      keySchema: {
-        key: 'bytes32',
-      },
-      schema: {
-        coord: 'uint256',
-        index: 'uint8',
-        dir: 'uint8',
-        locked: 'bool',
-        nextCoord: 'uint256',
       }
     },
     //-----------------------

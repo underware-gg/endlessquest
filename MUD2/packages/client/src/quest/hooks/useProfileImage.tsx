@@ -2,8 +2,8 @@ import { useGeneratedImage } from '../openai/hooks'
 import { useEffect, useMemo } from 'react'
 import { useComponentValue, useRow } from '@latticexyz/react'
 import { Entity } from '@latticexyz/recs'
+import { prompts } from '../prompts/prompts'
 import { useMUD } from '../../store'
-import { Terrain } from '../bridge/Crawl'
 
 
 export const useProfileImage = (prompt: string | null) => {
@@ -11,6 +11,7 @@ export const useProfileImage = (prompt: string | null) => {
   return {
     isWaiting,
     url,
+    error,
   }
 }
 
@@ -21,7 +22,7 @@ export const useProfileImage = (prompt: string | null) => {
 export const useAgentProfileImage = (agentEntity: Entity | undefined) => {
   const {
     networkLayer: {
-      components: { Agent, Metadata, ProfileImage },
+      components: { Agent, Metadata },
       systemCalls: {
         setAgentProfileImage,
       },
@@ -29,20 +30,22 @@ export const useAgentProfileImage = (agentEntity: Entity | undefined) => {
   } = useMUD()
 
   const agent = useComponentValue(Agent, agentEntity)
-  const metadata = useComponentValue(Metadata, agentEntity)
-  const url = useComponentValue(ProfileImage, agentEntity)
+  const metadataData = useComponentValue(Metadata, agentEntity)
+  const metadata = metadataData?.metadata ?? null
+  const url = metadataData?.url ?? null
+
+  useEffect(() => { console.log(`AGENT IMAGE:`, url) }, [url])
 
   const prompt = useMemo(() => {
-    if(agent && metadata) {
-      const meta = JSON.parse(metadata.metadata)
+    if (agent && metadata && !url) {
+      const meta = JSON.parse(metadata)
       return `A watercolor portrait of a maritime figure, digital neon art, luminescent deep sea creatures: ${meta.description}; nautical steampunk art, watercolor marine landscape, vintage nautical charts`
       // return `${meta.name}, ${meta.description}`
     }
     return null
-  }, [agent, metadata])
+  }, [agent, metadata, url])
   const { isWaiting, url: generatedUrl } = useProfileImage(prompt)
 
-  useEffect(() => { console.log(`AGENT IMAGE:`, url) }, [url])
   useEffect(() => { console.log(`AGENT META IMAGE:`, isWaiting, generatedUrl) }, [generatedUrl])
 
   useEffect(() => {
@@ -53,22 +56,13 @@ export const useAgentProfileImage = (agentEntity: Entity | undefined) => {
 
   return {
     isWaiting: (isWaiting && !metadata),
-    url: url?.url,
+    url,
   }
 }
 
 //---------------------
 // Chambers ProfileImage
 //
-const _chamberPrompts = {
-  //   "realm_suffix": "nautical steampunk art, watercolor marine landscape, vintage nautical charts",
-  //   "chamber_prefix": "A faded naval blueprint of a mysterious undersea structure",
-  //   "npc_prefix": "A watercolor portrait of a maritime figure",
-    [Terrain.Fire]: "digital neon art, luminescent deep sea creatures",
-    [Terrain.Water]: "art nouveau poster, mythological sea battles",
-    [Terrain.Earth]: "medieval manuscript illumination, bustling seaport",
-    [Terrain.Air]: "digital fantasy art, flight of the sea creatures"
-}
 export const useChamberProfileImage = (coord: bigint) => {
   const {
     networkLayer: {
@@ -81,25 +75,25 @@ export const useChamberProfileImage = (coord: bigint) => {
 
   const chamberRow = useRow(storeCache, { table: 'Chamber', key: { coord } });
   const metadataRow = useRow(storeCache, { table: 'ChamberMetadata', key: { coord } });
-  const profileImageRow = useRow(storeCache, { table: 'ChamberProfileImage', key: { coord } });
 
   const chamber = useMemo(() => (chamberRow?.value ?? null), [chamberRow])
   const metadata = useMemo(() => (metadataRow?.value?.metadata ?? null), [metadataRow])
-  const url = useMemo(() => (profileImageRow?.value?.url ?? null), [profileImageRow])
+  const url = useMemo(() => (metadataRow?.value?.url ?? null), [metadataRow])
+
+  // @ts-ignore
+  useEffect(() => { console.log(`CHAMBER IMAGE:`, chamber?.tokenId, coord, metadata?.name ?? null, url) }, [chamber, url])
 
   const prompt = useMemo(() => {
-    if (chamber && metadata) {
+    if (chamber && metadata && !url) {
       const meta = JSON.parse(metadata)
-      const pertype = _chamberPrompts[meta?.terrain ?? 0] ?? ''
-      console.log(`++++++++++++++++ GEN IMAGE CHAMBER META:`, metadata, pertype)
+      const pertype = prompts.chamberPrompts[meta?.terrain ?? 0] ?? ''
       return `${pertype}; ${meta.description}`
       // return `${meta.name}, ${meta.description}`
     }
     return null
-  }, [chamber, metadata])
+  }, [chamber, metadata, url])
   const { isWaiting, url: generatedUrl } = useProfileImage(prompt)
 
-  useEffect(() => { console.log(`CHAMBER IMAGE:`, chamber?.tokenId, metadata) }, [chamber, url])
   useEffect(() => { console.log(`CHAMBER IMAGE GENERATED:`, chamber?.tokenId, isWaiting, generatedUrl) }, [chamber, generatedUrl])
 
   useEffect(() => {
@@ -110,7 +104,7 @@ export const useChamberProfileImage = (coord: bigint) => {
 
   return {
     isWaiting: (isWaiting && !metadata),
-    url: generatedUrl ?? url,
+    url: url,
   }
 }
 

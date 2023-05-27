@@ -27,7 +27,6 @@ export function createPlayerSystem(layer: PhaserLayer) {
       },
       systemCalls: {
         spawn,
-        bridge_chamber,
       },
       playerEntity,
     },
@@ -128,15 +127,6 @@ export function createPlayerSystem(layer: PhaserLayer) {
         }
       }
     });
-
-    // get tile over player
-    const doorQuery = runQuery([Has(Door), HasValue(Position, position)])
-    doorQuery.forEach((entity) => {
-      const door = getComponentValueStrict(Door, entity)
-      console.log(`CRAWLER: Open door...`, position, door)
-      bridge_chamber(door.nextCoord)
-    });
-
 
   });
 }
