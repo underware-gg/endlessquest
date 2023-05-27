@@ -62,7 +62,7 @@ export const TokenLoader = ({
   return (
     <div>
       Loader(<span>{tokenId.toString() ?? '?'}) </span>
-      {coordOk ? 'x' : 'T'}
+      {coordOk ? '.' : 'T'}
     </div>
   )
 }
@@ -107,10 +107,10 @@ export const ChamberLoader = ({
   return (
     <div>
       Loader(<span>{slug ?? '?'}) </span>
-      {chamberOk ? 'x' : 'C'}
-      {tilesOk ? 'x' : 'T'}
-      {false ? 'x' : 'M'}
-      {false ? 'x' : 'I'}
+      {chamberOk ? '.' : 'C'}
+      {tilesOk ? '.' : 'T'}
+      {false ? '.' : 'M'}
+      {false ? '.' : 'I'}
     </div>
   )
 }
