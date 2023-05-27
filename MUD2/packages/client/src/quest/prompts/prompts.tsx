@@ -1,3 +1,5 @@
+import { Terrain } from '../bridge/Crawl'
+
 export const prompts = {
 
   // https://www.notion.so/fundaomental/AI-Design-b7a68959b308443e84b5f264cf228837?pvs=4#f22ef5fccde94d059ee248843549b387
@@ -55,7 +57,7 @@ Generation responses must contain only the JSON-compatible data structure, inclu
 When generating chamber data, the user must provide the "terrain_type", "gem_type", "coins and "yonder". If they do not, respond with this:
 "chamber": { "error": "you must provide the terrain_type, gem_type, coins and yonder to generate a chamber"}
 
-When generating a chamber, the NPC in the chamber must always have the behaviour mode associated with its gem, as listed in behaviour modes for NPCs.
+When generating an NPC, its behaviour mode is associated with its gem, as listed in behaviour modes for NPCs.
 
 World data example (JSON):
 {
@@ -100,6 +102,8 @@ Player data example (JSON):
     "player_quirk": "Despite his silent demeanor, Thorn has a surprising love for music and can play a variety of instruments."
   }
 }
+
+Use the examples structures, but not their data. Generate completely new data.
 
 Behaviour modes for NPCs:
 
@@ -222,7 +226,17 @@ NPC Behaviour mode examples:
     "description": "An ancient dragon, renowned for his wisdom and might. He guards a powerful artifact and only bestows it upon those who prove their valor.",
     "behaviour_mode": "A grand mythical beast who tests if the player is worthy",
     "quirk": "Fafnir has a soft spot for poetry. Those who recite an original verse might just sway his judgment."
-  })
+  }),
+
+  chamberPrompts: {
+    //   "realm_suffix": "nautical steampunk art, watercolor marine landscape, vintage nautical charts",
+    //   "chamber_prefix": "A faded naval blueprint of a mysterious undersea structure",
+    //   "npc_prefix": "A watercolor portrait of a maritime figure",
+    [Terrain.Fire]: "digital neon art, luminescent deep sea creatures",
+    [Terrain.Water]: "art nouveau poster, mythological sea battles",
+    [Terrain.Earth]: "medieval manuscript illumination, bustling seaport",
+    [Terrain.Air]: "digital fantasy art, flight of the sea creatures"
+  },
 
 }
 

@@ -67,6 +67,7 @@ export function defineContractComponents(world: World) {
         world,
         {
           metadata: RecsType.String,
+          url: RecsType.String,
         },
         {
           metadata: {
@@ -76,12 +77,16 @@ export function defineContractComponents(world: World) {
         }
       );
     })(),
-    ChamberProfileImage: (() => {
-      const tableId = new TableId("", "ChamberProfileIm");
+    Doors: (() => {
+      const tableId = new TableId("", "Doors");
       return defineComponent(
         world,
         {
-          url: RecsType.String,
+          coord: RecsType.BigInt,
+          index: RecsType.Number,
+          dir: RecsType.Number,
+          locked: RecsType.Boolean,
+          nextCoord: RecsType.BigInt,
         },
         {
           metadata: {
@@ -119,40 +124,7 @@ export function defineContractComponents(world: World) {
         world,
         {
           metadata: RecsType.String,
-        },
-        {
-          metadata: {
-            contractId: tableId.toHexString(),
-            tableId: tableId.toString(),
-          },
-        }
-      );
-    })(),
-    ProfileImage: (() => {
-      const tableId = new TableId("", "ProfileImage");
-      return defineComponent(
-        world,
-        {
           url: RecsType.String,
-        },
-        {
-          metadata: {
-            contractId: tableId.toHexString(),
-            tableId: tableId.toString(),
-          },
-        }
-      );
-    })(),
-    Doors: (() => {
-      const tableId = new TableId("", "Doors");
-      return defineComponent(
-        world,
-        {
-          coord: RecsType.BigInt,
-          index: RecsType.Number,
-          dir: RecsType.Number,
-          locked: RecsType.Boolean,
-          nextCoord: RecsType.BigInt,
         },
         {
           metadata: {

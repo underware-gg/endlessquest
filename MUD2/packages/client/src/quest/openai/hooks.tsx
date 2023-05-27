@@ -50,7 +50,7 @@ export const usePrompMetadata = (options: PromptMetadataOptions) => {
   const [isWaiting, setIsWaiting] = useState<boolean>(false)
   const [message, setMessage] = useState<string | null>(null)
   const [response, setResponse] = useState<string | null>(null)
-  const [metadata, setMetadata] = useState<object>({})
+  const [metadata, setMetadata] = useState<object | null>(null)
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
@@ -62,17 +62,18 @@ export const usePrompMetadata = (options: PromptMetadataOptions) => {
         setIsWaiting(false)
         setMessage(null)
         setResponse(response.response ?? null)
-        setMetadata(response.metadata ?? {})
+        setMetadata(response.metadata ?? null)
         setError(response.error ?? null)
       }
     }
 
-    setIsWaiting(true)
-    setMessage('Waiting...')
+    setIsWaiting(false)
     setResponse(null)
-    setMetadata({})
+    setMetadata(null)
     setError(null)
     if (options.type != MetadataType.None) {
+      setMessage('Waiting...')
+      setIsWaiting(true)
       _generate()
     }
 
@@ -112,10 +113,11 @@ export const useGeneratedImage = (prompt: string | null) => {
       }
     }
 
-    setIsWaiting(true)
+    setIsWaiting(false)
     setUrl(null)
     setError(null)
     if (prompt) {
+      setIsWaiting(true)
       _generate()
     }
 

@@ -6,7 +6,6 @@ import { PlayerLocation } from "./PlayerLocation";
 import { AgentLocation } from "./AgentLocation";
 import { ChatDialog } from "./ChatDialog";
 import { Loader } from "./Loader";
-// import { TestBridge } from "./TestBridge";
 
 declare global {
   interface Window { QuestNamespace: any; }
@@ -28,7 +27,7 @@ export const GameUI = () => {
   }, [isChatting])
 
   return (
-    <div className='NoMouse'>
+    <div className='NoMouse Relative'>
       
       <div className='GameUILeft'>
         <RealmLocation />

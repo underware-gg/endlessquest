@@ -3,9 +3,9 @@ pragma solidity >=0.8.0;
 
 import { System } from "@latticexyz/world/src/System.sol";
 import {
+  Token,
   Chamber, ChamberData,
-  ChamberMetadata,
-  ChamberProfileImage
+  ChamberMetadata, ChamberMetadataData
 } from "../codegen/Tables.sol";
 
 contract ChamberSystem is System {
@@ -23,6 +23,7 @@ contract ChamberSystem is System {
     uint16 coins,
     uint16 worth
   ) public {
+    Token.set(tokenId, coord);
     Chamber.set(coord,
       ChamberData({
         opener: _msgSender(),
@@ -42,10 +43,14 @@ contract ChamberSystem is System {
   }
 
   function setChamberMetadata(uint256 coord, string memory metadata) public {
-    ChamberMetadata.set(coord, metadata);
+    ChamberMetadataData memory data = ChamberMetadata.get(coord);
+    data.metadata = metadata;
+    ChamberMetadata.set(coord, data);
   }
 
   function setChamberProfileImage(uint256 coord, string memory url) public {
-    ChamberProfileImage.set(coord, url);
+    ChamberMetadataData memory data = ChamberMetadata.get(coord);
+    data.url = url;
+    ChamberMetadata.set(coord, data);
   }
 }
