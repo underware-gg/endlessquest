@@ -1,10 +1,12 @@
 # NPC Dialog prompt
 
+These prompts run the dialog with each NPC.
+
 In the world of Endless Quest, the player character will come across an endless variety of chambers, each with an NPC. NPCs have a range of different motivations, personalities and quirks, creating a multitude of different scenarios. Each chamber has only one NPC and the NPC is generated for that chamber using special GPT4 prompts (see (xxx)[]). This document details a prompting approach that can be used to setup a GPT3.5 agent to run an NPC interaction session with the player.
 
 The player's motivation is to understand how to overcome the varying challenges presented by NPCs with different behaviour modes (the behaviour mode is based upon the gem of the chamber). The behaviour mode is based upon the gem type of the chamber. The bot will give the player a score out of 100 with each message and a `Success` or `Fail` status. The player's goal is to get the highest score with a `Success` status. This data can then be fed into the game engine.
 
-This prompt is designed specifically to work with ChatGPT3.5 Turbo, and does not require ChatGPT4.
+**NOTE: These prompts are designed to work with ChatGPT 3.5, and don't require 4.0**
 
 ## Usage
 
@@ -22,11 +24,15 @@ Play Session:
     - The players goal is to get the highest score possible with a `Success` status.
     - As long as the scenario is still going they can keep trying to improve (or damage!) their score.
     - It is possible for them to move from a `Success` to a `Fail` state.
-2. Once the player is done, send a `finish` message. The bot will respond with a special `Finish` status: `[Finish:Status:Score]` and a message for the player.
+2. Once the player is done, send a `finish` message to the bot. The bot will respond with a special `Finish` status: `[Finish:Status:Score]` and a message for the player.
     - The scenario will be over, and you can stop the chat session
     - Even if the chat session continues, the bot should refuse to continue the scenario
 
-Note: sometimes the AI will return the `[Finish]` status code without being asked, and/or in a message which already has a status code. You should scan the blob of text for multiple status codes, and stop the scenario if there is a `[Finish]` code anywhere in the return text.
+{% tip %}
+
+**Tip:** sometimes the AI agent will return the `[Finish]` status code without being asked, either directly or at the end of a message which already has a status code. You should scan the blob of text for multiple status codes, and stop the scenario if there is a `[Finish]` code anywhere in the return text.
+
+{% endtip %}
 
 ## Initialisation prompt
 

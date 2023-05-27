@@ -2,22 +2,34 @@
 
 These prompts are designed to procedurally generate the different kinds of entities and their associated metadata in the correct format.
 
-These prompts are intended specifically for use with ChatGPT4.0
+**NOTE: You must use ChatGPT 4.0 for these prompts**
 
 ## Usage
 
-If you run this prompt in ChatGPT4.0 it should respond with `[Ready]`. You should then be able to send messages asking it to generate different kinds of metadata, such as:
-* World (`generate world`)
-* Chamber (`generate chamber`)
-* NPC (`generate NPC`)
-* PC (`generate PC`)
-* Briefing (`generate briefing`)
+If you run this prompt in ChatGPT4.0 it should respond with `[Ready]`. You can then send messages in plain english asking it to generate different kinds of metadata, such as:
+* World (`generate realm`) -- generate the definitions for a new world
+* Chamber (`generate chamber`) -- generate the definitions for a new chamber, including its resident NPC (see notes re: chamber generation below)
+* NPC (`generate NPC`) -- generate just an NPC
+* PC (`generate PC`) -- generate a PC definition
+* Briefing (`generate briefing`) -- generate a briefing; this combines together a chamber with some realm and PC info, useful for testing.
 
-e.g.
+You can also provide more detailed and specific instructions, for example:
 
-When generating a chamber, you will need to provide the correct `terrain_type`, `gem_type`, `coins` and `yonder` for that chamber - these are not details that the AI should be allowed to make up (it would if you let it!). These structures should be cognizant of the correct behaviour modes, etc. There are some edge cases where it doesn't generate correctly currently, for example, sometimes it makes up gems that don't exist, if you give it enough rope.
+```
+Generate a realm for a global Ethereum hackathon event, "Valhackheim", that is populated by various heavy metal viking norse gods who judge the lives of the hackathon participants to deem if their hack projects were worthy. Art prompts should be viking heavy metal themed
 
-There are some limitations
+Generate a briefing for Frolic, the judge of Lattice
+
+Generate a new realm realm_dictionary based on a theme of realms of thematic mathematical geometry and return only the realm_dictionary
+
+Generate a new boss NPC named "Goblout the Goblin King" who uses jokes to defeat his foes
+
+```
+% tip %}
+
+**Tip:** When generating a `chamber`, you will need to provide the correct `terrain_type`, `gem_type`, `coins` and `yonder` for the matching on-chain chamber - these are not details that the AI should be allowed to make up (it would if you let it!). These structures should be cognizant of the correct behaviour modes, etc. There are some edge cases where it doesn't generate correctly currently, for example, sometimes it makes up gems that don't exist, if you give it enough rope.
+
+{% endtip %}
 
 ## Initialisation Prompt
 
@@ -129,6 +141,6 @@ NPC Behaviour mode examples:
 * Trickster NPC: These are deceptive NPCs who try to trick the player. An example is "Eris the Illusionist", a mesmerizing enigma who speaks in riddles and illusions.
 * Trial NPC: These are grand mythical beasts who test if the player is worthy. An example is "Fafnir the Timeless", an ancient dragon who guards a powerful artifact and only bestows it upon those who prove their valor.
 * Artefact NPC: These are magical artifacts in the game. An example is "The Crystal of Eternity", a resplendent crystal with an inner glow that never dims and is said to possess the power to manipulate time.
-* Ruler NPC: This is the same powerful NPC described in the world data structure. They cannot be beaten unless the PC has the realm treasure.
+* Boss NPC: This is the same powerful NPC described in the world data structure. They cannot be beaten unless the PC has the realm treasure.
 * Treasure NPC: These are challenging and unpredictable encounters that the player must overcome to get the treasure. The treasure is needed to complete the boss encounter.
 ```

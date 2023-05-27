@@ -1,0 +1,16 @@
+{
+    "name": "The Judgement Chamber",
+    "description": "A grandiose chamber, high in the clouds of Valhackheim. Here, amidst an array of divine machinery and shifting holographic code, sits Frolic, the Judge of Code, his eyes casting an assessing gaze upon all who dare present their creations.",
+    "terrain_type": "Air",
+    "gem_type": "Ruby",
+    "npc": {
+        "name": "Frolic, the Judge of Code",
+        "description": "A towering figure clad in the heavy robes of justice, Frolic is one of Valhackheim's revered Norse gods. With eyes that flicker with ethereal code, he sits in judgement over hackathon projects, assessing their worthiness with an unyielding gaze.",
+        "behaviour_mode": "A grand mythical beast who tests if the player is worthy",
+        "quirk": "Frolic is known to occasionally pause his judgment to engage in a hearty laugh, lightening the intensity of the proceedings. Despite his stern role, he is a god who truly appreciates the joy of creation."
+    },
+    "coins": 999,
+    "yonder": 9,
+    "realm_description": "Valhackheim is a celestial domain of infinite codebases, home to the heavy metal Norse gods of Ethereum, who judge the hack projects of mortal participants. Here, the boundaries between code and metal, human and god, blur in a cacophony of creation and chaos.",
+    "PC_description": "Raised by monks in a secluded monastery, Thorn has mastered the art of silence. He communicates through gestures and expressions."
+}
