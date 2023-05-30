@@ -10,7 +10,7 @@ import Cookies from 'universal-cookie';
 import { nanoid } from 'nanoid'
 
 const _entityToBytes32 = (entity: string) => {
-  return "0x" + entity.replace("0x", "").padStart(64, "0");
+  return '0x' + entity.replace('0x', '').padStart(64, '0') as `0x${string}`;
 };
 
 export type SystemCalls = ReturnType<typeof createSystemCalls>;
@@ -169,27 +169,33 @@ export function createSystemCalls(
   //
   const setChamberMetadata = (coord: bigint, metadata: string) => {
     if (coord && metadata) {
-      console.warn(`STORE CHAMBER METADATA @`, coord, metadata)
-      worldSend("setChamberMetadata", [coord, metadata]);
+      // let stored_metadata = storeCache.tables.ChamberMetadata.get({ coord })
+      // if (stored_metadata == null) {
+        console.warn(`STORE CHAMBER METADATA @`, coord, metadata)
+        worldSend("setChamberMetadata", [coord, metadata]);
+      // }
     }
   };
-  const setAgentMetadata = (key: Entity, metadata: string) => {
-    if (key && metadata) {
-      const id = _entityToBytes32(key)
-      console.warn(`STORE AGENT METADATA @`, id, metadata)
-      worldSend("setAgentMetadata", [id, metadata]);
+  const setAgentMetadata = (entity: Entity, metadata: string) => {
+    if (entity && metadata) {
+      const key = _entityToBytes32(entity)
+      // let stored_metadata = storeCache.tables.Metadata.get({ key })
+      // if (stored_metadata == null) {
+        console.warn(`STORE AGENT METADATA @`, key, metadata)
+        worldSend("setAgentMetadata", [key, metadata]);
+      // }
     }
   };
 
   const setChamberProfileImage = (coord: bigint, url: string) => {
     if (coord && url) {
       console.warn(`STORE CHAMBER IMAGE URL @`, coord, url)
-      worldSend("setChamberProfileImage", [coord, url]);
+      worldSend("setChamberProfileImage", [coord, url])
     }
   };
-  const setAgentProfileImage = (key: Entity, url: string) => {
-    if (key && url) {
-      const id = _entityToBytes32(key)
+  const setAgentProfileImage = (entity: Entity, url: string) => {
+    if (entity && url) {
+      const id = _entityToBytes32(entity)
       console.warn(`STORE AGENT IMAGE URL @`, id, url)
       worldSend("setAgentProfileImage", [id, url]);
     }
@@ -207,7 +213,7 @@ export function createSystemCalls(
   }
 
   return {
-    // Exmaple
+    // Example
     increment,
     decrement,
     // Crawler

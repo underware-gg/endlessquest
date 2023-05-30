@@ -40,6 +40,7 @@ contract ChamberSystem is System {
         agent: 0
       })
     );
+    ChamberMetadata.set(coord, ChamberMetadataData("", ""));
   }
 
   function setChamberMetadata(uint256 coord, string memory metadata) public {

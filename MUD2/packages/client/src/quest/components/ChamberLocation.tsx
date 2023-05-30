@@ -19,7 +19,8 @@ export const ChamberLocation = () => {
     coins,
     worth,
     metadata,
-    isWaiting,
+    isFetching,
+    isError,
     url,
   } = useChamber()
 
@@ -28,8 +29,8 @@ export const ChamberLocation = () => {
       <div className='ChamberLocation'>
 
         <h2>Location</h2>
-        <p className='Important'>{isWaiting ? 'dreaming...' : (metadata?.name ?? '?')}</p>
-        <p>{isWaiting ? '...' : (metadata?.description ?? '?')}</p>
+        <p className='Important'>{isFetching ? 'dreaming...' : (metadata?.name ?? '?')}</p>
+        <p>{isFetching ? '...' : (metadata?.description ?? '?')}</p>
 
         <div className='Infos'>
           <div>Token Id: {tokenId?.toString() ?? '?'}</div>

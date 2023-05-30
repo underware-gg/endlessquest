@@ -3,6 +3,7 @@ import { useComponentValue, useEntityQuery, useRow } from '@latticexyz/react'
 import { Has, HasValue, getComponentValueStrict } from '@latticexyz/recs'
 import { useMUD } from '../../store'
 import { useBridgeContext, useBridgeToken, useBridgeChamber } from '../hooks/BridgeContext'
+import { useRequestChamberMetadata } from '../hooks/MetadataContext'
 import * as Crawl from '../bridge/Crawl'
 
 export const Loader = () => {
@@ -61,10 +62,14 @@ export const TokenLoader = ({
   // bridge this chamber
   useBridgeChamber(coord)
 
+  // request Realm metadata
+  const { isFetching, isSuccess } = useRequestChamberMetadata(1n)
+
   return (
     <div>
       Loader(<span>{tokenId.toString() ?? '?'}) </span>
       {coordOk ? '.' : 'T'}
+      {isSuccess ? '.' : isFetching ? 'm' : 'M'}
     </div>
   )
 }
@@ -106,12 +111,16 @@ export const ChamberLoader = ({
   // const slug = Crawl.compassToSlug(compass)
   const slug = Crawl.coordToSlug(coord)
 
+  // request Chamber metadata
+  const { isFetching, isSuccess } = useRequestChamberMetadata(coord)
+
   return (
     <div>
       Loader(<span>{slug ?? '?'}) </span>
+      {coordOk ? '.' : 'T'}
       {chamberOk ? '.' : 'C'}
       {tilesOk ? '.' : 'T'}
-      {false ? '.' : 'M'}
+      {isSuccess ? '.' : isFetching ? 'm': 'M'}
       {false ? '.' : 'I'}
     </div>
   )

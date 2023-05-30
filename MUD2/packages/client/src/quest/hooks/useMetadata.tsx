@@ -6,13 +6,125 @@ import { Entity } from '@latticexyz/recs'
 import { useMUD } from '../../store'
 
 
-export const useMetadata = (options: PromptMetadataOptions) => {
-  const { isWaiting, metadata, response, message, error } = usePrompMetadata(options)
+//---------------------
+// Chambers metadata
+//
+// export const useChamberMetadata = (coord: bigint) => {
+//   const {
+//     networkLayer: {
+//       components: { Chamber, ChamberMetadata },
+//       systemCalls: {
+//         setChamberMetadata,
+//       },
+//       storeCache,
+//     }
+//   } = useMUD()
+
+//   const chamberRow = useRow(storeCache, { table: 'Chamber', key: { coord } });
+//   const metadataRow = useRow(storeCache, { table: 'ChamberMetadata', key: { coord } });
+
+//   const chamber = useMemo(() => (chamberRow?.value ?? null), [chamberRow])  
+//   const metadata = useMemo(() => (metadataRow?.value?.metadata ?? null), [metadataRow])  
+
+//   useEffect(() => { console.log(`CHAMBER META:`, chamber?.tokenId, metadata) }, [chamber, metadata])
+
+//   const options: PromptMetadataOptions = useMemo(() => ({
+//     type: (chamber && !metadata) ? MetadataType.Chamber : MetadataType.None,
+//     terrain: chamber?.terrain ?? null,
+//     gemType: chamber?.gemType ?? null,
+//     coins: chamber?.coins ?? null,
+//     yonder: chamber?.yonder ?? null,
+//   }), [chamber, metadata])
+//   const { isWaiting, metadata: generatedMetadata } = usePrompMetadata(options)
+  
+//   // useEffect(() => { console.log(`CHAMBER META GENERATED:`, chamber?.tokenId, isWaiting, generatedMetadata) }, [chamber, generatedMetadata])
+
+//   useEffect(() => {
+//     if (chamber && generatedMetadata && !metadata) {
+//       // @ts-ignore: accept any property
+//       const cham = generatedMetadata.chamber ?? null
+//       if (!cham) {
+//         console.warn(`No Chamber in metadata!`, generatedMetadata)
+//         return
+//       }
+//       const meta = {
+//         name: cham.chamber_name ?? cham.name ?? '[name]',
+//         description: cham.chamber_description ?? cham.description ?? '[description]',
+//         terrain: chamber.terrain,
+//         yonder: chamber.yonder,
+//         gemType: chamber.gemType,
+//         coins: chamber.coins,
+//       }
+//       console.log(`meta store...:`, coord, meta)
+//       setChamberMetadata(coord, JSON.stringify(meta))
+//     }
+//   }, [chamber, generatedMetadata])
+
+//   return {
+//     isWaiting: (isWaiting && !metadata),
+//     metadata: metadata ? JSON.parse(metadata) : 'no metadata yet!',
+//   }
+// }
+
+
+
+//---------------------
+// Realm metadata
+//
+export const useRealmMetadata = (coord: bigint) => {
+  const {
+    networkLayer: {
+      components: { Chamber, ChamberMetadata },
+      systemCalls: {
+        setChamberMetadata,
+      },
+      storeCache,
+    }
+  } = useMUD()
+
+  const metadataRow = useRow(storeCache, { table: 'ChamberMetadata', key: { coord } });
+
+  const metadata = useMemo(() => (metadataRow?.value?.metadata ?? null), [metadataRow])
+
+  const options: PromptMetadataOptions = useMemo(() => ({
+    type: (!metadata) ? MetadataType.World : MetadataType.None,
+    terrain: null,
+    gemType: null,
+    coins: null,
+    yonder: null,
+  }), [metadata])
+  const { isWaiting, metadata: generatedMetadata } = usePrompMetadata(options)
+
+  useEffect(() => { console.log(`REALM META:`, metadata) }, [metadata])
+  // useEffect(() => { console.log(`REALM META GENERATED:`, isWaiting, generatedMetadata) }, [generatedMetadata])
+
+  useEffect(() => {
+    if (generatedMetadata && !metadata) {
+      // @ts-ignore: accept any property
+      const world = generatedMetadata.world ?? null
+      if (!world) {
+        console.warn(`No World Realm in metadata!`, generatedMetadata)
+        return
+      }
+      const meta = {
+        name: world.world_name ?? world.name ?? '[name]',
+        description: world.world_description ?? world.description ?? '[description]',
+        premise: world.world_premise ?? world.premise ?? '[premise]',
+        boss: world.world_boss ?? world.boss ?? '[boss]',
+        quirk: world.world_boss_quirk ?? world.quirk ?? '[quirk]',
+        treasure: world.world_treasure ?? world.treasure ?? '[treasure]',
+      }
+      console.log(`meta store...:`, coord, meta)
+      setChamberMetadata(coord, JSON.stringify(meta))
+    }
+  }, [generatedMetadata])
+
   return {
-    isWaiting,
-    metadata: response ? metadata : null,
+    isWaiting: (isWaiting && !metadata),
+    metadata: metadata ? JSON.parse(metadata) : 'no metadata yet!',
   }
 }
+
 
 
 //---------------------
@@ -31,14 +143,14 @@ export const useAgentMetadata = (agentEntity: Entity | undefined) => {
   const agent = useComponentValue(Agent, agentEntity)
   const metadata = useComponentValue(Metadata, agentEntity)
 
-  const options = useMemo(() => ({
+  const options: PromptMetadataOptions = useMemo(() => ({
     type: (agent && !metadata) ? MetadataType.NPC : MetadataType.None,
     terrain: agent?.terrain ?? null,
     gemType: agent?.gemType ?? null,
     coins: agent?.coins ?? null,
     yonder: agent?.yonder ?? null,
   }), [agent, metadata])
-  const { isWaiting, metadata: generatedMetadata } = useMetadata(options)
+  const { isWaiting, metadata: generatedMetadata } = usePrompMetadata(options)
   console.log(`AGENT META GENERATED:`, generatedMetadata)
 
   useEffect(() => { console.log(`AGENT META:`, metadata) }, [metadata])
@@ -70,123 +182,5 @@ export const useAgentMetadata = (agentEntity: Entity | undefined) => {
   return {
     isWaiting: (isWaiting && !metadata),
     metadata: metadata?.metadata ? JSON.parse(metadata.metadata) : 'no metadata yet!',
-  }
-}
-
-//---------------------
-// Chambers metadata
-//
-export const useChamberMetadata = (coord: bigint) => {
-  const {
-    networkLayer: {
-      components: { Chamber, ChamberMetadata },
-      systemCalls: {
-        setChamberMetadata,
-      },
-      storeCache,
-    }
-  } = useMUD()
-
-  const chamberRow = useRow(storeCache, { table: 'Chamber', key: { coord } });
-  const metadataRow = useRow(storeCache, { table: 'ChamberMetadata', key: { coord } });
-
-  const chamber = useMemo(() => (chamberRow?.value ?? null), [chamberRow])  
-  const metadata = useMemo(() => (metadataRow?.value?.metadata ?? null), [metadataRow])  
-
-  const options = useMemo(() => ({
-    type: (chamber && !metadata) ? MetadataType.Chamber : MetadataType.None,
-    terrain: chamber?.terrain ?? null,
-    gemType: chamber?.gemType ?? null,
-    coins: chamber?.coins ?? null,
-    yonder: chamber?.yonder ?? null,
-  }), [chamber, metadata])
-  const { isWaiting, metadata: generatedMetadata } = useMetadata(options)
-  
-  useEffect(() => { console.log(`CHAMBER META:`, chamber?.tokenId, metadata) }, [chamber, metadata])
-  // useEffect(() => { console.log(`CHAMBER META GENERATED:`, chamber?.tokenId, isWaiting, generatedMetadata) }, [chamber, generatedMetadata])
-
-  useEffect(() => {
-    if (chamber && generatedMetadata && !metadata) {
-      // @ts-ignore: accept any property
-      const cham = generatedMetadata.chamber ?? null
-      if (!cham) {
-        console.warn(`No Chamber in metadata!`, generatedMetadata)
-        return
-      }
-      const meta = {
-        name: cham.chamber_name ?? cham.name ?? '[name]',
-        description: cham.chamber_description ?? cham.description ?? '[description]',
-        terrain: chamber.terrain,
-        yonder: chamber.yonder,
-        gemType: chamber.gemType,
-        coins: chamber.coins,
-      }
-      console.log(`meta store...:`, coord, meta)
-      setChamberMetadata(coord, JSON.stringify(meta))
-    }
-  }, [chamber, generatedMetadata])
-
-  return {
-    isWaiting: (isWaiting && !metadata),
-    metadata: metadata ? JSON.parse(metadata) : 'no metadata yet!',
-  }
-}
-
-
-
-//---------------------
-// Realm metadata
-//
-export const useRealmMetadata = (coord: bigint) => {
-  const {
-    networkLayer: {
-      components: { Chamber, ChamberMetadata },
-      systemCalls: {
-        setChamberMetadata,
-      },
-      storeCache,
-    }
-  } = useMUD()
-
-  const metadataRow = useRow(storeCache, { table: 'ChamberMetadata', key: { coord } });
-
-  const metadata = useMemo(() => (metadataRow?.value?.metadata ?? null), [metadataRow])
-
-  const options = useMemo(() => ({
-    type: (!metadata) ? MetadataType.World : MetadataType.None,
-    terrain: null,
-    gemType: null,
-    coins: null,
-    yonder: null,
-  }), [metadata])
-  const { isWaiting, metadata: generatedMetadata } = useMetadata(options)
-
-  useEffect(() => { console.log(`REALM META:`, metadata) }, [metadata])
-  // useEffect(() => { console.log(`REALM META GENERATED:`, isWaiting, generatedMetadata) }, [generatedMetadata])
-
-  useEffect(() => {
-    if (generatedMetadata && !metadata) {
-      // @ts-ignore: accept any property
-      const world = generatedMetadata.world ?? null
-      if (!world) {
-        console.warn(`No World Realm in metadata!`, generatedMetadata)
-        return
-      }
-      const meta = {
-        name: world.world_name ?? world.name ?? '[name]',
-        description: world.world_description ?? world.description ?? '[description]',
-        premise: world.world_premise ?? world.premise ?? '[premise]',
-        boss: world.world_boss ?? world.boss ?? '[boss]',
-        quirk: world.world_boss_quirk ?? world.quirk ?? '[quirk]',
-        treasure: world.world_treasure ?? world.treasure ?? '[treasure]',
-      }
-      console.log(`meta store...:`, coord, meta)
-      setChamberMetadata(coord, JSON.stringify(meta))
-    }
-  }, [generatedMetadata])
-
-  return {
-    isWaiting: (isWaiting && !metadata),
-    metadata: metadata ? JSON.parse(metadata) : 'no metadata yet!',
   }
 }
