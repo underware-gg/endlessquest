@@ -24,6 +24,8 @@ const response = await openai.createImage({
 
 ## Prompt Structure
 
+__**Note:** This structure works but is experimental__
+
 Each `Realm` (world) should generate an art prompt tuning structure that looks like this:
 
 ```json
@@ -38,66 +40,62 @@ Each `Realm` (world) should generate an art prompt tuning structure that looks l
     }
 ```
 
-We will use AI prompts to generate art. Every type of asset should have a universal prefix and suffix that are unique to that asset type
-* `[STANDARD_PREFIX]` -- A universal prefix added to the start of every prompt, that tunes towards NPC portraits
-* `[STANDARD_SUFFIX]` -- A standard suffix added to the end of every prompt, that tunes for art quality.
+You construct the prompt for a `Chamber` and an `NPC` slightly differently, see below.
+* Each asset should have the image generated and then persisted, along with their other metdata (not every time)
+* Each terrain type should specify a custom suffix, which it can use to guide the generation towards a distinctive but consistent art style for that terrain type
 
 ### Realm Loading Screen: Background image
 
+**WARNING:** NOT IMPLEMENTED.
+
 This image is used as the background image on the loading screen for each Realm. It should ideally be generated once when the realm is created and then cached, using an API call to [Blockade Labs AI Skybox](https://www.blockadelabs.com/).
 
-The prompt should pass the `[STANDARD_PREFIX]` + `[REALM_DESCRIPTION]` + `[STANDARD_SUFFIX]`:
-* `[REALM_DESCRIPTION]` -- The description field from the realm metadata, with any leading/trailing whitespace+punctuation stripped.
+### Chamber Dialog: Chamber image
 
-This should be a rectangular aspect ratio, e.g. 1536x1024, and intended to be used as a page background.
-WARNING: 
+The image that represents the chamber. If you want an aspect ratio other than a square, generate at 1024x1024 then crop.
+`[CHAMBER_PREFIX], [CHAMBER_DESCRIPTION]; [TERRAIN_STYLE], [REALM_SUFFIX]`
 
-### Chamber Assets
+Where:
+* `[CHAMBER_PREFIX]` is loaded directly from the realm metadata
+* `[CHAMBER_DESCRIPTION]` is a description of the chamber, interpreted to a short prompt, else loaded directly from the NPC metadata
+* `[TERRAIN_STYLE]` is loaded directly from the `realm_art_prompts` metadata, based on the `TERRAIN_TYPE`
+* `[REALM_SUFFIX]` is loaded directly from the `realm_art_prompts` metadata 
 
-Each Chamber prompt should include:
-* `[TERRAIN_PREFIX]` -- A terrain type specific prompt that sets a consistent art style for each terrain
-* `[REALM_SUFFIX]` -- A standard suffix added to the prompt for everything in this realm
+They should ideally be a rectangular aspect ratio, e.g. 1024x768, but square is fine too if that's what's supported
 
-**Chamber Dialog: Chamber Background image**
+### Chamber Dialog: NPC image
 
-This image should be displayed as the background image for the chamber dialog UI. It is different for each chamber. The format should be:
-`[STANDARD_PREFIX]` + `[TERRAIN_PREFIX]` + `[CHAMBER_DESCRIPTION]` + `[REALM_SUFFIX]` + `[STANDARD_SUFFIX]`
-* `[CHAMBER_DESCRIPTION]` -- The name + description field from the chamber metadata, with any leading/trailing whitespace+punctuation stripped.
-
-This should be a rectangular aspect ratio, e.g. 768x512, and is intended to be used as a dialog background.
-
-**Chamber Dialog: NPC Portrait**
+The image that represents the NPC. This is displayed in the interaction to depict the NPC, along with the chamber image to depict the location.
 
 This image should be displayed as the portrait of the NPC. It is different for each chamber. The format should be:
-`[STANDARD_PREFIX]` + `[TERRAIN_PREFIX]` + `[NPC_DESCRIPTION]` + `[REALM_SUFFIX]` + `[STANDARD_SUFFIX]`
-* `[NPC_DESCRIPTION]` -- The NPC_Description of the NPC in this chamber, with leading/trailing whitespace+punctuation stripped.
+`[NPC_PREFIX], [NPC_DESCRIPTION]; [TERRAIN_STYLE], [REALM_SUFFIX]`
 
-NPC Portrait Picture are displayed in the chamber dialog UI, to depict the NPC found in that chamber.
-* Each NPC should have their own portrait picture generated, based upon their description
-* Generated images do not need a specific background, and likely work better if portraits are requested in a consistent art style
-* Each terrain type should specify a custom prefix and a suffix, which it can use to guide the generation towards a distinctive but consistent art style for that room type.
+Where:
+* `[NPC_PREFIX]` is loaded directly from the realm metadata
+* `[NPC_DESCRIPTION]` is a description of the NPC, interpreted to a short prompt, else loaded directly from the NPC metadata
+* `[TERRAIN_STYLE]` is loaded directly from the `realm_art_prompts` metadata, based on the `TERRAIN_TYPE`
+* `[REALM_SUFFIX]` is loaded directly from the `realm_art_prompts` metadata 
 
 They should be a square aspect ratio, e.g. 256x256 or 512x512, and is intended to be used as an NPC portrait.
 
 # Example Prompts (DALL-E)
 
-## Prefixes and suffixes
+## Sample Metadata
 
-**Standard Prefix (Chamber)**: `"A fantastical fantasy art landscape"`
+**Chamber and NPC prefixes**
 
-**Standard Suffix (Chamber)**: `", fantasy art, roleplaying game art, video game art, high definition, 4k"`
-
-**Standard Prefix (NPC)**: `"A fantasy art portrait of an NPC in a video game"`
-
-**Standard Suffix (NPC)**: `", portrait, fantasy art, roleplaying game art, video game art, high definition, 4k"`
+* **Chamber Prefix**: `"A fantastical fantasy art landscape"`
+* **NPC Prefix**: `"A fantasy art portrait of an NPC in a video game"`
+* **Realm Suffix**: `", fantasy art, roleplaying game art, video game art, high definition, 4k"`
 
 **Terrain Prefixes**:
+
 * `Fire` - `fiery expressionist style, by Edvard Munch`
 * `Water` - `watercolour style by J. M. W. Turner`
 * `Earth` - `oil painting by zdzislaw beksinski and mark rothko`
 * `Air` - `bright impressionist style by claude monet`
 
-## Realm (World) examples
+**Realm (World) examples**
 
 Format: `Description`
 
@@ -127,7 +125,7 @@ Air: `A fantastical fantasy art landscape, bright impressionist style by claude 
 
 ## NPC Description examples
 
-Format: `Behaviour Mode (Gem): Name - Description`
+Format: `Behaviour Mode (Gem): Name - Description`:
 
 * Quest (Silver): `Seraphina the Cursed Dancer - Once a famous dancer, Seraphina is now trapped in an endless dance by a jealous witch. She is friendly but forlorn, always moving to a silent rhythm.`
 * Quest (Silver): `Lana the Lost Traveler - A spirited adventurer with a heart for exploration. Unfortunately, Lana has a terrible sense of direction and often finds herself lost.`

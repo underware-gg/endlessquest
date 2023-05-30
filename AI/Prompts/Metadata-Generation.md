@@ -25,7 +25,7 @@ Generate a new realm realm_dictionary based on a theme of realms of thematic mat
 Generate a new boss NPC named "Goblout the Goblin King" who uses jokes to defeat his foes
 
 ```
-% tip %}
+{% tip %}
 
 **Tip:** When generating a `chamber`, you will need to provide the correct `terrain_type`, `gem_type`, `coins` and `yonder` for the matching on-chain chamber - these are not details that the AI should be allowed to make up (it would if you let it!). These structures should be cognizant of the correct behaviour modes, etc. There are some edge cases where it doesn't generate correctly currently, for example, sometimes it makes up gems that don't exist, if you give it enough rope.
 
