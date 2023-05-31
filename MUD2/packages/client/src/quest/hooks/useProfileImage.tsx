@@ -39,7 +39,7 @@ export const useAgentProfileImage = (agentEntity: Entity | undefined) => {
   const prompt = useMemo(() => {
     if (agent && metadata && !url) {
       const meta = JSON.parse(metadata)
-      return `A watercolor portrait of a maritime figure, digital neon art, luminescent deep sea creatures: ${meta.description}; nautical steampunk art, watercolor marine landscape, vintage nautical charts`
+      return `A watercolor portrait of a maritime figure, digital neon art, luminescent deep sea creatures: ${meta.description} nautical steampunk art, watercolor marine landscape, vintage nautical charts`
       // return `${meta.name}, ${meta.description}`
     }
     return null
@@ -73,8 +73,8 @@ export const useChamberProfileImage = (coord: bigint) => {
     }
   } = useMUD()
 
-  const chamberRow = useRow(storeCache, { table: 'Chamber', key: { coord } });
-  const metadataRow = useRow(storeCache, { table: 'ChamberMetadata', key: { coord } });
+  const chamberRow = useRow(storeCache, { table: 'Chamber', key: { coord } })
+  const metadataRow = useRow(storeCache, { table: 'ChamberMetadata', key: { coord } })
 
   const chamber = useMemo(() => (chamberRow?.value ?? null), [chamberRow])
   const metadata = useMemo(() => (metadataRow?.value?.metadata ?? null), [metadataRow])
@@ -87,7 +87,7 @@ export const useChamberProfileImage = (coord: bigint) => {
     if (chamber && metadata && !url) {
       const meta = JSON.parse(metadata)
       const pertype = prompts.chamberPrompts[meta?.terrain ?? 0] ?? ''
-      return `${pertype}; ${meta.description}`
+      return `${pertype} ${meta.description}`
       // return `${meta.name}, ${meta.description}`
     }
     return null

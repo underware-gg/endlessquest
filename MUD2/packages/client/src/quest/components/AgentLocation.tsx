@@ -1,9 +1,9 @@
-import { useComponentValue, useEntityQuery, useRow } from '@latticexyz/react';
-import { Entity, Has, HasValue, getComponentValueStrict } from '@latticexyz/recs';
-import { useMUD } from '../../store';
-import { usePlayer } from '../hooks/usePlayer';
-import { useAgent } from '../hooks/useAgent';
-import { useEffect, useMemo } from 'react';
+import { useComponentValue, useEntityQuery, useRow } from '@latticexyz/react'
+import { Entity, Has, HasValue, getComponentValueStrict } from '@latticexyz/recs'
+import { useMUD } from '../../store'
+import { usePlayer } from '../hooks/usePlayer'
+import { useAgent } from '../hooks/useAgent'
+import { useEffect, useMemo } from 'react'
 
 
 export const AgentLocation = ({

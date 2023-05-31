@@ -1,7 +1,7 @@
-import { useComponentValue, useEntityQuery, useRow } from '@latticexyz/react';
-import { Has, HasValue, getComponentValueStrict } from '@latticexyz/recs';
-import { useMUD } from '../../store';
-import { usePlayer } from '../hooks/usePlayer';
+import { useComponentValue, useEntityQuery, useRow } from '@latticexyz/react'
+import { Has, HasValue, getComponentValueStrict } from '@latticexyz/recs'
+import { useMUD } from '../../store'
+import { usePlayer } from '../hooks/usePlayer'
 import { useBridgeChamber } from '../hooks/BridgeContext'
 
 export const PlayerLocation = () => {
@@ -20,7 +20,6 @@ export const PlayerLocation = () => {
   } = usePlayer()
 
   // Bridge chamber if needed
-  console.log(`player bridge`, coord?.toString() ?? '..')
   useBridgeChamber(nextCoord ?? 0n)
 
   return (

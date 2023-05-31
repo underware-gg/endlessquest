@@ -20,8 +20,8 @@ import { useMUD } from '../../store'
 //     }
 //   } = useMUD()
 
-//   const chamberRow = useRow(storeCache, { table: 'Chamber', key: { coord } });
-//   const metadataRow = useRow(storeCache, { table: 'ChamberMetadata', key: { coord } });
+//   const chamberRow = useRow(storeCache, { table: 'Chamber', key: { coord } })
+//   const metadataRow = useRow(storeCache, { table: 'ChamberMetadata', key: { coord } })
 
 //   const chamber = useMemo(() => (chamberRow?.value ?? null), [chamberRow])  
 //   const metadata = useMemo(() => (metadataRow?.value?.metadata ?? null), [metadataRow])  
@@ -82,7 +82,7 @@ import { useMUD } from '../../store'
 //     }
 //   } = useMUD()
 
-//   const metadataRow = useRow(storeCache, { table: 'ChamberMetadata', key: { coord } });
+//   const metadataRow = useRow(storeCache, { table: 'ChamberMetadata', key: { coord } })
 
 //   const metadata = useMemo(() => (metadataRow?.value?.metadata ?? null), [metadataRow])
 

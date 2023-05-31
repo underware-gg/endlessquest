@@ -1,20 +1,20 @@
-import { mudConfig, resolveTableId } from "@latticexyz/world/register";
+import { mudConfig, resolveTableId } from '@latticexyz/world/register'
 
 export default mudConfig({
   enums: {
     Direction: [
-      "Unknown",
-      "Up",
-      "Down",
-      "Left",
-      "Right",
+      'Unknown',
+      'Up',
+      'Down',
+      'Left',
+      'Right',
     ]
   },
   tables: {
     //-----------------------
     Counter: {
       keySchema: {},
-      schema: "uint32",
+      schema: 'uint32',
     },
     //-----------------------
     Realm: {
@@ -62,8 +62,8 @@ export default mudConfig({
         coord: 'uint256'
       },
       schema: {
-        metadata: "string",
-        url: "string",
+        metadata: 'string',
+        url: 'string',
       }
     },
     //-----------------------
@@ -97,8 +97,8 @@ export default mudConfig({
     },
     Metadata: {
       schema: {
-        metadata: "string",
-        url: "string",
+        metadata: 'string',
+        url: 'string',
       }
     },
     //-----------------------
@@ -122,48 +122,48 @@ export default mudConfig({
     //-----------------------
     Player: {
       schema: {
-        level: "uint8",
-        name: "string",
+        level: 'uint8',
+        name: 'string',
       }
     },
     Position: {
       schema: {
-        x: "int32",
-        y: "int32",
+        x: 'int32',
+        y: 'int32',
       }
     },
     Location: {
       schema: {
-        coord: "uint256",
+        coord: 'uint256',
         agent: 'bytes32',
       }
     },
     Blocker: {
       schema: {
-        enabled: "bool",
+        enabled: 'bool',
       }
     },
   },
   modules: [
     {
-      name: "UniqueEntityModule",
+      name: 'UniqueEntityModule',
       root: true,
-      args: [resolveTableId("Agent")],
+      args: [resolveTableId('Agent')],
     },
     {
-      name: "UniqueEntityModule",
+      name: 'UniqueEntityModule',
       root: true,
-      args: [resolveTableId("Doors")],
+      args: [resolveTableId('Doors')],
     },
     {
-      name: "UniqueEntityModule",
+      name: 'UniqueEntityModule',
       root: true,
-      args: [resolveTableId("Tiles")],
+      args: [resolveTableId('Tiles')],
     },
     {
-      name: "KeysWithValueModule",
+      name: 'KeysWithValueModule',
       root: true,
-      args: [resolveTableId("Position")],
+      args: [resolveTableId('Position')],
     },
   ],
-});
+})

@@ -1,7 +1,7 @@
-import { useComponentValue, useEntityQuery, useRow } from "@latticexyz/react";
-import { Has, HasValue, getComponentValueStrict } from "@latticexyz/recs";
-import { useMUD } from "../../store";
-import { useEffect } from "react";
+import { useComponentValue, useEntityQuery, useRow } from '@latticexyz/react'
+import { Has, HasValue, getComponentValueStrict } from '@latticexyz/recs'
+import { useMUD } from '../../store'
+import { useEffect } from 'react'
 
 export const TestBridge = () => {
   const {
@@ -10,16 +10,16 @@ export const TestBridge = () => {
       systemCalls: { increment, decrement, bridge_tokenId, bridge_chamber },
       singletonEntity, storeCache,
     }
-  } = useMUD();
+  } = useMUD()
 
-  const counter = useComponentValue(Counter, singletonEntity);
+  const counter = useComponentValue(Counter, singletonEntity)
   const tokenId = BigInt(counter?.value?.toString() ?? '0')
 
   //
   // TokenSystem
   //
   // query by KEY
-  const token = useRow(storeCache, { table: "Token", key: { tokenId } });
+  const token = useRow(storeCache, { table: 'Token', key: { tokenId } })
   const coord = token?.value?.coord ?? 0n
   useEffect(() => {
     if (tokenId && !coord) {
@@ -35,7 +35,7 @@ export const TestBridge = () => {
       bridge_chamber(coord)
     }
   }, [coord])
-  const chamberData = useRow(storeCache, { table: "Chamber", key: { coord } });
+  const chamberData = useRow(storeCache, { table: 'Chamber', key: { coord } })
   const seed = chamberData?.value?.seed?.toString() ?? null
 
   //
@@ -54,26 +54,26 @@ export const TestBridge = () => {
       height: '200px',
     }}>
       <div>
-        Counter: <span>{counter?.value ?? "??"}</span>
+        Counter: <span>{counter?.value ?? '??'}</span>
       </div>
-      <button type="button"
+      <button type='button'
         onClick={async (event) => {
-          event.preventDefault();
-          console.log("new counter value < ", await decrement());
+          event.preventDefault()
+          console.log('new counter value < ', await decrement())
         }}
       >Decrement</button>
-      <button type="button"
+      <button type='button'
         onClick={async (event) => {
-          event.preventDefault();
-          console.log("new counter value > ", await increment());
+          event.preventDefault()
+          console.log('new counter value > ', await increment())
         }}
       >Increment</button>
 
       <hr />
-      {/* <button type="button"
+      {/* <button type='button'
         onClick={async (event) => {
-          event.preventDefault();
-          console.log("get coord:", await tokenIdToCoord(BigInt(tokenId)));
+          event.preventDefault()
+          console.log('get coord:', await tokenIdToCoord(BigInt(tokenId)))
         }}
       >
         Make coord
@@ -95,5 +95,5 @@ export const TestBridge = () => {
         })}</div>
 
     </div>
-  );
-};
+  )
+}

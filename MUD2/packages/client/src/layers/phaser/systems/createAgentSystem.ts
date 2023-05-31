@@ -7,10 +7,10 @@ import {
   setComponent,
   defineQuery,
   runQuery,
-} from "@latticexyz/recs";
-import { PhaserLayer } from "../createPhaserLayer";
-import { Animations, TILE_HEIGHT, TILE_WIDTH } from "../constants";
-import { pixelCoordToTileCoord, tileCoordToPixelCoord } from "@latticexyz/phaserx";
+} from '@latticexyz/recs'
+import { PhaserLayer } from '../createPhaserLayer'
+import { Animations, TILE_HEIGHT, TILE_WIDTH } from '../constants'
+import { pixelCoordToTileCoord, tileCoordToPixelCoord } from '@latticexyz/phaserx'
 
 export function createAgentSystem(layer: PhaserLayer) {
   const {
@@ -32,13 +32,13 @@ export function createAgentSystem(layer: PhaserLayer) {
         objectPool,
       },
     },
-  } = layer;
+  } = layer
 
   defineEnterSystem(world, [Has(Position), Has(Agent)], ({ entity }) => {
-    const position = getComponentValueStrict(Position, entity);
-    const pixelPosition = tileCoordToPixelCoord(position, TILE_WIDTH, TILE_HEIGHT);
+    const position = getComponentValueStrict(Position, entity)
+    const pixelPosition = tileCoordToPixelCoord(position, TILE_WIDTH, TILE_HEIGHT)
 
-    const agent = getComponentValueStrict(Agent, entity);
+    const agent = getComponentValueStrict(Agent, entity)
 
     const spriteList = [
       Animations.AgentsFisherman,
@@ -51,15 +51,15 @@ export function createAgentSystem(layer: PhaserLayer) {
     ]
     const spr = spriteList[(agent.gemType) % spriteList.length]
 
-    const agentObj = objectPool.get(entity, "Sprite");
+    const agentObj = objectPool.get(entity, 'Sprite')
     agentObj.setComponent({
       id: 'animation',
       once: (sprite) => {
-        sprite.setPosition(pixelPosition.x, pixelPosition.y);
-        sprite.play(spr);
+        sprite.setPosition(pixelPosition.x, pixelPosition.y)
+        sprite.play(spr)
       }
-    });
-  });
+    })
+  })
 
   defineSystem(world, [Has(Position), Has(Player)], ({ entity }) => {
     const position = getComponentValueStrict(Position, entity);
@@ -75,8 +75,8 @@ export function createAgentSystem(layer: PhaserLayer) {
       tileQuery.forEach((entity) => {
         const agent = getComponentValueStrict(Agent, entity)
         console.log(`CRAWLER: Reached Agent...`, agentPosition, agent)
-      });
+      })
     })
 
-  });
+  })
 }

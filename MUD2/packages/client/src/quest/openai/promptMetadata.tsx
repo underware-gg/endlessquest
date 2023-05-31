@@ -37,15 +37,11 @@ export default async function promptMetadata(options: PromptMetadataOptions): Pr
     }
   }
 
-  let prompt = `Generate ${options.type}, `
-  // if (options.terrain != null) prompt += `"terrain_type": "${Crawl.TerrainNames[options.terrain]}", `
-  // if (options.gemType != null) prompt += `"gem_type": "${Crawl.GemNames[options.gemType]}", `
-  // if (options.coins != null) prompt += `"coins": "${options.coins}", `
-  // if (options.yonder != null) prompt += `"yonder": "${options.yonder}", `
-  if (options.terrain != null) prompt += `terrain_type: ${Crawl.TerrainNames[options.terrain]}, `
-  if (options.gemType != null) prompt += `gem_type: ${Crawl.GemNames[options.gemType]}, `
-  if (options.coins != null) prompt += `coins: ${options.coins}, `
-  if (options.yonder != null) prompt += `yonder: ${options.yonder}, `
+  let prompt = `Generate ${options.type}`
+  if (options.terrain != null) prompt += `, terrain_type: ${Crawl.TerrainNames[options.terrain]}, `
+  if (options.gemType != null) prompt += `, gem_type: ${Crawl.GemNames[options.gemType]}, `
+  if (options.coins != null) prompt += `, coins: ${options.coins}, `
+  if (options.yonder != null) prompt += `, yonder: ${options.yonder}, `
   // prompt += `}`
 
   console.log('Metadata Chat prompt:', prompt)

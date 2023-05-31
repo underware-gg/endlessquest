@@ -5,7 +5,7 @@ import {
 } from '@wagmi/core'
 import { publicProvider } from '@wagmi/core/providers/public'
 import { readContract } from '@wagmi/core'
-import CrawlerToken from './CrawlerToken.json';
+import CrawlerToken from './CrawlerToken.json'
 
 //------------
 // wagmi

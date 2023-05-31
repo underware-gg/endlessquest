@@ -1,5 +1,5 @@
 import React from 'react'
-import { useMUD } from '../../store';
+import { useMUD } from '../../store'
 
 export const useComponentType = () => {
   const {

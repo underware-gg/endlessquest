@@ -1,10 +1,10 @@
-import { useMemo } from 'react';
-import { useComponentValue, useEntityQuery } from '@latticexyz/react';
-import { Has, HasValue } from "@latticexyz/recs";
-import { normalizeEntityID } from '@latticexyz/network';
-import { useMUD } from '../../store';
-import { useCoord } from './useCoord';
-import { useTile } from './useTile';
+import { useMemo } from 'react'
+import { useComponentValue, useEntityQuery } from '@latticexyz/react'
+import { Has, HasValue } from '@latticexyz/recs'
+import { normalizeEntityID } from '@latticexyz/network'
+import { useMUD } from '../../store'
+import { useCoord } from './useCoord'
+import { useTile } from './useTile'
 
 export const usePlayer = () => {
   const {
@@ -14,9 +14,9 @@ export const usePlayer = () => {
     }
   } = useMUD()
 
-  const player = useComponentValue(Player, playerEntity);
-  const position = useComponentValue(Position, playerEntity);
-  const location = useComponentValue(Location, playerEntity);
+  const player = useComponentValue(Player, playerEntity)
+  const position = useComponentValue(Position, playerEntity)
+  const location = useComponentValue(Location, playerEntity)
   const { compass, slug } = useCoord(location?.coord ?? 0n)
 
   const coord = useMemo(() => (location?.coord ?? undefined), [location])

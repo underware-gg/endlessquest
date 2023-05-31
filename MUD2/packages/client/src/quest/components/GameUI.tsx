@@ -1,14 +1,14 @@
-import { useEffect, useState } from "react";
-import { Main } from "./Main";
-import { RealmLocation } from "./RealmLocation";
-import { ChamberLocation } from "./ChamberLocation";
-import { PlayerLocation } from "./PlayerLocation";
-import { AgentLocation } from "./AgentLocation";
-import { ChatDialog } from "./ChatDialog";
-import { Loader } from "./Loader";
+import { useEffect, useState } from 'react'
+import { Main } from './Main'
+import { RealmLocation } from './RealmLocation'
+import { ChamberLocation } from './ChamberLocation'
+import { PlayerLocation } from './PlayerLocation'
+import { AgentLocation } from './AgentLocation'
+import { ChatDialog } from './ChatDialog'
+import { Loader } from './Loader'
 
 declare global {
-  interface Window { QuestNamespace: any; }
+  interface Window { QuestNamespace: any }
 }
 
 export const GameUI = () => {
@@ -47,5 +47,5 @@ export const GameUI = () => {
         <ChatDialog onChat={setIsChatting} agentName={agentName ?? 'Agent'} agentMetadata={agentMetadata ?? ''} />
       }
     </div>
-  );
-};
+  )
+}

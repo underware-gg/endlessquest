@@ -1,4 +1,4 @@
-import { PhaserLayer } from "../createPhaserLayer";
+import { PhaserLayer } from '../createPhaserLayer'
 
 export const createCamera = (layer: PhaserLayer) => {
   const {
@@ -7,7 +7,7 @@ export const createCamera = (layer: PhaserLayer) => {
         camera: { phaserCamera },
       },
     },
-  } = layer;
+  } = layer
 
-  phaserCamera.centerOn(0, 0);
-};
+  phaserCamera.centerOn(0, 0)
+}

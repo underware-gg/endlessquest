@@ -1,9 +1,9 @@
-import { useMemo } from 'react';
-import { useComponentValue, useEntityQuery } from '@latticexyz/react';
-import { Has, HasValue, getComponentValueStrict } from "@latticexyz/recs";
-import { normalizeEntityID } from '@latticexyz/network';
-import { useMUD } from '../../store';
-import { useCoord } from './useCoord';
+import { useMemo } from 'react'
+import { useComponentValue, useEntityQuery } from '@latticexyz/react'
+import { Has, HasValue, getComponentValueStrict } from '@latticexyz/recs'
+import { normalizeEntityID } from '@latticexyz/network'
+import { useMUD } from '../../store'
+import { useCoord } from './useCoord'
 
 export const useTile = (position: { x: number, y: number }) => {
   const {
@@ -12,7 +12,7 @@ export const useTile = (position: { x: number, y: number }) => {
       systemCalls: { increment, decrement, bridge_tokenId, bridge_chamber },
       singletonEntity, storeCache,
     }
-  } = useMUD();
+  } = useMUD()
 
   // Get Tiles component at position
   const cleanPos = {
@@ -31,8 +31,8 @@ export const useTile = (position: { x: number, y: number }) => {
   // }, [entities])
 
 
-  const tile = useComponentValue(Tiles, entity);
-  const door = useComponentValue(Door, entity);
+  const tile = useComponentValue(Tiles, entity)
+  const door = useComponentValue(Door, entity)
   const nextCoord = door?.nextCoord ?? 0n
 
   return {
