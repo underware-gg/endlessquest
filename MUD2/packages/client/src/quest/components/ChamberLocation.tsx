@@ -1,7 +1,4 @@
-import { useComponentValue, useEntityQuery, useRow } from '@latticexyz/react';
-import { Has, HasValue, getComponentValueStrict } from '@latticexyz/recs';
-import { useMUD } from '../../store';
-import { useChamber } from '../hooks/useChamber';
+import { useChamber } from '../hooks/useChamber'
 
 export const ChamberLocation = () => {
   // const {
@@ -19,8 +16,8 @@ export const ChamberLocation = () => {
     coins,
     worth,
     metadata,
-    isFetching,
-    isError,
+    metadataIsFetching,
+    metadataIsError,
     url,
   } = useChamber()
 
@@ -29,8 +26,8 @@ export const ChamberLocation = () => {
       <div className='ChamberLocation'>
 
         <h2>Location</h2>
-        <p className='Important'>{isFetching ? 'dreaming...' : (metadata?.name ?? '?')}</p>
-        <p>{isFetching ? '...' : (metadata?.description ?? '?')}</p>
+        <p className='Important'>{metadataIsFetching ? 'dreaming...' : (metadata?.name ?? '?')}</p>
+        <p>{metadataIsFetching ? '...' : (metadata?.description ?? '?')}</p>
 
         <div className='Infos'>
           <div>Token Id: {tokenId?.toString() ?? '?'}</div>

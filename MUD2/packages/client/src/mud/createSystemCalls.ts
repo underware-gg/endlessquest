@@ -42,6 +42,10 @@ export function createSystemCalls(
     return getComponentValue(Counter, singletonEntity);
   };
 
+  //---------------------------
+  // Crawler
+  //
+
   const bridge_tokenId = async (tokenId: bigint) => {
     // check if already bridged
     let stored_coord = storeCache.tables.Token.get({ tokenId });
@@ -62,9 +66,25 @@ export function createSystemCalls(
     return getComponentValue(Token, singletonEntity);
   };
 
-  //---------------------------
-  // Crawler
-  //
+  const bridge_realm = async (coord: bigint) => {
+    // check if already bridged
+    let stored_realm = storeCache.tables.Realm.get({ coord })
+    if (stored_realm != null) {
+      console.log(`STORED_REALM:`, stored_realm)
+      return
+    }
+    console.warn(`BRIDGE_REALM`, coord)
+    //
+    // store Chamber
+    const tx = await worldSend("setRealm", [
+      coord,
+    ]);
+    await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash)
+    const result = storeCache.tables.Realm.get({ coord })
+    // console.warn(`BRIDGED_REALM = `, result)
+    return result
+  }
+
   const bridge_chamber = async (coord: bigint) => {
     // check if already bridged
     let stored_chamber = storeCache.tables.Chamber.get({ coord });
@@ -167,15 +187,24 @@ export function createSystemCalls(
   //---------------------------
   // Metadata
   //
+  const setRealmMetadata = (coord: bigint, metadata: string) => {
+    if (coord && metadata) {
+      // let stored_metadata = storeCache.tables.ChamberMetadata.get({ coord })
+      // if (stored_metadata == null) {
+      console.warn(`STORE REALM METADATA @`, coord, metadata)
+      worldSend("setRealmMetadata", [coord, metadata])
+      // }
+    }
+  }
   const setChamberMetadata = (coord: bigint, metadata: string) => {
     if (coord && metadata) {
       // let stored_metadata = storeCache.tables.ChamberMetadata.get({ coord })
       // if (stored_metadata == null) {
         console.warn(`STORE CHAMBER METADATA @`, coord, metadata)
-        worldSend("setChamberMetadata", [coord, metadata]);
+        worldSend("setChamberMetadata", [coord, metadata])
       // }
     }
-  };
+  }
   const setAgentMetadata = (entity: Entity, metadata: string) => {
     if (entity && metadata) {
       const key = _entityToBytes32(entity)
@@ -217,9 +246,11 @@ export function createSystemCalls(
     increment,
     decrement,
     // Crawler
+    bridge_realm,
     bridge_tokenId,
     bridge_chamber,
     // Metadata
+    setRealmMetadata,
     setChamberMetadata,
     setAgentMetadata,
     setChamberProfileImage,

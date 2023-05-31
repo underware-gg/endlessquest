@@ -1,13 +1,13 @@
-import { useComponentValue, useEntityQuery, useRow } from '@latticexyz/react';
-import { Has, HasValue, getComponentValueStrict } from '@latticexyz/recs';
-import { useMUD } from '../../store';
-import { useRealm } from '../hooks/useRealm';
+import { useComponentValue, useEntityQuery, useRow } from '@latticexyz/react'
+import { Has, HasValue, getComponentValueStrict } from '@latticexyz/recs'
+import { useMUD } from '../../store'
+import { useRealm } from '../hooks/useRealm'
 
 export const RealmLocation = () => {
 
   const {
     metadata,
-    isWaiting,
+    metadataIsFetching,
     url,
   } = useRealm()
 
@@ -16,8 +16,8 @@ export const RealmLocation = () => {
       <div className='RealmLocation'>
 
         <h2>Realm</h2>
-        <p className='Important'>{isWaiting ? 'dreaming...' : (metadata?.name ?? '?')}</p>
-        <p>{isWaiting ? '...' : (metadata?.description ?? '?')}</p>
+        <p className='Important'>{metadataIsFetching ? 'dreaming...' : (metadata?.name ?? '?')}</p>
+        <p>{metadataIsFetching ? '...' : (metadata?.description ?? '?')}</p>
 
         {/* <div className='Infos'>
           <div>Yonder: {yonder ?? '?'}</div>

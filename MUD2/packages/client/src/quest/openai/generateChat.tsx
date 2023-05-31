@@ -124,7 +124,7 @@ export async function generateChat(options: ChatOptions): Promise<ChatResponse> 
     console.warn(`OpenAI Chat exception:`, error)
     return {
       error: error.message ?? error.error.message ?? error.response.data ?? 'An error occurred during your request',
-      status: error.status ?? error.response.status ?? null,
+      status: error.status ?? error.response?.status ?? null,
     }
   }
 }

@@ -20,6 +20,21 @@ export function defineContractComponents(world: World) {
         }
       );
     })(),
+    Realm: (() => {
+      const tableId = new TableId("", "Realm");
+      return defineComponent(
+        world,
+        {
+          opener: RecsType.String,
+        },
+        {
+          metadata: {
+            contractId: tableId.toHexString(),
+            tableId: tableId.toString(),
+          },
+        }
+      );
+    })(),
     Token: (() => {
       const tableId = new TableId("", "Token");
       return defineComponent(

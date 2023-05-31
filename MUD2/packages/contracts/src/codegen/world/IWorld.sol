@@ -10,6 +10,7 @@ import { IChamberSystem } from "./IChamberSystem.sol";
 import { IDoorsSystem } from "./IDoorsSystem.sol";
 import { IIncrementSystem } from "./IIncrementSystem.sol";
 import { IPlayerSystem } from "./IPlayerSystem.sol";
+import { IRealmSystem } from "./IRealmSystem.sol";
 import { ITilesSystem } from "./ITilesSystem.sol";
 import { ITokenSystem } from "./ITokenSystem.sol";
 
@@ -24,6 +25,7 @@ interface IWorld is
   IDoorsSystem,
   IIncrementSystem,
   IPlayerSystem,
+  IRealmSystem,
   ITilesSystem,
   ITokenSystem
 {

@@ -3,13 +3,13 @@ import * as Chat from './generateChat'
 import { prompts } from '../prompts/prompts'
 import { ChatCompletionRequestMessageRoleEnum } from 'openai'
 
-
+// types must match Prompts commands
 export enum MetadataType {
   None = 'None', // should not compute
-  World = 'World',
+  Realm = 'World',
   Chamber = 'Chamber',
-  NPC = 'NPC',
-  PC = 'PC',
+  Agent = 'NPC',
+  Player = 'PC',
   // briefing = 'briefing',
 }
 

@@ -19,7 +19,7 @@ export const useChamber = () => {
   const chamber = useRow(storeCache, { table: 'Chamber', key: { coord: (coord ?? 0n) } })
   const { compass, slug } = useCoord(coord ?? 0n)
 
-  const { metadata, isFetching, isError } = useChamberMetadata(coord ?? 0n)
+  const { metadata, isFetching: metadataIsFetching, isError: metadataIsError } = useChamberMetadata(coord ?? 0n)
 
   const { url } = useChamberProfileImage(coord ?? 0n)
 
@@ -35,8 +35,8 @@ export const useChamber = () => {
     coins: chamber?.value?.coins ?? null,
     worth: chamber?.value?.worth ?? null,
     metadata: metadata ?? null,
+    metadataIsFetching,
+    metadataIsError,
     url: url ?? null,
-    isFetching,
-    isError,
   }
 }

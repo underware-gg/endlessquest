@@ -17,6 +17,16 @@ export default mudConfig({
       schema: "uint32",
     },
     //-----------------------
+    Realm: {
+      keySchema: {
+        coord: 'uint256'
+      },
+      schema: {
+        // player who opened this Realm
+        opener: 'address',
+      }
+    },
+    //-----------------------
     Token: {
       keySchema: {
         tokenId: 'uint256'
@@ -31,7 +41,7 @@ export default mudConfig({
         coord: 'uint256'
       },
       schema: {
-        // player who opened this chamber
+        // player who opened this Chamber
         opener: 'address',
         // bridged data
         tokenId: 'uint256',

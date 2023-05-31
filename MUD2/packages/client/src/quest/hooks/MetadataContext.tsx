@@ -1,9 +1,7 @@
 import React, { ReactNode, createContext, useReducer, useContext, useEffect, useMemo } from 'react'
-import { useComponentValue, useRow } from '@latticexyz/react'
+import { useRow } from '@latticexyz/react'
 import { useMUD } from '../../store'
-import promptMetadata, { MetadataType, PromptMetadataOptions } from '../openai/promptMetadata'
-import { useComponentType } from './useComponentType'
-import { isFullComponentValue } from '@latticexyz/recs'
+import promptMetadata, { MetadataType } from '../openai/promptMetadata'
 
 //
 // React + Typescript + Context
@@ -14,13 +12,15 @@ import { isFullComponentValue } from '@latticexyz/recs'
 // Constants
 //
 export const initialState = {
-  chambers: {},
-  agents: {},
+  [MetadataType.None]: {}, // required by MetadataStateType
+  [MetadataType.Realm]: {},
+  [MetadataType.Chamber]: {},
+  [MetadataType.Agent]: {},
+  [MetadataType.Player]: {},
 }
 
 const MetadataActions = {
-  CHAMBER_METADATA: 'CHAMBER_METADATA',
-  AGENT_METADATA: 'AGENT_METADATA',
+  SET_METADATA: 'SET_METADATA',
 }
 
 //--------------------------------
@@ -34,22 +34,19 @@ enum StatusType {
 }
 
 type MetadataStateType = {
-  chambers: {
-    [coord: string]: StatusType,
-  }
-  agents: {
-    [coord: string]: StatusType,
+  [type in MetadataType]: {
+    [key: string]: StatusType
   }
 }
 
 type PayloadType = {
-  coord: string,
+  type: MetadataType,
+  key: bigint,
   status: StatusType,
-  metadata?: string,
+  metadata?: string | null,
 }
 type ActionType =
-  | { type: 'CHAMBER_METADATA', payload: PayloadType }
-  | { type: 'AGENT_METADATA', payload: PayloadType }
+  | { type: 'SET_METADATA', payload: PayloadType }
 
 
 
@@ -75,32 +72,26 @@ const MetadataProvider = ({
   children,
   systemCalls,
 }: MetadataProviderProps) => {
-  const { setChamberMetadata, setAgentMetadata } = systemCalls
+  const { setChamberMetadata, setRealmMetadata, setAgentMetadata } = systemCalls
 
   const [state, dispatch] = useReducer((state: MetadataStateType, action: ActionType) => {
-    const { coord, status, metadata } = action.payload
-    const key = coord.toString()
-    let newState = {
-      chambers: { ...state.chambers },
-      agents: { ...state.agents },
-    }
+    const { type, key, status, metadata } = action.payload
+    const _key = key.toString()
+    let newState = { ...state }
     switch (action.type) {
-      case MetadataActions.CHAMBER_METADATA: {
-        const currentStatus = state.chambers[key]
+      case MetadataActions.SET_METADATA: {
+        const currentStatus = state[type][_key]
         if (status != currentStatus) {
-          newState.chambers[key] = status
-          if (status == StatusType.Success && metadata) {
-            setChamberMetadata(coord, JSON.stringify(metadata))
+          newState[type] = {
+            ...state[type],
+            [_key]: status,
           }
-        }
-        break
-      }
-      case MetadataActions.AGENT_METADATA: {
-        const currentStatus = state.agents[key]
-        if (status != currentStatus) {
-          newState.agents[key] = status
-          if (status == StatusType.Success) {
-            setAgentMetadata(coord, JSON.stringify(metadata))
+          if (status == StatusType.Success && metadata) {
+            if (type == MetadataType.Chamber) {
+              setChamberMetadata(key, JSON.stringify(metadata))
+            } else if (type == MetadataType.Realm) {
+              setRealmMetadata(key, JSON.stringify(metadata))
+            }
           }
         }
         break
@@ -133,25 +124,22 @@ export { MetadataProvider, MetadataContext, MetadataActions }
 
 export const useRequestChamberMetadata = (coord: bigint) => {
   const { dispatch } = useContext(MetadataContext)
-  const { isUnknown, isFetching, isError, isSuccess } = useChamberMetadataStatus(coord)
+  const { isUnknown, isFetching, isError, isSuccess } = useMetadataStatus(MetadataType.Chamber, coord)
 
-  const {
-    networkLayer: {
-      storeCache,
-    }
-  } = useMUD()
+  const { networkLayer: { storeCache } } = useMUD()
 
-  const chamberRow = useRow(storeCache, { table: 'Chamber', key: { coord } });
-  const metadataRow = useRow(storeCache, { table: 'ChamberMetadata', key: { coord } });
+  const chamberRow = useRow(storeCache, { table: 'Chamber', key: { coord } })
+  const metadataRow = useRow(storeCache, { table: 'ChamberMetadata', key: { coord } })
 
   const chamber = useMemo(() => (chamberRow?.value ?? null), [chamberRow])
   const metadata = useMemo(() => (metadataRow?.value?.metadata ?? null), [metadataRow])
 
   useEffect(() => { console.log(`CHAMBER META:`, chamber?.tokenId, metadata) }, [chamber, metadata])
-  
+
   useEffect(() => {
-    let payload = {
-      coord,
+    let payload: PayloadType = {
+      type: MetadataType.Chamber,
+      key: coord,
       status: StatusType.Unknown,
       metadata: null,
     }
@@ -159,7 +147,7 @@ export const useRequestChamberMetadata = (coord: bigint) => {
     const _generate = async () => {
       payload.status = StatusType.Fetching
       dispatch({
-        type: MetadataActions.CHAMBER_METADATA,
+        type: MetadataActions.SET_METADATA,
         payload,
       })
 
@@ -192,7 +180,7 @@ export const useRequestChamberMetadata = (coord: bigint) => {
       }
 
       dispatch({
-        type: MetadataActions.CHAMBER_METADATA,
+        type: MetadataActions.SET_METADATA,
         payload,
       })
     }
@@ -203,13 +191,98 @@ export const useRequestChamberMetadata = (coord: bigint) => {
       } else if (metadata && metadata.length > 0) {
         payload.status = StatusType.Success
         dispatch({
-          type: MetadataActions.CHAMBER_METADATA,
+          type: MetadataActions.SET_METADATA,
           payload,
         })
       }
     }
 
   }, [chamber, metadata, isUnknown])
+
+  return {
+    isUnknown,
+    isFetching,
+    isSuccess,
+    isError,
+  }
+}
+
+export const useRequestRealmMetadata = (coord: bigint) => {
+  const { dispatch } = useContext(MetadataContext)
+  const { isUnknown, isFetching, isError, isSuccess } = useMetadataStatus(MetadataType.Realm, coord)
+
+  const { networkLayer: { storeCache } } = useMUD()
+
+  const realmRow = useRow(storeCache, { table: 'Realm', key: { coord } })
+  const metadataRow = useRow(storeCache, { table: 'ChamberMetadata', key: { coord } })
+
+  const realm = useMemo(() => (realmRow?.value ?? null), [realmRow])
+  const metadata = useMemo(() => (metadataRow?.value?.metadata ?? null), [metadataRow])
+
+  useEffect(() => { console.log(`REALM META:`, coord, realm, metadata) }, [coord, realm, metadata])
+
+  useEffect(() => {
+    let payload: PayloadType = {
+      type: MetadataType.Realm,
+      key: coord,
+      status: StatusType.Unknown,
+      metadata: null,
+    }
+
+    const _generate = async () => {
+      payload.status = StatusType.Fetching
+      dispatch({
+        type: MetadataActions.SET_METADATA,
+        payload,
+      })
+
+      const response = await promptMetadata({
+        type: MetadataType.Realm,
+        terrain: null,
+        gemType: null,
+        coins: null,
+        yonder: null,
+      })
+
+      if (response.error) {
+        payload.status = StatusType.Error
+        // @ts-ignore: accept any property
+      } else if (response.metadata?.world) {
+        // @ts-ignore: accept any property
+        const worldMetadata = response.metadata.world
+        payload.status = StatusType.Success
+        // @ts-ignore: accept any property
+        payload.metadata = {
+          name: worldMetadata.world_name ?? worldMetadata.name ?? '[name]',
+          description: worldMetadata.world_description ?? worldMetadata.description ?? '[description]',
+          premise: worldMetadata.world_premise ?? worldMetadata.premise ?? '[premise]',
+          boss: worldMetadata.world_boss ?? worldMetadata.boss ?? '[boss]',
+          quirk: worldMetadata.world_boss_quirk ?? worldMetadata.quirk ?? '[quirk]',
+          treasure: worldMetadata.world_treasure ?? worldMetadata.treasure ?? '[treasure]',
+        }
+      } else {
+        payload.status = StatusType.Unknown
+      }
+
+      dispatch({
+        type: MetadataActions.SET_METADATA,
+        payload,
+      })
+    }
+
+    if (isUnknown && realm) {
+      if (metadata === '') {
+        _generate()
+      } else if (metadata && metadata.length > 0) {
+        payload.status = StatusType.Success
+        dispatch({
+          type: MetadataActions.SET_METADATA,
+          payload,
+        })
+      }
+    }
+
+  }, [coord, metadata, isUnknown])
 
   return {
     isUnknown,
@@ -228,9 +301,9 @@ export const useMetadataContext = () => {
   return state
 }
 
-export const useChamberMetadataStatus = (coord: bigint) => {
+export const useMetadataStatus = (type: MetadataType, key: bigint) => {
   const { state } = useContext(MetadataContext)
-  const status = state.chambers[coord.toString()]
+  const status = state[type][key.toString()]
   return {
     isUnknown: (!status),
     isFetching: (status === StatusType.Fetching),
@@ -239,16 +312,11 @@ export const useChamberMetadataStatus = (coord: bigint) => {
   }
 }
 
-export const useChamberMetadata = (coord: bigint) => {
-  const { isUnknown, isFetching, isError, isSuccess } = useChamberMetadataStatus(coord)
+export const useChamberMetadata = (coord: bigint, type: MetadataType = MetadataType.Chamber) => {
+  const { networkLayer: { storeCache } } = useMUD()
+  const { isUnknown, isFetching, isError, isSuccess } = useMetadataStatus(type, coord)
 
-  const {
-    networkLayer: {
-      storeCache,
-    }
-  } = useMUD()
-
-  const metadataRow = useRow(storeCache, { table: 'ChamberMetadata', key: { coord } });
+  const metadataRow = useRow(storeCache, { table: 'ChamberMetadata', key: { coord } })
   const metadata = useMemo(() => (metadataRow?.value?.metadata ?? null), [metadataRow])
 
   return {
@@ -259,3 +327,9 @@ export const useChamberMetadata = (coord: bigint) => {
     metadata: metadata ? JSON.parse(metadata) : {},
   }
 }
+
+export const useRealmMetadata = (coord: bigint) => {
+  return useChamberMetadata(coord, MetadataType.Realm)
+}
+
+
