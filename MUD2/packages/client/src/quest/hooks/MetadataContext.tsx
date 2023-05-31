@@ -1,5 +1,6 @@
 import React, { ReactNode, createContext, useReducer, useContext, useEffect, useMemo } from 'react'
-import { useRow } from '@latticexyz/react'
+import { useRow, useComponentValue } from '@latticexyz/react'
+import { Entity } from '@latticexyz/recs'
 import { useMUD } from '../../store'
 import promptMetadata, { MetadataType, PromptMetadataOptions } from '../openai/promptMetadata'
 
@@ -39,9 +40,11 @@ type MetadataStateType = {
   }
 }
 
+type KeyType = bigint | Entity
+
 type PayloadType = {
   type: MetadataType,
-  key: bigint,
+  key: KeyType,
   status: StatusType,
   metadata?: string | null,
 }
@@ -91,6 +94,8 @@ const MetadataProvider = ({
               setChamberMetadata(key, JSON.stringify(metadata))
             } else if (type == MetadataType.Realm) {
               setRealmMetadata(key, JSON.stringify(metadata))
+            } else if (type == MetadataType.Agent) {
+              setAgentMetadata(key, JSON.stringify(metadata))
             }
           }
         }
@@ -124,9 +129,9 @@ export { MetadataProvider, MetadataContext, MetadataActions }
 
 const useRequestGenericMetadata = (
   type: MetadataType,
-  key: bigint,
+  key: KeyType,
   currentMetadata: any,
-  _makeOptions: () => PromptMetadataOptions,
+  options: PromptMetadataOptions,
   _parseResult: (matadata: any) => any | null) => {
   const { dispatch } = useContext(MetadataContext)
   const { isUnknown, isFetching, isError, isSuccess } = useMetadataStatus(type, key)
@@ -145,7 +150,6 @@ const useRequestGenericMetadata = (
         type: MetadataActions.SET_METADATA,
         payload,
       })
-      const options = _makeOptions()
       const response = await promptMetadata(options)
 
       if (response.error) {
@@ -163,7 +167,7 @@ const useRequestGenericMetadata = (
       })
     }
 
-    if (isUnknown) {
+    if (isUnknown && key !== 0n && key != '') {
       if (currentMetadata === '') {
         _generate()
       } else if (currentMetadata && currentMetadata.length > 0) {
@@ -198,17 +202,16 @@ export const useRequestRealmMetadata = (coord: bigint) => {
 
   useEffect(() => { console.log(`REALM META:`, coord, realm, metadata) }, [coord, realm, metadata])
 
-  const _makeOptions = (): PromptMetadataOptions => {
-    return {
-      type: MetadataType.Realm,
-      terrain: null,
-      gemType: null,
-      coins: null,
-      yonder: null,
-    }
+  const options: PromptMetadataOptions = {
+    type: MetadataType.Realm,
+    terrain: null,
+    gemType: null,
+    coins: null,
+    yonder: null,
   }
+
   const _parseResult = (responseMetadata: any): any | null => {
-    const worldMetadata = responseMetadata.world
+    const worldMetadata = responseMetadata.world ?? null
     if (!worldMetadata) return null
     return {
       name: worldMetadata.world_name ?? worldMetadata.name ?? '[name]',
@@ -224,7 +227,7 @@ export const useRequestRealmMetadata = (coord: bigint) => {
     MetadataType.Realm,
     coord,
     realm ? metadata : null,
-    _makeOptions,
+    options,
     _parseResult
   )
 }
@@ -240,17 +243,16 @@ export const useRequestChamberMetadata = (coord: bigint) => {
 
   useEffect(() => { console.log(`CHAMBER META:`, chamber?.tokenId, metadata) }, [chamber, metadata])
 
-  const _makeOptions = (): PromptMetadataOptions => {
-    return {
-      type: MetadataType.Chamber,
-      terrain: chamber?.terrain ?? null,
-      gemType: chamber?.gemType ?? null,
-      coins: chamber?.coins ?? null,
-      yonder: chamber?.yonder ?? null,
-    }
-  }
+  const options: PromptMetadataOptions = useMemo(() => ({
+    type: MetadataType.Chamber,
+    terrain: chamber?.terrain ?? null,
+    gemType: chamber?.gemType ?? null,
+    coins: chamber?.coins ?? null,
+    yonder: chamber?.yonder ?? null,
+  }), [chamber])
+
   const _parseResult = (responseMetadata: any): any | null => {
-    const chamberMetadata = responseMetadata.chamber
+    const chamberMetadata = responseMetadata.chamber ?? null
     if (!chamberMetadata) return null
     return {
       name: chamberMetadata.chamber_name ?? chamberMetadata.name ?? '[name]',
@@ -266,7 +268,48 @@ export const useRequestChamberMetadata = (coord: bigint) => {
     MetadataType.Chamber,
     coord,
     chamber ? metadata : null,
-    _makeOptions,
+    options,
+    _parseResult
+  )
+}
+
+export const useRequestAgentMetadata = (entity: Entity | undefined) => {
+  const { networkLayer: { components: { Agent, Metadata } } } = useMUD()
+
+  const agent = useComponentValue(Agent, entity) ?? null
+  const metadataData = useComponentValue(Metadata, entity) ?? null
+  const metadata = useMemo(() => (metadataData?.metadata ?? null), [metadataData])
+
+  const options: PromptMetadataOptions = useMemo(() => ({
+    type: MetadataType.Agent,
+    terrain: agent?.terrain ?? null,
+    gemType: agent?.gemType ?? null,
+    coins: agent?.coins ?? null,
+    yonder: agent?.yonder ?? null,
+  }), [agent])
+
+  useEffect(() => { console.log(`AGENT META:`, entity, metadata) }, [entity, metadata])
+
+  const _parseResult = (responseMetadata: any): any | null => {
+    const npcMetadata = responseMetadata.npc ?? responseMetadata.chamber?.npc ?? null
+    if (!npcMetadata) return null
+    return {
+      name: npcMetadata.name ?? '[name]',
+      description: npcMetadata.description ?? '[description]',
+      behaviour_mode: npcMetadata.behaviour_mode ?? '[behaviour]',
+      quirk: npcMetadata.quirk ?? '[quirk]',
+      terrain: agent?.terrain,
+      yonder: agent?.yonder,
+      gemType: agent?.gemType,
+      coins: agent?.coins,
+    }
+  }
+
+  return useRequestGenericMetadata(
+    MetadataType.Agent,
+    entity ?? ('' as Entity),
+    agent ? metadata : null,
+    options,
     _parseResult
   )
 }
@@ -281,9 +324,9 @@ export const useMetadataContext = () => {
   return state
 }
 
-export const useMetadataStatus = (type: MetadataType, key: bigint) => {
+export const useMetadataStatus = (type: MetadataType, key: KeyType | undefined) => {
   const { state } = useContext(MetadataContext)
-  const status = state[type][key.toString()]
+  const status = key ? state[type][key.toString()] : 0
   return {
     isUnknown: (!status),
     isFetching: (status === StatusType.Fetching),
@@ -312,4 +355,18 @@ export const useRealmMetadata = (coord: bigint) => {
   return useChamberMetadata(coord, MetadataType.Realm)
 }
 
+export const useAgentMetadata = (entity: Entity | undefined) => {
+  const { networkLayer: { components: { Metadata } } } = useMUD()
+  const { isUnknown, isFetching, isError, isSuccess } = useMetadataStatus(MetadataType.Agent, entity)
 
+  const metadataData = useComponentValue(Metadata, entity) ?? null
+  const metadata = useMemo(() => (metadataData?.metadata ?? null), [metadataData])
+
+  return {
+    isUnknown,
+    isFetching,
+    isSuccess,
+    isError,
+    metadata: metadata ? JSON.parse(metadata) : {},
+  }
+}

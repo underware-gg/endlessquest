@@ -1,9 +1,9 @@
 import { useMemo } from 'react'
 import { useEntityQuery, useRow } from '@latticexyz/react'
-import { HasValue } from '@latticexyz/recs'
+import { HasValue, Entity } from '@latticexyz/recs'
 import { useMUD } from '../../store'
 import { useBridgeContext, useBridgeToken, useBridgeChamber, useBridgeRealm } from '../hooks/BridgeContext'
-import { useRequestChamberMetadata, useRequestRealmMetadata } from '../hooks/MetadataContext'
+import { useRequestChamberMetadata, useRequestRealmMetadata, useRequestAgentMetadata } from '../hooks/MetadataContext'
 import * as Crawl from '../bridge/Crawl'
 
 export const Loader = () => {
@@ -43,7 +43,38 @@ export const Loader = () => {
 
 
 //-------------------------------
-// TokenLoader
+// Realm Loader
+//
+interface RealmLoaderProps {
+  coord: bigint,
+}
+
+export const RealmLoader = ({
+  coord = 0n,
+}: RealmLoaderProps) => {
+  const {
+    networkLayer: {
+      components: { Tiles },
+      storeCache,
+    }
+  } = useMUD()
+
+  useBridgeRealm(coord)
+
+  // request Realm metadata
+  const { isSuccess, isError, isFetching } = useRequestRealmMetadata(coord)
+
+  return (
+    <div>
+      Realm(<span>{coord.toString() ?? '?'}) </span>
+      {isSuccess ? '.' : isError ? '?' : isFetching ? 'm' : 'M'}
+    </div>
+  )
+}
+
+
+//-------------------------------
+// Token Loader
 //
 interface TokenLoaderProps {
   tokenId: bigint,
@@ -78,7 +109,7 @@ export const TokenLoader = ({
 
 
 //-------------------------------
-// TokenLoader
+// Chamber + Agent Loader
 //
 interface ChamberLoaderProps {
   tokenId?: bigint | null,
@@ -99,61 +130,27 @@ export const ChamberLoader = ({
   useBridgeChamber(coord)
 
   const chamberData = useRow(storeCache, { table: 'Chamber', key: { coord } })
-  const chamberTokenId = useMemo(() => (chamberData?.value?.tokenId.toString() ?? null), [chamberData])
   const seed = useMemo(() => (chamberData?.value?.seed?.toString() ?? null), [chamberData])
+  const agent = useMemo(() => (chamberData?.value?.agent as Entity ?? undefined), [chamberData])
 
   // const doors = useEntityQuery([HasValue(Doors, { coord })]) ?? []
   const tiles = useEntityQuery([HasValue(Tiles, { terrain: chamberData?.value?.terrain })]) ?? []
 
-  const coordOk = Boolean(coord)
-  const chamberOk = Boolean(seed)
-  const tilesOk = tiles.length > 0
-
-  // const compass = Crawl.coordToCompass(coord)
-  // const slug = Crawl.compassToSlug(compass)
   const slug = Crawl.coordToSlug(coord)
 
-  // request Chamber metadata
-  const { isFetching, isSuccess } = useRequestChamberMetadata(coord)
+  const { isFetching: chamberIsFetching, isError: chamberIsError, isSuccess: chamberIsSuccess } = useRequestChamberMetadata(coord)
+  const { isFetching: agentIsFetching, isError: agentIsError, isSuccess: agentIsSuccess } = useRequestAgentMetadata(agent)
 
   return (
     <div>
       Chamber(<span>{slug ?? '?'}) </span>
-      {coordOk ? '.' : 'T'}
-      {chamberOk ? '.' : 'C'}
-      {tilesOk ? '.' : 'T'}
-      {isSuccess ? '.' : isFetching ? 'm': 'M'}
+      {Boolean(seed) ? '.' : 'C'}
+      {tiles.length == 400 ? '.' : tiles.length > 0 ? 't' : 'T'}
+      {chamberIsSuccess ? '.' : chamberIsError ? '?' : chamberIsFetching ? 'm': 'M'}
       {false ? '.' : 'I'}
-    </div>
-  )
-}
-
-//-------------------------------
-// RealmLoader
-//
-interface RealmLoaderProps {
-  coord: bigint,
-}
-
-export const RealmLoader = ({
-  coord = 0n,
-}: RealmLoaderProps) => {
-  const {
-    networkLayer: {
-      components: { Tiles },
-      storeCache,
-    }
-  } = useMUD()
-
-  useBridgeRealm(coord)
-
-  // request Realm metadata
-  const { isFetching, isSuccess } = useRequestRealmMetadata(coord)
-
-  return (
-    <div>
-      Realm(<span>{coord.toString() ?? '?'}) </span>
-      {isSuccess ? '.' : isFetching ? 'm' : 'M'}
+      {' | '}
+      {agentIsSuccess ? '.' : agentIsError ? '?' : agentIsFetching ? 'm' : 'M'}
+      {false ? '.' : 'I'}
     </div>
   )
 }

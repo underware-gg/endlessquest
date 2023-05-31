@@ -4,6 +4,7 @@ import { useMUD } from '../../store'
 import { usePlayer } from '../hooks/usePlayer'
 import { useAgent } from '../hooks/useAgent'
 import { useEffect, useMemo } from 'react'
+import { useRequestAgentMetadata } from '../hooks/MetadataContext'
 
 
 export const AgentLocation = ({
@@ -27,9 +28,11 @@ export const AgentLocation = ({
     coins,
     worth,
     metadata,
-    isWaiting,
+    metadataIsFetching,
     url,
   } = useAgent(agentEntity)
+
+  useRequestAgentMetadata(agentEntity)
 
   const canChat = (agentId != 0n && metadata?.name)
 
@@ -44,8 +47,8 @@ export const AgentLocation = ({
       <div className='AgentLocation'>
 
         <h2>Encounter</h2>
-        <p className='Important'>{isWaiting ? 'dreaming...' : (metadata?.name ?? 'come closer...')}</p>
-        <p>{isWaiting ? 'don\'t move!' : (metadata?.description ?? '?')}</p>
+        <p className='Important'>{metadataIsFetching ? 'dreaming...' : (metadata?.name ?? 'come closer...')}</p>
+        <p>{metadataIsFetching ? 'don\'t move!' : (metadata?.description ?? '?')}</p>
 
         <div className='Infos'>
           {/* <div>coord: {coord?.toString() ?? '?'}</div> */}

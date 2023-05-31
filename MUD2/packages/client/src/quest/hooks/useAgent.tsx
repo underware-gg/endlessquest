@@ -4,7 +4,7 @@ import { Entity } from '@latticexyz/recs'
 import { useMUD } from '../../store'
 import { useCoord } from './useCoord'
 import { GemNames } from '../bridge/Crawl'
-import { useAgentMetadata } from './useMetadata'
+import { useAgentMetadata } from './MetadataContext'
 import { useAgentProfileImage } from './useProfileImage'
 
 export const useAgent = (agentEntity: Entity | undefined) => {
@@ -17,7 +17,7 @@ export const useAgent = (agentEntity: Entity | undefined) => {
   const agent = useComponentValue(Agent, agentEntity)
   const { compass, slug } = useCoord(agent?.coord ?? 0n)
 
-  const { metadata, isWaiting } = useAgentMetadata(agentEntity)
+  const { metadata, isFetching: metadataIsFetching, isError: metadataIsError } = useAgentMetadata(agentEntity)
 
   const { url } = useAgentProfileImage(agentEntity)
 
@@ -33,7 +33,8 @@ export const useAgent = (agentEntity: Entity | undefined) => {
     coins: agent?.coins ?? null,
     worth: agent?.worth ?? null,
     metadata: metadata ?? null,
+    metadataIsFetching,
+    metadataIsError,
     url: url ?? null,
-    isWaiting,
   }
 }
