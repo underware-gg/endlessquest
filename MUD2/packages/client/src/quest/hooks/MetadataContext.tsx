@@ -1,7 +1,7 @@
 import React, { ReactNode, createContext, useReducer, useContext, useEffect, useMemo } from 'react'
 import { useRow } from '@latticexyz/react'
 import { useMUD } from '../../store'
-import promptMetadata, { MetadataType } from '../openai/promptMetadata'
+import promptMetadata, { MetadataType, PromptMetadataOptions } from '../openai/promptMetadata'
 
 //
 // React + Typescript + Context
@@ -122,24 +122,19 @@ export { MetadataProvider, MetadataContext, MetadataActions }
 // Dispatches
 //
 
-export const useRequestChamberMetadata = (coord: bigint) => {
+const useRequestGenericMetadata = (
+  type: MetadataType,
+  key: bigint,
+  currentMetadata: any,
+  _makeOptions: () => PromptMetadataOptions,
+  _parseResult: (matadata: any) => any | null) => {
   const { dispatch } = useContext(MetadataContext)
-  const { isUnknown, isFetching, isError, isSuccess } = useMetadataStatus(MetadataType.Chamber, coord)
-
-  const { networkLayer: { storeCache } } = useMUD()
-
-  const chamberRow = useRow(storeCache, { table: 'Chamber', key: { coord } })
-  const metadataRow = useRow(storeCache, { table: 'ChamberMetadata', key: { coord } })
-
-  const chamber = useMemo(() => (chamberRow?.value ?? null), [chamberRow])
-  const metadata = useMemo(() => (metadataRow?.value?.metadata ?? null), [metadataRow])
-
-  useEffect(() => { console.log(`CHAMBER META:`, chamber?.tokenId, metadata) }, [chamber, metadata])
+  const { isUnknown, isFetching, isError, isSuccess } = useMetadataStatus(type, key)
 
   useEffect(() => {
     let payload: PayloadType = {
-      type: MetadataType.Chamber,
-      key: coord,
+      type,
+      key,
       status: StatusType.Unknown,
       metadata: null,
     }
@@ -150,31 +145,14 @@ export const useRequestChamberMetadata = (coord: bigint) => {
         type: MetadataActions.SET_METADATA,
         payload,
       })
-
-      const response = await promptMetadata({
-        type: MetadataType.Chamber,
-        terrain: chamber?.terrain ?? null,
-        gemType: chamber?.gemType ?? null,
-        coins: chamber?.coins ?? null,
-        yonder: chamber?.yonder ?? null,
-      })
+      const options = _makeOptions()
+      const response = await promptMetadata(options)
 
       if (response.error) {
         payload.status = StatusType.Error
-        // @ts-ignore: accept any property
-      } else if (response.metadata?.chamber) {
-        // @ts-ignore: accept any property
-        const chamberMetadata = response.metadata.chamber
-        payload.status = StatusType.Success
-        // @ts-ignore: accept any property
-        payload.metadata = {
-          name: chamberMetadata.chamber_name ?? chamberMetadata.name ?? '[name]',
-          description: chamberMetadata.chamber_description ?? chamberMetadata.description ?? '[description]',
-          terrain: chamber?.terrain ?? null,
-          yonder: chamber?.yonder ?? null,
-          gemType: chamber?.gemType ?? null,
-          coins: chamber?.coins ?? null,
-        }
+      } else if (response.metadata) {
+        payload.metadata = _parseResult(response.metadata)
+        payload.status = payload.metadata ? StatusType.Success : StatusType.Error
       } else {
         payload.status = StatusType.Unknown
       }
@@ -185,10 +163,10 @@ export const useRequestChamberMetadata = (coord: bigint) => {
       })
     }
 
-    if (isUnknown && chamber) {
-      if (metadata === '') {
+    if (isUnknown) {
+      if (currentMetadata === '') {
         _generate()
-      } else if (metadata && metadata.length > 0) {
+      } else if (currentMetadata && currentMetadata.length > 0) {
         payload.status = StatusType.Success
         dispatch({
           type: MetadataActions.SET_METADATA,
@@ -197,7 +175,7 @@ export const useRequestChamberMetadata = (coord: bigint) => {
       }
     }
 
-  }, [chamber, metadata, isUnknown])
+  }, [isUnknown, currentMetadata])
 
   return {
     isUnknown,
@@ -207,10 +185,9 @@ export const useRequestChamberMetadata = (coord: bigint) => {
   }
 }
 
-export const useRequestRealmMetadata = (coord: bigint) => {
-  const { dispatch } = useContext(MetadataContext)
-  const { isUnknown, isFetching, isError, isSuccess } = useMetadataStatus(MetadataType.Realm, coord)
 
+
+export const useRequestRealmMetadata = (coord: bigint) => {
   const { networkLayer: { storeCache } } = useMUD()
 
   const realmRow = useRow(storeCache, { table: 'Realm', key: { coord } })
@@ -221,76 +198,79 @@ export const useRequestRealmMetadata = (coord: bigint) => {
 
   useEffect(() => { console.log(`REALM META:`, coord, realm, metadata) }, [coord, realm, metadata])
 
-  useEffect(() => {
-    let payload: PayloadType = {
+  const _makeOptions = (): PromptMetadataOptions => {
+    return {
       type: MetadataType.Realm,
-      key: coord,
-      status: StatusType.Unknown,
-      metadata: null,
+      terrain: null,
+      gemType: null,
+      coins: null,
+      yonder: null,
     }
-
-    const _generate = async () => {
-      payload.status = StatusType.Fetching
-      dispatch({
-        type: MetadataActions.SET_METADATA,
-        payload,
-      })
-
-      const response = await promptMetadata({
-        type: MetadataType.Realm,
-        terrain: null,
-        gemType: null,
-        coins: null,
-        yonder: null,
-      })
-
-      if (response.error) {
-        payload.status = StatusType.Error
-        // @ts-ignore: accept any property
-      } else if (response.metadata?.world) {
-        // @ts-ignore: accept any property
-        const worldMetadata = response.metadata.world
-        payload.status = StatusType.Success
-        // @ts-ignore: accept any property
-        payload.metadata = {
-          name: worldMetadata.world_name ?? worldMetadata.name ?? '[name]',
-          description: worldMetadata.world_description ?? worldMetadata.description ?? '[description]',
-          premise: worldMetadata.world_premise ?? worldMetadata.premise ?? '[premise]',
-          boss: worldMetadata.world_boss ?? worldMetadata.boss ?? '[boss]',
-          quirk: worldMetadata.world_boss_quirk ?? worldMetadata.quirk ?? '[quirk]',
-          treasure: worldMetadata.world_treasure ?? worldMetadata.treasure ?? '[treasure]',
-        }
-      } else {
-        payload.status = StatusType.Unknown
-      }
-
-      dispatch({
-        type: MetadataActions.SET_METADATA,
-        payload,
-      })
-    }
-
-    if (isUnknown && realm) {
-      if (metadata === '') {
-        _generate()
-      } else if (metadata && metadata.length > 0) {
-        payload.status = StatusType.Success
-        dispatch({
-          type: MetadataActions.SET_METADATA,
-          payload,
-        })
-      }
-    }
-
-  }, [coord, metadata, isUnknown])
-
-  return {
-    isUnknown,
-    isFetching,
-    isSuccess,
-    isError,
   }
+  const _parseResult = (responseMetadata: any): any | null => {
+    const worldMetadata = responseMetadata.world
+    if (!worldMetadata) return null
+    return {
+      name: worldMetadata.world_name ?? worldMetadata.name ?? '[name]',
+      description: worldMetadata.world_description ?? worldMetadata.description ?? '[description]',
+      premise: worldMetadata.world_premise ?? worldMetadata.premise ?? '[premise]',
+      boss: worldMetadata.world_boss ?? worldMetadata.boss ?? '[boss]',
+      quirk: worldMetadata.world_boss_quirk ?? worldMetadata.quirk ?? '[quirk]',
+      treasure: worldMetadata.world_treasure ?? worldMetadata.treasure ?? '[treasure]',
+    }
+  }
+
+  return useRequestGenericMetadata(
+    MetadataType.Realm,
+    coord,
+    realm ? metadata : null,
+    _makeOptions,
+    _parseResult
+  )
 }
+
+export const useRequestChamberMetadata = (coord: bigint) => {
+  const { networkLayer: { storeCache } } = useMUD()
+
+  const chamberRow = useRow(storeCache, { table: 'Chamber', key: { coord } })
+  const metadataRow = useRow(storeCache, { table: 'ChamberMetadata', key: { coord } })
+
+  const chamber = useMemo(() => (chamberRow?.value ?? null), [chamberRow])
+  const metadata = useMemo(() => (metadataRow?.value?.metadata ?? null), [metadataRow])
+
+  useEffect(() => { console.log(`CHAMBER META:`, chamber?.tokenId, metadata) }, [chamber, metadata])
+
+  const _makeOptions = (): PromptMetadataOptions => {
+    return {
+      type: MetadataType.Chamber,
+      terrain: chamber?.terrain ?? null,
+      gemType: chamber?.gemType ?? null,
+      coins: chamber?.coins ?? null,
+      yonder: chamber?.yonder ?? null,
+    }
+  }
+  const _parseResult = (responseMetadata: any): any | null => {
+    const chamberMetadata = responseMetadata.chamber
+    if (!chamberMetadata) return null
+    return {
+      name: chamberMetadata.chamber_name ?? chamberMetadata.name ?? '[name]',
+      description: chamberMetadata.chamber_description ?? chamberMetadata.description ?? '[description]',
+      terrain: chamber?.terrain ?? null,
+      yonder: chamber?.yonder ?? null,
+      gemType: chamber?.gemType ?? null,
+      coins: chamber?.coins ?? null,
+    }
+  }
+
+  return useRequestGenericMetadata(
+    MetadataType.Chamber,
+    coord,
+    chamber ? metadata : null,
+    _makeOptions,
+    _parseResult
+  )
+}
+
 
 //--------------------------------
 // Hooks
