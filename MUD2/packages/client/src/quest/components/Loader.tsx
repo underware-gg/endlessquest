@@ -1,6 +1,7 @@
 import { useMemo } from 'react'
 import { useEntityQuery, useRow } from '@latticexyz/react'
 import { HasValue, Entity } from '@latticexyz/recs'
+import { normalizeEntityID } from '@latticexyz/network'
 import { useMUD } from '../../store'
 import { useBridgeContext, useBridgeToken, useBridgeChamber, useBridgeRealm } from '../hooks/BridgeContext'
 import { useRequestChamberMetadata, useRequestRealmMetadata, useRequestAgentMetadata } from '../hooks/MetadataContext'
@@ -131,7 +132,7 @@ export const ChamberLoader = ({
 
   const chamberData = useRow(storeCache, { table: 'Chamber', key: { coord } })
   const seed = useMemo(() => (chamberData?.value?.seed?.toString() ?? null), [chamberData])
-  const agent = useMemo(() => (chamberData?.value?.agent as Entity ?? undefined), [chamberData])
+  const agentEntity = useMemo(() => normalizeEntityID(chamberData?.value?.agent ?? '0'), [chamberData])
 
   // const doors = useEntityQuery([HasValue(Doors, { coord })]) ?? []
   const tiles = useEntityQuery([HasValue(Tiles, { terrain: chamberData?.value?.terrain })]) ?? []
@@ -139,7 +140,7 @@ export const ChamberLoader = ({
   const slug = Crawl.coordToSlug(coord)
 
   const { isFetching: chamberIsFetching, isError: chamberIsError, isSuccess: chamberIsSuccess } = useRequestChamberMetadata(coord)
-  const { isFetching: agentIsFetching, isError: agentIsError, isSuccess: agentIsSuccess } = useRequestAgentMetadata(agent)
+  const { isFetching: agentIsFetching, isError: agentIsError, isSuccess: agentIsSuccess } = useRequestAgentMetadata(agentEntity)
 
   return (
     <div>

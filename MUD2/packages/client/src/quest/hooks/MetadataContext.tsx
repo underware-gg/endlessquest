@@ -1,6 +1,5 @@
 import React, { ReactNode, createContext, useReducer, useContext, useEffect, useMemo } from 'react'
 import { useRow, useComponentValue } from '@latticexyz/react'
-import { normalizeEntityID } from '@latticexyz/network'
 import { Entity } from '@latticexyz/recs'
 import { useMUD } from '../../store'
 import promptMetadata, { MetadataType, PromptMetadataOptions } from '../openai/promptMetadata'
@@ -91,12 +90,19 @@ const MetadataProvider = ({
             [_key]: status,
           }
           if (status == StatusType.Success && metadata) {
-            if (type == MetadataType.Chamber) {
-              setChamberMetadata(key, JSON.stringify(metadata))
-            } else if (type == MetadataType.Realm) {
-              setRealmMetadata(key, JSON.stringify(metadata))
-            } else if (type == MetadataType.Agent) {
-              setAgentMetadata(key, JSON.stringify(metadata))
+            try {
+              const _meta = JSON.stringify(metadata)
+              if (_meta == '{}') throw(`Empty metadata {}`)
+              if (type == MetadataType.Chamber) {
+                setChamberMetadata(key, _meta)
+              } else if (type == MetadataType.Realm) {
+                setRealmMetadata(key, _meta)
+              } else if (type == MetadataType.Agent) {
+                setAgentMetadata(key, _meta)
+              }
+            } catch(e) {
+              console.warn(`MetadataContext [${type}][${_key}] exception:`, e)
+              newState[type][_key] = StatusType.Error
             }
           }
         }
@@ -277,10 +283,10 @@ export const useRequestChamberMetadata = (coord: bigint) => {
 export const useRequestAgentMetadata = (agentEntity: Entity | undefined) => {
   const { networkLayer: { components: { Agent, Metadata } } } = useMUD()
 
-  const entity = useMemo(() => normalizeEntityID(agentEntity ?? '0'), [agentEntity])
+  // const entity = useMemo(() => normalizeEntityID(agentEntity ?? '0'), [agentEntity])
 
-  const agent = useComponentValue(Agent, entity) ?? null
-  const metadataData = useComponentValue(Metadata, entity) ?? null
+  const agent = useComponentValue(Agent, agentEntity) ?? null
+  const metadataData = useComponentValue(Metadata, agentEntity) ?? null
   const metadata = useMemo(() => (metadataData?.metadata ?? null), [metadataData])
 
   const options: PromptMetadataOptions = useMemo(() => ({
@@ -291,11 +297,11 @@ export const useRequestAgentMetadata = (agentEntity: Entity | undefined) => {
     yonder: agent?.yonder ?? null,
   }), [agent])
 
-  useEffect(() => { console.log(`AGENT META:`, entity, agent, metadata) }, [entity, agent, metadata])
+  useEffect(() => { console.log(`AGENT META:`, agentEntity, agent, metadata) }, [agentEntity, agent, metadata])
 
   const _parseResult = (responseMetadata: any): any | null => {
     const agentMetadata = responseMetadata.npc ?? responseMetadata.chamber?.npc ?? null
-    console.log(`>>>>>> AGENT META RESULT`, agentMetadata, responseMetadata)
+    // console.log(`>>>>>> AGENT META RESULT`, agentMetadata, responseMetadata)
     if (!agentMetadata) return null
     return {
       name: agentMetadata.name ?? '[name]',
@@ -311,7 +317,7 @@ export const useRequestAgentMetadata = (agentEntity: Entity | undefined) => {
 
   return useRequestGenericMetadata(
     MetadataType.Agent,
-    entity ?? ('' as Entity),
+    agentEntity ?? ('' as Entity),
     agent ? metadata : null,
     options,
     _parseResult
@@ -362,11 +368,11 @@ export const useRealmMetadata = (coord: bigint) => {
 export const useAgentMetadata = (agentEntity: Entity | undefined) => {
   const { networkLayer: { components: { Metadata } } } = useMUD()
 
-  const entity = useMemo(() => normalizeEntityID(agentEntity ?? '0'), [agentEntity])
+  // const entity = useMemo(() => normalizeEntityID(agentEntity ?? '0'), [agentEntity])
 
-  const { isUnknown, isFetching, isError, isSuccess } = useMetadataStatus(MetadataType.Agent, entity)
+  const { isUnknown, isFetching, isError, isSuccess } = useMetadataStatus(MetadataType.Agent, agentEntity)
 
-  const metadataData = useComponentValue(Metadata, entity) ?? null
+  const metadataData = useComponentValue(Metadata, agentEntity) ?? null
   const metadata = useMemo(() => (metadataData?.metadata ?? null), [metadataData])
 
   return {

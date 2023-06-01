@@ -136,26 +136,26 @@ export function createSystemCalls(
     const tilemap = ethers.utils.arrayify(chamberData.tilemap)
     let map = Array(20 * 20).fill({ tileType: 0 })
     Object.values(tilemap).forEach(async (tileType, index) => {
+      const doorDir = chamberData.doors.findIndex((i) => i > 0 && i == index)
       const x = 2 + index % 16
       const y = 2 + Math.floor(index / 16)
-      map[y * 20 + x] = { tileType, index }
+      map[y * 20 + x] = { tileType, doorDir, index }
       if (index == chamberData.doors[0] && !chamberData.locks[0]) {
-        map[(y - 1) * 20 + x] = { tileType: 2 } // exit door
-        map[(y - 2) * 20 + x] = { tileType: 2 } // exit door
+        map[(y - 1) * 20 + x] = { tileType: 2, doorDir }
+        map[(y - 2) * 20 + x] = { tileType: 2, doorDir }
       } else if (index == chamberData.doors[1] && !chamberData.locks[1]) {
-        map[y * 20 + x + 1] = { tileType: 2 } // exit door
-        map[y * 20 + x + 2] = { tileType: 2 } // exit door
+        map[y * 20 + x + 1] = { tileType: 2, doorDir }
+        map[y * 20 + x + 2] = { tileType: 2, doorDir }
       } else if (index == chamberData.doors[2] && !chamberData.locks[2]) {
-        map[y * 20 + x - 1] = { tileType: 2 } // exit door
-        map[y * 20 + x - 2] = { tileType: 2 } // exit door
+        map[y * 20 + x - 1] = { tileType: 2, doorDir }
+        map[y * 20 + x - 2] = { tileType: 2, doorDir }
       } else if (index == chamberData.doors[3] && !chamberData.locks[3]) {
-        map[(y + 1) * 20 + x] = { tileType: 2 } // exit door
-        map[(y + 2) * 20 + x] = { tileType: 2 } // exit door
+        map[(y + 1) * 20 + x] = { tileType: 2, doorDir }
+        map[(y + 2) * 20 + x] = { tileType: 2, doorDir }
       }
     })
     map.forEach(async (tile, index) => {
-      const doorDir = chamberData.doors.findIndex((i) => i > 0 && i == tile.index)
-      const isEntry = (doorDir == chamberData.entryDir)
+      const isEntry = (tile.doorDir == chamberData.entryDir)
       let gridX = (index % 20)
       let gridY = Math.floor(index / 20)
       if (compass.east > 0) gridX += ((compass.east - 1) * 20)
@@ -169,7 +169,7 @@ export function createSystemCalls(
         isEntry,
         gridX,
         gridY,
-        doorDir,
+        tile.doorDir,
         coord
       ])
     })

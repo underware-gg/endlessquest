@@ -171,7 +171,7 @@ canvas {
   padding: 0 0.5em;
   overflow-y: scroll;
   width: calc(100% - 1em);
-  height: calc(80px - 1em);
+  height: calc(80px - 0.25em);
 }
 
 .ChatButton {

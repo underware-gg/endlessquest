@@ -3,6 +3,7 @@ import { Has, HasValue, getComponentValueStrict } from '@latticexyz/recs'
 import { useMUD } from '../../store'
 import { usePlayer } from '../hooks/usePlayer'
 import { useBridgeChamber } from '../hooks/BridgeContext'
+import { useRequestChamberMetadata } from '../hooks/MetadataContext'
 
 export const PlayerLocation = () => {
   // const {
@@ -21,6 +22,7 @@ export const PlayerLocation = () => {
 
   // Bridge chamber if needed
   useBridgeChamber(nextCoord ?? 0n)
+  // useRequestChamberMetadata(nextCoord) // request from bridge > Loader
 
   return (
     <div className='PlayerLocation'>

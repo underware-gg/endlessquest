@@ -18,7 +18,9 @@ export const AgentLocation = ({
   const {
     agentEntity,
     agentId,
+    nextCoord,
   } = usePlayer()
+
   const {
     coord,
     slug,
