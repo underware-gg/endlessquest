@@ -1,5 +1,6 @@
 import React, { ReactNode, createContext, useReducer, useContext, useEffect, useMemo } from 'react'
 import { useRow, useComponentValue } from '@latticexyz/react'
+import { normalizeEntityID } from '@latticexyz/network'
 import { Entity } from '@latticexyz/recs'
 import { useMUD } from '../../store'
 import promptMetadata, { MetadataType, PromptMetadataOptions } from '../openai/promptMetadata'
@@ -273,8 +274,10 @@ export const useRequestChamberMetadata = (coord: bigint) => {
   )
 }
 
-export const useRequestAgentMetadata = (entity: Entity | undefined) => {
+export const useRequestAgentMetadata = (agentEntity: Entity | undefined) => {
   const { networkLayer: { components: { Agent, Metadata } } } = useMUD()
+
+  const entity = useMemo(() => normalizeEntityID(agentEntity ?? '0'), [agentEntity])
 
   const agent = useComponentValue(Agent, entity) ?? null
   const metadataData = useComponentValue(Metadata, entity) ?? null
@@ -288,16 +291,17 @@ export const useRequestAgentMetadata = (entity: Entity | undefined) => {
     yonder: agent?.yonder ?? null,
   }), [agent])
 
-  useEffect(() => { console.log(`AGENT META:`, entity, metadata) }, [entity, metadata])
+  useEffect(() => { console.log(`AGENT META:`, entity, agent, metadata) }, [entity, agent, metadata])
 
   const _parseResult = (responseMetadata: any): any | null => {
-    const npcMetadata = responseMetadata.npc ?? responseMetadata.chamber?.npc ?? null
-    if (!npcMetadata) return null
+    const agentMetadata = responseMetadata.npc ?? responseMetadata.chamber?.npc ?? null
+    console.log(`>>>>>> AGENT META RESULT`, agentMetadata, responseMetadata)
+    if (!agentMetadata) return null
     return {
-      name: npcMetadata.name ?? '[name]',
-      description: npcMetadata.description ?? '[description]',
-      behaviour_mode: npcMetadata.behaviour_mode ?? '[behaviour]',
-      quirk: npcMetadata.quirk ?? '[quirk]',
+      name: agentMetadata.name ?? '[name]',
+      description: agentMetadata.description ?? '[description]',
+      behaviour_mode: agentMetadata.behaviour_mode ?? '[behaviour]',
+      quirk: agentMetadata.quirk ?? '[quirk]',
       terrain: agent?.terrain,
       yonder: agent?.yonder,
       gemType: agent?.gemType,
@@ -355,8 +359,11 @@ export const useRealmMetadata = (coord: bigint) => {
   return useChamberMetadata(coord, MetadataType.Realm)
 }
 
-export const useAgentMetadata = (entity: Entity | undefined) => {
+export const useAgentMetadata = (agentEntity: Entity | undefined) => {
   const { networkLayer: { components: { Metadata } } } = useMUD()
+
+  const entity = useMemo(() => normalizeEntityID(agentEntity ?? '0'), [agentEntity])
+
   const { isUnknown, isFetching, isError, isSuccess } = useMetadataStatus(MetadataType.Agent, entity)
 
   const metadataData = useComponentValue(Metadata, entity) ?? null

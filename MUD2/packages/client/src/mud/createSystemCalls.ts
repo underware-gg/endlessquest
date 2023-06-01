@@ -1,4 +1,10 @@
-import { Entity, getComponentValue, getEntitiesWithValue } from '@latticexyz/recs'
+import {
+  Entity,
+  getComponentValue,
+  Has, HasValue,
+  runQuery,
+} from "@latticexyz/recs"
+import { ContractTransaction } from 'ethers'
 import { awaitStreamValue } from '@latticexyz/utils'
 import { ClientComponents } from './createClientComponents'
 import { SetupNetworkResult } from './setupNetwork'
@@ -19,7 +25,7 @@ const cookies = new Cookies()
 
 export function createSystemCalls(
   { worldSend, txReduced$, singletonEntity, storeCache }: SetupNetworkResult,
-  { Counter, Token }: ClientComponents,
+  { Counter, Token, Agent, Position }: ClientComponents,
 ) {
 
   let playerName = cookies.get('playerName')
@@ -169,7 +175,7 @@ export function createSystemCalls(
     })
     //
     // Create Agent
-    await worldSend('setAgent', [
+    const agentTx = await worldSend('setAgent', [
       coord,
       chamberData.tokenId,
       chamberData.seed,
@@ -181,6 +187,23 @@ export function createSystemCalls(
       gemPos.gridX,
       gemPos.gridY,
     ])
+    // wait to commit transaction
+    await awaitStreamValue(txReduced$, (txHash) => txHash === agentTx.hash)
+    //
+    // Set Chamber agent
+    // this query must return only 1 value
+    const agentQuery = runQuery([Has(Agent), HasValue(Position, { x: gemPos.gridX, y: gemPos.gridY })])
+    console.log(`AGENT QUERY`, agentQuery)
+    agentQuery.forEach(async (entity) => {
+      const key = _entityToBytes32(entity)
+      console.log(`AGENT TO CHAMBER...`, coord, entity, key)
+      await worldSend('setChamberAgent', [
+        coord,
+        key,
+      ])
+    })
+    //
+    // return ChamberData
     return result
   }
 

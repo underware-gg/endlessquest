@@ -40,10 +40,6 @@ contract AgentSystem is System {
     Blocker.set(key, true);
     Position.set(key, gridX, gridY);
     Metadata.set(key, MetadataData("", ""));
-
-    // TODO: assign agent to chamber
-    // get chamber with key: coord
-    // set agent
   }
 
   function setAgentMetadata(bytes32 key, string memory metadata) public {

@@ -43,6 +43,12 @@ contract ChamberSystem is System {
     ChamberMetadata.set(coord, ChamberMetadataData("", ""));
   }
 
+  function setChamberAgent(uint256 coord, bytes32 agent) public {
+    ChamberData memory data = Chamber.get(coord);
+    data.agent = agent;
+    Chamber.set(coord, data);
+  }
+
   function setChamberMetadata(uint256 coord, string memory metadata) public {
     ChamberMetadataData memory data = ChamberMetadata.get(coord);
     data.metadata = metadata;

@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useMemo, useEffect } from 'react'
 import { useComponentValue } from '@latticexyz/react'
 import { Entity } from '@latticexyz/recs'
 import { useMUD } from '../../store'
@@ -20,6 +20,8 @@ export const useAgent = (agentEntity: Entity | undefined) => {
   const { metadata, isFetching: metadataIsFetching, isError: metadataIsError } = useAgentMetadata(agentEntity)
 
   const { url } = useAgentProfileImage(agentEntity)
+
+  // useEffect(() => { console.log(`____USE_AGENT:`, agentEntity, typeof agentEntity, agent, metadata) }, [agentEntity, agent, metadata])
 
   return {
     coord: agent?.coord ?? null,
