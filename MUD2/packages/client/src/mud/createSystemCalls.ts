@@ -159,7 +159,7 @@ export function createSystemCalls(
         isEntry,
         gridX,
         gridY,
-        tile.doorDir,
+        tile.doorDir ?? -1,
         coord
       ])
     })
