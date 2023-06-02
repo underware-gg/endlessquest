@@ -16,7 +16,7 @@ export function createControlsSystem(layer: PhaserLayer) {
     },
     networkLayer: {
       systemCalls: {
-        move,
+        moveToDirection,
       },
     },
   } = layer
@@ -46,7 +46,7 @@ export function createControlsSystem(layer: PhaserLayer) {
     keys => keys.has('W'),
     () => {
       if (!window.QuestNamespace.controlsEnabled) return
-      move(Direction.Up)
+      moveToDirection(Direction.Up)
       _moveGhost(Direction.Up)
     })
 
@@ -54,7 +54,7 @@ export function createControlsSystem(layer: PhaserLayer) {
     keys => keys.has('A'),
     () => {
       if (!window.QuestNamespace.controlsEnabled) return
-      move(Direction.Left)
+      moveToDirection(Direction.Left)
       _moveGhost(Direction.Left)
     }
   )
@@ -63,7 +63,7 @@ export function createControlsSystem(layer: PhaserLayer) {
     keys => keys.has('S'),
     () => {
       if (!window.QuestNamespace.controlsEnabled) return
-      move(Direction.Down)
+      moveToDirection(Direction.Down)
       _moveGhost(Direction.Down)
     }
   )
@@ -72,7 +72,7 @@ export function createControlsSystem(layer: PhaserLayer) {
     keys => keys.has('D'),
     () => {
       if (!window.QuestNamespace.controlsEnabled) return
-      move(Direction.Right)
+      moveToDirection(Direction.Right)
       _moveGhost(Direction.Right)
     }
   )

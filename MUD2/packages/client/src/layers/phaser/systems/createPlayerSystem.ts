@@ -8,7 +8,7 @@ import {
   defineQuery,
   runQuery,
   Entity,
- } from '@latticexyz/recs'
+} from '@latticexyz/recs'
 import { PhaserLayer } from '../createPhaserLayer'
 import { Animations, Sprites, Assets, TILE_HEIGHT, TILE_WIDTH } from '../constants'
 import { pixelCoordToTileCoord, tileCoordToPixelCoord } from '@latticexyz/phaserx'
@@ -26,7 +26,8 @@ export function createPlayerSystem(layer: PhaserLayer) {
         Door,
       },
       systemCalls: {
-        spawn,
+        spawnAtPosition,
+        moveToPosition,
       },
       playerEntity,
     },
@@ -45,8 +46,12 @@ export function createPlayerSystem(layer: PhaserLayer) {
   const _playerHasSpawned = () => {
     return (playerEntity && hasComponent(Player, playerEntity))
   }
-  const _isPlayer = (entity:Entity) => {
+  const _isPlayer = (entity: Entity) => {
     return (entity == playerEntity)
+  }
+  const _moveGhostTo = (position: { x: number, y: number }) => {
+    const pixelPosition = tileCoordToPixelCoord(position, TILE_WIDTH, TILE_HEIGHT)
+    _ghost.setPosition(pixelPosition.x + TILE_WIDTH / 2, pixelPosition.y + TILE_HEIGHT / 2)
   }
 
   // spawn by click
@@ -61,9 +66,15 @@ export function createPlayerSystem(layer: PhaserLayer) {
       const tile = getComponentValueStrict(Tile, entity)
       const door = hasComponent(Door, entity) ? getComponentValueStrict(Door, entity) : `(not a door)`
       console.log(`CRAWLER: Clicked tile:`, position, tile, door)
-      if (tile.tileType != 0 && !_playerHasSpawned()) {
-        console.log(`CRAWLER: Spawn at click!`)
-        spawn(position.x, position.y)
+      if (tile.tileType != 0) {
+        if (!_playerHasSpawned()) {
+          console.log(`CRAWLER: Spawn at click!`)
+          spawnAtPosition(position.x, position.y)
+        } else {
+          moveToPosition(position.x, position.y)
+          _moveGhostTo(position)
+          _ghost.setVisible(true)
+        }
       }
     })
   })
@@ -77,13 +88,13 @@ export function createPlayerSystem(layer: PhaserLayer) {
     if (tile.isEntry) {
       const position = getComponentValueStrict(Position, comp.entity)
       console.log(`CRAWLER: Spawn at entry!`, position, tile)
-      spawn(position.x, position.y)
+      spawnAtPosition(position.x, position.y)
     }
   })
 
   defineEnterSystem(world, [Has(Position), Has(Player)], ({ entity }) => {
     const playerObj = objectPool.get(entity, 'Sprite')
- 
+
     playerObj.setComponent({
       id: 'animation',
       once: (sprite) => {
@@ -123,7 +134,7 @@ export function createPlayerSystem(layer: PhaserLayer) {
           // camera.centerOn(pixelPosition.x, pixelPosition.y)
           // need to expose camera.pan() on phaserx
           camera.phaserCamera.pan(pixelPosition.x, pixelPosition.y, 1500, 'Sine')
-          _ghost.setPosition(pixelPosition.x + TILE_WIDTH / 2, pixelPosition.y + TILE_HEIGHT/2)
+          _moveGhostTo(position)
           _ghost.setVisible(false)
         }
       }

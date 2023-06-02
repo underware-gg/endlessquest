@@ -213,8 +213,8 @@ export function createSystemCalls(
     if (coord && metadata) {
       // let stored_metadata = storeCache.tables.ChamberMetadata.get({ coord })
       // if (stored_metadata == null) {
-        console.warn(`STORE CHAMBER METADATA @`, coord, metadata)
-        worldSend('setChamberMetadata', [coord, metadata])
+      console.warn(`STORE CHAMBER METADATA @`, coord, metadata)
+      worldSend('setChamberMetadata', [coord, metadata])
       // }
     }
   }
@@ -223,8 +223,8 @@ export function createSystemCalls(
       const key = _entityToBytes32(entity)
       // let stored_metadata = storeCache.tables.Metadata.get({ key })
       // if (stored_metadata == null) {
-        console.warn(`STORE AGENT METADATA @`, key, metadata)
-        worldSend('setAgentMetadata', [key, metadata])
+      console.warn(`STORE AGENT METADATA @`, key, metadata)
+      worldSend('setAgentMetadata', [key, metadata])
       // }
     }
   }
@@ -246,12 +246,15 @@ export function createSystemCalls(
   //---------------------------
   // Player / Movement
   //
-  const spawn = (x: number, y: number) => {
+  const spawnAtPosition = (x: number, y: number) => {
     console.warn(`SPAWN @`, x, y)
-    worldSend('spawn', [playerName, x, y])
+    worldSend('spawnAtPosition', [playerName, x, y])
   }
-  const move = (direction: Direction) => {
-    worldSend('move', [direction])
+  const moveToDirection = (direction: Direction) => {
+    worldSend('moveToDirection', [direction])
+  }
+  const moveToPosition = (x: number, y: number) => {
+    worldSend('moveToPosition', [x, y])
   }
 
   return {
@@ -269,7 +272,8 @@ export function createSystemCalls(
     setChamberProfileImage,
     setAgentProfileImage,
     // Player
-    spawn,
-    move,
+    spawnAtPosition,
+    moveToDirection,
+    moveToPosition,
   }
 }
