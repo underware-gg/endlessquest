@@ -48,7 +48,7 @@ export const AgentLocation = ({
     <div>
       <div className='AgentLocation'>
 
-        <h2>Encounter</h2>
+        <h3>Encounter</h3>
         <p className='Important'>{metadataIsFetching ? 'dreaming...' : (metadata?.name ?? 'come closer...')}</p>
         <p>{metadataIsFetching ? 'don\'t move!' : (metadata?.description ?? '?')}</p>
 

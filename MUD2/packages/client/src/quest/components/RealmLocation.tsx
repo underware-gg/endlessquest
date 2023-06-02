@@ -9,13 +9,13 @@ export const RealmLocation = () => {
     metadata,
     metadataIsFetching,
     url,
-  } = useRealm()
+  } = useRealm(1n)
 
   return (
     <div>
       <div className='RealmLocation'>
 
-        <h2>Realm</h2>
+        <h3>Realm</h3>
         <p className='Important'>{metadataIsFetching ? 'dreaming...' : (metadata?.name ?? '?')}</p>
         <p>{metadataIsFetching ? '...' : (metadata?.description ?? '?')}</p>
 

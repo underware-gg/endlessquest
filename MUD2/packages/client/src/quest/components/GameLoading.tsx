@@ -23,7 +23,7 @@ export const GameLoading = () => {
   }
 
   return (
-    <div className='GameLoading NoMouse'>
+    <div className='FullScreen WithMouse'>
       <div className='GameLoadingBox'>
         <div className='GameLoadingBar'>
           {loadingState.msg}

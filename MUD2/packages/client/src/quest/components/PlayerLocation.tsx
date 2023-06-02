@@ -26,7 +26,7 @@ export const PlayerLocation = () => {
 
   return (
     <div className='PlayerLocation'>
-      <h2>Player</h2>
+      <h3>Player</h3>
       <div>Id: {name ?? '?'}</div>
       <div>Level: {level ?? '?'}</div>
 

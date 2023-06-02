@@ -1,7 +1,7 @@
 import { useComponentValue } from '@latticexyz/react'
 import { SyncState } from '@latticexyz/network'
 import { useMUD } from '../../store'
-import { GameUI } from './GameUI'
+import { GameSelector } from './GameSelector'
 import { BridgeProvider } from '../hooks/BridgeContext'
 import { MetadataProvider } from '../hooks/MetadataContext'
 
@@ -25,7 +25,7 @@ export const GameRoot = () => {
   return (
     <BridgeProvider systemCalls={systemCalls}>
       <MetadataProvider systemCalls={systemCalls}>
-        <GameUI />
+        <GameSelector />
       </MetadataProvider>
     </BridgeProvider>
   )

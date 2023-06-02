@@ -92,7 +92,7 @@ const MetadataProvider = ({
           if (status == StatusType.Success && metadata) {
             try {
               const _meta = JSON.stringify(metadata)
-              if (_meta == '{}') throw(`Empty metadata {}`)
+              if (_meta == '{}') throw (`Empty metadata {}`)
               if (type == MetadataType.Chamber) {
                 setChamberMetadata(key, _meta)
               } else if (type == MetadataType.Realm) {
@@ -100,7 +100,7 @@ const MetadataProvider = ({
               } else if (type == MetadataType.Agent) {
                 setAgentMetadata(key, _meta)
               }
-            } catch(e) {
+            } catch (e) {
               console.warn(`MetadataContext [${type}][${_key}] exception:`, e)
               newState[type][_key] = StatusType.Error
             }
