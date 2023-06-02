@@ -34,7 +34,7 @@ export const RealmButton = ({
     <Grid className='SelectRealmBox'>
       <Row>
         <Col span={4} className='UI' onClick={() => _clicked()}>
-          <img className='FillParent' src={url ?? logo} />
+          <img className='FillParent' src={url ? url : logo} />
         </Col>
         <Col span={8} className='UI' onClick={() => _clicked()}>
           {metadata &&

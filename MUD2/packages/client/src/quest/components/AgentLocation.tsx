@@ -45,7 +45,7 @@ export const AgentLocation = ({
   return (
     <>
       <div className='ChamberImage'>
-        <img className='FillParent' src={url ?? anim} />
+        <img className='FillParent' src={url ? url : anim} />
       </div>
 
       <div className='ChamberLocation'>

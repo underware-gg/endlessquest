@@ -13,7 +13,7 @@ export const RealmLocation = () => {
   return (
     <>
       <div className='RealmImage'>
-        <img className='FillParent' src={url ?? logo} />
+        <img className='FillParent' src={url ? url : logo} />
       </div>
 
       <div className='RealmLocation'>
