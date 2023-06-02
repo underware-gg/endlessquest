@@ -1,6 +1,3 @@
-import { useComponentValue, useEntityQuery, useRow } from '@latticexyz/react'
-import { Has, HasValue, getComponentValueStrict } from '@latticexyz/recs'
-import { useMUD } from '../../store'
 import { useRealm } from '../hooks/useRealm'
 
 export const RealmLocation = () => {
@@ -27,6 +24,12 @@ export const RealmLocation = () => {
         </div> */}
 
       </div>
+
+      {/* {url &&
+        <div className='RealmImage'>
+          <img className='FillParent' src={url} />
+        </div>
+      } */}
 
     </div>
   )

@@ -108,3 +108,46 @@ export const useChamberProfileImage = (coord: bigint) => {
   }
 }
 
+//---------------------
+// Realms ProfileImage
+//
+export const useRealmProfileImage = (coord: bigint) => {
+  const {
+    networkLayer: {
+      systemCalls: {
+        setChamberProfileImage,
+      },
+      storeCache,
+    }
+  } = useMUD()
+
+  const metadataRow = useRow(storeCache, { table: 'ChamberMetadata', key: { coord } })
+  const metadata = useMemo(() => (metadataRow?.value?.metadata ?? null), [metadataRow])
+  const url = useMemo(() => (metadataRow?.value?.url ?? null), [metadataRow])
+
+  // @ts-ignore
+  useEffect(() => { console.log(`REALM IMAGE:`, coord, metadata?.name ?? null, url) }, [url])
+
+  const prompt = useMemo(() => {
+    if (metadata && url == '') {
+      const meta = JSON.parse(metadata)
+      return `${meta.name}, ${meta.description}`
+    }
+    return null
+  }, [metadata, url])
+  const { isWaiting, url: generatedUrl } = useProfileImage(prompt)
+
+  useEffect(() => { console.log(`REALM IMAGE GENERATED:`, isWaiting, generatedUrl) }, [generatedUrl])
+
+  useEffect(() => {
+    if (generatedUrl && url == '') {
+      setChamberProfileImage(coord, generatedUrl)
+    }
+  }, [generatedUrl])
+
+  return {
+    isWaiting: (isWaiting && !metadata),
+    url: url,
+  }
+}
+

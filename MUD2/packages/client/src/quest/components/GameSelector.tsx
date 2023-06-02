@@ -29,18 +29,18 @@ export const RealmButton = ({
 
   return (
     <div className='SelectRealmBox'>
-          <div className='SelectRealmButton' onClick={() => _clicked()}>
+      <div className='SelectRealmButton' onClick={() => _clicked()}>
         <img className='FillParent' src={url ?? 'https://github.com/funDAOmental/endlessquest/blob/main/Assets/logos/EndlessQuest-frames/page_01.png?raw=true'} />
-          </div>
-          <div className='SelectRealmDescription' onClick={() => _clicked()}>
-            {metadata &&
-              <>
-                {/* <p>Realm  {coord.toString()}</p> */}
-                <h2 className='Important'>{metadata.name ?? null}</h2>
-                <p>{metadata.description ?? null}</p>
-              </>
-            }
-          </div>
+      </div>
+      <div className='SelectRealmDescription' onClick={() => _clicked()}>
+        {metadata &&
+          <>
+            {/* <p>Realm  {coord.toString()}</p> */}
+            <h2 className='Important'>{metadata.name ?? 'New Quest'}</h2>
+            <p>{metadata.description ?? null}</p>
+          </>
+        }
+      </div>
     </div>
   )
 }

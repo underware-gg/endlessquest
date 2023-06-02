@@ -176,6 +176,15 @@ canvas {
   width: 250px;
   height: 180px;
 }
+.RealmImage {
+  @extend .UI;
+  position: absolute;
+  top: 0;
+  left: 250px;
+  width: 180px;
+  height: 180px;
+}
+
 
 .PlayerLocation {
   @extend .UI;
@@ -193,17 +202,6 @@ canvas {
   margin-right: 0;
 }
 
-.LocationImage {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 150px;
-  height: 150px;
-}
-.LocationImg {
-  max-width: 150px;
-  max-height: 150px;
-}
 
 .BackgroundImage {
   position: absolute;
