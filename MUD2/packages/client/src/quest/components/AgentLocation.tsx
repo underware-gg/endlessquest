@@ -5,13 +5,12 @@ import { usePlayer } from '../hooks/usePlayer'
 import { useAgent } from '../hooks/useAgent'
 import { useEffect, useMemo } from 'react'
 import { useRequestAgentMetadata } from '../hooks/MetadataContext'
-import { useSettingsContext } from '../hooks/SettingsContext'
+import { useSettingsContext, SettingsActions } from '../hooks/SettingsContext'
 
 
 export const AgentLocation = ({
-  onChat = (e: boolean, name: string, description: string) => { },
 }) => {
-  const { anim } = useSettingsContext()
+  const { anim, isChatting, dispatch } = useSettingsContext()
 
   const {
     agentEntity,
@@ -34,13 +33,14 @@ export const AgentLocation = ({
 
   useRequestAgentMetadata(agentEntity)
 
-  const canChat = (agentId != 0n && metadata?.name)
+  const _onChat = () => {
+    dispatch({
+      type: SettingsActions.SET_IS_CHATTING,
+      payload: !isChatting,
+    })
+  }
 
-  useEffect(() => {
-    if (!canChat) {
-      onChat(false, '', '')
-    }
-  }, [canChat])
+  const canChat = (agentId != 0n && metadata?.name)
 
   return (
     <>
@@ -63,7 +63,7 @@ export const AgentLocation = ({
           <div>Coins: {coins ?? '?'}</div>
           {/* <div>Url: {url?.slice(0, 20) ?? '?'}</div> */}
           {/* <div>Worth: {worth ?? '?'}</div> */}
-          <button className='ChatButton' disabled={!canChat} onClick={() => onChat(true, metadata?.name, metadata ? JSON.stringify(metadata) : '')}>CHAT</button>
+          <button className='ChatButton' disabled={!canChat} onClick={() => _onChat()}>CHAT</button>
         </div>
       </div>
     </>

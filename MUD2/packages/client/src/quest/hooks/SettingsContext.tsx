@@ -10,12 +10,14 @@ import React, { ReactNode, createContext, useReducer, useContext, useEffect } fr
 //
 export const initialState = {
   realmCoord: 0n,
+  isChatting: false,
   logo: 'https://raw.githubusercontent.com/funDAOmental/endlessquest/main/Assets/logos/EndlessQuest-frames/page_01.png',
   anim: 'https://raw.githubusercontent.com/funDAOmental/endlessquest/main/Assets/logos/EndlessQuest-logo4-optimised.gif',
 }
 
 const SettingsActions = {
   SET_REALM_COORD: 'SET_REALM_COORD',
+  SET_IS_CHATTING: 'SET_IS_CHATTING',
 }
 
 //--------------------------------
@@ -23,12 +25,14 @@ const SettingsActions = {
 //
 type SettingsStateType = {
   realmCoord: bigint,
+  isChatting: boolean,
   logo: string,
   anim: string,
 }
 
 type ActionType =
   | { type: 'SET_REALM_COORD', payload: bigint }
+  | { type: 'SET_IS_CHATTING', payload: boolean }
 
 
 
@@ -56,7 +60,11 @@ const SettingsProvider = ({
     let newState = { ...state }
     switch (action.type) {
       case SettingsActions.SET_REALM_COORD: {
-        newState.realmCoord = action.payload
+        newState.realmCoord = action.payload as bigint
+        break
+      }
+      case SettingsActions.SET_IS_CHATTING: {
+        newState.isChatting = action.payload as boolean
         break
       }
       default:

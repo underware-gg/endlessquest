@@ -61,7 +61,7 @@ export const GameSelector = () => {
   }
 
   return (
-    <div className='FadedCover WithMouse'>
+    <div className='FadedCover'>
       <Container className='FillParent'>
         <RealmButton coord={1n} onClick={_selectedCoord} />
       </Container>

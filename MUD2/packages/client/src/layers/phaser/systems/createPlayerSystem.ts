@@ -56,7 +56,7 @@ export function createPlayerSystem(layer: PhaserLayer) {
 
   // spawn by click
   input.pointerdown$.subscribe((event) => {
-    if (!event.pointer) return
+    if (!event.pointer || !window.QuestNamespace.controlsEnabled) return
     const x = event.pointer.worldX
     const y = event.pointer.worldY
     const position = pixelCoordToTileCoord({ x, y }, TILE_WIDTH, TILE_HEIGHT)
