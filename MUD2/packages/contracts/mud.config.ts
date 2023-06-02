@@ -89,7 +89,7 @@ export default mudConfig({
       }
     },
     //-----------------------
-    Tiles: {
+    Tile: {
       keySchema: {
         key: 'bytes32',
       },
@@ -140,7 +140,7 @@ export default mudConfig({
     {
       name: 'UniqueEntityModule',
       root: true,
-      args: [resolveTableId('Tiles')],
+      args: [resolveTableId('Tile')],
     },
     {
       name: 'KeysWithValueModule',

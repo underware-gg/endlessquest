@@ -54,7 +54,7 @@ export interface CoordToChamberDataResult {
     coins: number
     worth: number
   }
-  // Stored on Tiles table
+  // Stored on Tile table
   bitmap: bigint
   tilemap: string
   // Stored on Door table

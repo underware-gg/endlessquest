@@ -5,7 +5,7 @@ import { System } from "@latticexyz/world/src/System.sol";
 import {
   Player, PlayerData,
   Position, PositionData, PositionTableId,
-  Tiles, TilesData,
+  Tile, TileData,
   Agent, AgentData,
   Location,
   Blocker
@@ -63,8 +63,8 @@ contract PlayerSystem is System {
       bool blocker = Blocker.get(thingsAtPosition[i]);
       require(blocker == false, "--- BLOCKER! ---");
       //
-      // Find Tiles at position
-      TilesData memory tile = Tiles.get(thingsAtPosition[i]);
+      // Find Tile at position
+      TileData memory tile = Tile.get(thingsAtPosition[i]);
       if (tile.terrain > 0) {
         isTile = true;
       }

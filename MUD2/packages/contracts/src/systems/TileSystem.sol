@@ -3,10 +3,10 @@ pragma solidity >=0.8.0;
 
 import { System } from "@latticexyz/world/src/System.sol";
 import { getUniqueEntity } from "@latticexyz/world/src/modules/uniqueentity/getUniqueEntity.sol";
-import { Tiles, Position, Blocker, Door } from "../codegen/Tables.sol";
+import { Tile, Position, Blocker, Door } from "../codegen/Tables.sol";
 import { Crawl } from "../utils/Crawl.sol";
 
-contract TilesSystem is System {
+contract TileSystem is System {
 
   // Bridge setters
   function setTile(
@@ -19,7 +19,7 @@ contract TilesSystem is System {
     uint256 coord
   ) public {
     bytes32 key = getUniqueEntity();
-    Tiles.set(key,
+    Tile.set(key,
       terrain,
       tileType,
       isEntry

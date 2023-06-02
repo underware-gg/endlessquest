@@ -130,8 +130,8 @@ export function defineContractComponents(world: World) {
         }
       );
     })(),
-    Tiles: (() => {
-      const tableId = new TableId("", "Tiles");
+    Tile: (() => {
+      const tableId = new TableId("", "Tile");
       return defineComponent(
         world,
         {

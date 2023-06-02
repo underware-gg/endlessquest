@@ -17,16 +17,16 @@ import { EncodeArray } from "@latticexyz/store/src/tightcoder/EncodeArray.sol";
 import { Schema, SchemaLib } from "@latticexyz/store/src/Schema.sol";
 import { PackedCounter, PackedCounterLib } from "@latticexyz/store/src/PackedCounter.sol";
 
-bytes32 constant _tableId = bytes32(abi.encodePacked(bytes16(""), bytes16("Tiles")));
-bytes32 constant TilesTableId = _tableId;
+bytes32 constant _tableId = bytes32(abi.encodePacked(bytes16(""), bytes16("Tile")));
+bytes32 constant TileTableId = _tableId;
 
-struct TilesData {
+struct TileData {
   uint8 terrain;
   uint8 tileType;
   bool isEntry;
 }
 
-library Tiles {
+library Tile {
   /** Get the table's schema */
   function getSchema() internal pure returns (Schema) {
     SchemaType[] memory _schema = new SchemaType[](3);
@@ -50,7 +50,7 @@ library Tiles {
     _fieldNames[0] = "terrain";
     _fieldNames[1] = "tileType";
     _fieldNames[2] = "isEntry";
-    return ("Tiles", _fieldNames);
+    return ("Tile", _fieldNames);
   }
 
   /** Register the table's schema */
@@ -178,7 +178,7 @@ library Tiles {
   }
 
   /** Get the full data */
-  function get(bytes32 key) internal view returns (TilesData memory _table) {
+  function get(bytes32 key) internal view returns (TileData memory _table) {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32((key));
 
@@ -187,7 +187,7 @@ library Tiles {
   }
 
   /** Get the full data (using the specified store) */
-  function get(IStore _store, bytes32 key) internal view returns (TilesData memory _table) {
+  function get(IStore _store, bytes32 key) internal view returns (TileData memory _table) {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32((key));
 
@@ -216,17 +216,17 @@ library Tiles {
   }
 
   /** Set the full data using the data struct */
-  function set(bytes32 key, TilesData memory _table) internal {
+  function set(bytes32 key, TileData memory _table) internal {
     set(key, _table.terrain, _table.tileType, _table.isEntry);
   }
 
   /** Set the full data using the data struct (using the specified store) */
-  function set(IStore _store, bytes32 key, TilesData memory _table) internal {
+  function set(IStore _store, bytes32 key, TileData memory _table) internal {
     set(_store, key, _table.terrain, _table.tileType, _table.isEntry);
   }
 
   /** Decode the tightly packed blob using this table's schema */
-  function decode(bytes memory _blob) internal pure returns (TilesData memory _table) {
+  function decode(bytes memory _blob) internal pure returns (TileData memory _table) {
     _table.terrain = (uint8(Bytes.slice1(_blob, 0)));
 
     _table.tileType = (uint8(Bytes.slice1(_blob, 1)));

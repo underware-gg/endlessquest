@@ -22,7 +22,7 @@ export function createPlayerSystem(layer: PhaserLayer) {
       components: {
         Position,
         Player,
-        Tiles,
+        Tile,
         Door,
       },
       systemCalls: {
@@ -56,10 +56,10 @@ export function createPlayerSystem(layer: PhaserLayer) {
     const y = event.pointer.worldY
     const position = pixelCoordToTileCoord({ x, y }, TILE_WIDTH, TILE_HEIGHT)
     // only on free tiles
-    const query = runQuery([Has(Tiles), HasValue(Position, position)])
+    const query = runQuery([Has(Tile), HasValue(Position, position)])
     query.forEach((entity) => {
-      const tile = getComponentValueStrict(Tiles, entity)
-      const door = getComponentValueStrict(Door, entity)
+      const tile = getComponentValueStrict(Tile, entity)
+      const door = hasComponent(Door, entity) ? getComponentValueStrict(Door, entity) : `(not a door)`
       console.log(`CRAWLER: Clicked tile:`, position, tile, door)
       if (tile.tileType != 0 && !_playerHasSpawned()) {
         console.log(`CRAWLER: Spawn at click!`)
@@ -70,10 +70,10 @@ export function createPlayerSystem(layer: PhaserLayer) {
 
 
   // auto spawn when a new entry is loaded
-  const query = defineQuery([Has(Tiles), Has(Position)])
+  const query = defineQuery([Has(Tile), Has(Position)])
   query.update$.subscribe((comp) => {
     if (_playerHasSpawned()) return
-    const tile = getComponentValueStrict(Tiles, comp.entity)
+    const tile = getComponentValueStrict(Tile, comp.entity)
     if (tile.isEntry) {
       const position = getComponentValueStrict(Position, comp.entity)
       console.log(`CRAWLER: Spawn at entry!`, position, tile)
@@ -107,9 +107,9 @@ export function createPlayerSystem(layer: PhaserLayer) {
     const position = getComponentValueStrict(Position, entity)
     const pixelPosition = tileCoordToPixelCoord(position, TILE_WIDTH, TILE_HEIGHT)
 
-    const tileQuery = runQuery([Has(Tiles), HasValue(Position, position)])
+    const tileQuery = runQuery([Has(Tile), HasValue(Position, position)])
     tileQuery.forEach((entity) => {
-      const tile = getComponentValueStrict(Tiles, entity)
+      const tile = getComponentValueStrict(Tile, entity)
       console.log(`CRAWLER: Player moved...`, position, tile)
     })
 

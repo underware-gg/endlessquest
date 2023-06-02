@@ -20,7 +20,6 @@ export function createAgentSystem(layer: PhaserLayer) {
         Position,
         Agent,
         Player,
-        Tiles,
       },
       // systemCalls: {
       //   spawn,

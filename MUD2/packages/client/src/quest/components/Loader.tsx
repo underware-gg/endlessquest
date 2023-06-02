@@ -53,12 +53,6 @@ interface RealmLoaderProps {
 export const RealmLoader = ({
   coord = 0n,
 }: RealmLoaderProps) => {
-  const {
-    networkLayer: {
-      components: { Tiles },
-      storeCache,
-    }
-  } = useMUD()
 
   useBridgeRealm(coord)
 
@@ -123,7 +117,7 @@ export const ChamberLoader = ({
 }: ChamberLoaderProps) => {
   const {
     networkLayer: {
-      components: { Tiles },
+      components: { Tile },
       storeCache,
     }
   } = useMUD()
@@ -134,7 +128,7 @@ export const ChamberLoader = ({
   const seed = useMemo(() => (chamberData?.value?.seed?.toString() ?? null), [chamberData])
   const agentEntity = useMemo(() => normalizeEntityID(chamberData?.value?.agent ?? '0'), [chamberData])
 
-  const tiles = useEntityQuery([HasValue(Tiles, { terrain: chamberData?.value?.terrain })]) ?? []
+  const tiles = useEntityQuery([HasValue(Tile, { terrain: chamberData?.value?.terrain })]) ?? []
 
   const slug = Crawl.coordToSlug(coord)
 

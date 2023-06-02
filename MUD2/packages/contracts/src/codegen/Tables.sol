@@ -10,7 +10,7 @@ import { Chamber, ChamberData, ChamberTableId } from "./tables/Chamber.sol";
 import { ChamberMetadata, ChamberMetadataData, ChamberMetadataTableId } from "./tables/ChamberMetadata.sol";
 import { Agent, AgentData, AgentTableId } from "./tables/Agent.sol";
 import { Metadata, MetadataData, MetadataTableId } from "./tables/Metadata.sol";
-import { Tiles, TilesData, TilesTableId } from "./tables/Tiles.sol";
+import { Tile, TileData, TileTableId } from "./tables/Tile.sol";
 import { Door, DoorTableId } from "./tables/Door.sol";
 import { Player, PlayerData, PlayerTableId } from "./tables/Player.sol";
 import { Position, PositionData, PositionTableId } from "./tables/Position.sol";

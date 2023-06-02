@@ -28,7 +28,7 @@ export function createMapSystem(layer: PhaserLayer) {
       //   spawn
       // },
       components: {
-        Tiles,
+        Tile,
         Position,
       },
     }
@@ -110,14 +110,14 @@ export function createMapSystem(layer: PhaserLayer) {
   }
 
   const _addTileQuery = (entity: Entity) => {
-    const tile = getComponentValueStrict(Tiles, entity)
+    const tile = getComponentValueStrict(Tile, entity)
     const position = getComponentValueStrict(Position, entity)
     // console.log(`TILES_UPDATE:`, tile, position)
     _addTileToMap(tile as singleTile, position as singlePosition)
   }
 
   const initQuery = runQuery([
-    Has(Tiles),
+    Has(Tile),
     Has(Position),
   ])
   console.log(`INIT TILES QUERY`, initQuery)
@@ -126,7 +126,7 @@ export function createMapSystem(layer: PhaserLayer) {
   })
 
   const query = defineQuery([
-    Has(Tiles),
+    Has(Tile),
     Has(Position),
   ])
 
@@ -138,7 +138,7 @@ export function createMapSystem(layer: PhaserLayer) {
   // let observable = query.update$.pipe(map(() => [...query.matching]))
   // observable.subscribe((entities) => {
   //   entities.forEach((entity) => {
-  //     const tile = getComponentValueStrict(Tiles, entity)
+  //     const tile = getComponentValueStrict(Tile, entity)
   //     const position = getComponentValueStrict(Position, entity)
   //     // console.log(`TILES_UPDATE:`, tile, position)
   //     _addTileToMap(tile as singleTile, position as singlePosition)

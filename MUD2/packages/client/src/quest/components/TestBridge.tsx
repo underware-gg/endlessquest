@@ -6,7 +6,7 @@ import { useEffect } from 'react'
 export const TestBridge = () => {
   const {
     networkLayer: {
-      components: { Counter, Tiles },
+      components: { Counter, Tile },
       systemCalls: { increment, decrement, bridge_tokenId, bridge_chamber },
       singletonEntity, storeCache,
     }
@@ -39,10 +39,10 @@ export const TestBridge = () => {
   const seed = chamberData?.value?.seed?.toString() ?? null
 
   //
-  // DoorSystem, TilesSystem
+  // DoorSystem, TileSystem
   //
   // query by VALUE
-  const tiles = useEntityQuery([HasValue(Tiles, { terrain: chamberData?.value?.terrain })]) ?? []
+  const tiles = useEntityQuery([HasValue(Tile, { terrain: chamberData?.value?.terrain })]) ?? []
 
   return (
     <div style={{
@@ -84,7 +84,7 @@ export const TestBridge = () => {
 
       <div>tiles: {
         [...tiles].map(id => {
-          const data = getComponentValueStrict(Tiles, id)
+          const data = getComponentValueStrict(Tile, id)
           return <span key={`_${id}`}>{data.tileType},</span>
         })}</div>
 
