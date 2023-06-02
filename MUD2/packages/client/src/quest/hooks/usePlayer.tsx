@@ -1,6 +1,5 @@
 import { useMemo } from 'react'
-import { useComponentValue, useEntityQuery } from '@latticexyz/react'
-import { Has, HasValue } from '@latticexyz/recs'
+import { useComponentValue } from '@latticexyz/react'
 import { normalizeEntityID } from '@latticexyz/network'
 import { useMUD } from '../../store'
 import { useCoord } from './useCoord'
@@ -9,7 +8,7 @@ import { useTile } from './useTile'
 export const usePlayer = () => {
   const {
     networkLayer: {
-      components: { Player, Position, Location, Doors, Tiles },
+      components: { Player, Position, Location },
       playerEntity,
     }
   } = useMUD()

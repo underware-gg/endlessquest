@@ -134,7 +134,6 @@ export const ChamberLoader = ({
   const seed = useMemo(() => (chamberData?.value?.seed?.toString() ?? null), [chamberData])
   const agentEntity = useMemo(() => normalizeEntityID(chamberData?.value?.agent ?? '0'), [chamberData])
 
-  // const doors = useEntityQuery([HasValue(Doors, { coord })]) ?? []
   const tiles = useEntityQuery([HasValue(Tiles, { terrain: chamberData?.value?.terrain })]) ?? []
 
   const slug = Crawl.coordToSlug(coord)

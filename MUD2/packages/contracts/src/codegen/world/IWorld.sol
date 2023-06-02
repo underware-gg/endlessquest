@@ -7,7 +7,6 @@ import { IBaseWorld } from "@latticexyz/world/src/interfaces/IBaseWorld.sol";
 
 import { IAgentSystem } from "./IAgentSystem.sol";
 import { IChamberSystem } from "./IChamberSystem.sol";
-import { IDoorsSystem } from "./IDoorsSystem.sol";
 import { IIncrementSystem } from "./IIncrementSystem.sol";
 import { IPlayerSystem } from "./IPlayerSystem.sol";
 import { IRealmSystem } from "./IRealmSystem.sol";
@@ -22,7 +21,6 @@ interface IWorld is
   IBaseWorld,
   IAgentSystem,
   IChamberSystem,
-  IDoorsSystem,
   IIncrementSystem,
   IPlayerSystem,
   IRealmSystem,

@@ -8,7 +8,6 @@ import { Realm, RealmTableId } from "./tables/Realm.sol";
 import { Token, TokenTableId } from "./tables/Token.sol";
 import { Chamber, ChamberData, ChamberTableId } from "./tables/Chamber.sol";
 import { ChamberMetadata, ChamberMetadataData, ChamberMetadataTableId } from "./tables/ChamberMetadata.sol";
-import { Doors, DoorsData, DoorsTableId } from "./tables/Doors.sol";
 import { Agent, AgentData, AgentTableId } from "./tables/Agent.sol";
 import { Metadata, MetadataData, MetadataTableId } from "./tables/Metadata.sol";
 import { Tiles, TilesData, TilesTableId } from "./tables/Tiles.sol";

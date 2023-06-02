@@ -67,19 +67,6 @@ export default mudConfig({
       }
     },
     //-----------------------
-    Doors: {
-      keySchema: {
-        key: 'bytes32',
-      },
-      schema: {
-        coord: 'uint256',
-        index: 'uint8',
-        dir: 'uint8',
-        locked: 'bool',
-        nextCoord: 'uint256',
-      }
-    },
-    //-----------------------
     Agent: {
       keySchema: {
         key: 'bytes32',
@@ -149,11 +136,6 @@ export default mudConfig({
       name: 'UniqueEntityModule',
       root: true,
       args: [resolveTableId('Agent')],
-    },
-    {
-      name: 'UniqueEntityModule',
-      root: true,
-      args: [resolveTableId('Doors')],
     },
     {
       name: 'UniqueEntityModule',

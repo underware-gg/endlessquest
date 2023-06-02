@@ -121,16 +121,6 @@ export function createSystemCalls(
     const result = storeCache.tables.Chamber.get({ coord })
     // console.warn(`BRIDGED_CHAMBER = `, result)
     //
-    // store Doors
-    chamberData.doors.forEach(async (door, dir) => {
-      await worldSend('setDoor', [
-        coord,
-        door,
-        dir,
-        chamberData.locks[dir],  // locked
-      ])
-    })
-    //
     // store Tiles
     let gemPos = { gridX: 0, gridY: 0 }
     const tilemap = ethers.utils.arrayify(chamberData.tilemap)

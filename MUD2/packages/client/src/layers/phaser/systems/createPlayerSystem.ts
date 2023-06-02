@@ -59,7 +59,8 @@ export function createPlayerSystem(layer: PhaserLayer) {
     const query = runQuery([Has(Tiles), HasValue(Position, position)])
     query.forEach((entity) => {
       const tile = getComponentValueStrict(Tiles, entity)
-      console.log(`CRAWLER: Clicked tile:`, position, tile)
+      const door = getComponentValueStrict(Door, entity)
+      console.log(`CRAWLER: Clicked tile:`, position, tile, door)
       if (tile.tileType != 0 && !_playerHasSpawned()) {
         console.log(`CRAWLER: Spawn at click!`)
         spawn(position.x, position.y)

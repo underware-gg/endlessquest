@@ -6,7 +6,7 @@ import { useEffect } from 'react'
 export const TestBridge = () => {
   const {
     networkLayer: {
-      components: { Counter, Doors, Tiles },
+      components: { Counter, Tiles },
       systemCalls: { increment, decrement, bridge_tokenId, bridge_chamber },
       singletonEntity, storeCache,
     }
@@ -42,7 +42,6 @@ export const TestBridge = () => {
   // DoorSystem, TilesSystem
   //
   // query by VALUE
-  const doors = useEntityQuery([HasValue(Doors, { coord })]) ?? []
   const tiles = useEntityQuery([HasValue(Tiles, { terrain: chamberData?.value?.terrain })]) ?? []
 
   return (
@@ -82,11 +81,6 @@ export const TestBridge = () => {
 
       <hr />
       <div>seed: {seed ?? '?'}</div>
-      <div>doors: {
-        [...doors].map(id => {
-          const data = getComponentValueStrict(Doors, id)
-          return <span key={`_${id}`}>{data.index},</span>
-        })}</div>
 
       <div>tiles: {
         [...tiles].map(id => {

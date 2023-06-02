@@ -92,25 +92,6 @@ export function defineContractComponents(world: World) {
         }
       );
     })(),
-    Doors: (() => {
-      const tableId = new TableId("", "Doors");
-      return defineComponent(
-        world,
-        {
-          coord: RecsType.BigInt,
-          index: RecsType.Number,
-          dir: RecsType.Number,
-          locked: RecsType.Boolean,
-          nextCoord: RecsType.BigInt,
-        },
-        {
-          metadata: {
-            contractId: tableId.toHexString(),
-            tableId: tableId.toString(),
-          },
-        }
-      );
-    })(),
     Agent: (() => {
       const tableId = new TableId("", "Agent");
       return defineComponent(

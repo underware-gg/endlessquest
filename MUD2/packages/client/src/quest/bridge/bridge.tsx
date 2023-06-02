@@ -57,7 +57,7 @@ export interface CoordToChamberDataResult {
   // Stored on Tiles table
   bitmap: bigint
   tilemap: string
-  // Stored on Doors table
+  // Stored on Door table
   doors: number[]
   locks: boolean[]
   // name: string
