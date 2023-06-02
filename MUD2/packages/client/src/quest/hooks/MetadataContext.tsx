@@ -12,16 +12,31 @@ import promptMetadata, { MetadataType, PromptMetadataOptions } from '../openai/p
 //--------------------------------
 // Constants
 //
+export enum ContentType {
+  Metadata = 'metadata',
+  Url = 'url',
+}
+
 export const initialState = {
-  [MetadataType.None]: {}, // required by MetadataStateType
-  [MetadataType.Realm]: {},
-  [MetadataType.Chamber]: {},
-  [MetadataType.Agent]: {},
-  [MetadataType.Player]: {},
+  [ContentType.Metadata]: {
+    [MetadataType.None]: {}, // required by MetadataStateType
+    [MetadataType.Realm]: {},
+    [MetadataType.Chamber]: {},
+    [MetadataType.Agent]: {},
+    [MetadataType.Player]: {},
+  },
+  [ContentType.Url]: {
+    [MetadataType.None]: {}, // required by MetadataStateType
+    [MetadataType.Realm]: {},
+    [MetadataType.Chamber]: {},
+    [MetadataType.Agent]: {},
+    [MetadataType.Player]: {},
+  },
 }
 
 const MetadataActions = {
   SET_METADATA: 'SET_METADATA',
+  SET_URL: 'SET_URL',
 }
 
 //--------------------------------
@@ -35,8 +50,10 @@ enum StatusType {
 }
 
 type MetadataStateType = {
-  [type in MetadataType]: {
-    [key: string]: StatusType
+  [content in ContentType]: {
+    [type in MetadataType]: {
+      [key: string]: StatusType
+    }
   }
 }
 
@@ -47,9 +64,11 @@ type PayloadType = {
   key: KeyType,
   status: StatusType,
   metadata?: string | null,
+  url?: string | null,
 }
 type ActionType =
   | { type: 'SET_METADATA', payload: PayloadType }
+  | { type: 'SET_URL', payload: PayloadType }
 
 
 
@@ -75,39 +94,57 @@ const MetadataProvider = ({
   children,
   systemCalls,
 }: MetadataProviderProps) => {
-  const { setChamberMetadata, setRealmMetadata, setAgentMetadata } = systemCalls
+  const {
+    setChamberMetadata, setRealmMetadata, setAgentMetadata,
+    setChamberProfileImage, setAgentProfileImage,
+  } = systemCalls
 
   const [state, dispatch] = useReducer((state: MetadataStateType, action: ActionType) => {
-    const { type, key, status, metadata } = action.payload
+    const { type, key, status, metadata, url } = action.payload
     const _key = key.toString()
     let newState = { ...state }
     switch (action.type) {
-      case MetadataActions.SET_METADATA: {
-        const currentStatus = state[type][_key]
+      case MetadataActions.SET_METADATA:
+      case MetadataActions.SET_URL:
+        const content = action.type == MetadataActions.SET_METADATA ? ContentType.Metadata : ContentType.Url
+        const currentStatus = state[content][type][_key]
         if (status != currentStatus) {
-          newState[type] = {
-            ...state[type],
+          newState[content][type] = {
+            ...state[content][type],
             [_key]: status,
           }
           if (status == StatusType.Success && metadata) {
             try {
-              const _meta = JSON.stringify(metadata)
-              if (_meta == '{}') throw (`Empty metadata {}`)
-              if (type == MetadataType.Chamber) {
-                setChamberMetadata(key, _meta)
-              } else if (type == MetadataType.Realm) {
-                setRealmMetadata(key, _meta)
-              } else if (type == MetadataType.Agent) {
-                setAgentMetadata(key, _meta)
+              if (content == ContentType.Metadata) {
+                const _meta = JSON.stringify(metadata)
+                if (_meta == '{}') throw (`Empty metadata {}`)
+                if (type == MetadataType.Chamber) {
+                  setChamberMetadata(key, _meta)
+                } else if (type == MetadataType.Realm) {
+                  setRealmMetadata(key, _meta)
+                } else if (type == MetadataType.Agent) {
+                  setAgentMetadata(key, _meta)
+                } else {
+                  throw (`Invalid metadata type ${type}`)
+                }
+              } else {
+                if (type == MetadataType.Chamber) {
+                  setChamberProfileImage(key, url)
+                  // } else if (type == MetadataType.Realm) {
+                  //   setRealmProfileImage(key, url)
+                } else if (type == MetadataType.Agent) {
+                  setAgentProfileImage(key, url)
+                } else {
+                  throw (`Invalid metadata type ${type}`)
+                }
               }
             } catch (e) {
-              console.warn(`MetadataContext [${type}][${_key}] exception:`, e)
-              newState[type][_key] = StatusType.Error
+              console.warn(`MetadataContext metadata.[${type}][${_key}] exception:`, e)
+              newState[content][type][_key] = StatusType.Error
             }
           }
         }
         break
-      }
       default:
         console.warn(`MetadataProvider: Unknown action [${action.type}]`)
         return state
@@ -131,7 +168,7 @@ export { MetadataProvider, MetadataContext, MetadataActions }
 
 
 //--------------------------------
-// Dispatches
+// Metadata Dispatches
 //
 
 const useRequestGenericMetadata = (
@@ -196,8 +233,9 @@ const useRequestGenericMetadata = (
   }
 }
 
-
-
+//
+// Realm Metadata
+//
 export const useRequestRealmMetadata = (coord: bigint) => {
   const { networkLayer: { storeCache } } = useMUD()
 
@@ -239,6 +277,9 @@ export const useRequestRealmMetadata = (coord: bigint) => {
   )
 }
 
+//
+// Chamber Metadata
+//
 export const useRequestChamberMetadata = (coord: bigint) => {
   const { networkLayer: { storeCache } } = useMUD()
 
@@ -280,6 +321,9 @@ export const useRequestChamberMetadata = (coord: bigint) => {
   )
 }
 
+//
+// Agent Metadata
+//
 export const useRequestAgentMetadata = (agentEntity: Entity | undefined) => {
   const { networkLayer: { components: { Agent, Metadata } } } = useMUD()
 
@@ -325,8 +369,11 @@ export const useRequestAgentMetadata = (agentEntity: Entity | undefined) => {
 }
 
 
+
+
+
 //--------------------------------
-// Hooks
+// Generic Hooks
 //
 
 export const useMetadataContext = () => {
@@ -334,9 +381,9 @@ export const useMetadataContext = () => {
   return state
 }
 
-export const useMetadataStatus = (type: MetadataType, key: KeyType | undefined) => {
+const useStatus = (content: ContentType, type: MetadataType, key: KeyType | undefined) => {
   const { state } = useContext(MetadataContext)
-  const status = key ? state[type][key.toString()] : 0
+  const status = key ? state[content][type][key.toString()] : 0
   return {
     isUnknown: (!status),
     isFetching: (status === StatusType.Fetching),
@@ -344,6 +391,14 @@ export const useMetadataStatus = (type: MetadataType, key: KeyType | undefined) 
     isError: (status === StatusType.Error),
   }
 }
+
+export const useMetadataStatus = (type: MetadataType, key: KeyType | undefined) => {
+  return useStatus(ContentType.Metadata, type, key)
+}
+
+//--------------------------------
+// Metadata Hooks
+//
 
 export const useChamberMetadata = (coord: bigint, type: MetadataType = MetadataType.Chamber) => {
   const { networkLayer: { storeCache } } = useMUD()
@@ -367,8 +422,6 @@ export const useRealmMetadata = (coord: bigint) => {
 
 export const useAgentMetadata = (agentEntity: Entity | undefined) => {
   const { networkLayer: { components: { Metadata } } } = useMUD()
-
-  // const entity = useMemo(() => normalizeEntityID(agentEntity ?? '0'), [agentEntity])
 
   const { isUnknown, isFetching, isError, isSuccess } = useMetadataStatus(MetadataType.Agent, agentEntity)
 
