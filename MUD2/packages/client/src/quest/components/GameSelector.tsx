@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useRealm } from '../hooks/useRealm'
-import { GameUI } from './GameUI'
 import { Container, Grid, Row, Col } from './Grid'
+import { useSettingsContext, SettingsActions } from '../hooks/SettingsContext'
 
 interface RealmButtonProps {
   coord: bigint,
@@ -49,17 +49,19 @@ export const RealmButton = ({
 }
 
 export const GameSelector = () => {
-  const [selectedCoord, setSelectedCoord] = useState(0n)
+  const { dispatch } = useSettingsContext()
 
-  // hide when selected
-  if (selectedCoord > 0n) {
-    return <GameUI />
+  const _selectedCoord = (coord: bigint) => {
+    dispatch({
+      type: SettingsActions.SET_REALM_COORD,
+      payload: coord,
+    })
   }
 
   return (
     <div className='FadedCover WithMouse'>
       <Container className='FillParent'>
-        <RealmButton coord={1n} onClick={setSelectedCoord} />
+        <RealmButton coord={1n} onClick={_selectedCoord} />
       </Container>
     </div>
   )

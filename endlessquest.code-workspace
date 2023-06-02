@@ -19,8 +19,8 @@
     },
     "search.exclude": {
       "**/codegen": true,
-      "**/package-lock.yaml": true,
-      "**/pnpm-lock.json": true,
+      "**/package-lock.*": true,
+      "**/pnpm-lock.*": true,
       "/yarn.lock": true,
       "/yarn-error.log": true,
     },

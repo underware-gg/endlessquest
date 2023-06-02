@@ -5,9 +5,11 @@ import { normalizeEntityID } from '@latticexyz/network'
 import { useMUD } from '../../store'
 import { useBridgeContext, useBridgeToken, useBridgeChamber, useBridgeRealm } from '../hooks/BridgeContext'
 import { useRequestChamberMetadata, useRequestRealmMetadata, useRequestAgentMetadata } from '../hooks/MetadataContext'
+import { useSettingsContext } from '../hooks/SettingsContext'
 import * as Crawl from '../bridge/Crawl'
 
 export const Loader = () => {
+  const { realmCoord } = useSettingsContext()
   const { realms, tokens, chambers } = useBridgeContext()
 
   const loaders = useMemo(() => {
@@ -27,8 +29,8 @@ export const Loader = () => {
     return result
   }, [realms.length, tokens.length, chambers.length])
 
-  // force bridge Realm #1
-  useBridgeRealm(1n)
+  // force bridge selected Realm
+  useBridgeRealm(realmCoord)
 
   // force bridge token #1
   useBridgeToken(1n)

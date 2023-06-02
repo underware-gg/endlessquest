@@ -1,12 +1,14 @@
+import { useSettingsContext } from '../hooks/SettingsContext'
 import { useRealm } from '../hooks/useRealm'
 
 export const RealmLocation = () => {
+  const { realmCoord } = useSettingsContext()
 
   const {
     metadata,
     metadataIsFetching,
     url,
-  } = useRealm(1n)
+  } = useRealm(realmCoord)
 
   return (
     <div>

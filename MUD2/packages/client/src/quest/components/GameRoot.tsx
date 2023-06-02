@@ -1,9 +1,19 @@
 import { useComponentValue } from '@latticexyz/react'
 import { SyncState } from '@latticexyz/network'
 import { useMUD } from '../../store'
-import { GameSelector } from './GameSelector'
+import { SettingsProvider, useSettingsContext } from '../hooks/SettingsContext'
 import { BridgeProvider } from '../hooks/BridgeContext'
 import { MetadataProvider } from '../hooks/MetadataContext'
+import { GameSelector } from './GameSelector'
+import { GameUI } from './GameUI'
+
+const _GameRoot = () => {
+  const { realmCoord } = useSettingsContext()
+  if (realmCoord == 0n) {
+    return <GameSelector />
+  }
+  return <GameUI />
+}
 
 export const GameRoot = () => {
 
@@ -20,13 +30,16 @@ export const GameRoot = () => {
     percentage: 0,
   })
 
+
   if (loadingState.state !== SyncState.LIVE) return <></>
 
   return (
-    <BridgeProvider systemCalls={systemCalls}>
-      <MetadataProvider systemCalls={systemCalls}>
-        <GameSelector />
-      </MetadataProvider>
-    </BridgeProvider>
+    <SettingsProvider>
+      <BridgeProvider systemCalls={systemCalls}>
+        <MetadataProvider systemCalls={systemCalls}>
+          <_GameRoot />
+        </MetadataProvider>
+      </BridgeProvider>
+    </SettingsProvider>
   )
 }
