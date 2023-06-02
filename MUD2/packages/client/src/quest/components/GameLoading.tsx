@@ -29,8 +29,8 @@ export const GameLoading = () => {
           {loadingState.msg}
         </div>
         <div className='GameLoadingBar'>
-          {Math.floor(loadingState.percentage)}%
           <Loading percentage={loadingState.percentage} />
+          {Math.floor(loadingState.percentage)}%
         </div>
       </div>
     </div>

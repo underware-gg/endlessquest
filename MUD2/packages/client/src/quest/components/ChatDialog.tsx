@@ -53,26 +53,29 @@ export const ChatDialog = ({
   const canSubmit = (!isRequesting && prompt.length > 0)
 
   return (
-    <div>
+    <>
       <div className='ClearCover' onClick={() => onChat(false)} />
-      <div className='ChatDialog'>
 
-        <div className='ChatContent'>
-          {topics}
-          {isRequesting &&
-            <div>
-              {history.length > 0 && _makeTopic('prompt', ChatCompletionRequestMessageRoleEnum.User, prompt)}
-              <ChatRequest prompt={prompt} previousHistory={history} onDone={_onDone} agentMetadata={agentMetadata} />
-            </div>
-          }
+      <div className='FullScreen CenteredContainer'>
+        <div className='ChatDialog'>
+
+          <div className='ChatContent'>
+            {topics}
+            {isRequesting &&
+              <div>
+                {history.length > 0 && _makeTopic('prompt', ChatCompletionRequestMessageRoleEnum.User, prompt)}
+                <ChatRequest prompt={prompt} previousHistory={history} onDone={_onDone} agentMetadata={agentMetadata} />
+              </div>
+            }
+          </div>
+
+          <div className='ChatInputRow'>
+            <input disabled={isRequesting} className='ChatInput' value={prompt} onChange={(e) => setPrompt(e.target.value)}></input>
+            <button disabled={!canSubmit} className='ChatSubmit' onClick={() => _submit()}>Submit</button>
+          </div>
+
         </div>
-
-        <div className='ChatInputRow'>
-          <input disabled={isRequesting} className='ChatInput' value={prompt} onChange={(e) => setPrompt(e.target.value)}></input>
-          <button disabled={!canSubmit} className='ChatSubmit' onClick={() => _submit()}>Submit</button>
-        </div>
-
       </div>
-    </div>
+    </>
   )
 }

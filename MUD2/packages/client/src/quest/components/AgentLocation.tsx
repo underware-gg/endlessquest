@@ -5,15 +5,13 @@ import { usePlayer } from '../hooks/usePlayer'
 import { useAgent } from '../hooks/useAgent'
 import { useEffect, useMemo } from 'react'
 import { useRequestAgentMetadata } from '../hooks/MetadataContext'
+import { useSettingsContext } from '../hooks/SettingsContext'
 
 
 export const AgentLocation = ({
   onChat = (e: boolean, name: string, description: string) => { },
 }) => {
-  // const {
-  //   components: { Position, Location },
-  //   network: { playerEntity },
-  // } = useMUD()
+  const { anim } = useSettingsContext()
 
   const {
     agentEntity,
@@ -45,9 +43,12 @@ export const AgentLocation = ({
   }, [canChat])
 
   return (
-    <div>
-      <div className='AgentLocation'>
+    <>
+      <div className='ChamberImage'>
+        <img className='FillParent' src={url ?? anim} />
+      </div>
 
+      <div className='ChamberLocation'>
         <h3>Encounter</h3>
         <p className='Important'>{metadataIsFetching ? 'dreaming...' : (metadata?.name ?? 'come closer...')}</p>
         <p>{metadataIsFetching ? 'don\'t move!' : (metadata?.description ?? '?')}</p>
@@ -64,15 +65,7 @@ export const AgentLocation = ({
           {/* <div>Worth: {worth ?? '?'}</div> */}
           <button className='ChatButton' disabled={!canChat} onClick={() => onChat(true, metadata?.name, metadata ? JSON.stringify(metadata) : '')}>CHAT</button>
         </div>
-
       </div>
-
-      {url &&
-        <div className='AgentLocation'>
-          <img className='FillParent' src={url ?? ''} />
-        </div>
-      }
-
-    </div>
+    </>
   )
 }

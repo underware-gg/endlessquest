@@ -71,9 +71,9 @@ export function createPlayerSystem(layer: PhaserLayer) {
           console.log(`CRAWLER: Spawn at click!`)
           spawnAtPosition(position.x, position.y)
         } else {
-          moveToPosition(position.x, position.y)
-          _moveGhostTo(position)
-          _ghost.setVisible(true)
+          // moveToPosition(position.x, position.y)
+          // _moveGhostTo(position)
+          // _ghost.setVisible(true)
         }
       }
     })

@@ -1,10 +1,8 @@
+import { useSettingsContext } from '../hooks/SettingsContext'
 import { useChamber } from '../hooks/useChamber'
 
 export const ChamberLocation = () => {
-  // const {
-  //   components: { Position, Location },
-  //   network: { playerEntity },
-  // } = useMUD()
+  const { anim } = useSettingsContext()
 
   const {
     coord,
@@ -22,9 +20,12 @@ export const ChamberLocation = () => {
   } = useChamber()
 
   return (
-    <div>
-      <div className='ChamberLocation'>
+    <>
+      <div className='ChamberImage'>
+        <img className='FillParent' src={url ?? anim} />
+      </div>
 
+      <div className='ChamberLocation'>
         <h3>Location</h3>
         <p className='Important'>{metadataIsFetching ? 'dreaming...' : (metadata?.name ?? '?')}</p>
         <p>{metadataIsFetching ? '...' : (metadata?.description ?? '?')}</p>
@@ -40,12 +41,6 @@ export const ChamberLocation = () => {
           {/* <div>Url: {url?.slice(0, 20) ?? '?'}</div> */}
         </div>
       </div>
-
-      {url &&
-        <div className='ChamberLocation'>
-          <img className='FillParent' src={url} />
-        </div>
-      }
-    </div>
+    </>
   )
 }

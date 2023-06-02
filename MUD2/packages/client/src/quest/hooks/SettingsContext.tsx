@@ -10,6 +10,8 @@ import React, { ReactNode, createContext, useReducer, useContext, useEffect } fr
 //
 export const initialState = {
   realmCoord: 0n,
+  logo: 'https://raw.githubusercontent.com/funDAOmental/endlessquest/main/Assets/logos/EndlessQuest-frames/page_01.png',
+  anim: 'https://raw.githubusercontent.com/funDAOmental/endlessquest/main/Assets/logos/EndlessQuest-logo4-optimised.gif',
 }
 
 const SettingsActions = {
@@ -21,6 +23,8 @@ const SettingsActions = {
 //
 type SettingsStateType = {
   realmCoord: bigint,
+  logo: string,
+  anim: string,
 }
 
 type ActionType =

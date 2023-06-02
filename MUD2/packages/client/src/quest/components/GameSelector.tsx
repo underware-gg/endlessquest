@@ -12,6 +12,8 @@ export const RealmButton = ({
   coord = 0n,
   onClick,
 }: RealmButtonProps) => {
+  const { logo } = useSettingsContext()
+
   const {
     realmExists,
     metadata,
@@ -32,7 +34,7 @@ export const RealmButton = ({
     <Grid className='SelectRealmBox'>
       <Row>
         <Col span={4} className='UI' onClick={() => _clicked()}>
-          <img className='FillParent' src={url ?? 'https://github.com/funDAOmental/endlessquest/blob/main/Assets/logos/EndlessQuest-frames/page_01.png?raw=true'} />
+          <img className='FillParent' src={url ?? logo} />
         </Col>
         <Col span={8} className='UI' onClick={() => _clicked()}>
           {metadata &&

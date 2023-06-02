@@ -27,8 +27,8 @@ export const PlayerLocation = () => {
   return (
     <div className='PlayerLocation'>
       <h3>Player</h3>
-      <div>Id: {name ?? '?'}</div>
-      <div>Level: {level ?? '?'}</div>
+      {/* <div>Id: {name ?? '?'}</div> */}
+      {/* <div>Level: {level ?? '?'}</div> */}
 
       <div className='Infos'>
         <div>World Position: {position?.x ?? '?'},{position?.y ?? '?'}</div>
