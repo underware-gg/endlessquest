@@ -48,7 +48,7 @@ contract AgentSystem is System {
     Metadata.set(key, data);
   }
 
-  function setAgentProfileImage(bytes32 key, string memory url) public {
+  function setAgentArtUrl(bytes32 key, string memory url) public {
     MetadataData memory data = Metadata.get(key);
     data.url = url;
     Metadata.set(key, data);

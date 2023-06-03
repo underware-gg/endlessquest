@@ -55,7 +55,7 @@ contract ChamberSystem is System {
     ChamberMetadata.set(coord, data);
   }
 
-  function setChamberProfileImage(uint256 coord, string memory url) public {
+  function setChamberArtUrl(uint256 coord, string memory url) public {
     ChamberMetadataData memory data = ChamberMetadata.get(coord);
     data.url = url;
     ChamberMetadata.set(coord, data);

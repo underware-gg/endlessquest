@@ -24,7 +24,7 @@ contract RealmSystem is System {
     ChamberMetadata.set(coord, data);
   }
 
-  function setRealmProfileImage(uint256 coord, string memory url) public {
+  function setRealmArtUrl(uint256 coord, string memory url) public {
     ChamberMetadataData memory data = ChamberMetadata.get(coord);
     data.url = url;
     ChamberMetadata.set(coord, data);

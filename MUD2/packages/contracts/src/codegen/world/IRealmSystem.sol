@@ -8,5 +8,5 @@ interface IRealmSystem {
 
   function setRealmMetadata(uint256 coord, string memory metadata) external;
 
-  function setRealmProfileImage(uint256 coord, string memory url) external;
+  function setRealmArtUrl(uint256 coord, string memory url) external;
 }

@@ -4,7 +4,10 @@ import { HasValue, Entity } from '@latticexyz/recs'
 import { normalizeEntityID } from '@latticexyz/network'
 import { useMUD } from '../../store'
 import { useBridgeContext, useBridgeToken, useBridgeChamber, useBridgeRealm } from '../hooks/BridgeContext'
-import { useRequestChamberMetadata, useRequestRealmMetadata, useRequestAgentMetadata } from '../hooks/MetadataContext'
+import {
+  useRequestChamberMetadata, useRequestRealmMetadata, useRequestAgentMetadata,
+  useRequestRealmArtUrl,
+} from '../hooks/MetadataContext'
 import { useSettingsContext } from '../hooks/SettingsContext'
 import * as Crawl from '../bridge/Crawl'
 
@@ -58,13 +61,14 @@ export const RealmLoader = ({
 
   useBridgeRealm(coord)
 
-  // request Realm metadata
-  const { isSuccess, isError, isFetching } = useRequestRealmMetadata(coord)
+  const { isSuccess: metaIsSuccess, isError: metaIsError, isFetching: metaIsFetching } = useRequestRealmMetadata(coord)
+  const { isSuccess: urlIsSuccess, isError: urlIsError, isFetching: urlIsFetching } = useRequestRealmArtUrl(coord)
 
   return (
     <div>
       Realm(<span>{coord.toString() ?? '?'}) </span>
-      {isSuccess ? '.' : isError ? '?' : isFetching ? 'm' : 'M'}
+      {metaIsSuccess ? '.' : metaIsError ? '?' : metaIsFetching ? 'm' : 'M'}
+      {urlIsSuccess ? '.' : urlIsError ? '?' : urlIsFetching ? 'i' : 'I'}
     </div>
   )
 }

@@ -229,17 +229,26 @@ export function createSystemCalls(
     }
   }
 
-  const setChamberProfileImage = (coord: bigint, url: string) => {
+  //---------------------------
+  // Art Url
+  //
+  const setRealmArtUrl = (coord: bigint, url: string) => {
     if (coord && url) {
-      console.warn(`STORE CHAMBER IMAGE URL @`, coord, url)
-      worldSend('setChamberProfileImage', [coord, url])
+      console.warn(`STORE REALM IMAGE URL @`, coord, url)
+      worldSend('setRealmArtUrl', [coord, url])
     }
   }
-  const setAgentProfileImage = (entity: Entity, url: string) => {
+  const setChamberArtUrl = (coord: bigint, url: string) => {
+    if (coord && url) {
+      console.warn(`STORE CHAMBER IMAGE URL @`, coord, url)
+      worldSend('setChamberArtUrl', [coord, url])
+    }
+  }
+  const setAgentArtUrl = (entity: Entity, url: string) => {
     if (entity && url) {
       const id = _entityToBytes32(entity)
       console.warn(`STORE AGENT IMAGE URL @`, id, url)
-      worldSend('setAgentProfileImage', [id, url])
+      worldSend('setAgentArtUrl', [id, url])
     }
   }
 
@@ -269,8 +278,10 @@ export function createSystemCalls(
     setRealmMetadata,
     setChamberMetadata,
     setAgentMetadata,
-    setChamberProfileImage,
-    setAgentProfileImage,
+    // Art url
+    setRealmArtUrl,
+    setChamberArtUrl,
+    setAgentArtUrl,
     // Player
     spawnAtPosition,
     moveToDirection,

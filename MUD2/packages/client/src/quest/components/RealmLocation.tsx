@@ -2,7 +2,7 @@ import { useSettingsContext } from '../hooks/SettingsContext'
 import { useRealm } from '../hooks/useRealm'
 
 export const RealmLocation = () => {
-  const { realmCoord, logo } = useSettingsContext()
+  const { realmCoord, anim } = useSettingsContext()
 
   const {
     metadata,
@@ -13,7 +13,7 @@ export const RealmLocation = () => {
   return (
     <>
       <div className='RealmImage'>
-        <img className='FillParent' src={url ? url : logo} />
+        <img className='FillParent' src={url ? url : anim} />
       </div>
 
       <div className='RealmLocation'>

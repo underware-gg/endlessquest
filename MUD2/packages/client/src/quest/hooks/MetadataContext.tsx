@@ -2,7 +2,9 @@ import React, { ReactNode, createContext, useReducer, useContext, useEffect, use
 import { useRow, useComponentValue } from '@latticexyz/react'
 import { Entity } from '@latticexyz/recs'
 import { useMUD } from '../../store'
-import promptMetadata, { MetadataType, PromptMetadataOptions } from '../openai/promptMetadata'
+import promptMetadata, { MetadataType, PromptMetadataOptions, PromptMetadataResponse } from '../openai/promptMetadata'
+import { generateImage, ImageOptions, ImageResponse, ImageSize } from '../openai/generateImage'
+import { PromptAgentResponse } from '../openai/promptChat'
 
 //
 // React + Typescript + Context
@@ -35,8 +37,7 @@ export const initialState = {
 }
 
 const MetadataActions = {
-  SET_METADATA: 'SET_METADATA',
-  SET_URL: 'SET_URL',
+  SET: 'SET',
 }
 
 //--------------------------------
@@ -60,6 +61,7 @@ type MetadataStateType = {
 type KeyType = bigint | Entity
 
 type PayloadType = {
+  content: ContentType,
   type: MetadataType,
   key: KeyType,
   status: StatusType,
@@ -67,8 +69,7 @@ type PayloadType = {
   url?: string | null,
 }
 type ActionType =
-  | { type: 'SET_METADATA', payload: PayloadType }
-  | { type: 'SET_URL', payload: PayloadType }
+  | { type: 'SET', payload: PayloadType }
 
 
 
@@ -96,26 +97,25 @@ const MetadataProvider = ({
 }: MetadataProviderProps) => {
   const {
     setChamberMetadata, setRealmMetadata, setAgentMetadata,
-    setChamberProfileImage, setAgentProfileImage,
+    setChamberArtUrl, setRealmArtUrl, setAgentArtUrl,
   } = systemCalls
 
   const [state, dispatch] = useReducer((state: MetadataStateType, action: ActionType) => {
-    const { type, key, status, metadata, url } = action.payload
+    const { content, type, key, status, metadata, url } = action.payload
+    console.log(`____CONTEXT IMAGE META`, content, type, key, status, metadata, url)
     const _key = key.toString()
     let newState = { ...state }
     switch (action.type) {
-      case MetadataActions.SET_METADATA:
-      case MetadataActions.SET_URL:
-        const content = action.type == MetadataActions.SET_METADATA ? ContentType.Metadata : ContentType.Url
+      case MetadataActions.SET:
         const currentStatus = state[content][type][_key]
         if (status != currentStatus) {
           newState[content][type] = {
             ...state[content][type],
             [_key]: status,
           }
-          if (status == StatusType.Success && metadata) {
+          if (status == StatusType.Success) {
             try {
-              if (content == ContentType.Metadata) {
+              if (content == ContentType.Metadata && metadata) {
                 const _meta = JSON.stringify(metadata)
                 if (_meta == '{}') throw (`Empty metadata {}`)
                 if (type == MetadataType.Chamber) {
@@ -127,13 +127,13 @@ const MetadataProvider = ({
                 } else {
                   throw (`Invalid metadata type ${type}`)
                 }
-              } else {
+              } else if (content == ContentType.Url && url) {
                 if (type == MetadataType.Chamber) {
-                  setChamberProfileImage(key, url)
-                  // } else if (type == MetadataType.Realm) {
-                  //   setRealmProfileImage(key, url)
+                  setChamberArtUrl(key, url)
+                } else if (type == MetadataType.Realm) {
+                  setRealmArtUrl(key, url)
                 } else if (type == MetadataType.Agent) {
-                  setAgentProfileImage(key, url)
+                  setAgentArtUrl(key, url)
                 } else {
                   throw (`Invalid metadata type ${type}`)
                 }
@@ -167,63 +167,81 @@ export { MetadataProvider, MetadataContext, MetadataActions }
 
 
 
+
+
 //--------------------------------
-// Metadata Dispatches
+// Generic Requests
 //
 
 const useRequestGenericMetadata = (
+  content: ContentType,
   type: MetadataType,
   key: KeyType,
-  currentMetadata: any,
-  options: PromptMetadataOptions,
-  _parseResult: (matadata: any) => any | null) => {
+  currentValue: string | null,
+  options: PromptMetadataOptions | ImageOptions,
+  _parseResult: ((matadata: any) => any | null) | null) => {
   const { dispatch } = useContext(MetadataContext)
-  const { isUnknown, isFetching, isError, isSuccess } = useMetadataStatus(type, key)
+  const { isUnknown, isFetching, isError, isSuccess } = useStatus(content, type, key)
+  const isMetadata = content == ContentType.Metadata
 
   useEffect(() => {
     let payload: PayloadType = {
+      content,
       type,
       key,
       status: StatusType.Unknown,
       metadata: null,
+      url: null,
     }
 
     const _generate = async () => {
       payload.status = StatusType.Fetching
       dispatch({
-        type: MetadataActions.SET_METADATA,
+        type: MetadataActions.SET,
         payload,
       })
-      const response = await promptMetadata(options)
+      const response = isMetadata ? 
+        await promptMetadata(options as PromptMetadataOptions)
+        : await generateImage(options as ImageOptions)
 
+      payload.status = StatusType.Unknown
+      
       if (response.error) {
         payload.status = StatusType.Error
-      } else if (response.metadata) {
-        payload.metadata = _parseResult(response.metadata)
-        payload.status = payload.metadata ? StatusType.Success : StatusType.Error
+      } else if (isMetadata) {
+        const resp = response as PromptMetadataResponse
+        if (resp.metadata) {
+          payload.metadata = _parseResult?.(resp.metadata)
+          payload.status = payload.metadata ? StatusType.Success : StatusType.Error
+        }
       } else {
-        payload.status = StatusType.Unknown
+        const resp = response as ImageResponse
+        if (resp.url) {
+          payload.url = resp.url
+          payload.status = payload.url ? StatusType.Success : StatusType.Error
+        }
       }
 
       dispatch({
-        type: MetadataActions.SET_METADATA,
+        type: MetadataActions.SET,
         payload,
       })
     }
 
     if (isUnknown && key !== 0n && key != '') {
-      if (currentMetadata === '') {
+      if (currentValue === '') {
         _generate()
-      } else if (currentMetadata && currentMetadata.length > 0) {
+      } else if (currentValue && currentValue.length > 0) {
+        console.log(`____UPDATE CONTEXT IMAGE META`, content, type, key, currentValue)
         payload.status = StatusType.Success
         dispatch({
-          type: MetadataActions.SET_METADATA,
+          type: MetadataActions.SET,
           payload,
         })
       }
     }
 
-  }, [isUnknown, currentMetadata])
+  }, [isUnknown, currentValue])
 
   return {
     isUnknown,
@@ -232,6 +250,11 @@ const useRequestGenericMetadata = (
     isError,
   }
 }
+
+
+//--------------------------------
+// Metadata Requests
+//
 
 //
 // Realm Metadata
@@ -245,7 +268,7 @@ export const useRequestRealmMetadata = (coord: bigint) => {
   const realm = useMemo(() => (realmRow?.value ?? null), [realmRow])
   const metadata = useMemo(() => (metadataRow?.value?.metadata ?? null), [metadataRow])
 
-  useEffect(() => { console.log(`REALM META:`, coord, realm, metadata) }, [coord, realm, metadata])
+  useEffect(() => { console.log(`REALM META:`, coord, realm, `[${metadata}]`) }, [coord, realm, metadata])
 
   const options: PromptMetadataOptions = {
     type: MetadataType.Realm,
@@ -269,6 +292,7 @@ export const useRequestRealmMetadata = (coord: bigint) => {
   }
 
   return useRequestGenericMetadata(
+    ContentType.Metadata,
     MetadataType.Realm,
     coord,
     realm ? metadata : null,
@@ -289,7 +313,7 @@ export const useRequestChamberMetadata = (coord: bigint) => {
   const chamber = useMemo(() => (chamberRow?.value ?? null), [chamberRow])
   const metadata = useMemo(() => (metadataRow?.value?.metadata ?? null), [metadataRow])
 
-  useEffect(() => { console.log(`CHAMBER META:`, chamber?.tokenId, metadata) }, [chamber, metadata])
+  useEffect(() => { console.log(`CHAMBER META:`, chamber?.tokenId, `[${metadata}]`) }, [chamber, metadata])
 
   const options: PromptMetadataOptions = useMemo(() => ({
     type: MetadataType.Chamber,
@@ -313,6 +337,7 @@ export const useRequestChamberMetadata = (coord: bigint) => {
   }
 
   return useRequestGenericMetadata(
+    ContentType.Metadata,
     MetadataType.Chamber,
     coord,
     chamber ? metadata : null,
@@ -341,7 +366,7 @@ export const useRequestAgentMetadata = (agentEntity: Entity | undefined) => {
     yonder: agent?.yonder ?? null,
   }), [agent])
 
-  useEffect(() => { console.log(`AGENT META:`, agentEntity, agent, metadata) }, [agentEntity, agent, metadata])
+  useEffect(() => { console.log(`AGENT META:`, agentEntity, agent, `[${metadata}]`) }, [agentEntity, agent, metadata])
 
   const _parseResult = (responseMetadata: any): any | null => {
     const agentMetadata = responseMetadata.npc ?? responseMetadata.chamber?.npc ?? null
@@ -360,6 +385,7 @@ export const useRequestAgentMetadata = (agentEntity: Entity | undefined) => {
   }
 
   return useRequestGenericMetadata(
+    ContentType.Metadata,
     MetadataType.Agent,
     agentEntity ?? ('' as Entity),
     agent ? metadata : null,
@@ -369,6 +395,50 @@ export const useRequestAgentMetadata = (agentEntity: Entity | undefined) => {
 }
 
 
+
+
+
+//--------------------------------
+// Art url Requests
+//
+
+//
+// Realm Art
+//
+export const useRequestRealmArtUrl = (coord: bigint) => {
+  const { networkLayer: { storeCache } } = useMUD()
+
+  const metadataRow = useRow(storeCache, { table: 'ChamberMetadata', key: { coord } })
+  const metadata = useMemo(() => (metadataRow?.value?.metadata ?? null), [metadataRow])
+  const url = useMemo(() => (metadataRow?.value?.url ?? null), [metadataRow])
+
+  const prompt = useMemo(() => {
+    if (metadata && url === '') {
+      const meta = JSON.parse(metadata)
+      if (meta.name) {
+        return `${meta.name}, ${meta.description}`
+      }
+    }
+    return ''
+  }, [metadata, url])
+
+  // @ts-ignore
+  useEffect(() => { console.log(`REALM ART URL IMAGE:`, coord, prompt, `[${url}]`) }, [prompt, url])
+
+  const options: ImageOptions = {
+    prompt,
+    size: ImageSize.Medium,
+  }
+
+  return useRequestGenericMetadata(
+    ContentType.Url,
+    MetadataType.Realm,
+    coord,
+    (prompt || url) ? url : null,
+    options,
+    null
+  )
+}
 
 
 
@@ -396,13 +466,22 @@ export const useMetadataStatus = (type: MetadataType, key: KeyType | undefined) 
   return useStatus(ContentType.Metadata, type, key)
 }
 
+export const useArtUrlStatus = (type: MetadataType, key: KeyType | undefined) => {
+  return useStatus(ContentType.Url, type, key)
+}
+
+
 //--------------------------------
 // Metadata Hooks
 //
 
+export const useRealmMetadata = (coord: bigint) => {
+  return useChamberMetadata(coord, MetadataType.Realm)
+}
+
 export const useChamberMetadata = (coord: bigint, type: MetadataType = MetadataType.Chamber) => {
-  const { networkLayer: { storeCache } } = useMUD()
   const { isUnknown, isFetching, isError, isSuccess } = useMetadataStatus(type, coord)
+  const { networkLayer: { storeCache } } = useMUD()
 
   const metadataRow = useRow(storeCache, { table: 'ChamberMetadata', key: { coord } })
   const metadata = useMemo(() => (metadataRow?.value?.metadata ?? null), [metadataRow])
@@ -416,14 +495,9 @@ export const useChamberMetadata = (coord: bigint, type: MetadataType = MetadataT
   }
 }
 
-export const useRealmMetadata = (coord: bigint) => {
-  return useChamberMetadata(coord, MetadataType.Realm)
-}
-
 export const useAgentMetadata = (agentEntity: Entity | undefined) => {
-  const { networkLayer: { components: { Metadata } } } = useMUD()
-
   const { isUnknown, isFetching, isError, isSuccess } = useMetadataStatus(MetadataType.Agent, agentEntity)
+  const { networkLayer: { components: { Metadata } } } = useMUD()
 
   const metadataData = useComponentValue(Metadata, agentEntity) ?? null
   const metadata = useMemo(() => (metadataData?.metadata ?? null), [metadataData])
@@ -434,5 +508,45 @@ export const useAgentMetadata = (agentEntity: Entity | undefined) => {
     isSuccess,
     isError,
     metadata: metadata ? JSON.parse(metadata) : {},
+  }
+}
+
+//--------------------------------
+// Art Url Hooks
+//
+
+export const useRealmArtUrl = (coord: bigint) => {
+  return useChamberArtUrl(coord, MetadataType.Realm)
+}
+
+export const useChamberArtUrl = (coord: bigint, type: MetadataType = MetadataType.Chamber) => {
+  const { isUnknown, isFetching, isError, isSuccess } = useArtUrlStatus(type, coord)
+  const { networkLayer: { storeCache } } = useMUD()
+
+  const metadataRow = useRow(storeCache, { table: 'ChamberMetadata', key: { coord } })
+  const url = useMemo(() => (metadataRow?.value?.url ?? null), [metadataRow])
+
+  return {
+    isUnknown,
+    isFetching,
+    isSuccess,
+    isError,
+    url,
+  }
+}
+
+export const useAgentArtUrl = (agentEntity: Entity | undefined) => {
+  const { isUnknown, isFetching, isError, isSuccess } = useArtUrlStatus(MetadataType.Agent, agentEntity)
+  const { networkLayer: { components: { Metadata } } } = useMUD()
+
+  const metadataData = useComponentValue(Metadata, agentEntity) ?? null
+  const url = useMemo(() => (metadataData?.url ?? null), [metadataData])
+
+  return {
+    isUnknown,
+    isFetching,
+    isSuccess,
+    isError,
+    url,
   }
 }

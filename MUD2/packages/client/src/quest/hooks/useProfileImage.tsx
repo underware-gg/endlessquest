@@ -24,7 +24,7 @@ export const useAgentProfileImage = (agentEntity: Entity | undefined) => {
     networkLayer: {
       components: { Agent, Metadata },
       systemCalls: {
-        setAgentProfileImage,
+        setAgentArtUrl,
       },
     }
   } = useMUD()
@@ -50,7 +50,7 @@ export const useAgentProfileImage = (agentEntity: Entity | undefined) => {
 
   useEffect(() => {
     if (agentEntity && agent && generatedUrl && !url) {
-      setAgentProfileImage(agentEntity, generatedUrl)
+      setAgentArtUrl(agentEntity, generatedUrl)
     }
   }, [agent, generatedUrl])
 
@@ -67,7 +67,7 @@ export const useChamberProfileImage = (coord: bigint) => {
   const {
     networkLayer: {
       systemCalls: {
-        setChamberProfileImage,
+        setChamberArtUrl,
       },
       storeCache,
     }
@@ -98,7 +98,7 @@ export const useChamberProfileImage = (coord: bigint) => {
 
   useEffect(() => {
     if (chamber && generatedUrl && !url) {
-      setChamberProfileImage(coord, generatedUrl)
+      setChamberArtUrl(coord, generatedUrl)
     }
   }, [chamber, generatedUrl])
 
@@ -111,43 +111,43 @@ export const useChamberProfileImage = (coord: bigint) => {
 //---------------------
 // Realms ProfileImage
 //
-export const useRealmProfileImage = (coord: bigint) => {
-  const {
-    networkLayer: {
-      systemCalls: {
-        setChamberProfileImage,
-      },
-      storeCache,
-    }
-  } = useMUD()
+// export const useRealmProfileImage = (coord: bigint) => {
+//   const {
+//     networkLayer: {
+//       systemCalls: {
+//         setChamberArtUrl,
+//       },
+//       storeCache,
+//     }
+//   } = useMUD()
 
-  const metadataRow = useRow(storeCache, { table: 'ChamberMetadata', key: { coord } })
-  const metadata = useMemo(() => (metadataRow?.value?.metadata ?? null), [metadataRow])
-  const url = useMemo(() => (metadataRow?.value?.url ?? null), [metadataRow])
+//   const metadataRow = useRow(storeCache, { table: 'ChamberMetadata', key: { coord } })
+//   const metadata = useMemo(() => (metadataRow?.value?.metadata ?? null), [metadataRow])
+//   const url = useMemo(() => (metadataRow?.value?.url ?? null), [metadataRow])
 
-  // @ts-ignore
-  useEffect(() => { console.log(`REALM IMAGE:`, coord, metadata?.name ?? null, url) }, [url])
+//   // @ts-ignore
+//   useEffect(() => { console.log(`REALM IMAGE:`, coord, metadata?.name ?? null, url) }, [url])
 
-  const prompt = useMemo(() => {
-    if (metadata && url == '') {
-      const meta = JSON.parse(metadata)
-      return `${meta.name}, ${meta.description}`
-    }
-    return null
-  }, [metadata, url])
-  const { isWaiting, url: generatedUrl } = useProfileImage(prompt)
+//   const prompt = useMemo(() => {
+//     if (metadata && url == '') {
+//       const meta = JSON.parse(metadata)
+//       return `${meta.name}, ${meta.description}`
+//     }
+//     return null
+//   }, [metadata, url])
+//   const { isWaiting, url: generatedUrl } = useProfileImage(prompt)
 
-  useEffect(() => { console.log(`REALM IMAGE GENERATED:`, isWaiting, generatedUrl) }, [generatedUrl])
+//   useEffect(() => { console.log(`REALM IMAGE GENERATED:`, isWaiting, generatedUrl) }, [generatedUrl])
 
-  useEffect(() => {
-    if (generatedUrl && url == '') {
-      setChamberProfileImage(coord, generatedUrl)
-    }
-  }, [generatedUrl])
+//   useEffect(() => {
+//     if (generatedUrl && url == '') {
+//       setChamberArtUrl(coord, generatedUrl)
+//     }
+//   }, [generatedUrl])
 
-  return {
-    isWaiting: (isWaiting && !metadata),
-    url: url,
-  }
-}
+//   return {
+//     isWaiting: (isWaiting && !metadata),
+//     url: url,
+//   }
+// }
 
