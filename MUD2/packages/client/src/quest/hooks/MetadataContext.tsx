@@ -4,7 +4,7 @@ import { Entity } from '@latticexyz/recs'
 import { useMUD } from '../../store'
 import promptMetadata, { MetadataType, PromptMetadataOptions, PromptMetadataResponse } from '../openai/promptMetadata'
 import { generateImage, ImageOptions, ImageResponse, ImageSize } from '../openai/generateImage'
-import { PromptAgentResponse } from '../openai/promptChat'
+import { prompts } from '../prompts/prompts'
 
 //
 // React + Typescript + Context
@@ -102,7 +102,7 @@ const MetadataProvider = ({
 
   const [state, dispatch] = useReducer((state: MetadataStateType, action: ActionType) => {
     const { content, type, key, status, metadata, url } = action.payload
-    console.log(`____CONTEXT IMAGE META`, content, type, key, status, metadata, url)
+    // console.log(`____CONTEXT IMAGE META`, content, type, key, status, metadata, url)
     const _key = key.toString()
     let newState = { ...state }
     switch (action.type) {
@@ -232,7 +232,6 @@ const useRequestGenericMetadata = (
       if (currentValue === '') {
         _generate()
       } else if (currentValue && currentValue.length > 0) {
-        console.log(`____UPDATE CONTEXT IMAGE META`, content, type, key, currentValue)
         payload.status = StatusType.Success
         dispatch({
           type: MetadataActions.SET,
@@ -440,6 +439,86 @@ export const useRequestRealmArtUrl = (coord: bigint) => {
   )
 }
 
+//
+// Chamber Art
+//
+export const useRequestChamberArtUrl = (coord: bigint) => {
+  const { networkLayer: { storeCache } } = useMUD()
+
+  const metadataRow = useRow(storeCache, { table: 'ChamberMetadata', key: { coord } })
+  const metadata = useMemo(() => (metadataRow?.value?.metadata ?? null), [metadataRow])
+  const url = useMemo(() => (metadataRow?.value?.url ?? null), [metadataRow])
+
+  const prompt = useMemo(() => {
+    if (metadata && url === '') {
+      const meta = JSON.parse(metadata)
+      if (meta.description) {
+        const pertype = prompts.chamberPrompts[meta?.terrain ?? 0] ?? ''
+        return `${pertype} ${meta.description}`
+      }
+    }
+    return ''
+  }, [metadata, url])
+
+  // @ts-ignore
+  useEffect(() => { console.log(`CHAMBER ART URL IMAGE:`, coord, prompt, `[${url}]`) }, [prompt, url])
+
+  const options: ImageOptions = {
+    prompt,
+    size: ImageSize.Medium,
+  }
+
+  return useRequestGenericMetadata(
+    ContentType.Url,
+    MetadataType.Chamber,
+    coord,
+    (prompt || url) ? url : null,
+    options,
+    null
+  )
+}
+
+//
+// Agent Art
+//
+export const useRequestAgentArtUrl = (agentEntity: Entity) => {
+  const {
+    networkLayer: {
+      components: { Agent, Metadata },
+    }
+  } = useMUD()
+
+  const agent = useComponentValue(Agent, agentEntity)
+  const metadataData = useComponentValue(Metadata, agentEntity)
+  const metadata = metadataData?.metadata ?? null
+  const url = metadataData?.url ?? null
+
+  const prompt = useMemo(() => {
+    if (agent && metadata && !url) {
+      const meta = JSON.parse(metadata)
+      return `A watercolor portrait of a maritime figure, digital neon art, luminescent deep sea creatures: ${meta.description} nautical steampunk art, watercolor marine landscape, vintage nautical charts`
+      // return `${meta.name}, ${meta.description}`
+    }
+    return ''
+  }, [metadata, url])
+
+  // @ts-ignore
+  useEffect(() => { console.log(`AGENT ART URL IMAGE:`, url) }, [url])
+
+  const options: ImageOptions = {
+    prompt,
+    size: ImageSize.Medium,
+  }
+
+  return useRequestGenericMetadata(
+    ContentType.Url,
+    MetadataType.Agent,
+    agentEntity,
+    (prompt || url) ? url : null,
+    options,
+    null
+  )
+}
 
 
 //--------------------------------

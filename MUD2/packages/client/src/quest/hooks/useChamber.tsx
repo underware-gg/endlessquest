@@ -5,8 +5,7 @@ import { useMUD } from '../../store'
 import { useCoord } from './useCoord'
 import { usePlayer } from './usePlayer'
 import { GemNames } from '../bridge/Crawl'
-import { useChamberProfileImage } from './useProfileImage'
-import { useChamberMetadata } from './MetadataContext'
+import { useChamberMetadata, useChamberArtUrl } from './MetadataContext'
 
 export const useChamber = () => {
   const {
@@ -24,7 +23,7 @@ export const useChamber = () => {
 
   const { metadata, isFetching: metadataIsFetching, isError: metadataIsError } = useChamberMetadata(coord ?? 0n)
 
-  const { url } = useChamberProfileImage(coord ?? 0n)
+  const { url } = useChamberArtUrl(coord ?? 0n)
 
   return {
     coord: coord ?? null,

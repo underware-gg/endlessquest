@@ -4,8 +4,7 @@ import { Entity } from '@latticexyz/recs'
 import { useMUD } from '../../store'
 import { useCoord } from './useCoord'
 import { GemNames } from '../bridge/Crawl'
-import { useAgentMetadata } from './MetadataContext'
-import { useAgentProfileImage } from './useProfileImage'
+import { useAgentMetadata, useAgentArtUrl } from './MetadataContext'
 
 export const useAgent = (agentEntity: Entity | undefined) => {
   const {
@@ -19,8 +18,8 @@ export const useAgent = (agentEntity: Entity | undefined) => {
 
   const { metadata, isFetching: metadataIsFetching, isError: metadataIsError } = useAgentMetadata(agentEntity)
 
-  const { url } = useAgentProfileImage(agentEntity)
-
+  const { url } = useAgentArtUrl(agentEntity ?? '0' as Entity)
+ 
   // useEffect(() => { console.log(`____USE_AGENT:`, agentEntity, typeof agentEntity, agent, metadata) }, [agentEntity, agent, metadata])
 
   return {

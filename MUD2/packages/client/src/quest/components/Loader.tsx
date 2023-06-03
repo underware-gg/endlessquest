@@ -5,8 +5,8 @@ import { normalizeEntityID } from '@latticexyz/network'
 import { useMUD } from '../../store'
 import { useBridgeContext, useBridgeToken, useBridgeChamber, useBridgeRealm } from '../hooks/BridgeContext'
 import {
-  useRequestChamberMetadata, useRequestRealmMetadata, useRequestAgentMetadata,
-  useRequestRealmArtUrl,
+  useRequestRealmMetadata, useRequestChamberMetadata, useRequestAgentMetadata,
+  useRequestRealmArtUrl, useRequestChamberArtUrl, useRequestAgentArtUrl,
 } from '../hooks/MetadataContext'
 import { useSettingsContext } from '../hooks/SettingsContext'
 import * as Crawl from '../bridge/Crawl'
@@ -138,8 +138,11 @@ export const ChamberLoader = ({
 
   const slug = Crawl.coordToSlug(coord)
 
-  const { isFetching: chamberIsFetching, isError: chamberIsError, isSuccess: chamberIsSuccess } = useRequestChamberMetadata(coord)
-  const { isFetching: agentIsFetching, isError: agentIsError, isSuccess: agentIsSuccess } = useRequestAgentMetadata(agentEntity)
+  const { isSuccess: chamberIsSuccess, isError: chamberIsError, isFetching: chamberIsFetching } = useRequestChamberMetadata(coord)
+  const { isSuccess: agentIsSuccess, isError: agentIsError, isFetching: agentIsFetching } = useRequestAgentMetadata(agentEntity)
+
+  const { isSuccess: chamberArtIsSuccess, isError: chamberArtIsError, isFetching: chamberArtIsFetching } = useRequestChamberArtUrl(coord)
+  const { isSuccess: agentArtIsSuccess, isError: agentArtIsError, isFetching: agentArtIsFetching } = useRequestAgentArtUrl(agentEntity)
 
   return (
     <div>
@@ -147,10 +150,10 @@ export const ChamberLoader = ({
       {Boolean(seed) ? '.' : 'C'}
       {tiles.length == 400 ? '.' : tiles.length > 0 ? 't' : 'T'}
       {chamberIsSuccess ? '.' : chamberIsError ? '?' : chamberIsFetching ? 'm': 'M'}
-      {false ? '.' : 'I'}
+      {chamberArtIsSuccess ? '.' : chamberArtIsError ? '?' : chamberArtIsFetching ? 'i' : 'I'}
       {' | '}
       {agentIsSuccess ? '.' : agentIsError ? '?' : agentIsFetching ? 'm' : 'M'}
-      {false ? '.' : 'I'}
+      {agentArtIsSuccess ? '.' : agentArtIsError ? '?' : agentArtIsFetching ? 'i' : 'I'}
     </div>
   )
 }
