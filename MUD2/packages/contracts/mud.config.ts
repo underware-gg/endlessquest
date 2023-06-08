@@ -135,12 +135,7 @@ export default mudConfig({
     {
       name: 'UniqueEntityModule',
       root: true,
-      args: [resolveTableId('Agent')],
-    },
-    {
-      name: 'UniqueEntityModule',
-      root: true,
-      args: [resolveTableId('Tile')],
+      args: [],
     },
     {
       name: 'KeysWithValueModule',
