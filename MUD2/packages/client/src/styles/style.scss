@@ -251,6 +251,15 @@ canvas {
   height: calc(80px - 0.25em);
 }
 
+.RoomLoader {
+  @extend .UI;
+  width: $ui-chamber-size;
+  height: 100px;
+  position: absolute;
+  bottom: 0;
+  left: $ui-chamber-size;
+}
+
 
 //---------------
 // Full screeners
