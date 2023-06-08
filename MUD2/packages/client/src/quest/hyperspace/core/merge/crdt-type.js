@@ -127,9 +127,10 @@ export const createTypeMetadata = (type) => {
   }
 }
 
-//
+//---------------------------------
 // transient data types
 // no need to persist between sessions
+//
 
 export const player = {
   position: {
@@ -153,8 +154,9 @@ export const editor = {
 }
 
 
-// 
+//---------------------------------
 // persistent data types
+// 
 
 // key: agentId or profileId (nanoid)
 export const profile = {
@@ -301,7 +303,43 @@ export const document = {
   content: 'string',
 }
 
+//---------------------------------
+// Endless Quest
+//
+
+// key: 'number', the Realm nunmber
+export const questRealm = {
+  metadata: 'string',
+  artUrl: 'string',
+  name: 'string',
+  description: 'description',
+}
+// key: 'chamberSlug', like N1E1, S1W1, etc
+export const questChamber = {
+  metadata: 'string',
+  artUrl: 'string',
+  name: 'string',
+  description: 'description',
+}
+// key: 'chamberSlug', like N1E1, S1W1, etc
+export const questAgent = {
+  metadata: 'string',
+  artUrl: 'string',
+  name: 'string',
+  description: 'description',
+}
+// key: 'timestamp', from Date.now()
+export const questMessages = {
+  realm: 'number',    // realm number > questRealm
+  chamber: 'string',  // chamber slug > questChamber, questAgent
+  player: 'string',   // player wallet address on MUD
+  messages: 'string', // serialized OpenAI messages array
+}
+
+
+//---------------------------------
 // deprecated
+//
 // key: book id (nanoid)
 export const book = {
   position: {
@@ -312,6 +350,10 @@ export const book = {
   text: 'string',
 }
 
+
+//---------------------------------
+// deprecated
+//
 export const typeDefs = {
   // transient
   player: createTypeMetadata(player),
@@ -327,6 +369,11 @@ export const typeDefs = {
   permission: createTypeMetadata(permission),
   trigger: createTypeMetadata(trigger),
   document: createTypeMetadata(document),
+  // endless quest
+  questRealm: createTypeMetadata(questRealm),
+  questChamber: createTypeMetadata(questChamber),
+  questAgent: createTypeMetadata(questAgent),
+  questMessages: createTypeMetadata(questMessages),
   // deprecated
   map: createTypeMetadata(map),
   book: createTypeMetadata(book),
