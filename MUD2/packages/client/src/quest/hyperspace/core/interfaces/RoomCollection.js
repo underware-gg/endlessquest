@@ -28,11 +28,11 @@ class RoomCollection extends RoomMate {
   }
 
   // @ts-ignore
-  upsert(id, newData, checkPermission = false) {
+  upsert(id, newData) {
     if (id == null) return
-    let data = this.remoteStore.getDocument(this.type, id)
+    let data = this.remoteStore.getDocument(this.type, id) ?? {}
     data = {
-      ...(data ?? {}),
+      ...data,
       ...newData,
     }
     this.remoteStore.setDocument(this.type, id, data)

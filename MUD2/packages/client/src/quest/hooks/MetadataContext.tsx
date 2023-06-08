@@ -4,7 +4,9 @@ import { Entity } from '@latticexyz/recs'
 import { useMUD } from '../../store'
 import promptMetadata, { MetadataType, PromptMetadataOptions, PromptMetadataResponse } from '../openai/promptMetadata'
 import { generateImage, ImageOptions, ImageResponse, ImageSize } from '../openai/generateImage'
+import { useHyperspaceContext } from '../hyperspace/hooks/HyperspaceContext'
 import { prompts } from '../prompts/prompts'
+import { questChamber } from '../hyperspace/core/merge/crdt-type'
 
 //
 // React + Typescript + Context
@@ -95,6 +97,7 @@ const MetadataProvider = ({
   children,
   systemCalls,
 }: MetadataProviderProps) => {
+  const { QuestRealm, QuestChamber, QuestAgent } = useHyperspaceContext()
   const {
     setChamberMetadata, setRealmMetadata, setAgentMetadata,
     setChamberArtUrl, setRealmArtUrl, setAgentArtUrl,
@@ -118,20 +121,24 @@ const MetadataProvider = ({
               if (content == ContentType.Metadata && metadata) {
                 const _meta = JSON.stringify(metadata)
                 if (_meta == '{}') throw (`Empty metadata {}`)
-                if (type == MetadataType.Chamber) {
-                  setChamberMetadata(key, _meta)
-                } else if (type == MetadataType.Realm) {
+                if (type == MetadataType.Realm) {
                   setRealmMetadata(key, _meta)
+                  QuestRealm.updateRealmMetadata(key, metadata)
+                } else if (type == MetadataType.Chamber) {
+                  setChamberMetadata(key, _meta)
+                  QuestChamber.updateChamberMetadata(key, metadata)
                 } else if (type == MetadataType.Agent) {
                   setAgentMetadata(key, _meta)
                 } else {
                   throw (`Invalid metadata type ${type}`)
                 }
               } else if (content == ContentType.Url && url) {
-                if (type == MetadataType.Chamber) {
-                  setChamberArtUrl(key, url)
-                } else if (type == MetadataType.Realm) {
+                if (type == MetadataType.Realm) {
                   setRealmArtUrl(key, url)
+                  QuestRealm.updateRealmArtUrl(key, url)
+                } else if (type == MetadataType.Chamber) {
+                  setChamberArtUrl(key, url)
+                  QuestChamber.updateChamberArtUrl(key, url)
                 } else if (type == MetadataType.Agent) {
                   setAgentArtUrl(key, url)
                 } else {

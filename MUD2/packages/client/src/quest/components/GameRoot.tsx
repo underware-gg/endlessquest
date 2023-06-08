@@ -2,6 +2,7 @@ import { useComponentValue } from '@latticexyz/react'
 import { SyncState } from '@latticexyz/network'
 import { useMUD } from '../../store'
 import { SettingsProvider, useSettingsContext } from '../hooks/SettingsContext'
+import { HyperspaceProvider } from '../hyperspace/hooks/HyperspaceContext'
 import { BridgeProvider } from '../hooks/BridgeContext'
 import { MetadataProvider } from '../hooks/MetadataContext'
 import { GameSelector } from './GameSelector'
@@ -36,12 +37,14 @@ export const GameRoot = () => {
 
   return (
     <SettingsProvider>
-      <BridgeProvider systemCalls={systemCalls}>
-        <MetadataProvider systemCalls={systemCalls}>
-          <_GameRoot />
-          <Room />
-        </MetadataProvider>
-      </BridgeProvider>
+      <HyperspaceProvider>
+        <BridgeProvider systemCalls={systemCalls}>
+          <MetadataProvider systemCalls={systemCalls}>
+            <_GameRoot />
+            <Room />
+          </MetadataProvider>
+        </BridgeProvider>
+      </HyperspaceProvider>
     </SettingsProvider>
   )
 }

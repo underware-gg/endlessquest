@@ -1,6 +1,6 @@
 import * as ClientRoom from './networking'
 import Screen from './components/screen'
-import Tileset from './components/tileset'
+import QuestMetadata from './components/questMetadata'
 import Store from './store'
 
 let _roomCounter = 0
@@ -40,7 +40,9 @@ class Room {
     if (this.slug) {
       // instantiate components before this.clientRoom.init() to listen to snapshot loading events
       this.Screen = new Screen(this)
-      this.Tileset = new Tileset(this)
+      this.QuestRealm = new QuestMetadata(this, 'questRealm')
+      this.QuestChamber = new QuestMetadata(this, 'questChamber')
+      this.QuestAgent = new QuestMetadata(this, 'questAgent')
     }
 
     this.clientRoom?.init({

@@ -101,6 +101,6 @@ export const compassToSlug = (compass: Compass, separator = true): string => {
   return result
 }
 
-export const coordToSlug = (coord: bigint): string => {
-  return compassToSlug(coordToCompass(coord))
+export const coordToSlug = (coord: bigint, separator = true): string => {
+  return compassToSlug(coordToCompass(coord), separator)
 }
