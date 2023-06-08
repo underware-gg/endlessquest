@@ -27,7 +27,7 @@ export const ChamberLocation = () => {
 
       <div className='ChamberLocation'>
         <h3>Location</h3>
-        <p className='Important'>{metadataIsFetching ? 'dreaming...' : (metadata?.name ?? '?')}</p>
+        <p className='Importanter'>{metadataIsFetching ? 'dreaming...' : (metadata?.name ?? '?')}</p>
         <p>{metadataIsFetching ? '...' : (metadata?.description ?? '?')}</p>
 
         <div className='Infos'>

@@ -50,7 +50,7 @@ export const AgentLocation = ({
 
       <div className='ChamberLocation'>
         <h3>Encounter</h3>
-        <p className='Important'>{metadataIsFetching ? 'dreaming...' : (metadata?.name ?? 'come closer...')}</p>
+        <p className='Importanter'>{metadataIsFetching ? 'dreaming...' : (metadata?.name ?? 'come closer...')}</p>
         <p>{metadataIsFetching ? 'don\'t move!' : (metadata?.description ?? '?')}</p>
 
         <div className='Infos'>

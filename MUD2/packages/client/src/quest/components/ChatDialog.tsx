@@ -38,7 +38,7 @@ export const ChatDialog = ({
     const className = isAgent ? 'AgentTopic' : 'UserTopic'
     return (
       <div key={key} className={className}>
-        <div className='Important'>{isAgent ? agentName : playerName}</div>
+        <div className='Importanter'>{isAgent ? agentName : playerName}</div>
         <div>{content}</div>
       </div>
     )

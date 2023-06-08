@@ -18,7 +18,7 @@ export const RealmLocation = () => {
 
       <div className='RealmLocation'>
         <h3>Realm</h3>
-        <p className='Important'>{metadataIsFetching ? 'dreaming...' : (metadata?.name ?? '?')}</p>
+        <p className='Importanter'>{metadataIsFetching ? 'dreaming...' : (metadata?.name ?? '?')}</p>
         <p>{metadataIsFetching ? '...' : (metadata?.description ?? '?')}</p>
       </div>
     </>

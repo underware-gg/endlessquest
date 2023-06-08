@@ -18,7 +18,7 @@ html, body {
 }
 
 h1, h2, h3, h4, h5 {
-  line-height: 1em;
+  line-height: 1.1em;
   margin: 0.2em;
 }
 
@@ -45,7 +45,19 @@ canvas {
 
 .Important {
   color: $important;
+}
+
+.Importanter {
+  color: $important;
   font-size: 1.3rem;
+}
+
+.Red {
+  color: #f44;
+}
+
+.Green {
+  color: #4f4;
 }
 
 .NoMouse {
@@ -83,6 +95,10 @@ canvas {
   display: flex;
 }
 
+.Block {
+  display: block !important;
+}
+
 .Relative {
   position: relative;
 }
@@ -92,6 +108,11 @@ canvas {
   top: 0;
   left: 0;
 }
+
+.Padded {
+  padding: 0.5em !important;
+}
+
 
 .NoPadding {
   padding: 0 !important;
@@ -128,8 +149,16 @@ canvas {
 //-----------------------------
 // <GameSelector>
 //
+.SelectRealmContainer {
+  width: 600px !important;
+}
+.SelectRealmInfo {
+  @extend .CenteredContainer;
+  width: 600px !important;
+  height: 80px;
+}
 .SelectRealmBox {
-  width: 600px;
+  width: 600px !important;
   height: 200px;
 }
 

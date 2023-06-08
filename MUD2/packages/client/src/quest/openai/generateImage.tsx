@@ -3,6 +3,7 @@ import {
   OpenAIApi,
 } from 'openai'
 import Cookies from 'universal-cookie'
+import { Keys } from './keys'
 
 const cookies = new Cookies()
 
@@ -12,29 +13,14 @@ const cookies = new Cookies()
 
 let _openai: OpenAIApi
 
-function _create(apiKey: string, organization: string | undefined) {
+function _create(apiKey: string | undefined, organization: string | undefined) {
   const configuration = new Configuration({
-    apiKey,
-    organization,
+    apiKey: apiKey ?? cookies.get(Keys.OPENAI_API_KEY),
+    organization: organization ?? cookies.get(Keys.OPENAI_ORG_ID),
   })
   _openai = new OpenAIApi(configuration)
 }
 
-// let _apiKey = ''
-let _apiKey = cookies.get('OPENAI_API_KEY')
-let _orgID = cookies.get('OPENAI_ORG_ID')
-if (!_apiKey?.length) {
-  cookies.set('OPENAI_API_KEY', '', { path: '/' })
-  _apiKey = import.meta.env.OPENAI_API_KEY
-}
-if (!_orgID?.length) {
-  cookies.set('OPENAI_ORG_ID', '', { path: '/' })
-  _orgID = import.meta.env.OPENAI_ORG_ID
-}
-
-if (_apiKey?.length > 0 && _orgID?.length > 0) {
-  _create(_apiKey, _orgID)
-}
 
 //-----------------------
 // Types
@@ -50,6 +36,7 @@ export interface ImageOptions {
   prompt: string
   size: ImageSize,
   apiKey?: string
+  orgId?: string
 }
 
 export interface ImageResponse {
@@ -64,8 +51,8 @@ export interface ImageResponse {
 export async function generateImage(options: ImageOptions): Promise<ImageResponse> {
 
   // use user key
-  if (options.apiKey && !_openai) {
-    _create(options.apiKey, undefined)
+  if (!_openai) {
+    _create(options.apiKey, options.orgId)
   }
 
   // cerate client
