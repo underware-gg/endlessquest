@@ -1,12 +1,13 @@
 import React, { ReactNode, createContext, useReducer, useContext, useEffect, useMemo } from 'react'
 import { useRow, useComponentValue } from '@latticexyz/react'
 import { Entity } from '@latticexyz/recs'
+import { normalizeEntityID } from '@latticexyz/network'
 import { useMUD } from '../../store'
 import promptMetadata, { MetadataType, PromptMetadataOptions, PromptMetadataResponse } from '../openai/promptMetadata'
 import { generateImage, ImageOptions, ImageResponse, ImageSize } from '../openai/generateImage'
 import { useHyperspaceContext } from '../hyperspace/hooks/HyperspaceContext'
 import { prompts } from '../prompts/prompts'
-import { questChamber } from '../hyperspace/core/merge/crdt-type'
+import { agentToCoord } from '../utils'
 
 //
 // React + Typescript + Context
@@ -91,17 +92,20 @@ const MetadataContext = createContext<{
 //
 interface MetadataProviderProps {
   children: string | JSX.Element | JSX.Element[] | ReactNode
-  systemCalls: any,
+  networkLayer: any,
 }
 const MetadataProvider = ({
   children,
-  systemCalls,
+  networkLayer,
 }: MetadataProviderProps) => {
   const { QuestRealm, QuestChamber, QuestAgent } = useHyperspaceContext()
   const {
-    setChamberMetadata, setRealmMetadata, setAgentMetadata,
-    setChamberArtUrl, setRealmArtUrl, setAgentArtUrl,
-  } = systemCalls
+    systemCalls: {
+      setChamberMetadata, setRealmMetadata, setAgentMetadata,
+      setChamberArtUrl, setRealmArtUrl, setAgentArtUrl,
+    },
+    storeCache,
+  } = networkLayer
 
   const [state, dispatch] = useReducer((state: MetadataStateType, action: ActionType) => {
     const { content, type, key, status, metadata, url } = action.payload
@@ -123,24 +127,38 @@ const MetadataProvider = ({
                 if (_meta == '{}') throw (`Empty metadata {}`)
                 if (type == MetadataType.Realm) {
                   setRealmMetadata(key, _meta)
-                  QuestRealm.updateRealmMetadata(key, metadata)
+                  setTimeout(() => {
+                    QuestRealm.updateMetadataWithCoord(key, metadata)
+                  }, 100)
                 } else if (type == MetadataType.Chamber) {
                   setChamberMetadata(key, _meta)
-                  QuestChamber.updateChamberMetadata(key, metadata)
+                  setTimeout(() => {
+                    QuestChamber.updateMetadataWithSlug(key, metadata)
+                  }, 100)
                 } else if (type == MetadataType.Agent) {
                   setAgentMetadata(key, _meta)
+                  setTimeout(() => {
+                    QuestAgent.updateMetadataWithSlug(agentToCoord(storeCache, key as Entity), metadata)
+                  }, 100)
                 } else {
                   throw (`Invalid metadata type ${type}`)
                 }
               } else if (content == ContentType.Url && url) {
                 if (type == MetadataType.Realm) {
                   setRealmArtUrl(key, url)
-                  QuestRealm.updateRealmArtUrl(key, url)
+                  setTimeout(() => {
+                    QuestRealm.updateArtUrlWithCoord(key, url)
+                  }, 100)
                 } else if (type == MetadataType.Chamber) {
                   setChamberArtUrl(key, url)
-                  QuestChamber.updateChamberArtUrl(key, url)
+                  setTimeout(() => {
+                    QuestChamber.updateArtUrlWithSlug(key, url)
+                  }, 100)
                 } else if (type == MetadataType.Agent) {
                   setAgentArtUrl(key, url)
+                  setTimeout(() => {
+                    QuestAgent.updateArtUrlWithSlug(agentToCoord(storeCache, key as Entity), url)
+                  }, 100)
                 } else {
                   throw (`Invalid metadata type ${type}`)
                 }

@@ -8,8 +8,8 @@ class QuestMetadata extends RoomCollection {
   }
 
   // @ts-ignore
-  updateRealmMetadata(coord, metadata) {
-    console.log(`Hyper.updateRealmMetadata()`, coord, metadata)
+  updateMetadataWithCoord(coord, metadata) {
+    console.log(`Hyperspace.updateMetadataWithCoord(${this.type})`, coord, metadata)
     this.upsert(coord.toString(), {
       metadata: JSON.stringify(metadata),
       name: metadata?.name ?? null,
@@ -18,9 +18,9 @@ class QuestMetadata extends RoomCollection {
   }
 
   // @ts-ignore
-  updateChamberMetadata(coord, metadata) {
+  updateMetadataWithSlug(coord, metadata) {
     const slug = coordToSlug(coord, false)
-    console.log(`Hyper.updateChamberMetadata()`, slug, coord, metadata)
+    console.log(`Hyperspace.updateMetadataWithSlug(${this.type})`, slug, coord, metadata)
     this.upsert(slug, {
       metadata: JSON.stringify(metadata),
       name: metadata?.name ?? null,
@@ -29,17 +29,17 @@ class QuestMetadata extends RoomCollection {
   }
 
   // @ts-ignore
-  updateRealmArtUrl(coord, artUrl) {
-    console.log(`Hyper.updateRealmArtUrl()`, coord, artUrl)
+  updateArtUrlWithCoord(coord, artUrl) {
+    console.log(`Hyperspace.updateArtUrlWithCoord(${this.type})`, coord, artUrl)
     this.upsert(coord.toString(), {
       artUrl
     })
   }
 
   // @ts-ignore
-  updateChamberArtUrl(coord, artUrl) {
+  updateArtUrlWithSlug(coord, artUrl) {
     const slug = coordToSlug(coord, false)
-    console.log(`Hyper.updateChamberArtUrl()`, slug, coord, artUrl)
+    console.log(`Hyperspace.updateArtUrlWithSlug(${this.type})`, slug, coord, artUrl)
     this.upsert(slug, {
       artUrl
     })

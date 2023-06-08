@@ -9,15 +9,12 @@ import { awaitStreamValue } from '@latticexyz/utils'
 import { ClientComponents } from './createClientComponents'
 import { SetupNetworkResult } from './setupNetwork'
 import { Direction } from '../layers/phaser/constants'
+import { entityToBytes32 } from "../quest/utils"
 import * as Bridge from '../quest/bridge/bridge'
 import * as Crawl from '../quest/bridge/Crawl'
 import * as ethers from 'ethers'
 import Cookies from 'universal-cookie'
 import { nanoid } from 'nanoid'
-
-const _entityToBytes32 = (entity: string) => {
-  return '0x' + entity.replace('0x', '').padStart(64, '0') as `0x${string}`
-}
 
 export type SystemCalls = ReturnType<typeof createSystemCalls>
 
@@ -185,7 +182,7 @@ export function createSystemCalls(
     const agentQuery = runQuery([Has(Agent), HasValue(Position, { x: gemPos.gridX, y: gemPos.gridY })])
     console.log(`AGENT QUERY`, agentQuery)
     agentQuery.forEach(async (entity) => {
-      const key = _entityToBytes32(entity)
+      const key = entityToBytes32(entity)
       console.log(`AGENT TO CHAMBER...`, coord, entity, key)
       await worldSend('setChamberAgent', [
         coord,
@@ -220,7 +217,7 @@ export function createSystemCalls(
   }
   const setAgentMetadata = (entity: Entity, metadata: string) => {
     if (entity && metadata) {
-      const key = _entityToBytes32(entity)
+      const key = entityToBytes32(entity)
       // let stored_metadata = storeCache.tables.Metadata.get({ key })
       // if (stored_metadata == null) {
       console.warn(`STORE AGENT METADATA @`, key, metadata)
@@ -246,7 +243,7 @@ export function createSystemCalls(
   }
   const setAgentArtUrl = (entity: Entity, url: string) => {
     if (entity && url) {
-      const id = _entityToBytes32(entity)
+      const id = entityToBytes32(entity)
       console.warn(`STORE AGENT IMAGE URL @`, id, url)
       worldSend('setAgentArtUrl', [id, url])
     }

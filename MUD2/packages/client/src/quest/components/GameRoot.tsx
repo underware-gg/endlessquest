@@ -20,9 +20,10 @@ const _GameRoot = () => {
 export const GameRoot = () => {
 
   const {
+    networkLayer,
     networkLayer: {
       components: { LoadingState },
-      singletonEntity, systemCalls,
+      singletonEntity,
     }
   } = useMUD()
 
@@ -38,8 +39,8 @@ export const GameRoot = () => {
   return (
     <SettingsProvider>
       <HyperspaceProvider>
-        <BridgeProvider systemCalls={systemCalls}>
-          <MetadataProvider systemCalls={systemCalls}>
+        <BridgeProvider networkLayer={networkLayer}>
+          <MetadataProvider networkLayer={networkLayer}>
             <_GameRoot />
             <Room />
           </MetadataProvider>

@@ -52,13 +52,17 @@ const BridgeContext = createContext<{
 //
 interface BridgeProviderProps {
   children: string | JSX.Element | JSX.Element[] | ReactNode
-  systemCalls: any,
+  networkLayer: any,
 }
 const BridgeProvider = ({
   children,
-  systemCalls,
+  networkLayer,
 }: BridgeProviderProps) => {
-  const { bridge_tokenId, bridge_chamber, bridge_realm } = systemCalls
+  const {
+    systemCalls: {
+      bridge_tokenId, bridge_chamber, bridge_realm,
+    },
+  } = networkLayer
 
   const [state, dispatch] = useReducer((state: BridgeStateType, action: ActionType) => {
     let newState = { ...state }
