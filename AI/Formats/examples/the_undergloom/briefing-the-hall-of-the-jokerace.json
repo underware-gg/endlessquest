@@ -1,0 +1,17 @@
+{
+    "name": "The Hall of the Jokerace",
+    "description": "A grand, cavernous chamber, echoing with the murmurs of a thousand invisible spectators, awaiting the next witty contender. The air shimmers with the residual laughter of countless jokes, puns, and jests delivered throughout the ages.",
+    "terrain_type": "Fire",
+    "gem_type": "Ruby",
+    "npc": {
+        "name": "David, The Divine Economist",
+        "description": "An ageless entity, radiant with the accumulated wit and wisdom of countless epochs. David oversees the on-chain 'jokerace' competitions, testing the comedic mettle of any who dare step onto his stage.",
+        "behaviour_mode": "A grand mythical beast who tests if the player is worthy through a test of humor. You must come second in his on-chain 'jokerace' competition to win the Horn of Ill-Humoured Pedantry.",
+        "quirk": "Despite being a judge of humor, David himself never laughs, only chuckles in a deep, rich timbre that resonates throughout the chamber."
+    },
+    "coins": 690,
+    "yonder": 1337,
+    "realm_description": "The Undergloom is a vast, subterranean network of dank caves and danker jokes, populated with goblins, ill-gotten gold, and dangerously bad humour",
+    "realm_treasure": "The Horn of Ill-Humoured Pedantry, a great horn that when blown, will loudly and pedantically rebut any joke with a serious, tone-deaf and factual proclamation that completely ruins the joke",
+    "PC_description": "Clad in a worn-out jokester's cap and a smile that never quite reaches his eyes, our adventurer is a bard and painter by trade. Known as Logonaut, he wields a lute, a paintbrush and a sharp wit. Logonaut stands poised to prove that even in the Undergloom, laughter is the best currency."
+}
