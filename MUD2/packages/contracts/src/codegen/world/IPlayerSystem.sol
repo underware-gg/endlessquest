@@ -6,7 +6,9 @@ pragma solidity >=0.8.0;
 import { Direction } from "./../Types.sol";
 
 interface IPlayerSystem {
-  function spawn(string memory name, int32 x, int32 y) external;
+  function spawnAtPosition(string memory name, int32 x, int32 y) external;
 
-  function move(Direction direction) external;
+  function moveToDirection(Direction direction) external;
+
+  function moveToPosition(int32 x, int32 y) external;
 }

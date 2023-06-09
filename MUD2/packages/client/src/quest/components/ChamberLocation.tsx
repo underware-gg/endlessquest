@@ -1,13 +1,8 @@
-import { useComponentValue, useEntityQuery, useRow } from '@latticexyz/react';
-import { Has, HasValue, getComponentValueStrict } from '@latticexyz/recs';
-import { useMUD } from '../../store';
-import { useChamber } from '../hooks/useChamber';
+import { useSettingsContext } from '../hooks/SettingsContext'
+import { useChamber } from '../hooks/useChamber'
 
 export const ChamberLocation = () => {
-  // const {
-  //   components: { Position, Location },
-  //   network: { playerEntity },
-  // } = useMUD()
+  const { anim } = useSettingsContext()
 
   const {
     coord,
@@ -19,17 +14,21 @@ export const ChamberLocation = () => {
     coins,
     worth,
     metadata,
-    isWaiting,
+    metadataIsFetching,
+    metadataIsError,
     url,
   } = useChamber()
 
   return (
-    <div>
-      <div className='ChamberLocation'>
+    <>
+      <div className='ChamberImage'>
+        <img className='FillParent' src={url ? url : anim} />
+      </div>
 
-        <h2>Location</h2>
-        <p className='Important'>{isWaiting ? 'dreaming...' : (metadata?.name ?? '?')}</p>
-        <p>{isWaiting ? '...' : (metadata?.description ?? '?')}</p>
+      <div className='ChamberLocation'>
+        <h3>Location</h3>
+        <p className='Importanter'>{metadataIsFetching ? 'dreaming...' : (metadata?.name ?? '?')}</p>
+        <p>{metadataIsFetching ? '...' : (metadata?.description ?? '?')}</p>
 
         <div className='Infos'>
           <div>Token Id: {tokenId?.toString() ?? '?'}</div>
@@ -42,12 +41,6 @@ export const ChamberLocation = () => {
           {/* <div>Url: {url?.slice(0, 20) ?? '?'}</div> */}
         </div>
       </div>
-
-      {url &&
-        <div className='ChamberLocation'>
-          <img className='FillParent' src={url} />
-        </div>
-      }
-    </div>
+    </>
   )
 }

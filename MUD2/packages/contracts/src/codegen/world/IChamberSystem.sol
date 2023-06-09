@@ -18,7 +18,9 @@ interface IChamberSystem {
     uint16 worth
   ) external;
 
+  function setChamberAgent(uint256 coord, bytes32 agent) external;
+
   function setChamberMetadata(uint256 coord, string memory metadata) external;
 
-  function setChamberProfileImage(uint256 coord, string memory url) external;
+  function setChamberArtUrl(uint256 coord, string memory url) external;
 }

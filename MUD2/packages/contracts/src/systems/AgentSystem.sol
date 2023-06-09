@@ -39,10 +39,7 @@ contract AgentSystem is System {
     );
     Blocker.set(key, true);
     Position.set(key, gridX, gridY);
-
-    // TODO: assign agent to chamber
-    // get chamber with key: coord
-    // set agent
+    Metadata.set(key, MetadataData("", ""));
   }
 
   function setAgentMetadata(bytes32 key, string memory metadata) public {
@@ -51,7 +48,7 @@ contract AgentSystem is System {
     Metadata.set(key, data);
   }
 
-  function setAgentProfileImage(bytes32 key, string memory url) public {
+  function setAgentArtUrl(bytes32 key, string memory url) public {
     MetadataData memory data = Metadata.get(key);
     data.url = url;
     Metadata.set(key, data);

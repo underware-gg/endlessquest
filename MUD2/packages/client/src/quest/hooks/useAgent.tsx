@@ -1,11 +1,10 @@
-import { useMemo } from 'react'
+import { useMemo, useEffect } from 'react'
 import { useComponentValue } from '@latticexyz/react'
 import { Entity } from '@latticexyz/recs'
 import { useMUD } from '../../store'
 import { useCoord } from './useCoord'
 import { GemNames } from '../bridge/Crawl'
-import { useAgentMetadata } from './useMetadata'
-import { useAgentProfileImage } from './useProfileImage'
+import { useAgentMetadata, useAgentArtUrl } from './MetadataContext'
 
 export const useAgent = (agentEntity: Entity | undefined) => {
   const {
@@ -17,9 +16,11 @@ export const useAgent = (agentEntity: Entity | undefined) => {
   const agent = useComponentValue(Agent, agentEntity)
   const { compass, slug } = useCoord(agent?.coord ?? 0n)
 
-  const { metadata, isWaiting } = useAgentMetadata(agentEntity)
+  const { metadata, isFetching: metadataIsFetching, isError: metadataIsError } = useAgentMetadata(agentEntity)
 
-  const { url } = useAgentProfileImage(agentEntity)
+  const { url } = useAgentArtUrl(agentEntity ?? '0' as Entity)
+ 
+  // useEffect(() => { console.log(`____USE_AGENT:`, agentEntity, typeof agentEntity, agent, metadata) }, [agentEntity, agent, metadata])
 
   return {
     coord: agent?.coord ?? null,
@@ -33,7 +34,8 @@ export const useAgent = (agentEntity: Entity | undefined) => {
     coins: agent?.coins ?? null,
     worth: agent?.worth ?? null,
     metadata: metadata ?? null,
+    metadataIsFetching,
+    metadataIsError,
     url: url ?? null,
-    isWaiting,
   }
 }

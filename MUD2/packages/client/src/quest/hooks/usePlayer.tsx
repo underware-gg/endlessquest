@@ -1,27 +1,26 @@
-import { useMemo } from 'react';
-import { useComponentValue, useEntityQuery } from '@latticexyz/react';
-import { Has, HasValue } from "@latticexyz/recs";
-import { normalizeEntityID } from '@latticexyz/network';
-import { useMUD } from '../../store';
-import { useCoord } from './useCoord';
-import { useTile } from './useTile';
+import { useMemo } from 'react'
+import { useComponentValue } from '@latticexyz/react'
+import { Entity } from '@latticexyz/recs'
+import { useMUD } from '../../store'
+import { useCoord } from './useCoord'
+import { useTile } from './useTile'
 
 export const usePlayer = () => {
   const {
     networkLayer: {
-      components: { Player, Position, Location, Doors, Tiles },
+      components: { Player, Position, Location },
       playerEntity,
     }
   } = useMUD()
 
-  const player = useComponentValue(Player, playerEntity);
-  const position = useComponentValue(Position, playerEntity);
-  const location = useComponentValue(Location, playerEntity);
+  const player = useComponentValue(Player, playerEntity)
+  const position = useComponentValue(Position, playerEntity)
+  const location = useComponentValue(Location, playerEntity)
   const { compass, slug } = useCoord(location?.coord ?? 0n)
 
   const coord = useMemo(() => (location?.coord ?? undefined), [location])
 
-  const agentEntity = useMemo(() => (normalizeEntityID(location?.agent ?? '0')), [location])
+  const agentEntity = useMemo(() => (location?.agent ?? '0x0'), [location]) as Entity
   const agentId = useMemo(() => (BigInt(agentEntity ? agentEntity as string : 0)), [agentEntity])
 
   const { tileType, isDoor, nextCoord } = useTile(position ?? { x: 0, y: 0 })

@@ -5,7 +5,7 @@ import {
 } from '@wagmi/core'
 import { publicProvider } from '@wagmi/core/providers/public'
 import { readContract } from '@wagmi/core'
-import CrawlerToken from './CrawlerToken.json';
+import CrawlerToken from './CrawlerToken.json'
 
 //------------
 // wagmi
@@ -54,10 +54,10 @@ export interface CoordToChamberDataResult {
     coins: number
     worth: number
   }
-  // Stored on Tiles table
+  // Stored on Tile table
   bitmap: bigint
   tilemap: string
-  // Stored on Doors table
+  // Stored on Door table
   doors: number[]
   locks: boolean[]
   // name: string

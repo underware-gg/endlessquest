@@ -75,7 +75,7 @@ library Player {
   /** Get level */
   function getLevel(bytes32 key) internal view returns (uint8 level) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 0);
     return (uint8(Bytes.slice1(_blob, 0)));
@@ -84,7 +84,7 @@ library Player {
   /** Get level (using the specified store) */
   function getLevel(IStore _store, bytes32 key) internal view returns (uint8 level) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     bytes memory _blob = _store.getField(_tableId, _keyTuple, 0);
     return (uint8(Bytes.slice1(_blob, 0)));
@@ -93,7 +93,7 @@ library Player {
   /** Set level */
   function setLevel(bytes32 key, uint8 level) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     StoreSwitch.setField(_tableId, _keyTuple, 0, abi.encodePacked((level)));
   }
@@ -101,7 +101,7 @@ library Player {
   /** Set level (using the specified store) */
   function setLevel(IStore _store, bytes32 key, uint8 level) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     _store.setField(_tableId, _keyTuple, 0, abi.encodePacked((level)));
   }
@@ -109,7 +109,7 @@ library Player {
   /** Get name */
   function getName(bytes32 key) internal view returns (string memory name) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 1);
     return (string(_blob));
@@ -118,7 +118,7 @@ library Player {
   /** Get name (using the specified store) */
   function getName(IStore _store, bytes32 key) internal view returns (string memory name) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     bytes memory _blob = _store.getField(_tableId, _keyTuple, 1);
     return (string(_blob));
@@ -127,7 +127,7 @@ library Player {
   /** Set name */
   function setName(bytes32 key, string memory name) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     StoreSwitch.setField(_tableId, _keyTuple, 1, bytes((name)));
   }
@@ -135,7 +135,7 @@ library Player {
   /** Set name (using the specified store) */
   function setName(IStore _store, bytes32 key, string memory name) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     _store.setField(_tableId, _keyTuple, 1, bytes((name)));
   }
@@ -143,7 +143,7 @@ library Player {
   /** Get the length of name */
   function lengthName(bytes32 key) internal view returns (uint256) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     uint256 _byteLength = StoreSwitch.getFieldLength(_tableId, _keyTuple, 1, getSchema());
     return _byteLength / 1;
@@ -152,7 +152,7 @@ library Player {
   /** Get the length of name (using the specified store) */
   function lengthName(IStore _store, bytes32 key) internal view returns (uint256) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     uint256 _byteLength = _store.getFieldLength(_tableId, _keyTuple, 1, getSchema());
     return _byteLength / 1;
@@ -161,7 +161,7 @@ library Player {
   /** Get an item of name (unchecked, returns invalid data if index overflows) */
   function getItemName(bytes32 key, uint256 _index) internal view returns (string memory) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     bytes memory _blob = StoreSwitch.getFieldSlice(_tableId, _keyTuple, 1, getSchema(), _index * 1, (_index + 1) * 1);
     return (string(_blob));
@@ -170,7 +170,7 @@ library Player {
   /** Get an item of name (using the specified store) (unchecked, returns invalid data if index overflows) */
   function getItemName(IStore _store, bytes32 key, uint256 _index) internal view returns (string memory) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     bytes memory _blob = _store.getFieldSlice(_tableId, _keyTuple, 1, getSchema(), _index * 1, (_index + 1) * 1);
     return (string(_blob));
@@ -179,7 +179,7 @@ library Player {
   /** Push a slice to name */
   function pushName(bytes32 key, string memory _slice) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     StoreSwitch.pushToField(_tableId, _keyTuple, 1, bytes((_slice)));
   }
@@ -187,7 +187,7 @@ library Player {
   /** Push a slice to name (using the specified store) */
   function pushName(IStore _store, bytes32 key, string memory _slice) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     _store.pushToField(_tableId, _keyTuple, 1, bytes((_slice)));
   }
@@ -195,7 +195,7 @@ library Player {
   /** Pop a slice from name */
   function popName(bytes32 key) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     StoreSwitch.popFromField(_tableId, _keyTuple, 1, 1);
   }
@@ -203,7 +203,7 @@ library Player {
   /** Pop a slice from name (using the specified store) */
   function popName(IStore _store, bytes32 key) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     _store.popFromField(_tableId, _keyTuple, 1, 1);
   }
@@ -211,7 +211,7 @@ library Player {
   /** Update a slice of name at `_index` */
   function updateName(bytes32 key, uint256 _index, string memory _slice) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     StoreSwitch.updateInField(_tableId, _keyTuple, 1, _index * 1, bytes((_slice)));
   }
@@ -219,7 +219,7 @@ library Player {
   /** Update a slice of name (using the specified store) at `_index` */
   function updateName(IStore _store, bytes32 key, uint256 _index, string memory _slice) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     _store.updateInField(_tableId, _keyTuple, 1, _index * 1, bytes((_slice)));
   }
@@ -227,7 +227,7 @@ library Player {
   /** Get the full data */
   function get(bytes32 key) internal view returns (PlayerData memory _table) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     bytes memory _blob = StoreSwitch.getRecord(_tableId, _keyTuple, getSchema());
     return decode(_blob);
@@ -236,7 +236,7 @@ library Player {
   /** Get the full data (using the specified store) */
   function get(IStore _store, bytes32 key) internal view returns (PlayerData memory _table) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     bytes memory _blob = _store.getRecord(_tableId, _keyTuple, getSchema());
     return decode(_blob);
@@ -247,7 +247,7 @@ library Player {
     bytes memory _data = encode(level, name);
 
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     StoreSwitch.setRecord(_tableId, _keyTuple, _data);
   }
@@ -257,7 +257,7 @@ library Player {
     bytes memory _data = encode(level, name);
 
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     _store.setRecord(_tableId, _keyTuple, _data);
   }
@@ -303,13 +303,13 @@ library Player {
   /** Encode keys as a bytes32 array using this table's schema */
   function encodeKeyTuple(bytes32 key) internal pure returns (bytes32[] memory _keyTuple) {
     _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
   }
 
   /* Delete all data for given keys */
   function deleteRecord(bytes32 key) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     StoreSwitch.deleteRecord(_tableId, _keyTuple);
   }
@@ -317,7 +317,7 @@ library Player {
   /* Delete all data for given keys (using the specified store) */
   function deleteRecord(IStore _store, bytes32 key) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     _store.deleteRecord(_tableId, _keyTuple);
   }

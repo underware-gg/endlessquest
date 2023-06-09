@@ -11,11 +11,13 @@ import React, { ReactNode, createContext, useReducer, useContext, useEffect } fr
 export const initialState = {
   tokens: [],
   chambers: [],
+  realms: [],
 }
 
 const BridgeActions = {
   BRIDGE_TOKEN: 'BRIDGE_TOKEN',
   BRIDGE_CHAMBER: 'BRIDGE_CHAMBER',
+  BRIDGE_REALM: 'BRIDGE_REALM',
 }
 
 //--------------------------------
@@ -24,11 +26,13 @@ const BridgeActions = {
 type BridgeStateType = {
   tokens: Array<bigint>,
   chambers: Array<bigint>,
+  realms: Array<bigint>,
 }
 
 type ActionType =
   | { type: 'BRIDGE_TOKEN', payload: bigint }
   | { type: 'BRIDGE_CHAMBER', payload: bigint }
+  | { type: 'BRIDGE_REALM', payload: bigint }
 
 
 
@@ -48,13 +52,17 @@ const BridgeContext = createContext<{
 //
 interface BridgeProviderProps {
   children: string | JSX.Element | JSX.Element[] | ReactNode
-  systemCalls: any,
+  networkLayer: any,
 }
 const BridgeProvider = ({
   children,
-  systemCalls,
+  networkLayer,
 }: BridgeProviderProps) => {
-  const { bridge_tokenId, bridge_chamber } = systemCalls
+  const {
+    systemCalls: {
+      bridge_tokenId, bridge_chamber, bridge_realm,
+    },
+  } = networkLayer
 
   const [state, dispatch] = useReducer((state: BridgeStateType, action: ActionType) => {
     let newState = { ...state }
@@ -72,6 +80,14 @@ const BridgeProvider = ({
         if (coord > 0n && !state.chambers.includes(coord)) {
           state.chambers.push(coord)
           bridge_chamber(coord)
+        }
+        break
+      }
+      case BridgeActions.BRIDGE_REALM: {
+        const coord = action.payload
+        if (coord > 0n && !state.realms.includes(coord)) {
+          state.realms.push(coord)
+          bridge_realm(coord)
         }
         break
       }
@@ -126,6 +142,20 @@ export const useBridgeChamber = (coord: bigint) => {
   }, [coord])
   return state.chambers.includes(coord)
 }
+
+export const useBridgeRealm = (coord: bigint) => {
+  const { state, dispatch } = useContext(BridgeContext)
+  useEffect(() => {
+    if (coord) {
+      dispatch({
+        type: BridgeActions.BRIDGE_REALM,
+        payload: coord,
+      })
+    }
+  }, [coord])
+  return state.realms.includes(coord)
+}
+
 
 //--------------------------------
 // Hooks

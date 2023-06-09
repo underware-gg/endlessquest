@@ -1,12 +1,13 @@
 @import 'googlefonts';
 
 $important: #fa0;
+$ui-bg: #000a;
+// $ui-border: 1px solid #ddd;
+$ui-border: 5px ridge $important;
+$ui-realms-size: 150px;
+$ui-chamber-size: 250px;
 
 html, body {
-  // all: initial;
-  // margin: 0;
-  // padding: 0;
-  // border: none;
   // background-color: #1a3a1e;
   background-color: #000;
   color: #fff;
@@ -17,7 +18,7 @@ html, body {
 }
 
 h1, h2, h3, h4, h5 {
-  line-height: 1em;
+  line-height: 1.1em;
   margin: 0.2em;
 }
 
@@ -39,19 +40,46 @@ canvas {
   left: 0;
   width: 100vw;
   height: 100vh;
+  cursor: crosshair;
+}
+
+.Smaller {
+  font-size: 80%;
 }
 
 .Important {
   color: $important;
-  font-size: 110%;
+}
+
+.Importanter {
+  color: $important;
+  font-size: 1.3rem;
+}
+
+.Red {
+  color: #f44;
+}
+
+.Green {
+  color: #4f4;
 }
 
 .NoMouse {
-  pointer-events: none;
+  pointer-events: none!important;
 }
 
 .WithMouse {
-  pointer-events: all;
+  pointer-events: all!important;
+}
+
+.Clickable {
+  cursor: pointer!important;
+  pointer-events: all!important;
+}
+
+.FillScreen {
+  width: 100vw;
+  height: 100vh;
 }
 
 .FillParent {
@@ -61,10 +89,32 @@ canvas {
   min-height: 100%;
 }
 
+.CenteredContainer {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+.Flex {
+  display: flex;
+}
+
+.Block {
+  display: block !important;
+}
+
+.Relative {
+  position: relative;
+}
+
 .Absolute {
   position: absolute !important;
   top: 0;
   left: 0;
+}
+
+.Padded {
+  padding: 0.5em !important;
 }
 
 .NoPadding {
@@ -79,121 +129,153 @@ canvas {
   border: none !important;
 }
 
-.GameUILeft {
-  @extend .FillParent;
+.Debug {
+  background-color: #f0f8;
+}
+
+//-----------------------------
+// <GameLoading>
+//
+.GameLoadingBox {
+  width: 300px;
+  height: 40px;
+  position: absolute;
+  left: calc(50% - (300px / 2));
+  top: calc(50% - (40px / 2));
+}
+.GameLoadingBar {
+  width: 100%;
+  height: 50%;
+  margin: auto;
+}
+
+//-----------------------------
+// <GameSelector>
+//
+.SelectRealmContainer {
+  width: 600px !important;
+}
+.SelectRealmInfo {
+  @extend .CenteredContainer;
+  width: 600px !important;
+  height: 80px;
+}
+.SelectRealmBox {
+  width: 600px !important;
+  height: 200px;
+}
+
+//-----------------------------
+// <GameUI>
+//
+.GameUITop {
   position: absolute;
   top: 0;
   left: 0;
+  width: 100%;
+  height: $ui-realms-size;
+  display: flex;
 }
 
 .GameUIRight {
-  @extend .GameUILeft;
-  left: unset;
+  position: absolute;
+  top: $ui-realms-size;
   right: 0;
 }
 
 .UI {
-  pointer-events: all;
-  position: relative;
-  border: 1px solid #ddd;
-  background-color: #0008;
+  border: $ui-border;
+  background-color: $ui-bg;
   padding: 0.3em;
+  box-sizing: border-box; // padding does not increase element size
 }
 
-.Infos {
-  color: #bbb;
-  padding: 0.5em;
-}
-
-.Main {
+.RealmImage {
   @extend .UI;
-  width: 400px;
-  height: 200px;
-}
-
-.ChamberLocation {
-  @extend .UI;
-  width: 250px;
-  height: 250px;
+  width: $ui-realms-size;
+  height: $ui-realms-size;
 }
 
 .RealmLocation {
   @extend .UI;
-  width: 250px;
-  height: 180px;
+  width: calc(100% - $ui-realms-size - $ui-chamber-size);
+  height: $ui-realms-size;
 }
 
 .PlayerLocation {
   @extend .UI;
-  width: 250px;
-  height: 180px;
-  margin-left: auto;
-  margin-right: 0;
+  width: $ui-chamber-size;
+  height: $ui-realms-size;
 }
 
-.AgentLocation {
+.ChamberImage {
   @extend .UI;
-  width: 250px;
-  height: 250px;
-  margin-left: auto;
-  margin-right: 0;
+  width: $ui-chamber-size;
+  height: $ui-chamber-size;
 }
 
-.LocationImage {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 150px;
-  height: 150px;
-}
-.LocationImg {
-  max-width: 150px;
-  max-height: 150px;
-}
-
-.BackgroundImage {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.Loader {
+.ChamberLocation {
   @extend .UI;
-  width: 200px;
-  height: 80px;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-}
-.LoaderContent {
-  padding: 0 0.5em;
-  overflow-y: scroll;
-  width: calc(100% - 1em);
-  height: calc(80px - 1em);
+  width: $ui-chamber-size;
+  height: calc($ui-chamber-size * 1.5);
 }
 
 .ChatButton {
   position: absolute;
-  bottom: 0;
+  bottom: 20px;
   left: 60px;
   width: 50%;
   height: 40px;
 }
 
+.Infos {
+  color: #aaa;
+  padding: 0.5em;
+}
+
+
+//-------------
+// <Loader>
+//
+
+.Loader {
+  @extend .UI;
+  width: $ui-chamber-size;
+  height: 100px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+.LoaderContent {
+  padding: 0 0.5em;
+  overflow-y: scroll;
+  width: calc(100% - 1em);
+  height: calc(80px - 0.25em);
+}
+
+.RoomLoader {
+  @extend .UI;
+  width: $ui-chamber-size;
+  height: 100px;
+  position: absolute;
+  bottom: 0;
+  left: $ui-chamber-size;
+}
+
+
+//---------------
+// Full screeners
+//
 .ClearCover {
-  // @extend .FillParent;
+  @extend .FillScreen; 
   position: absolute;
   top: 0;
   right: 0;
-  width: 100vw;
-  height: 100vh;
-  pointer-events: all;
 }
 .FadedCover {
   @extend .ClearCover;
-  background-color: #0008;
+  background-color: $ui-bg;
 }
 
 .FullscreenProfileImage {
@@ -203,14 +285,13 @@ canvas {
   top: calc(50% - 512px);
   width: 1024px;
   height: 1024px;
-  pointer-events: none;
 }
 
+
+//---------------
+// Chat
+//
 .ChatDialog {
-  @extend .UI;
-  position: absolute;
-  left: calc(50% - 250px);
-  top: calc(50% - 350px);
   width: 500px;
   height: 700px;
   padding: 0;
@@ -218,36 +299,34 @@ canvas {
 }
 
 .ChatContent {
-  padding: 1em;
+  @extend .UI;
   overflow-y: scroll;
-  width: calc(100% - 20px);
-  height: 625px;
+  position: relative;
+  width: 100%;
+  height: 650px;
+  padding: 1em;
 }
 
 .ChatInputRow {
   @extend .UI;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: calc(100% - 25px);
-  height: 15px;
-  padding: 1em;
+  width: 100%;
+  height: 50px;
+  padding: 0.5em;
+  position: relative;
 }
 
 .ChatInput {
   position: absolute;
-  bottom: 5px;
-  left: 5px;
+  left: 0.5em;
   width: calc(100% - 100px);
   height: 20px;
 }
 
 .ChatSubmit {
   position: absolute;
-  bottom: 5px;
-  right: 5px;
+  right: 0.5em;
   width: 70px;
-  height: 28px;
+  height: 25px;
 }
 
 .UserTopic {

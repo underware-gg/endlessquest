@@ -105,7 +105,7 @@ library Chamber {
   /** Get opener */
   function getOpener(uint256 coord) internal view returns (address opener) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32(uint256((coord)));
+    _keyTuple[0] = bytes32(uint256(coord));
 
     bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 0);
     return (address(Bytes.slice20(_blob, 0)));
@@ -114,7 +114,7 @@ library Chamber {
   /** Get opener (using the specified store) */
   function getOpener(IStore _store, uint256 coord) internal view returns (address opener) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32(uint256((coord)));
+    _keyTuple[0] = bytes32(uint256(coord));
 
     bytes memory _blob = _store.getField(_tableId, _keyTuple, 0);
     return (address(Bytes.slice20(_blob, 0)));
@@ -123,7 +123,7 @@ library Chamber {
   /** Set opener */
   function setOpener(uint256 coord, address opener) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32(uint256((coord)));
+    _keyTuple[0] = bytes32(uint256(coord));
 
     StoreSwitch.setField(_tableId, _keyTuple, 0, abi.encodePacked((opener)));
   }
@@ -131,7 +131,7 @@ library Chamber {
   /** Set opener (using the specified store) */
   function setOpener(IStore _store, uint256 coord, address opener) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32(uint256((coord)));
+    _keyTuple[0] = bytes32(uint256(coord));
 
     _store.setField(_tableId, _keyTuple, 0, abi.encodePacked((opener)));
   }
@@ -139,7 +139,7 @@ library Chamber {
   /** Get tokenId */
   function getTokenId(uint256 coord) internal view returns (uint256 tokenId) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32(uint256((coord)));
+    _keyTuple[0] = bytes32(uint256(coord));
 
     bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 1);
     return (uint256(Bytes.slice32(_blob, 0)));
@@ -148,7 +148,7 @@ library Chamber {
   /** Get tokenId (using the specified store) */
   function getTokenId(IStore _store, uint256 coord) internal view returns (uint256 tokenId) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32(uint256((coord)));
+    _keyTuple[0] = bytes32(uint256(coord));
 
     bytes memory _blob = _store.getField(_tableId, _keyTuple, 1);
     return (uint256(Bytes.slice32(_blob, 0)));
@@ -157,7 +157,7 @@ library Chamber {
   /** Set tokenId */
   function setTokenId(uint256 coord, uint256 tokenId) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32(uint256((coord)));
+    _keyTuple[0] = bytes32(uint256(coord));
 
     StoreSwitch.setField(_tableId, _keyTuple, 1, abi.encodePacked((tokenId)));
   }
@@ -165,7 +165,7 @@ library Chamber {
   /** Set tokenId (using the specified store) */
   function setTokenId(IStore _store, uint256 coord, uint256 tokenId) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32(uint256((coord)));
+    _keyTuple[0] = bytes32(uint256(coord));
 
     _store.setField(_tableId, _keyTuple, 1, abi.encodePacked((tokenId)));
   }
@@ -173,7 +173,7 @@ library Chamber {
   /** Get seed */
   function getSeed(uint256 coord) internal view returns (uint256 seed) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32(uint256((coord)));
+    _keyTuple[0] = bytes32(uint256(coord));
 
     bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 2);
     return (uint256(Bytes.slice32(_blob, 0)));
@@ -182,7 +182,7 @@ library Chamber {
   /** Get seed (using the specified store) */
   function getSeed(IStore _store, uint256 coord) internal view returns (uint256 seed) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32(uint256((coord)));
+    _keyTuple[0] = bytes32(uint256(coord));
 
     bytes memory _blob = _store.getField(_tableId, _keyTuple, 2);
     return (uint256(Bytes.slice32(_blob, 0)));
@@ -191,7 +191,7 @@ library Chamber {
   /** Set seed */
   function setSeed(uint256 coord, uint256 seed) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32(uint256((coord)));
+    _keyTuple[0] = bytes32(uint256(coord));
 
     StoreSwitch.setField(_tableId, _keyTuple, 2, abi.encodePacked((seed)));
   }
@@ -199,7 +199,7 @@ library Chamber {
   /** Set seed (using the specified store) */
   function setSeed(IStore _store, uint256 coord, uint256 seed) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32(uint256((coord)));
+    _keyTuple[0] = bytes32(uint256(coord));
 
     _store.setField(_tableId, _keyTuple, 2, abi.encodePacked((seed)));
   }
@@ -207,7 +207,7 @@ library Chamber {
   /** Get yonder */
   function getYonder(uint256 coord) internal view returns (uint8 yonder) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32(uint256((coord)));
+    _keyTuple[0] = bytes32(uint256(coord));
 
     bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 3);
     return (uint8(Bytes.slice1(_blob, 0)));
@@ -216,7 +216,7 @@ library Chamber {
   /** Get yonder (using the specified store) */
   function getYonder(IStore _store, uint256 coord) internal view returns (uint8 yonder) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32(uint256((coord)));
+    _keyTuple[0] = bytes32(uint256(coord));
 
     bytes memory _blob = _store.getField(_tableId, _keyTuple, 3);
     return (uint8(Bytes.slice1(_blob, 0)));
@@ -225,7 +225,7 @@ library Chamber {
   /** Set yonder */
   function setYonder(uint256 coord, uint8 yonder) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32(uint256((coord)));
+    _keyTuple[0] = bytes32(uint256(coord));
 
     StoreSwitch.setField(_tableId, _keyTuple, 3, abi.encodePacked((yonder)));
   }
@@ -233,7 +233,7 @@ library Chamber {
   /** Set yonder (using the specified store) */
   function setYonder(IStore _store, uint256 coord, uint8 yonder) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32(uint256((coord)));
+    _keyTuple[0] = bytes32(uint256(coord));
 
     _store.setField(_tableId, _keyTuple, 3, abi.encodePacked((yonder)));
   }
@@ -241,7 +241,7 @@ library Chamber {
   /** Get chapter */
   function getChapter(uint256 coord) internal view returns (uint8 chapter) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32(uint256((coord)));
+    _keyTuple[0] = bytes32(uint256(coord));
 
     bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 4);
     return (uint8(Bytes.slice1(_blob, 0)));
@@ -250,7 +250,7 @@ library Chamber {
   /** Get chapter (using the specified store) */
   function getChapter(IStore _store, uint256 coord) internal view returns (uint8 chapter) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32(uint256((coord)));
+    _keyTuple[0] = bytes32(uint256(coord));
 
     bytes memory _blob = _store.getField(_tableId, _keyTuple, 4);
     return (uint8(Bytes.slice1(_blob, 0)));
@@ -259,7 +259,7 @@ library Chamber {
   /** Set chapter */
   function setChapter(uint256 coord, uint8 chapter) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32(uint256((coord)));
+    _keyTuple[0] = bytes32(uint256(coord));
 
     StoreSwitch.setField(_tableId, _keyTuple, 4, abi.encodePacked((chapter)));
   }
@@ -267,7 +267,7 @@ library Chamber {
   /** Set chapter (using the specified store) */
   function setChapter(IStore _store, uint256 coord, uint8 chapter) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32(uint256((coord)));
+    _keyTuple[0] = bytes32(uint256(coord));
 
     _store.setField(_tableId, _keyTuple, 4, abi.encodePacked((chapter)));
   }
@@ -275,7 +275,7 @@ library Chamber {
   /** Get terrain */
   function getTerrain(uint256 coord) internal view returns (uint8 terrain) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32(uint256((coord)));
+    _keyTuple[0] = bytes32(uint256(coord));
 
     bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 5);
     return (uint8(Bytes.slice1(_blob, 0)));
@@ -284,7 +284,7 @@ library Chamber {
   /** Get terrain (using the specified store) */
   function getTerrain(IStore _store, uint256 coord) internal view returns (uint8 terrain) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32(uint256((coord)));
+    _keyTuple[0] = bytes32(uint256(coord));
 
     bytes memory _blob = _store.getField(_tableId, _keyTuple, 5);
     return (uint8(Bytes.slice1(_blob, 0)));
@@ -293,7 +293,7 @@ library Chamber {
   /** Set terrain */
   function setTerrain(uint256 coord, uint8 terrain) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32(uint256((coord)));
+    _keyTuple[0] = bytes32(uint256(coord));
 
     StoreSwitch.setField(_tableId, _keyTuple, 5, abi.encodePacked((terrain)));
   }
@@ -301,7 +301,7 @@ library Chamber {
   /** Set terrain (using the specified store) */
   function setTerrain(IStore _store, uint256 coord, uint8 terrain) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32(uint256((coord)));
+    _keyTuple[0] = bytes32(uint256(coord));
 
     _store.setField(_tableId, _keyTuple, 5, abi.encodePacked((terrain)));
   }
@@ -309,7 +309,7 @@ library Chamber {
   /** Get entryDir */
   function getEntryDir(uint256 coord) internal view returns (uint8 entryDir) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32(uint256((coord)));
+    _keyTuple[0] = bytes32(uint256(coord));
 
     bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 6);
     return (uint8(Bytes.slice1(_blob, 0)));
@@ -318,7 +318,7 @@ library Chamber {
   /** Get entryDir (using the specified store) */
   function getEntryDir(IStore _store, uint256 coord) internal view returns (uint8 entryDir) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32(uint256((coord)));
+    _keyTuple[0] = bytes32(uint256(coord));
 
     bytes memory _blob = _store.getField(_tableId, _keyTuple, 6);
     return (uint8(Bytes.slice1(_blob, 0)));
@@ -327,7 +327,7 @@ library Chamber {
   /** Set entryDir */
   function setEntryDir(uint256 coord, uint8 entryDir) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32(uint256((coord)));
+    _keyTuple[0] = bytes32(uint256(coord));
 
     StoreSwitch.setField(_tableId, _keyTuple, 6, abi.encodePacked((entryDir)));
   }
@@ -335,7 +335,7 @@ library Chamber {
   /** Set entryDir (using the specified store) */
   function setEntryDir(IStore _store, uint256 coord, uint8 entryDir) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32(uint256((coord)));
+    _keyTuple[0] = bytes32(uint256(coord));
 
     _store.setField(_tableId, _keyTuple, 6, abi.encodePacked((entryDir)));
   }
@@ -343,7 +343,7 @@ library Chamber {
   /** Get gemPos */
   function getGemPos(uint256 coord) internal view returns (uint8 gemPos) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32(uint256((coord)));
+    _keyTuple[0] = bytes32(uint256(coord));
 
     bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 7);
     return (uint8(Bytes.slice1(_blob, 0)));
@@ -352,7 +352,7 @@ library Chamber {
   /** Get gemPos (using the specified store) */
   function getGemPos(IStore _store, uint256 coord) internal view returns (uint8 gemPos) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32(uint256((coord)));
+    _keyTuple[0] = bytes32(uint256(coord));
 
     bytes memory _blob = _store.getField(_tableId, _keyTuple, 7);
     return (uint8(Bytes.slice1(_blob, 0)));
@@ -361,7 +361,7 @@ library Chamber {
   /** Set gemPos */
   function setGemPos(uint256 coord, uint8 gemPos) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32(uint256((coord)));
+    _keyTuple[0] = bytes32(uint256(coord));
 
     StoreSwitch.setField(_tableId, _keyTuple, 7, abi.encodePacked((gemPos)));
   }
@@ -369,7 +369,7 @@ library Chamber {
   /** Set gemPos (using the specified store) */
   function setGemPos(IStore _store, uint256 coord, uint8 gemPos) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32(uint256((coord)));
+    _keyTuple[0] = bytes32(uint256(coord));
 
     _store.setField(_tableId, _keyTuple, 7, abi.encodePacked((gemPos)));
   }
@@ -377,7 +377,7 @@ library Chamber {
   /** Get gemType */
   function getGemType(uint256 coord) internal view returns (uint8 gemType) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32(uint256((coord)));
+    _keyTuple[0] = bytes32(uint256(coord));
 
     bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 8);
     return (uint8(Bytes.slice1(_blob, 0)));
@@ -386,7 +386,7 @@ library Chamber {
   /** Get gemType (using the specified store) */
   function getGemType(IStore _store, uint256 coord) internal view returns (uint8 gemType) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32(uint256((coord)));
+    _keyTuple[0] = bytes32(uint256(coord));
 
     bytes memory _blob = _store.getField(_tableId, _keyTuple, 8);
     return (uint8(Bytes.slice1(_blob, 0)));
@@ -395,7 +395,7 @@ library Chamber {
   /** Set gemType */
   function setGemType(uint256 coord, uint8 gemType) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32(uint256((coord)));
+    _keyTuple[0] = bytes32(uint256(coord));
 
     StoreSwitch.setField(_tableId, _keyTuple, 8, abi.encodePacked((gemType)));
   }
@@ -403,7 +403,7 @@ library Chamber {
   /** Set gemType (using the specified store) */
   function setGemType(IStore _store, uint256 coord, uint8 gemType) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32(uint256((coord)));
+    _keyTuple[0] = bytes32(uint256(coord));
 
     _store.setField(_tableId, _keyTuple, 8, abi.encodePacked((gemType)));
   }
@@ -411,7 +411,7 @@ library Chamber {
   /** Get coins */
   function getCoins(uint256 coord) internal view returns (uint16 coins) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32(uint256((coord)));
+    _keyTuple[0] = bytes32(uint256(coord));
 
     bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 9);
     return (uint16(Bytes.slice2(_blob, 0)));
@@ -420,7 +420,7 @@ library Chamber {
   /** Get coins (using the specified store) */
   function getCoins(IStore _store, uint256 coord) internal view returns (uint16 coins) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32(uint256((coord)));
+    _keyTuple[0] = bytes32(uint256(coord));
 
     bytes memory _blob = _store.getField(_tableId, _keyTuple, 9);
     return (uint16(Bytes.slice2(_blob, 0)));
@@ -429,7 +429,7 @@ library Chamber {
   /** Set coins */
   function setCoins(uint256 coord, uint16 coins) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32(uint256((coord)));
+    _keyTuple[0] = bytes32(uint256(coord));
 
     StoreSwitch.setField(_tableId, _keyTuple, 9, abi.encodePacked((coins)));
   }
@@ -437,7 +437,7 @@ library Chamber {
   /** Set coins (using the specified store) */
   function setCoins(IStore _store, uint256 coord, uint16 coins) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32(uint256((coord)));
+    _keyTuple[0] = bytes32(uint256(coord));
 
     _store.setField(_tableId, _keyTuple, 9, abi.encodePacked((coins)));
   }
@@ -445,7 +445,7 @@ library Chamber {
   /** Get worth */
   function getWorth(uint256 coord) internal view returns (uint16 worth) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32(uint256((coord)));
+    _keyTuple[0] = bytes32(uint256(coord));
 
     bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 10);
     return (uint16(Bytes.slice2(_blob, 0)));
@@ -454,7 +454,7 @@ library Chamber {
   /** Get worth (using the specified store) */
   function getWorth(IStore _store, uint256 coord) internal view returns (uint16 worth) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32(uint256((coord)));
+    _keyTuple[0] = bytes32(uint256(coord));
 
     bytes memory _blob = _store.getField(_tableId, _keyTuple, 10);
     return (uint16(Bytes.slice2(_blob, 0)));
@@ -463,7 +463,7 @@ library Chamber {
   /** Set worth */
   function setWorth(uint256 coord, uint16 worth) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32(uint256((coord)));
+    _keyTuple[0] = bytes32(uint256(coord));
 
     StoreSwitch.setField(_tableId, _keyTuple, 10, abi.encodePacked((worth)));
   }
@@ -471,7 +471,7 @@ library Chamber {
   /** Set worth (using the specified store) */
   function setWorth(IStore _store, uint256 coord, uint16 worth) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32(uint256((coord)));
+    _keyTuple[0] = bytes32(uint256(coord));
 
     _store.setField(_tableId, _keyTuple, 10, abi.encodePacked((worth)));
   }
@@ -479,7 +479,7 @@ library Chamber {
   /** Get agent */
   function getAgent(uint256 coord) internal view returns (bytes32 agent) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32(uint256((coord)));
+    _keyTuple[0] = bytes32(uint256(coord));
 
     bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 11);
     return (Bytes.slice32(_blob, 0));
@@ -488,7 +488,7 @@ library Chamber {
   /** Get agent (using the specified store) */
   function getAgent(IStore _store, uint256 coord) internal view returns (bytes32 agent) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32(uint256((coord)));
+    _keyTuple[0] = bytes32(uint256(coord));
 
     bytes memory _blob = _store.getField(_tableId, _keyTuple, 11);
     return (Bytes.slice32(_blob, 0));
@@ -497,7 +497,7 @@ library Chamber {
   /** Set agent */
   function setAgent(uint256 coord, bytes32 agent) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32(uint256((coord)));
+    _keyTuple[0] = bytes32(uint256(coord));
 
     StoreSwitch.setField(_tableId, _keyTuple, 11, abi.encodePacked((agent)));
   }
@@ -505,7 +505,7 @@ library Chamber {
   /** Set agent (using the specified store) */
   function setAgent(IStore _store, uint256 coord, bytes32 agent) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32(uint256((coord)));
+    _keyTuple[0] = bytes32(uint256(coord));
 
     _store.setField(_tableId, _keyTuple, 11, abi.encodePacked((agent)));
   }
@@ -513,7 +513,7 @@ library Chamber {
   /** Get the full data */
   function get(uint256 coord) internal view returns (ChamberData memory _table) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32(uint256((coord)));
+    _keyTuple[0] = bytes32(uint256(coord));
 
     bytes memory _blob = StoreSwitch.getRecord(_tableId, _keyTuple, getSchema());
     return decode(_blob);
@@ -522,7 +522,7 @@ library Chamber {
   /** Get the full data (using the specified store) */
   function get(IStore _store, uint256 coord) internal view returns (ChamberData memory _table) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32(uint256((coord)));
+    _keyTuple[0] = bytes32(uint256(coord));
 
     bytes memory _blob = _store.getRecord(_tableId, _keyTuple, getSchema());
     return decode(_blob);
@@ -560,7 +560,7 @@ library Chamber {
     );
 
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32(uint256((coord)));
+    _keyTuple[0] = bytes32(uint256(coord));
 
     StoreSwitch.setRecord(_tableId, _keyTuple, _data);
   }
@@ -598,7 +598,7 @@ library Chamber {
     );
 
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32(uint256((coord)));
+    _keyTuple[0] = bytes32(uint256(coord));
 
     _store.setRecord(_tableId, _keyTuple, _data);
   }
@@ -691,13 +691,13 @@ library Chamber {
   /** Encode keys as a bytes32 array using this table's schema */
   function encodeKeyTuple(uint256 coord) internal pure returns (bytes32[] memory _keyTuple) {
     _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32(uint256((coord)));
+    _keyTuple[0] = bytes32(uint256(coord));
   }
 
   /* Delete all data for given keys */
   function deleteRecord(uint256 coord) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32(uint256((coord)));
+    _keyTuple[0] = bytes32(uint256(coord));
 
     StoreSwitch.deleteRecord(_tableId, _keyTuple);
   }
@@ -705,7 +705,7 @@ library Chamber {
   /* Delete all data for given keys (using the specified store) */
   function deleteRecord(IStore _store, uint256 coord) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32(uint256((coord)));
+    _keyTuple[0] = bytes32(uint256(coord));
 
     _store.deleteRecord(_tableId, _keyTuple);
   }

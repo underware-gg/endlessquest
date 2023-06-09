@@ -5,7 +5,7 @@ import { System } from "@latticexyz/world/src/System.sol";
 import {
   Player, PlayerData,
   Position, PositionData, PositionTableId,
-  Tiles, TilesData,
+  Tile, TileData,
   Agent, AgentData,
   Location,
   Blocker
@@ -17,7 +17,7 @@ import { Direction } from "../codegen/Types.sol";
 import { Crawl } from "../utils/Crawl.sol";
 
 contract PlayerSystem is System {
-  function spawn(string memory name, int32 x, int32 y) public {
+  function spawnAtPosition(string memory name, int32 x, int32 y) public {
     bytes32 player = addressToEntity(_msgSender());
 
     PlayerData memory existingPlayer = Player.get(player);
@@ -28,10 +28,10 @@ contract PlayerSystem is System {
     
     Player.set(player, 1, name);
     Blocker.set(player, true);
-    goToPosition(player, x, y);
+    moveToPosition(x, y);
   }
 
-  function move(Direction direction) public {
+  function moveToDirection(Direction direction) public {
     require(direction != Direction.Unknown, "invalid direction");
 
     bytes32 player = addressToEntity(_msgSender());
@@ -54,8 +54,14 @@ contract PlayerSystem is System {
       x += 1;
     }
 
+    moveToPosition(x, y);
+  }
+
+  function moveToPosition(int32 x, int32 y) public {
+    bytes32 player = addressToEntity(_msgSender());
+
     // check if there is a tile and it is not 0
-    bool isTile = false;
+    bool isOverTile = false;
     bytes32[] memory thingsAtPosition = getKeysWithValue(PositionTableId, Position.encode(x, y));
     for(uint256 i = 0 ; i < thingsAtPosition.length; ++i) {
       //
@@ -63,18 +69,14 @@ contract PlayerSystem is System {
       bool blocker = Blocker.get(thingsAtPosition[i]);
       require(blocker == false, "--- BLOCKER! ---");
       //
-      // Find Tiles at position
-      TilesData memory tile = Tiles.get(thingsAtPosition[i]);
+      // Find Tile at position
+      TileData memory tile = Tile.get(thingsAtPosition[i]);
       if (tile.terrain > 0) {
-        isTile = true;
+        isOverTile = true;
       }
     }
-    require(isTile, "--- OUT OF BOUNDS! ---");
+    require(isOverTile, "--- OUT OF BOUNDS! ---");
 
-    goToPosition(player, x, y);
-  }
-
-  function goToPosition(bytes32 player, int32 x, int32 y) private {
     Position.set(player, x, y);
 
     int256 north = (y < 0) ? int256((-y -1) / 20) + 1 : int256(0);

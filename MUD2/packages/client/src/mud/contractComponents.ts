@@ -20,6 +20,21 @@ export function defineContractComponents(world: World) {
         }
       );
     })(),
+    Realm: (() => {
+      const tableId = new TableId("", "Realm");
+      return defineComponent(
+        world,
+        {
+          opener: RecsType.String,
+        },
+        {
+          metadata: {
+            contractId: tableId.toHexString(),
+            tableId: tableId.toString(),
+          },
+        }
+      );
+    })(),
     Token: (() => {
       const tableId = new TableId("", "Token");
       return defineComponent(
@@ -77,25 +92,6 @@ export function defineContractComponents(world: World) {
         }
       );
     })(),
-    Doors: (() => {
-      const tableId = new TableId("", "Doors");
-      return defineComponent(
-        world,
-        {
-          coord: RecsType.BigInt,
-          index: RecsType.Number,
-          dir: RecsType.Number,
-          locked: RecsType.Boolean,
-          nextCoord: RecsType.BigInt,
-        },
-        {
-          metadata: {
-            contractId: tableId.toHexString(),
-            tableId: tableId.toString(),
-          },
-        }
-      );
-    })(),
     Agent: (() => {
       const tableId = new TableId("", "Agent");
       return defineComponent(
@@ -134,8 +130,8 @@ export function defineContractComponents(world: World) {
         }
       );
     })(),
-    Tiles: (() => {
-      const tableId = new TableId("", "Tiles");
+    Tile: (() => {
+      const tableId = new TableId("", "Tile");
       return defineComponent(
         world,
         {

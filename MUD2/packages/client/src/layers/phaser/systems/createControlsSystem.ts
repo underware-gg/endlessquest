@@ -1,9 +1,9 @@
-import { Direction } from "../constants";
-import { PhaserLayer } from "../createPhaserLayer";
-import { TILE_HEIGHT, TILE_WIDTH } from "../constants";
+import { Direction } from '../constants'
+import { PhaserLayer } from '../createPhaserLayer'
+import { TILE_HEIGHT, TILE_WIDTH } from '../constants'
 
 declare global {
-  interface Window { QuestNamespace: any; }
+  interface Window { QuestNamespace: any }
 }
 
 export function createControlsSystem(layer: PhaserLayer) {
@@ -16,10 +16,10 @@ export function createControlsSystem(layer: PhaserLayer) {
     },
     networkLayer: {
       systemCalls: {
-        move,
+        moveToDirection,
       },
     },
-  } = layer;
+  } = layer
 
   window.QuestNamespace = {
     controlsEnabled: true
@@ -43,37 +43,37 @@ export function createControlsSystem(layer: PhaserLayer) {
   }
 
   input.onKeyPress(
-    keys => keys.has("W"),
+    keys => keys.has('W'),
     () => {
       if (!window.QuestNamespace.controlsEnabled) return
-      move(Direction.Up);
-      _moveGhost(Direction.Up);
-    });
+      moveToDirection(Direction.Up)
+      _moveGhost(Direction.Up)
+    })
 
   input.onKeyPress(
-    keys => keys.has("A"),
+    keys => keys.has('A'),
     () => {
       if (!window.QuestNamespace.controlsEnabled) return
-      move(Direction.Left);
-      _moveGhost(Direction.Left);
+      moveToDirection(Direction.Left)
+      _moveGhost(Direction.Left)
     }
-  );
+  )
 
   input.onKeyPress(
-    keys => keys.has("S"),
+    keys => keys.has('S'),
     () => {
       if (!window.QuestNamespace.controlsEnabled) return
-      move(Direction.Down);
-      _moveGhost(Direction.Down);
+      moveToDirection(Direction.Down)
+      _moveGhost(Direction.Down)
     }
-  );
+  )
 
   input.onKeyPress(
-    keys => keys.has("D"),
+    keys => keys.has('D'),
     () => {
       if (!window.QuestNamespace.controlsEnabled) return
-      move(Direction.Right);
-      _moveGhost(Direction.Right);
+      moveToDirection(Direction.Right)
+      _moveGhost(Direction.Right)
     }
-  );
+  )
 }

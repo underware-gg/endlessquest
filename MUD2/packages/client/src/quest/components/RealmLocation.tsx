@@ -1,33 +1,26 @@
-import { useComponentValue, useEntityQuery, useRow } from '@latticexyz/react';
-import { Has, HasValue, getComponentValueStrict } from '@latticexyz/recs';
-import { useMUD } from '../../store';
-import { useRealm } from '../hooks/useRealm';
+import { useSettingsContext } from '../hooks/SettingsContext'
+import { useRealm } from '../hooks/useRealm'
 
 export const RealmLocation = () => {
+  const { realmCoord, anim } = useSettingsContext()
 
   const {
     metadata,
-    isWaiting,
+    metadataIsFetching,
     url,
-  } = useRealm()
+  } = useRealm(realmCoord)
 
   return (
-    <div>
-      <div className='RealmLocation'>
-
-        <h2>Realm</h2>
-        <p className='Important'>{isWaiting ? 'dreaming...' : (metadata?.name ?? '?')}</p>
-        <p>{isWaiting ? '...' : (metadata?.description ?? '?')}</p>
-
-        {/* <div className='Infos'>
-          <div>Yonder: {yonder ?? '?'}</div>
-          <div>Gem: {gemName ?? '?'}</div>
-          <div>Coins: {coins ?? '?'}</div>
-          <div>Url: {url?.slice(0, 20) ?? '?'}</div>
-        </div> */}
-
+    <>
+      <div className='RealmImage'>
+        <img className='FillParent' src={url ? url : anim} />
       </div>
 
-    </div>
+      <div className='RealmLocation'>
+        <h3>Realm</h3>
+        <p className='Importanter'>{metadataIsFetching ? 'dreaming...' : (metadata?.name ?? '?')}</p>
+        <p>{metadataIsFetching ? '...' : (metadata?.description ?? '?')}</p>
+      </div>
+    </>
   )
 }

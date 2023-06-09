@@ -75,13 +75,14 @@ more [screenshots](Assets/screenshots/)
 # Repo Structure
 
 
-## AI
+## `AI`
 
 The core of the generative experience is run by two GPT prompts, both detailed in `/AI/Prompts/`:
 * [Metadata-Generation.md](https://github.com/funDAOmental/endlessquest/blob/main/AI/Prompts/Metadata-Generation.md) -- Generates the metadata for each world, chamber and encounter
 * [NPC-dialog.md](https://github.com/funDAOmental/endlessquest/blob/main/AI/Prompts/Metadata-Generation.md) -- Runs the interaction with each NPC
 
 Art Assets are generated using DALL-E via OpenAI API, as detailed in [GenerativeArt.md](https://github.com/funDAOmental/endlessquest/blob/main/AI/GenerativeArt.md)
+
 
 
 ## `MUD2`
@@ -94,13 +95,13 @@ Install [Node.js 16+](https://nodejs.org/en/download) (we use version 18)
 
 * Install pnpm
 
-```shell
+```bash
 $ npm install --global pnpm
 ```
 
 * Install [Foundry](https://github.com/foundry-rs) ([docs](https://book.getfoundry.sh/getting-started/installation))
 
-```shell
+```bash
 $ brew install libusb
 $ curl -L https://foundry.paradigm.xyz | bash
 # restart the terminal or open a new one
@@ -111,7 +112,7 @@ $ foundryup
 
 Edit `MUD2/env.contracts` if you want to use your own Anvil private key.
 
-```shell
+```bash
 $ cd MUD2
 $ pnpm install
 $ pnpm initialize
@@ -120,7 +121,7 @@ $ cp env.contracts packages/contracts/.env
 
 ### Start local server
 
-```shell
+```bash
 $ pnpm run dev
 ```
 
@@ -135,34 +136,107 @@ OpenAI API keys enabled for `GPT-4` need to be on cookies. The first time the ap
 | `OPENAI_ORG_ID`  | `<org_id>` |
 
 
-## MUD development notes
 
-### Install a fresh MUD game
 
-According to [getting-started](https://mud.dev/quick-start)
+## Deployment
+
+### Fund your wallet
+
+* [mud cli faucet](https://mud.dev/cli#faucet)
+
+The wallet used for deployment must have ETH on the network.
+
+```bash
+# Lattice testnet
+$ pnpm mud faucet --address <address>
+
+# Other networks
+$ pnpm mud faucet --faucetUrl <faucetService> --address <address>
+```
+
+
+
+### MUD deployment
+
+* [mud cli deploy](https://mud.dev/cli#deploy)
+
+Paste the deployment wallet private key to `PRIVATE_KEY` in `MUD2/packages/contracts/.env`
+
+Edit profiles at `MUD2/packages/contracts/foundry.toml`
+
+```bash
+# deploy locally (http://localhost:8545)
+$ cd MUD2/packages/contracts
+$ pnpm mud deploy
+
+# deploy to the lattice testnet
+$ cd MUD2/packages/contracts
+$ pnpm mud deploy --profile lattice-testnet
+
+# deploy to optimism mainnet
+$ cd MUD2/packages/contracts
+$ pnpm mud deploy --profile optimism-mainnet
+```
+
+If in error and need to retry...
+
+```bash
+$ pnpm mud deploy --profile lattice-testnet --priorityFeeMultiplier 5
+```
+
+
+
+* [Emojimon deployment](https://mud.dev/tutorials/emojimon/deploy-to-testnet#deploy-the-client)
+
+
+Deploy contracts to testnet...
+
+```bash
+$ de MUD2/packages/contracts
+$ pnpm deploy:testnet
+> chained 4242
+```
+
+Build distribution...
+
+```bash
+$ de MUD2/packages/client
+$ pnpm build
+$ zip packages/client/dist
+```
+
+
+
+
+
+## Development notes
+
+### Install a fresh MUD from template
+
+* MUD [getting-started](https://mud.dev/quick-start)
 
 Need Node 18 and Foundry (see above)
 
-```shell
+```bash
 $ npm install -g pnpm
 $ pnpm create mud@canary MUD
 ? Template
 > phaser
 ```
 
+
 ### Upgrade MUD
 
 Check latest version [here](https://www.npmjs.com/package/@latticexyz/cli?activeTab=versions)
 
-```shell
+```bash
 $ cd MUD2
-$ pnpm mud set-version -v 2.0.0-alpha.1.197
 $ pnpm mud:up
 ```
 
 Or manually...
 
-```shell
+```bash
 $ cd MUD2
 $ pnpm mud set-version -v 2.0.0-alpha.1.197
 $ cd packages/client
@@ -173,16 +247,5 @@ $ pnpm mud set-version -v 2.0.0-alpha.1.197
 $ cd -
 $ pnpm install
 ```
-
-### Deploy MUD
-
-(not tested)
-
-```
-$ pnpm deploy:testnet in contracts
-> chainId 4242
-
-```
-
 
 

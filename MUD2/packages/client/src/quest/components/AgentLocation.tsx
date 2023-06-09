@@ -1,23 +1,23 @@
-import { useComponentValue, useEntityQuery, useRow } from '@latticexyz/react';
-import { Entity, Has, HasValue, getComponentValueStrict } from '@latticexyz/recs';
-import { useMUD } from '../../store';
-import { usePlayer } from '../hooks/usePlayer';
-import { useAgent } from '../hooks/useAgent';
-import { useEffect, useMemo } from 'react';
+import { useComponentValue, useEntityQuery, useRow } from '@latticexyz/react'
+import { Entity, Has, HasValue, getComponentValueStrict } from '@latticexyz/recs'
+import { useMUD } from '../../store'
+import { usePlayer } from '../hooks/usePlayer'
+import { useAgent } from '../hooks/useAgent'
+import { useEffect, useMemo } from 'react'
+import { useRequestAgentMetadata } from '../hooks/MetadataContext'
+import { useSettingsContext, SettingsActions } from '../hooks/SettingsContext'
 
 
 export const AgentLocation = ({
-  onChat = (e: boolean, name: string, description: string) => { },
 }) => {
-  // const {
-  //   components: { Position, Location },
-  //   network: { playerEntity },
-  // } = useMUD()
+  const { anim, isChatting, dispatch } = useSettingsContext()
 
   const {
     agentEntity,
     agentId,
+    nextCoord,
   } = usePlayer()
+
   const {
     coord,
     slug,
@@ -27,25 +27,31 @@ export const AgentLocation = ({
     coins,
     worth,
     metadata,
-    isWaiting,
+    metadataIsFetching,
     url,
   } = useAgent(agentEntity)
 
+  useRequestAgentMetadata(agentEntity)
+
+  const _onChat = () => {
+    dispatch({
+      type: SettingsActions.SET_IS_CHATTING,
+      payload: !isChatting,
+    })
+  }
+
   const canChat = (agentId != 0n && metadata?.name)
 
-  useEffect(() => {
-    if (!canChat) {
-      onChat(false, '', '')
-    }
-  }, [canChat])
-
   return (
-    <div>
-      <div className='AgentLocation'>
+    <>
+      <div className='ChamberImage'>
+        <img className='FillParent' src={url ? url : anim} />
+      </div>
 
-        <h2>Encounter</h2>
-        <p className='Important'>{isWaiting ? 'dreaming...' : (metadata?.name ?? 'come closer...')}</p>
-        <p>{isWaiting ? 'don\'t move!' : (metadata?.description ?? '?')}</p>
+      <div className='ChamberLocation'>
+        <h3>Encounter</h3>
+        <p className='Importanter'>{metadataIsFetching ? 'dreaming...' : (metadata?.name ?? 'come closer...')}</p>
+        <p>{metadataIsFetching ? 'don\'t move!' : (metadata?.description ?? '?')}</p>
 
         <div className='Infos'>
           {/* <div>coord: {coord?.toString() ?? '?'}</div> */}
@@ -57,17 +63,9 @@ export const AgentLocation = ({
           <div>Coins: {coins ?? '?'}</div>
           {/* <div>Url: {url?.slice(0, 20) ?? '?'}</div> */}
           {/* <div>Worth: {worth ?? '?'}</div> */}
-          <button className='ChatButton' disabled={!canChat} onClick={() => onChat(true, metadata?.name, metadata ? JSON.stringify(metadata) : '')}>CHAT</button>
+          <button className='ChatButton' disabled={!canChat} onClick={() => _onChat()}>CHAT</button>
         </div>
-
       </div>
-
-      {url &&
-        <div className='AgentLocation'>
-          <img className='FillParent' src={url ?? ''} />
-        </div>
-      }
-
-    </div>
+    </>
   )
 }

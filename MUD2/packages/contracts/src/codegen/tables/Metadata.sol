@@ -75,7 +75,7 @@ library Metadata {
   /** Get metadata */
   function getMetadata(bytes32 key) internal view returns (string memory metadata) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 0);
     return (string(_blob));
@@ -84,7 +84,7 @@ library Metadata {
   /** Get metadata (using the specified store) */
   function getMetadata(IStore _store, bytes32 key) internal view returns (string memory metadata) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     bytes memory _blob = _store.getField(_tableId, _keyTuple, 0);
     return (string(_blob));
@@ -93,7 +93,7 @@ library Metadata {
   /** Set metadata */
   function setMetadata(bytes32 key, string memory metadata) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     StoreSwitch.setField(_tableId, _keyTuple, 0, bytes((metadata)));
   }
@@ -101,7 +101,7 @@ library Metadata {
   /** Set metadata (using the specified store) */
   function setMetadata(IStore _store, bytes32 key, string memory metadata) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     _store.setField(_tableId, _keyTuple, 0, bytes((metadata)));
   }
@@ -109,7 +109,7 @@ library Metadata {
   /** Get the length of metadata */
   function lengthMetadata(bytes32 key) internal view returns (uint256) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     uint256 _byteLength = StoreSwitch.getFieldLength(_tableId, _keyTuple, 0, getSchema());
     return _byteLength / 1;
@@ -118,7 +118,7 @@ library Metadata {
   /** Get the length of metadata (using the specified store) */
   function lengthMetadata(IStore _store, bytes32 key) internal view returns (uint256) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     uint256 _byteLength = _store.getFieldLength(_tableId, _keyTuple, 0, getSchema());
     return _byteLength / 1;
@@ -127,7 +127,7 @@ library Metadata {
   /** Get an item of metadata (unchecked, returns invalid data if index overflows) */
   function getItemMetadata(bytes32 key, uint256 _index) internal view returns (string memory) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     bytes memory _blob = StoreSwitch.getFieldSlice(_tableId, _keyTuple, 0, getSchema(), _index * 1, (_index + 1) * 1);
     return (string(_blob));
@@ -136,7 +136,7 @@ library Metadata {
   /** Get an item of metadata (using the specified store) (unchecked, returns invalid data if index overflows) */
   function getItemMetadata(IStore _store, bytes32 key, uint256 _index) internal view returns (string memory) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     bytes memory _blob = _store.getFieldSlice(_tableId, _keyTuple, 0, getSchema(), _index * 1, (_index + 1) * 1);
     return (string(_blob));
@@ -145,7 +145,7 @@ library Metadata {
   /** Push a slice to metadata */
   function pushMetadata(bytes32 key, string memory _slice) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     StoreSwitch.pushToField(_tableId, _keyTuple, 0, bytes((_slice)));
   }
@@ -153,7 +153,7 @@ library Metadata {
   /** Push a slice to metadata (using the specified store) */
   function pushMetadata(IStore _store, bytes32 key, string memory _slice) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     _store.pushToField(_tableId, _keyTuple, 0, bytes((_slice)));
   }
@@ -161,7 +161,7 @@ library Metadata {
   /** Pop a slice from metadata */
   function popMetadata(bytes32 key) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     StoreSwitch.popFromField(_tableId, _keyTuple, 0, 1);
   }
@@ -169,7 +169,7 @@ library Metadata {
   /** Pop a slice from metadata (using the specified store) */
   function popMetadata(IStore _store, bytes32 key) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     _store.popFromField(_tableId, _keyTuple, 0, 1);
   }
@@ -177,7 +177,7 @@ library Metadata {
   /** Update a slice of metadata at `_index` */
   function updateMetadata(bytes32 key, uint256 _index, string memory _slice) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     StoreSwitch.updateInField(_tableId, _keyTuple, 0, _index * 1, bytes((_slice)));
   }
@@ -185,7 +185,7 @@ library Metadata {
   /** Update a slice of metadata (using the specified store) at `_index` */
   function updateMetadata(IStore _store, bytes32 key, uint256 _index, string memory _slice) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     _store.updateInField(_tableId, _keyTuple, 0, _index * 1, bytes((_slice)));
   }
@@ -193,7 +193,7 @@ library Metadata {
   /** Get url */
   function getUrl(bytes32 key) internal view returns (string memory url) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 1);
     return (string(_blob));
@@ -202,7 +202,7 @@ library Metadata {
   /** Get url (using the specified store) */
   function getUrl(IStore _store, bytes32 key) internal view returns (string memory url) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     bytes memory _blob = _store.getField(_tableId, _keyTuple, 1);
     return (string(_blob));
@@ -211,7 +211,7 @@ library Metadata {
   /** Set url */
   function setUrl(bytes32 key, string memory url) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     StoreSwitch.setField(_tableId, _keyTuple, 1, bytes((url)));
   }
@@ -219,7 +219,7 @@ library Metadata {
   /** Set url (using the specified store) */
   function setUrl(IStore _store, bytes32 key, string memory url) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     _store.setField(_tableId, _keyTuple, 1, bytes((url)));
   }
@@ -227,7 +227,7 @@ library Metadata {
   /** Get the length of url */
   function lengthUrl(bytes32 key) internal view returns (uint256) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     uint256 _byteLength = StoreSwitch.getFieldLength(_tableId, _keyTuple, 1, getSchema());
     return _byteLength / 1;
@@ -236,7 +236,7 @@ library Metadata {
   /** Get the length of url (using the specified store) */
   function lengthUrl(IStore _store, bytes32 key) internal view returns (uint256) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     uint256 _byteLength = _store.getFieldLength(_tableId, _keyTuple, 1, getSchema());
     return _byteLength / 1;
@@ -245,7 +245,7 @@ library Metadata {
   /** Get an item of url (unchecked, returns invalid data if index overflows) */
   function getItemUrl(bytes32 key, uint256 _index) internal view returns (string memory) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     bytes memory _blob = StoreSwitch.getFieldSlice(_tableId, _keyTuple, 1, getSchema(), _index * 1, (_index + 1) * 1);
     return (string(_blob));
@@ -254,7 +254,7 @@ library Metadata {
   /** Get an item of url (using the specified store) (unchecked, returns invalid data if index overflows) */
   function getItemUrl(IStore _store, bytes32 key, uint256 _index) internal view returns (string memory) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     bytes memory _blob = _store.getFieldSlice(_tableId, _keyTuple, 1, getSchema(), _index * 1, (_index + 1) * 1);
     return (string(_blob));
@@ -263,7 +263,7 @@ library Metadata {
   /** Push a slice to url */
   function pushUrl(bytes32 key, string memory _slice) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     StoreSwitch.pushToField(_tableId, _keyTuple, 1, bytes((_slice)));
   }
@@ -271,7 +271,7 @@ library Metadata {
   /** Push a slice to url (using the specified store) */
   function pushUrl(IStore _store, bytes32 key, string memory _slice) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     _store.pushToField(_tableId, _keyTuple, 1, bytes((_slice)));
   }
@@ -279,7 +279,7 @@ library Metadata {
   /** Pop a slice from url */
   function popUrl(bytes32 key) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     StoreSwitch.popFromField(_tableId, _keyTuple, 1, 1);
   }
@@ -287,7 +287,7 @@ library Metadata {
   /** Pop a slice from url (using the specified store) */
   function popUrl(IStore _store, bytes32 key) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     _store.popFromField(_tableId, _keyTuple, 1, 1);
   }
@@ -295,7 +295,7 @@ library Metadata {
   /** Update a slice of url at `_index` */
   function updateUrl(bytes32 key, uint256 _index, string memory _slice) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     StoreSwitch.updateInField(_tableId, _keyTuple, 1, _index * 1, bytes((_slice)));
   }
@@ -303,7 +303,7 @@ library Metadata {
   /** Update a slice of url (using the specified store) at `_index` */
   function updateUrl(IStore _store, bytes32 key, uint256 _index, string memory _slice) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     _store.updateInField(_tableId, _keyTuple, 1, _index * 1, bytes((_slice)));
   }
@@ -311,7 +311,7 @@ library Metadata {
   /** Get the full data */
   function get(bytes32 key) internal view returns (MetadataData memory _table) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     bytes memory _blob = StoreSwitch.getRecord(_tableId, _keyTuple, getSchema());
     return decode(_blob);
@@ -320,7 +320,7 @@ library Metadata {
   /** Get the full data (using the specified store) */
   function get(IStore _store, bytes32 key) internal view returns (MetadataData memory _table) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     bytes memory _blob = _store.getRecord(_tableId, _keyTuple, getSchema());
     return decode(_blob);
@@ -331,7 +331,7 @@ library Metadata {
     bytes memory _data = encode(metadata, url);
 
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     StoreSwitch.setRecord(_tableId, _keyTuple, _data);
   }
@@ -341,7 +341,7 @@ library Metadata {
     bytes memory _data = encode(metadata, url);
 
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     _store.setRecord(_tableId, _keyTuple, _data);
   }
@@ -390,13 +390,13 @@ library Metadata {
   /** Encode keys as a bytes32 array using this table's schema */
   function encodeKeyTuple(bytes32 key) internal pure returns (bytes32[] memory _keyTuple) {
     _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
   }
 
   /* Delete all data for given keys */
   function deleteRecord(bytes32 key) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     StoreSwitch.deleteRecord(_tableId, _keyTuple);
   }
@@ -404,7 +404,7 @@ library Metadata {
   /* Delete all data for given keys (using the specified store) */
   function deleteRecord(IStore _store, bytes32 key) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     _store.deleteRecord(_tableId, _keyTuple);
   }

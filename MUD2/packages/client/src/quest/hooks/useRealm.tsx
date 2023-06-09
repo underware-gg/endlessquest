@@ -1,30 +1,30 @@
-import { useMemo } from 'react';
-import { useComponentValue, useRow } from '@latticexyz/react';
-import { useMUD } from '../../store';
-import { useCoord } from './useCoord';
-import { usePlayer } from './usePlayer';
-import { GemNames } from '../bridge/Crawl';
-import { useRealmMetadata } from './useMetadata'
-import { useChamberProfileImage } from './useProfileImage';
+import React, { useMemo } from 'react'
+import { useMUD } from '../../store'
+import { useRow } from '@latticexyz/react'
+import { useRealmMetadata, useRealmArtUrl } from './MetadataContext'
 
-export const useRealm = () => {
+export const useRealm = (coord: bigint) => {
   const {
     networkLayer: {
-      components: { Chamber },
       storeCache,
     }
   } = useMUD()
 
-  const coord = 999n
+  const realmRow = useRow(storeCache, { table: 'Realm', key: { coord } })
+  const realm = useMemo(() => (realmRow?.value ?? null), [realmRow])
+  const opener = realm?.opener ?? null
+  const realmExists = opener ?? false
 
-  const { metadata, isWaiting } = useRealmMetadata(coord)
+  const { metadata, isFetching: metadataIsFetching, isError: metadataIsError } = useRealmMetadata(coord)
 
-  // const { url } = useChamberProfileImage(coord)
-  const url = null
+  const { url } = useRealmArtUrl(coord)
 
   return {
+    realmExists,
+    opener,
     metadata: metadata ?? null,
-    url: url ?? null,
-    isWaiting,
+    metadataIsFetching,
+    metadataIsError,
+    url,
   }
 }

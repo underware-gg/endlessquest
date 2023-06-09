@@ -17,16 +17,16 @@ import { EncodeArray } from "@latticexyz/store/src/tightcoder/EncodeArray.sol";
 import { Schema, SchemaLib } from "@latticexyz/store/src/Schema.sol";
 import { PackedCounter, PackedCounterLib } from "@latticexyz/store/src/PackedCounter.sol";
 
-bytes32 constant _tableId = bytes32(abi.encodePacked(bytes16(""), bytes16("Tiles")));
-bytes32 constant TilesTableId = _tableId;
+bytes32 constant _tableId = bytes32(abi.encodePacked(bytes16(""), bytes16("Tile")));
+bytes32 constant TileTableId = _tableId;
 
-struct TilesData {
+struct TileData {
   uint8 terrain;
   uint8 tileType;
   bool isEntry;
 }
 
-library Tiles {
+library Tile {
   /** Get the table's schema */
   function getSchema() internal pure returns (Schema) {
     SchemaType[] memory _schema = new SchemaType[](3);
@@ -50,7 +50,7 @@ library Tiles {
     _fieldNames[0] = "terrain";
     _fieldNames[1] = "tileType";
     _fieldNames[2] = "isEntry";
-    return ("Tiles", _fieldNames);
+    return ("Tile", _fieldNames);
   }
 
   /** Register the table's schema */
@@ -78,7 +78,7 @@ library Tiles {
   /** Get terrain */
   function getTerrain(bytes32 key) internal view returns (uint8 terrain) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 0);
     return (uint8(Bytes.slice1(_blob, 0)));
@@ -87,7 +87,7 @@ library Tiles {
   /** Get terrain (using the specified store) */
   function getTerrain(IStore _store, bytes32 key) internal view returns (uint8 terrain) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     bytes memory _blob = _store.getField(_tableId, _keyTuple, 0);
     return (uint8(Bytes.slice1(_blob, 0)));
@@ -96,7 +96,7 @@ library Tiles {
   /** Set terrain */
   function setTerrain(bytes32 key, uint8 terrain) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     StoreSwitch.setField(_tableId, _keyTuple, 0, abi.encodePacked((terrain)));
   }
@@ -104,7 +104,7 @@ library Tiles {
   /** Set terrain (using the specified store) */
   function setTerrain(IStore _store, bytes32 key, uint8 terrain) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     _store.setField(_tableId, _keyTuple, 0, abi.encodePacked((terrain)));
   }
@@ -112,7 +112,7 @@ library Tiles {
   /** Get tileType */
   function getTileType(bytes32 key) internal view returns (uint8 tileType) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 1);
     return (uint8(Bytes.slice1(_blob, 0)));
@@ -121,7 +121,7 @@ library Tiles {
   /** Get tileType (using the specified store) */
   function getTileType(IStore _store, bytes32 key) internal view returns (uint8 tileType) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     bytes memory _blob = _store.getField(_tableId, _keyTuple, 1);
     return (uint8(Bytes.slice1(_blob, 0)));
@@ -130,7 +130,7 @@ library Tiles {
   /** Set tileType */
   function setTileType(bytes32 key, uint8 tileType) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     StoreSwitch.setField(_tableId, _keyTuple, 1, abi.encodePacked((tileType)));
   }
@@ -138,7 +138,7 @@ library Tiles {
   /** Set tileType (using the specified store) */
   function setTileType(IStore _store, bytes32 key, uint8 tileType) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     _store.setField(_tableId, _keyTuple, 1, abi.encodePacked((tileType)));
   }
@@ -146,7 +146,7 @@ library Tiles {
   /** Get isEntry */
   function getIsEntry(bytes32 key) internal view returns (bool isEntry) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 2);
     return (_toBool(uint8(Bytes.slice1(_blob, 0))));
@@ -155,7 +155,7 @@ library Tiles {
   /** Get isEntry (using the specified store) */
   function getIsEntry(IStore _store, bytes32 key) internal view returns (bool isEntry) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     bytes memory _blob = _store.getField(_tableId, _keyTuple, 2);
     return (_toBool(uint8(Bytes.slice1(_blob, 0))));
@@ -164,7 +164,7 @@ library Tiles {
   /** Set isEntry */
   function setIsEntry(bytes32 key, bool isEntry) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     StoreSwitch.setField(_tableId, _keyTuple, 2, abi.encodePacked((isEntry)));
   }
@@ -172,24 +172,24 @@ library Tiles {
   /** Set isEntry (using the specified store) */
   function setIsEntry(IStore _store, bytes32 key, bool isEntry) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     _store.setField(_tableId, _keyTuple, 2, abi.encodePacked((isEntry)));
   }
 
   /** Get the full data */
-  function get(bytes32 key) internal view returns (TilesData memory _table) {
+  function get(bytes32 key) internal view returns (TileData memory _table) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     bytes memory _blob = StoreSwitch.getRecord(_tableId, _keyTuple, getSchema());
     return decode(_blob);
   }
 
   /** Get the full data (using the specified store) */
-  function get(IStore _store, bytes32 key) internal view returns (TilesData memory _table) {
+  function get(IStore _store, bytes32 key) internal view returns (TileData memory _table) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     bytes memory _blob = _store.getRecord(_tableId, _keyTuple, getSchema());
     return decode(_blob);
@@ -200,7 +200,7 @@ library Tiles {
     bytes memory _data = encode(terrain, tileType, isEntry);
 
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     StoreSwitch.setRecord(_tableId, _keyTuple, _data);
   }
@@ -210,23 +210,23 @@ library Tiles {
     bytes memory _data = encode(terrain, tileType, isEntry);
 
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     _store.setRecord(_tableId, _keyTuple, _data);
   }
 
   /** Set the full data using the data struct */
-  function set(bytes32 key, TilesData memory _table) internal {
+  function set(bytes32 key, TileData memory _table) internal {
     set(key, _table.terrain, _table.tileType, _table.isEntry);
   }
 
   /** Set the full data using the data struct (using the specified store) */
-  function set(IStore _store, bytes32 key, TilesData memory _table) internal {
+  function set(IStore _store, bytes32 key, TileData memory _table) internal {
     set(_store, key, _table.terrain, _table.tileType, _table.isEntry);
   }
 
   /** Decode the tightly packed blob using this table's schema */
-  function decode(bytes memory _blob) internal pure returns (TilesData memory _table) {
+  function decode(bytes memory _blob) internal pure returns (TileData memory _table) {
     _table.terrain = (uint8(Bytes.slice1(_blob, 0)));
 
     _table.tileType = (uint8(Bytes.slice1(_blob, 1)));
@@ -242,13 +242,13 @@ library Tiles {
   /** Encode keys as a bytes32 array using this table's schema */
   function encodeKeyTuple(bytes32 key) internal pure returns (bytes32[] memory _keyTuple) {
     _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
   }
 
   /* Delete all data for given keys */
   function deleteRecord(bytes32 key) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     StoreSwitch.deleteRecord(_tableId, _keyTuple);
   }
@@ -256,7 +256,7 @@ library Tiles {
   /* Delete all data for given keys (using the specified store) */
   function deleteRecord(IStore _store, bytes32 key) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     _store.deleteRecord(_tableId, _keyTuple);
   }

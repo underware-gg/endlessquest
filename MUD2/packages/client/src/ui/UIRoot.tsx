@@ -1,8 +1,6 @@
-import { useStore } from "../store"
-import { Wrapper } from "./Wrapper"
-import { LoadingScreen } from "./LoadingScreen"
-import { GameUI } from "../quest/components/GameUI"
-import { BridgeProvider } from '../quest/hooks/BridgeContext'
+import { useStore } from '../store'
+import { GameLoading } from '../quest/components/GameLoading'
+import { GameRoot } from '../quest/components/GameRoot'
 
 export const UIRoot = () => {
   const layers = useStore((state) => {
@@ -16,12 +14,8 @@ export const UIRoot = () => {
 
   return (
     <div className='FillParent'>
-      <Wrapper>
-        <LoadingScreen />
-      </Wrapper>
-      <BridgeProvider systemCalls={layers.networkLayer.systemCalls}>
-        <GameUI />
-      </BridgeProvider>
+      <GameLoading />
+      <GameRoot />
     </div>
   )
 }
