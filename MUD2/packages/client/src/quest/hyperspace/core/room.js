@@ -1,6 +1,7 @@
 import * as ClientRoom from './networking'
 import Screen from './components/screen'
 import QuestMetadata from './components/questMetadata'
+import QuestMessages from './components/questMessages'
 import Store from './store'
 
 let _roomCounter = 0
@@ -29,28 +30,27 @@ class Room {
 
     // room client: the actual room in use, synched with the server
     // can be null
-    this.clientRoom = (this.slug) ? ClientRoom.create({
+    this.clientRoom = ClientRoom.create({
       slug: this.slug,
       store: this.remoteStore,
       roomId: this.roomId,
-    }) : null
+    })
 
     this.agentId = this.clientRoom?.agentId ?? null
 
-    if (this.slug) {
-      // instantiate components before this.clientRoom.init() to listen to snapshot loading events
-      this.Screen = new Screen(this)
-      this.QuestRealm = new QuestMetadata(this, 'questRealm')
-      this.QuestChamber = new QuestMetadata(this, 'questChamber')
-      this.QuestAgent = new QuestMetadata(this, 'questAgent')
-    }
+    // instantiate components before this.clientRoom.init() to listen to snapshot loading events
+    this.Screen = new Screen(this)
+    this.QuestRealm = new QuestMetadata(this, 'questRealm')
+    this.QuestChamber = new QuestMetadata(this, 'questChamber')
+    this.QuestAgent = new QuestMetadata(this, 'questAgent')
+    this.QuestMessages = new QuestMessages(this)
 
-    this.clientRoom?.init({
+    this.clientRoom.init({
       loadLocalSnapshot: true,
     })
 
     // wait for Room client to load
-    const hasClientData = await this.clientRoom?.waitForConnection()
+    const hasClientData = await this.clientRoom.waitForConnection()
     // console.log(`CLIENT CONNECTED!`, hasClientData)
 
   }

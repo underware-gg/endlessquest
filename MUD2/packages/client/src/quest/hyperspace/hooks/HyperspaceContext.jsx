@@ -76,7 +76,7 @@ export const useHyperspaceContext = () => {
     QuestRealm: room?.QuestRealm ?? null,
     QuestChamber: room?.QuestChamber ?? null,
     QuestAgent: room?.QuestAgent ?? null,
-    // QuestMessages: room?.QuestMessages ?? null,
+    QuestMessages: room?.QuestMessages ?? null,
   }
 }
 

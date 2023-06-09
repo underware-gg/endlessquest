@@ -43,6 +43,10 @@ canvas {
   cursor: crosshair;
 }
 
+.Smaller {
+  font-size: 80%;
+}
+
 .Important {
   color: $important;
 }
@@ -112,7 +116,6 @@ canvas {
 .Padded {
   padding: 0.5em !important;
 }
-
 
 .NoPadding {
   padding: 0 !important;

@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { ChatCompletionRequestMessageRoleEnum } from 'openai'
 import { ChatHistory } from '../openai/generateChat'
 import { ChatRequest } from './ChatRequest'
+import { useHyperspaceContext } from '../hyperspace/hooks/HyperspaceContext'
 import { useSettingsContext, SettingsActions } from '../hooks/SettingsContext'
 import { usePlayer } from '../hooks/usePlayer'
 import { useAgent } from '../hooks/useAgent'
@@ -9,24 +10,27 @@ import { useAgent } from '../hooks/useAgent'
 export const ChatDialog = ({
   playerName = 'Player',
 }) => {
-  const { isChatting, dispatch } = useSettingsContext()
+  const [timestamp, setTimestamp] = useState(0)
   const [history, setHistory] = useState<ChatHistory>([])
   const [prompt, setPrompt] = useState('')
   const [isRequesting, setIsRequesting] = useState(false)
-
-  useEffect(() => {
-    setHistory([])
-    setIsRequesting(true)
-  }, [])
+  const { realmCoord, isChatting, dispatch } = useSettingsContext()
+  const { QuestMessages } = useHyperspaceContext()
 
   useEffect(() => {
     window.QuestNamespace.controlsEnabled = !isChatting
+    if (isChatting) {
+      setHistory([])
+      setIsRequesting(true)
+      setTimestamp(Date.now())
+    }
   }, [isChatting])
 
   const {
     agentEntity,
   } = usePlayer()
   const {
+    coord,
     metadata,
   } = useAgent(agentEntity)
 
@@ -70,6 +74,7 @@ export const ChatDialog = ({
     setHistory(newHistory)
     setIsRequesting(false)
     setPrompt('')
+    QuestMessages.updateMessages(timestamp, realmCoord, coord, playerName, newHistory)
   }
 
   const canSubmit = (!isRequesting && prompt.length > 0)
@@ -86,6 +91,9 @@ export const ChatDialog = ({
         <div className='ChatDialog'>
 
           <div className='ChatContent'>
+            {topics.length > 0 &&
+              <p className='Smaller'>chat id: {timestamp}</p>
+            }
             {topics}
             {isRequesting &&
               <div>
