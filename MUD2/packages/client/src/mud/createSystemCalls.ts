@@ -9,7 +9,6 @@ import { awaitStreamValue } from '@latticexyz/utils'
 import { ClientComponents } from './createClientComponents'
 import { SetupNetworkResult } from './setupNetwork'
 import { Direction } from '../layers/phaser/constants'
-import { entityToBytes32 } from "../quest/utils"
 import * as Bridge from '../quest/bridge/bridge'
 import * as Crawl from '../quest/bridge/Crawl'
 import * as ethers from 'ethers'
@@ -182,11 +181,10 @@ export function createSystemCalls(
     const agentQuery = runQuery([Has(Agent), HasValue(Position, { x: gemPos.gridX, y: gemPos.gridY })])
     console.log(`AGENT QUERY`, agentQuery)
     agentQuery.forEach(async (entity) => {
-      const key = entityToBytes32(entity)
-      console.log(`AGENT TO CHAMBER...`, coord, entity, key)
+      console.log(`AGENT TO CHAMBER...`, coord, entity)
       await worldSend('setChamberAgent', [
         coord,
-        key,
+        entity,
       ])
     })
     //
@@ -217,11 +215,10 @@ export function createSystemCalls(
   }
   const setAgentMetadata = (entity: Entity, metadata: string) => {
     if (entity && metadata) {
-      const key = entityToBytes32(entity)
-      // let stored_metadata = storeCache.tables.Metadata.get({ key })
+      // let stored_metadata = storeCache.tables.Metadata.get({ key: entity })
       // if (stored_metadata == null) {
-      console.warn(`STORE AGENT METADATA @`, key, metadata)
-      worldSend('setAgentMetadata', [key, metadata])
+      console.warn(`STORE AGENT METADATA @`, entity, metadata)
+      worldSend('setAgentMetadata', [entity, metadata])
       // }
     }
   }
@@ -243,9 +240,8 @@ export function createSystemCalls(
   }
   const setAgentArtUrl = (entity: Entity, url: string) => {
     if (entity && url) {
-      const id = entityToBytes32(entity)
-      console.warn(`STORE AGENT IMAGE URL @`, id, url)
-      worldSend('setAgentArtUrl', [id, url])
+      console.warn(`STORE AGENT IMAGE URL @`, entity, url)
+      worldSend('setAgentArtUrl', [entity, url])
     }
   }
 
