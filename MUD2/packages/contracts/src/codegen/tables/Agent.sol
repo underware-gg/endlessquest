@@ -93,7 +93,7 @@ library Agent {
   /** Get coord */
   function getCoord(bytes32 key) internal view returns (uint256 coord) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 0);
     return (uint256(Bytes.slice32(_blob, 0)));
@@ -102,7 +102,7 @@ library Agent {
   /** Get coord (using the specified store) */
   function getCoord(IStore _store, bytes32 key) internal view returns (uint256 coord) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     bytes memory _blob = _store.getField(_tableId, _keyTuple, 0);
     return (uint256(Bytes.slice32(_blob, 0)));
@@ -111,7 +111,7 @@ library Agent {
   /** Set coord */
   function setCoord(bytes32 key, uint256 coord) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     StoreSwitch.setField(_tableId, _keyTuple, 0, abi.encodePacked((coord)));
   }
@@ -119,7 +119,7 @@ library Agent {
   /** Set coord (using the specified store) */
   function setCoord(IStore _store, bytes32 key, uint256 coord) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     _store.setField(_tableId, _keyTuple, 0, abi.encodePacked((coord)));
   }
@@ -127,7 +127,7 @@ library Agent {
   /** Get tokenId */
   function getTokenId(bytes32 key) internal view returns (uint256 tokenId) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 1);
     return (uint256(Bytes.slice32(_blob, 0)));
@@ -136,7 +136,7 @@ library Agent {
   /** Get tokenId (using the specified store) */
   function getTokenId(IStore _store, bytes32 key) internal view returns (uint256 tokenId) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     bytes memory _blob = _store.getField(_tableId, _keyTuple, 1);
     return (uint256(Bytes.slice32(_blob, 0)));
@@ -145,7 +145,7 @@ library Agent {
   /** Set tokenId */
   function setTokenId(bytes32 key, uint256 tokenId) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     StoreSwitch.setField(_tableId, _keyTuple, 1, abi.encodePacked((tokenId)));
   }
@@ -153,7 +153,7 @@ library Agent {
   /** Set tokenId (using the specified store) */
   function setTokenId(IStore _store, bytes32 key, uint256 tokenId) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     _store.setField(_tableId, _keyTuple, 1, abi.encodePacked((tokenId)));
   }
@@ -161,7 +161,7 @@ library Agent {
   /** Get seed */
   function getSeed(bytes32 key) internal view returns (uint256 seed) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 2);
     return (uint256(Bytes.slice32(_blob, 0)));
@@ -170,7 +170,7 @@ library Agent {
   /** Get seed (using the specified store) */
   function getSeed(IStore _store, bytes32 key) internal view returns (uint256 seed) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     bytes memory _blob = _store.getField(_tableId, _keyTuple, 2);
     return (uint256(Bytes.slice32(_blob, 0)));
@@ -179,7 +179,7 @@ library Agent {
   /** Set seed */
   function setSeed(bytes32 key, uint256 seed) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     StoreSwitch.setField(_tableId, _keyTuple, 2, abi.encodePacked((seed)));
   }
@@ -187,7 +187,7 @@ library Agent {
   /** Set seed (using the specified store) */
   function setSeed(IStore _store, bytes32 key, uint256 seed) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     _store.setField(_tableId, _keyTuple, 2, abi.encodePacked((seed)));
   }
@@ -195,7 +195,7 @@ library Agent {
   /** Get yonder */
   function getYonder(bytes32 key) internal view returns (uint8 yonder) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 3);
     return (uint8(Bytes.slice1(_blob, 0)));
@@ -204,7 +204,7 @@ library Agent {
   /** Get yonder (using the specified store) */
   function getYonder(IStore _store, bytes32 key) internal view returns (uint8 yonder) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     bytes memory _blob = _store.getField(_tableId, _keyTuple, 3);
     return (uint8(Bytes.slice1(_blob, 0)));
@@ -213,7 +213,7 @@ library Agent {
   /** Set yonder */
   function setYonder(bytes32 key, uint8 yonder) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     StoreSwitch.setField(_tableId, _keyTuple, 3, abi.encodePacked((yonder)));
   }
@@ -221,7 +221,7 @@ library Agent {
   /** Set yonder (using the specified store) */
   function setYonder(IStore _store, bytes32 key, uint8 yonder) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     _store.setField(_tableId, _keyTuple, 3, abi.encodePacked((yonder)));
   }
@@ -229,7 +229,7 @@ library Agent {
   /** Get terrain */
   function getTerrain(bytes32 key) internal view returns (uint8 terrain) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 4);
     return (uint8(Bytes.slice1(_blob, 0)));
@@ -238,7 +238,7 @@ library Agent {
   /** Get terrain (using the specified store) */
   function getTerrain(IStore _store, bytes32 key) internal view returns (uint8 terrain) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     bytes memory _blob = _store.getField(_tableId, _keyTuple, 4);
     return (uint8(Bytes.slice1(_blob, 0)));
@@ -247,7 +247,7 @@ library Agent {
   /** Set terrain */
   function setTerrain(bytes32 key, uint8 terrain) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     StoreSwitch.setField(_tableId, _keyTuple, 4, abi.encodePacked((terrain)));
   }
@@ -255,7 +255,7 @@ library Agent {
   /** Set terrain (using the specified store) */
   function setTerrain(IStore _store, bytes32 key, uint8 terrain) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     _store.setField(_tableId, _keyTuple, 4, abi.encodePacked((terrain)));
   }
@@ -263,7 +263,7 @@ library Agent {
   /** Get gemType */
   function getGemType(bytes32 key) internal view returns (uint8 gemType) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 5);
     return (uint8(Bytes.slice1(_blob, 0)));
@@ -272,7 +272,7 @@ library Agent {
   /** Get gemType (using the specified store) */
   function getGemType(IStore _store, bytes32 key) internal view returns (uint8 gemType) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     bytes memory _blob = _store.getField(_tableId, _keyTuple, 5);
     return (uint8(Bytes.slice1(_blob, 0)));
@@ -281,7 +281,7 @@ library Agent {
   /** Set gemType */
   function setGemType(bytes32 key, uint8 gemType) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     StoreSwitch.setField(_tableId, _keyTuple, 5, abi.encodePacked((gemType)));
   }
@@ -289,7 +289,7 @@ library Agent {
   /** Set gemType (using the specified store) */
   function setGemType(IStore _store, bytes32 key, uint8 gemType) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     _store.setField(_tableId, _keyTuple, 5, abi.encodePacked((gemType)));
   }
@@ -297,7 +297,7 @@ library Agent {
   /** Get coins */
   function getCoins(bytes32 key) internal view returns (uint16 coins) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 6);
     return (uint16(Bytes.slice2(_blob, 0)));
@@ -306,7 +306,7 @@ library Agent {
   /** Get coins (using the specified store) */
   function getCoins(IStore _store, bytes32 key) internal view returns (uint16 coins) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     bytes memory _blob = _store.getField(_tableId, _keyTuple, 6);
     return (uint16(Bytes.slice2(_blob, 0)));
@@ -315,7 +315,7 @@ library Agent {
   /** Set coins */
   function setCoins(bytes32 key, uint16 coins) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     StoreSwitch.setField(_tableId, _keyTuple, 6, abi.encodePacked((coins)));
   }
@@ -323,7 +323,7 @@ library Agent {
   /** Set coins (using the specified store) */
   function setCoins(IStore _store, bytes32 key, uint16 coins) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     _store.setField(_tableId, _keyTuple, 6, abi.encodePacked((coins)));
   }
@@ -331,7 +331,7 @@ library Agent {
   /** Get worth */
   function getWorth(bytes32 key) internal view returns (uint16 worth) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 7);
     return (uint16(Bytes.slice2(_blob, 0)));
@@ -340,7 +340,7 @@ library Agent {
   /** Get worth (using the specified store) */
   function getWorth(IStore _store, bytes32 key) internal view returns (uint16 worth) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     bytes memory _blob = _store.getField(_tableId, _keyTuple, 7);
     return (uint16(Bytes.slice2(_blob, 0)));
@@ -349,7 +349,7 @@ library Agent {
   /** Set worth */
   function setWorth(bytes32 key, uint16 worth) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     StoreSwitch.setField(_tableId, _keyTuple, 7, abi.encodePacked((worth)));
   }
@@ -357,7 +357,7 @@ library Agent {
   /** Set worth (using the specified store) */
   function setWorth(IStore _store, bytes32 key, uint16 worth) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     _store.setField(_tableId, _keyTuple, 7, abi.encodePacked((worth)));
   }
@@ -365,7 +365,7 @@ library Agent {
   /** Get the full data */
   function get(bytes32 key) internal view returns (AgentData memory _table) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     bytes memory _blob = StoreSwitch.getRecord(_tableId, _keyTuple, getSchema());
     return decode(_blob);
@@ -374,7 +374,7 @@ library Agent {
   /** Get the full data (using the specified store) */
   function get(IStore _store, bytes32 key) internal view returns (AgentData memory _table) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     bytes memory _blob = _store.getRecord(_tableId, _keyTuple, getSchema());
     return decode(_blob);
@@ -395,7 +395,7 @@ library Agent {
     bytes memory _data = encode(coord, tokenId, seed, yonder, terrain, gemType, coins, worth);
 
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     StoreSwitch.setRecord(_tableId, _keyTuple, _data);
   }
@@ -416,7 +416,7 @@ library Agent {
     bytes memory _data = encode(coord, tokenId, seed, yonder, terrain, gemType, coins, worth);
 
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     _store.setRecord(_tableId, _keyTuple, _data);
   }
@@ -488,13 +488,13 @@ library Agent {
   /** Encode keys as a bytes32 array using this table's schema */
   function encodeKeyTuple(bytes32 key) internal pure returns (bytes32[] memory _keyTuple) {
     _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
   }
 
   /* Delete all data for given keys */
   function deleteRecord(bytes32 key) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     StoreSwitch.deleteRecord(_tableId, _keyTuple);
   }
@@ -502,7 +502,7 @@ library Agent {
   /* Delete all data for given keys (using the specified store) */
   function deleteRecord(IStore _store, bytes32 key) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     _store.deleteRecord(_tableId, _keyTuple);
   }

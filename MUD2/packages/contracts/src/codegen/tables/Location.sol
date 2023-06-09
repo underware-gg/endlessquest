@@ -75,7 +75,7 @@ library Location {
   /** Get coord */
   function getCoord(bytes32 key) internal view returns (uint256 coord) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 0);
     return (uint256(Bytes.slice32(_blob, 0)));
@@ -84,7 +84,7 @@ library Location {
   /** Get coord (using the specified store) */
   function getCoord(IStore _store, bytes32 key) internal view returns (uint256 coord) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     bytes memory _blob = _store.getField(_tableId, _keyTuple, 0);
     return (uint256(Bytes.slice32(_blob, 0)));
@@ -93,7 +93,7 @@ library Location {
   /** Set coord */
   function setCoord(bytes32 key, uint256 coord) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     StoreSwitch.setField(_tableId, _keyTuple, 0, abi.encodePacked((coord)));
   }
@@ -101,7 +101,7 @@ library Location {
   /** Set coord (using the specified store) */
   function setCoord(IStore _store, bytes32 key, uint256 coord) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     _store.setField(_tableId, _keyTuple, 0, abi.encodePacked((coord)));
   }
@@ -109,7 +109,7 @@ library Location {
   /** Get agent */
   function getAgent(bytes32 key) internal view returns (bytes32 agent) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 1);
     return (Bytes.slice32(_blob, 0));
@@ -118,7 +118,7 @@ library Location {
   /** Get agent (using the specified store) */
   function getAgent(IStore _store, bytes32 key) internal view returns (bytes32 agent) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     bytes memory _blob = _store.getField(_tableId, _keyTuple, 1);
     return (Bytes.slice32(_blob, 0));
@@ -127,7 +127,7 @@ library Location {
   /** Set agent */
   function setAgent(bytes32 key, bytes32 agent) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     StoreSwitch.setField(_tableId, _keyTuple, 1, abi.encodePacked((agent)));
   }
@@ -135,7 +135,7 @@ library Location {
   /** Set agent (using the specified store) */
   function setAgent(IStore _store, bytes32 key, bytes32 agent) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     _store.setField(_tableId, _keyTuple, 1, abi.encodePacked((agent)));
   }
@@ -143,7 +143,7 @@ library Location {
   /** Get the full data */
   function get(bytes32 key) internal view returns (LocationData memory _table) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     bytes memory _blob = StoreSwitch.getRecord(_tableId, _keyTuple, getSchema());
     return decode(_blob);
@@ -152,7 +152,7 @@ library Location {
   /** Get the full data (using the specified store) */
   function get(IStore _store, bytes32 key) internal view returns (LocationData memory _table) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     bytes memory _blob = _store.getRecord(_tableId, _keyTuple, getSchema());
     return decode(_blob);
@@ -163,7 +163,7 @@ library Location {
     bytes memory _data = encode(coord, agent);
 
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     StoreSwitch.setRecord(_tableId, _keyTuple, _data);
   }
@@ -173,7 +173,7 @@ library Location {
     bytes memory _data = encode(coord, agent);
 
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     _store.setRecord(_tableId, _keyTuple, _data);
   }
@@ -203,13 +203,13 @@ library Location {
   /** Encode keys as a bytes32 array using this table's schema */
   function encodeKeyTuple(bytes32 key) internal pure returns (bytes32[] memory _keyTuple) {
     _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
   }
 
   /* Delete all data for given keys */
   function deleteRecord(bytes32 key) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     StoreSwitch.deleteRecord(_tableId, _keyTuple);
   }
@@ -217,7 +217,7 @@ library Location {
   /* Delete all data for given keys (using the specified store) */
   function deleteRecord(IStore _store, bytes32 key) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = key;
 
     _store.deleteRecord(_tableId, _keyTuple);
   }

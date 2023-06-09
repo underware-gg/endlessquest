@@ -68,7 +68,7 @@ library Realm {
   /** Get opener */
   function get(uint256 coord) internal view returns (address opener) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32(uint256((coord)));
+    _keyTuple[0] = bytes32(uint256(coord));
 
     bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 0);
     return (address(Bytes.slice20(_blob, 0)));
@@ -77,7 +77,7 @@ library Realm {
   /** Get opener (using the specified store) */
   function get(IStore _store, uint256 coord) internal view returns (address opener) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32(uint256((coord)));
+    _keyTuple[0] = bytes32(uint256(coord));
 
     bytes memory _blob = _store.getField(_tableId, _keyTuple, 0);
     return (address(Bytes.slice20(_blob, 0)));
@@ -86,7 +86,7 @@ library Realm {
   /** Set opener */
   function set(uint256 coord, address opener) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32(uint256((coord)));
+    _keyTuple[0] = bytes32(uint256(coord));
 
     StoreSwitch.setField(_tableId, _keyTuple, 0, abi.encodePacked((opener)));
   }
@@ -94,7 +94,7 @@ library Realm {
   /** Set opener (using the specified store) */
   function set(IStore _store, uint256 coord, address opener) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32(uint256((coord)));
+    _keyTuple[0] = bytes32(uint256(coord));
 
     _store.setField(_tableId, _keyTuple, 0, abi.encodePacked((opener)));
   }
@@ -107,13 +107,13 @@ library Realm {
   /** Encode keys as a bytes32 array using this table's schema */
   function encodeKeyTuple(uint256 coord) internal pure returns (bytes32[] memory _keyTuple) {
     _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32(uint256((coord)));
+    _keyTuple[0] = bytes32(uint256(coord));
   }
 
   /* Delete all data for given keys */
   function deleteRecord(uint256 coord) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32(uint256((coord)));
+    _keyTuple[0] = bytes32(uint256(coord));
 
     StoreSwitch.deleteRecord(_tableId, _keyTuple);
   }
@@ -121,7 +121,7 @@ library Realm {
   /* Delete all data for given keys (using the specified store) */
   function deleteRecord(IStore _store, uint256 coord) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32(uint256((coord)));
+    _keyTuple[0] = bytes32(uint256(coord));
 
     _store.deleteRecord(_tableId, _keyTuple);
   }
