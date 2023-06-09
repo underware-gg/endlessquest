@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 import { useComponentValue } from '@latticexyz/react'
-import { normalizeEntityID } from '@latticexyz/network'
+import { Entity } from '@latticexyz/recs'
 import { useMUD } from '../../store'
 import { useCoord } from './useCoord'
 import { useTile } from './useTile'
@@ -20,7 +20,7 @@ export const usePlayer = () => {
 
   const coord = useMemo(() => (location?.coord ?? undefined), [location])
 
-  const agentEntity = useMemo(() => (normalizeEntityID(location?.agent ?? '0')), [location])
+  const agentEntity = useMemo(() => (location?.agent ?? '0x0'), [location]) as Entity
   const agentId = useMemo(() => (BigInt(agentEntity ? agentEntity as string : 0)), [agentEntity])
 
   const { tileType, isDoor, nextCoord } = useTile(position ?? { x: 0, y: 0 })

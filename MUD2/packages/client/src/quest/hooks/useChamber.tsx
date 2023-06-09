@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 import { useRow } from '@latticexyz/react'
-import { normalizeEntityID } from '@latticexyz/network'
+import { Entity } from '@latticexyz/recs'
 import { useMUD } from '../../store'
 import { useCoord } from './useCoord'
 import { usePlayer } from './usePlayer'
@@ -19,7 +19,7 @@ export const useChamber = () => {
   const chamber = useRow(storeCache, { table: 'Chamber', key: { coord: (coord ?? 0n) } })
   const { compass, slug } = useCoord(coord ?? 0n)
 
-  const agentEntity = useMemo(() => normalizeEntityID(chamber?.value?.agent ?? '0'), [chamber])
+  const agentEntity = useMemo(() => (chamber?.value?.agent ?? '0x0'), [chamber]) as Entity
 
   const { metadata, isFetching: metadataIsFetching, isError: metadataIsError } = useChamberMetadata(coord ?? 0n)
 

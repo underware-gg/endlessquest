@@ -1,7 +1,6 @@
 import { useMemo } from 'react'
 import { useEntityQuery, useRow } from '@latticexyz/react'
 import { HasValue, Entity } from '@latticexyz/recs'
-import { normalizeEntityID } from '@latticexyz/network'
 import { useMUD } from '../../store'
 import { useBridgeContext, useBridgeToken, useBridgeChamber, useBridgeRealm } from '../hooks/BridgeContext'
 import {
@@ -132,7 +131,7 @@ export const ChamberLoader = ({
 
   const chamberData = useRow(storeCache, { table: 'Chamber', key: { coord } })
   const seed = useMemo(() => (chamberData?.value?.seed?.toString() ?? null), [chamberData])
-  const agentEntity = useMemo(() => normalizeEntityID(chamberData?.value?.agent ?? '0'), [chamberData])
+  const agentEntity = useMemo(() => (chamberData?.value?.agent ?? '0x0'), [chamberData]) as Entity
 
   const tiles = useEntityQuery([HasValue(Tile, { terrain: chamberData?.value?.terrain })]) ?? []
 

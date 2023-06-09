@@ -1,7 +1,6 @@
 import React, { ReactNode, createContext, useReducer, useContext, useEffect, useMemo } from 'react'
 import { useRow, useComponentValue } from '@latticexyz/react'
 import { Entity } from '@latticexyz/recs'
-import { normalizeEntityID } from '@latticexyz/network'
 import { useMUD } from '../../store'
 import promptMetadata, { MetadataType, PromptMetadataOptions, PromptMetadataResponse } from '../openai/promptMetadata'
 import { generateImage, ImageOptions, ImageResponse, ImageSize } from '../openai/generateImage'
@@ -375,8 +374,6 @@ export const useRequestChamberMetadata = (coord: bigint) => {
 //
 export const useRequestAgentMetadata = (agentEntity: Entity | undefined) => {
   const { networkLayer: { components: { Agent, Metadata } } } = useMUD()
-
-  // const entity = useMemo(() => normalizeEntityID(agentEntity ?? '0'), [agentEntity])
 
   const agent = useComponentValue(Agent, agentEntity) ?? null
   const metadataData = useComponentValue(Metadata, agentEntity) ?? null

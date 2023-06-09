@@ -1,9 +1,7 @@
 import { useMemo } from 'react'
 import { useComponentValue, useEntityQuery } from '@latticexyz/react'
-import { Has, HasValue, getComponentValueStrict } from '@latticexyz/recs'
-import { normalizeEntityID } from '@latticexyz/network'
+import { Has, HasValue } from '@latticexyz/recs'
 import { useMUD } from '../../store'
-import { useCoord } from './useCoord'
 
 export const useTile = (position: { x: number, y: number }) => {
   const {
