@@ -9,7 +9,7 @@ export const Room = () => {
   const [status, setStatus] = useState('?')
   const [room, setRoom] = useState<any | null>(null)
 
-  const slug = '123quest'
+  const slug = ':endlessquest'
 
   useEffect(() => {
     setStatus('mounted')
