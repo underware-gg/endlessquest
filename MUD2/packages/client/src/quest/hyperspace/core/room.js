@@ -1,5 +1,4 @@
 import * as ClientRoom from './networking'
-import Screen from './components/screen'
 import QuestMetadata from './components/questMetadata'
 import QuestMessages from './components/questMessages'
 import Store from './store'
