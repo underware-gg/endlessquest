@@ -5,6 +5,7 @@ export const RealmLocation = () => {
   const { realmCoord, anim } = useSettingsContext()
 
   const {
+    opener,
     metadata,
     metadataIsFetching,
     url,
@@ -20,6 +21,7 @@ export const RealmLocation = () => {
         <h3>Realm</h3>
         <p className='Importanter'>{metadataIsFetching ? 'dreaming...' : (metadata?.name ?? '?')}</p>
         <p>{metadataIsFetching ? '...' : (metadata?.description ?? '?')}</p>
+        <p>{opener}</p>
       </div>
     </>
   )

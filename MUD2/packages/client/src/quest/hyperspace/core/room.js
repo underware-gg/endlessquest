@@ -39,7 +39,6 @@ class Room {
     this.agentId = this.clientRoom?.agentId ?? null
 
     // instantiate components before this.clientRoom.init() to listen to snapshot loading events
-    this.Screen = new Screen(this)
     this.QuestRealm = new QuestMetadata(this, 'questRealm')
     this.QuestChamber = new QuestMetadata(this, 'questChamber')
     this.QuestAgent = new QuestMetadata(this, 'questAgent')

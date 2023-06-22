@@ -83,7 +83,7 @@ export function createSystemCalls(
     ])
     await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash)
     const result = storeCache.tables.Realm.get({ coord })
-    // console.warn(`BRIDGED_REALM = `, result)
+    console.warn(`BRIDGED_REALM = `, result)
     return result
   }
 
