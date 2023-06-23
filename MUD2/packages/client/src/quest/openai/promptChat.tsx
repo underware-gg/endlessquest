@@ -3,6 +3,7 @@ import { prompts } from '../prompts/prompts'
 import { ChatCompletionRequestMessageRoleEnum } from 'openai'
 
 export interface PromptAgentOptions {
+  gptModel: Chat.GPTModel,
   history: Chat.ChatHistory
   agentMetadata: string
   prompt: string | null
@@ -36,7 +37,7 @@ export default async function promptChat(options: PromptAgentOptions): Promise<P
 
   // https://platform.openai.com/docs/api-reference/chat/create
   const response = await Chat.generateChat({
-    model: Chat.GPTModel.GPT4,
+    model: options.gptModel,
     messages,
   })
   console.log('Chat response:', response)

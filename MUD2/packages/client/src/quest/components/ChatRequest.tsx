@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useState } from 'react'
 import { ChatHistory } from '../openai/generateChat'
 import { usePrompChat } from '../openai/hooks'
+import { PromptAgentOptions } from '../openai/promptChat'
+import { useMetadataContext } from '../hooks/MetadataContext'
 
 interface ChatRequestProps {
   prompt: string,
@@ -15,8 +17,16 @@ export const ChatRequest = ({
   agentMetadata,
   onDone = (h: ChatHistory, m: string) => { },
 }: ChatRequestProps) => {
+  const { gptModel } = useMetadataContext()
 
-  const { isWaiting, message, error, history: newHistory } = usePrompChat(previousHistory, prompt, agentMetadata)
+  const options: PromptAgentOptions = {
+    gptModel,
+    history: previousHistory,
+    prompt,
+    agentMetadata,
+  }
+
+  const { isWaiting, message, error, history: newHistory } = usePrompChat(options)
 
   useEffect(() => {
     if (!isWaiting && (message || error)) {

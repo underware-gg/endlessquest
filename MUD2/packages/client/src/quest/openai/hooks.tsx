@@ -1,10 +1,10 @@
 import { useState, useEffect, useMemo } from 'react'
 import prompMetadata, { MetadataType, PromptMetadataOptions } from './promptMetadata'
-import promptChat from './promptChat'
+import promptChat, { PromptAgentOptions } from './promptChat'
 import { ChatHistory } from './generateChat'
-import { generateImage, ImageOptions, ImageSize } from './generateImage'
+import { generateImage, ImageSize } from './generateImage'
 
-export const usePrompChat = (previousHistory: ChatHistory, prompt: string, agentMetadata: string) => {
+export const usePrompChat = (options: PromptAgentOptions) => {
   const [isWaiting, setIsWaiting] = useState<boolean>(false)
   const [message, setMessage] = useState<string | null>(null)
   const [history, setHistory] = useState<ChatHistory>([])
@@ -14,11 +14,7 @@ export const usePrompChat = (previousHistory: ChatHistory, prompt: string, agent
     let _mounted = true
 
     const _generate = async () => {
-      const response = await promptChat({
-        history: previousHistory,
-        prompt,
-        agentMetadata,
-      })
+      const response = await promptChat(options)
       if (_mounted) {
         setIsWaiting(false)
         setMessage(response.message ?? null)

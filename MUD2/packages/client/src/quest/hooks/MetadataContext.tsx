@@ -4,9 +4,11 @@ import { Entity } from '@latticexyz/recs'
 import { useMUD } from '../../store'
 import promptMetadata, { MetadataType, PromptMetadataOptions, PromptMetadataResponse } from '../openai/promptMetadata'
 import { generateImage, ImageOptions, ImageResponse, ImageSize } from '../openai/generateImage'
+import { GPTModel } from '../openai/generateChat'
 import { useHyperspaceContext } from '../hyperspace/hooks/HyperspaceContext'
 import { prompts } from '../prompts/prompts'
 import { agentToCoord } from '../utils'
+import { useSettingsContext } from './SettingsContext'
 
 //
 // React + Typescript + Context
@@ -22,23 +24,27 @@ export enum ContentType {
 }
 
 export const initialState = {
-  [ContentType.Metadata]: {
-    [MetadataType.None]: {}, // required by MetadataStateType
-    [MetadataType.Realm]: {},
-    [MetadataType.Chamber]: {},
-    [MetadataType.Agent]: {},
-    [MetadataType.Player]: {},
-  },
-  [ContentType.Url]: {
-    [MetadataType.None]: {}, // required by MetadataStateType
-    [MetadataType.Realm]: {},
-    [MetadataType.Chamber]: {},
-    [MetadataType.Agent]: {},
-    [MetadataType.Player]: {},
-  },
+  gptModel: GPTModel.GPT3,
+  data: {
+    [ContentType.Metadata]: {
+      [MetadataType.None]: {}, // required by MetadataStateType
+      [MetadataType.Realm]: {},
+      [MetadataType.Chamber]: {},
+      [MetadataType.Agent]: {},
+      [MetadataType.Player]: {},
+    },
+    [ContentType.Url]: {
+      [MetadataType.None]: {}, // required by MetadataStateType
+      [MetadataType.Realm]: {},
+      [MetadataType.Chamber]: {},
+      [MetadataType.Agent]: {},
+      [MetadataType.Player]: {},
+    },
+  }
 }
 
 const MetadataActions = {
+  SET_GPT_MODEL: 'SET_GPT_MODEL',
   SET: 'SET',
 }
 
@@ -53,9 +59,12 @@ enum StatusType {
 }
 
 type MetadataStateType = {
-  [content in ContentType]: {
-    [type in MetadataType]: {
-      [key: string]: StatusType
+  gptModel: GPTModel,
+  data: {
+    [content in ContentType]: {
+      [type in MetadataType]: {
+        [key: string]: StatusType
+      }
     }
   }
 }
@@ -71,6 +80,7 @@ type PayloadType = {
   url?: string | null,
 }
 type ActionType =
+  | { type: 'SET_GPT_MODEL', payload: GPTModel }
   | { type: 'SET', payload: PayloadType }
 
 
@@ -107,16 +117,20 @@ const MetadataProvider = ({
   } = networkLayer
 
   const [state, dispatch] = useReducer((state: MetadataStateType, action: ActionType) => {
-    const { content, type, key, status, metadata, url } = action.payload
     // console.log(`____CONTEXT IMAGE META`, content, type, key, status, metadata, url)
-    const _key = key.toString()
     let newState = { ...state }
     switch (action.type) {
-      case MetadataActions.SET:
-        const currentStatus = state[content][type][_key]
+      case MetadataActions.SET_GPT_MODEL: {
+        newState.gptModel = action.payload as GPTModel
+        break
+      }
+      case MetadataActions.SET: {
+        const { content, type, key, status, metadata, url } = action.payload as PayloadType
+        const _key = key.toString()
+        const currentStatus = state.data[content][type][_key]
         if (status != currentStatus) {
-          newState[content][type] = {
-            ...state[content][type],
+          newState.data[content][type] = {
+            ...state.data[content][type],
             [_key]: status,
           }
           if (status == StatusType.Success) {
@@ -164,11 +178,12 @@ const MetadataProvider = ({
               }
             } catch (e) {
               console.warn(`MetadataContext metadata.[${type}][${_key}] exception:`, e)
-              newState[content][type][_key] = StatusType.Error
+              newState.data[content][type][_key] = StatusType.Error
             }
           }
         }
         break
+      }
       default:
         console.warn(`MetadataProvider: Unknown action [${action.type}]`)
         return state
@@ -293,7 +308,10 @@ export const useRequestRealmMetadata = (coord: bigint) => {
 
   useEffect(() => { console.log(`REALM META:`, coord, realm, `[${metadata}]`) }, [coord, realm, metadata])
 
+  const { state: { gptModel } } = useContext(MetadataContext)
+
   const options: PromptMetadataOptions = {
+    gptModel,
     type: MetadataType.Realm,
     terrain: null,
     gemType: null,
@@ -338,7 +356,10 @@ export const useRequestChamberMetadata = (coord: bigint) => {
 
   useEffect(() => { console.log(`CHAMBER META:`, chamber?.tokenId, `[${metadata}]`) }, [chamber, metadata])
 
+  const { state: { gptModel } } = useContext(MetadataContext)
+
   const options: PromptMetadataOptions = useMemo(() => ({
+    gptModel,
     type: MetadataType.Chamber,
     terrain: chamber?.terrain ?? null,
     gemType: chamber?.gemType ?? null,
@@ -379,7 +400,10 @@ export const useRequestAgentMetadata = (agentEntity: Entity | undefined) => {
   const metadataData = useComponentValue(Metadata, agentEntity) ?? null
   const metadata = useMemo(() => (metadataData?.metadata ?? null), [metadataData])
 
+  const { state: { gptModel } } = useContext(MetadataContext)
+
   const options: PromptMetadataOptions = useMemo(() => ({
+    gptModel,
     type: MetadataType.Agent,
     terrain: agent?.terrain ?? null,
     gemType: agent?.gemType ?? null,
@@ -554,7 +578,7 @@ export const useMetadataContext = () => {
 
 const useStatus = (content: ContentType, type: MetadataType, key: KeyType | undefined) => {
   const { state } = useContext(MetadataContext)
-  const status = key ? state[content][type][key.toString()] : 0
+  const status = key ? state.data[content][type][key.toString()] : 0
   return {
     isUnknown: (!status),
     isFetching: (status === StatusType.Fetching),

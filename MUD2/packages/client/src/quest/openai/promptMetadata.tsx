@@ -14,6 +14,7 @@ export enum MetadataType {
 }
 
 export interface PromptMetadataOptions {
+  gptModel: Chat.GPTModel
   type: MetadataType
   terrain: number | null
   gemType: number | null
@@ -57,7 +58,7 @@ export default async function promptMetadata(options: PromptMetadataOptions): Pr
 
   // https://platform.openai.com/docs/api-reference/chat/create
   const response = await Chat.generateChat({
-    model: Chat.GPTModel.GPT4,
+    model: options.gptModel,
     messages,
   })
   console.log('Metadata Chat response:', response)
