@@ -1,7 +1,10 @@
-import * as ClientRoom from './networking'
-import QuestMetadata from './components/questMetadata'
-import QuestMessages from './components/questMessages'
-import Store from './store'
+import {
+  Store,
+  ClientRoom,
+ } from 'hyperbox-sdk'
+import { getServerUrl } from '../utils/config'
+import QuestMetadata from '../components/questMetadata'
+import QuestMessages from '../components/questMessages'
 
 let _roomCounter = 0
 let _openRooms = 0
@@ -29,7 +32,7 @@ class Room {
 
     // room client: the actual room in use, synched with the server
     // can be null
-    this.clientRoom = ClientRoom.create({
+    this.clientRoom = new ClientRoom(getServerUrl(), {
       slug: this.slug,
       store: this.remoteStore,
       roomId: this.roomId,

@@ -14,7 +14,7 @@ export const Room = () => {
   useEffect(() => {
     setStatus('mounted')
     console.log(`[${slug}] <Hyperspace> import...`)
-    import('../core/room').then(async ({ default: Room }) => {
+    import('../core/room/room').then(async ({ default: Room }) => {
       console.log(`[${slug}] <Hyperspace> init...`)
       setStatus('imported')
       const _room = new Room()

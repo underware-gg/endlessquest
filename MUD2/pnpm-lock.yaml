@@ -1,4 +1,4 @@
-lockfileVersion: '6.1'
+lockfileVersion: '6.0'
 
 settings:
   autoInstallPeers: true
@@ -125,6 +125,9 @@ importers:
       events:
         specifier: ^3.3.0
         version: 3.3.0
+      hyperbox-sdk:
+        specifier: github:funDAOmental/hyperbox-sdk
+        version: github.com/funDAOmental/hyperbox-sdk/30a3f3dbfabadb544f59bc35a4266258a2e000cd
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -7760,6 +7763,16 @@ packages:
     name: forge-std
     version: 1.2.0
     dev: true
+
+  github.com/funDAOmental/hyperbox-sdk/30a3f3dbfabadb544f59bc35a4266258a2e000cd:
+    resolution: {tarball: https://codeload.github.com/funDAOmental/hyperbox-sdk/tar.gz/30a3f3dbfabadb544f59bc35a4266258a2e000cd}
+    name: hyperbox-sdk
+    version: 0.0.1
+    dependencies:
+      events: 3.3.0
+      messagepack: 1.1.12
+      nanoid: 4.0.2
+    dev: false
 
   github.com/transmissions11/solmate/9cf1428245074e39090dceacb0c28b1f684f584c:
     resolution: {tarball: https://codeload.github.com/transmissions11/solmate/tar.gz/9cf1428245074e39090dceacb0c28b1f684f584c}

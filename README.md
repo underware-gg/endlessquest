@@ -125,6 +125,12 @@ $ cp env.contracts packages/contracts/.env
 $ pnpm run dev
 ```
 
+To use a local [sync server](https://github.com/funDAOmental/hyperbox-server), edit `MUD2/packages/client/.env` to contain this, and restart:
+
+```
+VITE_SERVER_URL=ws://localhost:8787
+```
+
 
 #### OpenAI API Keys
 

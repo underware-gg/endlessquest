@@ -28,6 +28,7 @@
     "contracts": "workspace:*",
     "ethers": "^5.7.2",
     "events": "^3.3.0",
+    "hyperbox-sdk": "github:funDAOmental/hyperbox-sdk",
     "lodash": "^4.17.21",
     "messagepack": "^1.1.12",
     "nanoid": "^4.0.2",
