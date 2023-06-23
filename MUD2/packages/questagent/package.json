@@ -1,0 +1,22 @@
+{
+  "name": "questagent",
+  "version": "0.0.1",
+  "private": true,
+  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "watch": "tsc -w",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "hyperbox-sdk": "github:funDAOmental/hyperbox-sdk",
+    "nanoid": "^4.0.2",
+    "openai": "^3.2.1",
+    "universal-cookie": "^4.0.4"
+  },
+  "devDependencies": {
+  }
+}
