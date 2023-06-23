@@ -1,7 +1,7 @@
-import * as Crawl from '../bridge/Crawl'
 import * as Chat from './generateChat'
 import { prompts } from '../prompts/prompts'
 import { ChatCompletionRequestMessageRoleEnum } from 'openai'
+import * as Crawl from '../utils/Crawl'
 
 // types must match Prompts commands
 export enum MetadataType {
@@ -28,7 +28,7 @@ export interface PromptMetadataResponse {
   error: string | null
 }
 
-export default async function promptMetadata(options: PromptMetadataOptions): Promise<PromptMetadataResponse> {
+export async function promptMetadata(options: PromptMetadataOptions): Promise<PromptMetadataResponse> {
 
   if(options.type == MetadataType.None) {
     return {

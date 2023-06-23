@@ -1,4 +1,4 @@
-import { Terrain } from '../bridge/Crawl'
+import { Terrain } from '../utils/Crawl'
 
 export const prompts = {
 

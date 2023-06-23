@@ -7,16 +7,18 @@
   "types": "dist/index.d.ts",
   "type": "module",
   "scripts": {
-    "build": "tsc -p tsconfig.json",
+    "build": "rm -f tsconfig.tsbuildinfo; tsc -p tsconfig.json",
     "watch": "tsc -w",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
+    "@types/react": "^18.2.6",
     "hyperbox-sdk": "github:funDAOmental/hyperbox-sdk",
     "nanoid": "^4.0.2",
     "openai": "^3.2.1",
+    "questagent": "link:",
+    "react": "^18.2.0",
+    "react-cookie": "^4.1.1",
     "universal-cookie": "^4.0.4"
-  },
-  "devDependencies": {
   }
 }

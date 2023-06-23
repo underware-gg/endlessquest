@@ -122,24 +122,21 @@ importers:
       ethers:
         specifier: ^5.7.2
         version: 5.7.2
-      events:
-        specifier: ^3.3.0
-        version: 3.3.0
       hyperbox-sdk:
         specifier: github:funDAOmental/hyperbox-sdk
         version: github.com/funDAOmental/hyperbox-sdk/30a3f3dbfabadb544f59bc35a4266258a2e000cd
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
-      messagepack:
-        specifier: ^1.1.12
-        version: 1.1.12
       nanoid:
         specifier: ^4.0.2
         version: 4.0.2
       openai:
         specifier: ^3.2.1
         version: 3.2.1
+      questagent:
+        specifier: workspace:*
+        version: link:../questagent
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -265,6 +262,33 @@ importers:
       typechain:
         specifier: ^8.1.1
         version: 8.1.1(typescript@5.1.3)
+
+  packages/questagent:
+    dependencies:
+      '@types/react':
+        specifier: ^18.2.6
+        version: 18.2.6
+      hyperbox-sdk:
+        specifier: github:funDAOmental/hyperbox-sdk
+        version: link:../../../../hyperbox-sdk
+      nanoid:
+        specifier: ^4.0.2
+        version: 4.0.2
+      openai:
+        specifier: ^3.2.1
+        version: 3.2.1
+      questagent:
+        specifier: 'link:'
+        version: 'link:'
+      react:
+        specifier: ^18.2.0
+        version: 18.2.0
+      react-cookie:
+        specifier: ^4.1.1
+        version: 4.1.1(react@18.2.0)
+      universal-cookie:
+        specifier: ^4.0.4
+        version: 4.0.4
 
 packages:
 

@@ -1,11 +1,11 @@
 import { useEffect, useMemo, useState } from 'react'
 import { ChatCompletionRequestMessageRoleEnum } from 'openai'
-import { ChatHistory } from '../openai/generateChat'
 import { ChatRequest } from './ChatRequest'
 import { useHyperspaceContext } from '../hyperspace/hooks/HyperspaceContext'
 import { useSettingsContext, SettingsActions } from '../hooks/SettingsContext'
 import { usePlayer } from '../hooks/usePlayer'
 import { useAgent } from '../hooks/useAgent'
+import { ChatHistory } from 'questagent'
 
 export const ChatDialog = ({
   playerName = 'Player',

@@ -16,6 +16,7 @@
       "**/contracts/broadcast": true,
       "**/contracts/out": true,
       "**/contracts/types": true,
+      "**/tsconfig.tsbuildinfo": true,
     },
     "search.exclude": {
       "**/codegen": true,

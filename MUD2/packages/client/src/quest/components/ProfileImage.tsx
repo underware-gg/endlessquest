@@ -1,6 +1,4 @@
 import { useEffect, useState } from 'react'
-import { usePrompChat, usePrompMetadata } from '../openai/hooks'
-import { MetadataType } from '../openai/promptMetadata'
 
 export const ProfileImage = ({
   url = '',

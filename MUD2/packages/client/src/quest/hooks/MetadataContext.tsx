@@ -1,14 +1,18 @@
 import React, { ReactNode, createContext, useReducer, useContext, useEffect, useMemo } from 'react'
+import {
+  promptMetadata,
+  MetadataType, PromptMetadataOptions, PromptMetadataResponse,
+  generateImage, ImageOptions, ImageResponse, ImageSize,
+  GPTModel,
+  prompts,
+} from 'questagent'
+// Hyperspace
+import { useHyperspaceContext } from '../hyperspace/hooks/HyperspaceContext'
+// MUD
 import { useRow, useComponentValue } from '@latticexyz/react'
 import { Entity } from '@latticexyz/recs'
 import { useMUD } from '../../store'
-import promptMetadata, { MetadataType, PromptMetadataOptions, PromptMetadataResponse } from '../openai/promptMetadata'
-import { generateImage, ImageOptions, ImageResponse, ImageSize } from '../openai/generateImage'
-import { GPTModel } from '../openai/generateChat'
-import { useHyperspaceContext } from '../hyperspace/hooks/HyperspaceContext'
-import { prompts } from '../prompts/prompts'
 import { agentToCoord } from '../utils'
-import { useSettingsContext } from './SettingsContext'
 
 //
 // React + Typescript + Context

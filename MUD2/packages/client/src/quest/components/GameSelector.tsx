@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react'
 import { useRealm } from '../hooks/useRealm'
 import { Container, Grid, Row, Col } from './Grid'
 import { useSettingsContext, SettingsActions } from '../hooks/SettingsContext'
-import { Keys, useKeys } from '../openai/keys'
 import { useCookies } from 'react-cookie'
+import { Keys, useKeys } from 'questagent'
 
 interface RealmButtonProps {
   coord: bigint,

@@ -1,5 +1,5 @@
+import { ChatHistory } from 'questagent'
 import { coordToSlug } from '../../../bridge/Crawl'
-import { ChatHistory } from '../../../openai/generateChat'
 import RoomCollection from '../interfaces/RoomCollection'
 
 class Room { }

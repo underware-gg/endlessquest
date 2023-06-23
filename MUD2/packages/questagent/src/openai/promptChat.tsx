@@ -15,7 +15,7 @@ export interface PromptAgentResponse {
   error: string | null
 }
 
-export default async function promptChat(options: PromptAgentOptions): Promise<PromptAgentResponse> {
+export async function promptChat(options: PromptAgentOptions): Promise<PromptAgentResponse> {
 
   let messages = [...options.history]
 
