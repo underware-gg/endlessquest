@@ -270,7 +270,7 @@ importers:
         version: 18.2.6
       hyperbox-sdk:
         specifier: github:funDAOmental/hyperbox-sdk
-        version: link:../../../../hyperbox-sdk
+        version: github.com/funDAOmental/hyperbox-sdk/30a3f3dbfabadb544f59bc35a4266258a2e000cd
       nanoid:
         specifier: ^4.0.2
         version: 4.0.2

@@ -9,7 +9,9 @@
   "scripts": {
     "build": "rm -f tsconfig.tsbuildinfo; tsc -p tsconfig.json",
     "watch": "tsc -w",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "link": "pnpm link ../../../../hyperbox-sdk",
+    "unlink": "pnpm install hyperbox-sdk"
   },
   "dependencies": {
     "@types/react": "^18.2.6",

@@ -9,7 +9,9 @@
     "dev": "wait-port localhost:8545 && vite",
     "initialize": "pnpm build",
     "preview": "vite preview",
-    "test": "tsc --noEmit"
+    "test": "tsc --noEmit",
+    "link": "pnpm link ../questagent ../../../../hyperbox-sdk",
+    "unlink": "pnpm install questagent hyperbox-sdk"
   },
   "dependencies": {
     "@ethersproject/providers": "^5.7.2",
