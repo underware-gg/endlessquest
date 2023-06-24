@@ -2,10 +2,7 @@ import {
   Configuration,
   OpenAIApi,
 } from 'openai'
-import Cookies from 'universal-cookie'
-import { Keys } from './keys'
-
-const cookies = new Cookies()
+import { Keys, getKey } from './keys'
 
 //-----------------------
 // OPenAI Client
@@ -15,8 +12,8 @@ let _openai: OpenAIApi
 
 function _create(apiKey: string | undefined, organization: string | undefined) {
   const configuration = new Configuration({
-    apiKey: apiKey ?? cookies.get(Keys.OPENAI_API_KEY),
-    organization: organization ?? cookies.get(Keys.OPENAI_ORG_ID),
+    apiKey: apiKey ?? getKey(Keys.OPENAI_API_KEY),
+    organization: organization ?? getKey(Keys.OPENAI_ORG_ID),
   })
   _openai = new OpenAIApi(configuration)
 }

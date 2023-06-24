@@ -1,9 +1,10 @@
-import { useCookies } from 'react-cookie'
+import { GPTModel } from './generateChat'
 import Cookies from 'universal-cookie'
 
 export enum Keys {
   OPENAI_API_KEY = 'OPENAI_API_KEY',
-  OPENAI_ORG_ID = 'OPENAI_ORG_ID'
+  OPENAI_ORG_ID = 'OPENAI_ORG_ID',
+  GPT_MODEL = 'GPT_MODEL',
 }
 
 // Initialize cookies
@@ -13,4 +14,11 @@ if (!cookies.get(Keys.OPENAI_API_KEY)) {
 }
 if (!cookies.get(Keys.OPENAI_ORG_ID)) {
   cookies.set(Keys.OPENAI_ORG_ID, '', { path: '/' })
+}
+if (!cookies.get(Keys.GPT_MODEL)) {
+  cookies.set(Keys.GPT_MODEL, GPTModel.GPT4, { path: '/' })
+}
+
+export const getKey = (keyName: Keys) => {
+  return cookies.get(keyName)
 }

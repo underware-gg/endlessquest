@@ -1,9 +1,7 @@
-import { useEffect, useState } from 'react'
 import { useRealm } from '../hooks/useRealm'
 import { Container, Grid, Row, Col } from './Grid'
 import { useSettingsContext, SettingsActions } from '../hooks/SettingsContext'
-import { useCookies } from 'react-cookie'
-import { Keys, useKeys } from 'questagent'
+import { OpenAISetup } from 'questagent'
 
 interface RealmButtonProps {
   coord: bigint,
@@ -50,38 +48,6 @@ export const RealmButton = ({
   )
 }
 
-export const OpenAISetup = () => {
-  const { apiKeyIsOk, orgIdIsOk , keysAreOk } = useKeys()
-  
-  const [cookies, setCookie] = useCookies([Keys.OPENAI_API_KEY, Keys.OPENAI_ORG_ID])
-
-  const _setupCookie = (name: Keys) => {
-    const value = window.prompt(`Enter your ${name}`)
-    if (value) {
-      setCookie(name, value, { path: '/' })
-    }
-  }
-
-  return (
-    <Row className='SelectRealmInfo'>
-      <Col span={12} className='Padded'>
-        <p>Setup</p>
-        <p>OPENAI_API_KEY:&nbsp;
-          {apiKeyIsOk
-            ? <span className='Green'>OK</span> 
-            : <span className='Important Clickable' onClick={() => _setupCookie(Keys.OPENAI_API_KEY)}>SETUP</span>
-          }
-        </p>
-        <p>OPENAI_ORG_ID:&nbsp;
-          {orgIdIsOk
-            ? <span className='Green'>OK</span>
-            : <span className='Important Clickable' onClick={() => _setupCookie(Keys.OPENAI_ORG_ID)}>SETUP</span>}
-        </p>
-      </Col>
-    </Row>
-  )
-}
-
 export const GameSelector = () => {
   const { dispatch } = useSettingsContext()
 
@@ -106,7 +72,11 @@ export const GameSelector = () => {
 
           <RealmButton coord={1n} onClick={_selectedCoord} />
 
-          <OpenAISetup />
+          <Row className='SelectRealmInfo'>
+            <Col span={12} className='Padded'>
+              <OpenAISetup />
+            </Col>
+          </Row>
 
         </Grid>
       </Container>

@@ -1,3 +1,4 @@
+export * from './components/OpenAISetup'
 export * from './hooks/useGeneratedImage'
 export * from './hooks/useKeys'
 export * from './hooks/usePromptChat'

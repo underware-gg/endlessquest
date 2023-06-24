@@ -5,6 +5,8 @@ import {
   generateImage, ImageOptions, ImageResponse, ImageSize,
   GPTModel,
   prompts,
+  getKey,
+  Keys,
 } from 'questagent'
 // Hyperspace
 import { useHyperspaceContext } from '../hyperspace/hooks/HyperspaceContext'
@@ -28,7 +30,7 @@ export enum ContentType {
 }
 
 export const initialState = {
-  gptModel: GPTModel.GPT3,
+  gptModel: GPTModel.GPT4,
   data: {
     [ContentType.Metadata]: {
       [MetadataType.None]: {}, // required by MetadataStateType
@@ -312,7 +314,7 @@ export const useRequestRealmMetadata = (coord: bigint) => {
 
   useEffect(() => { console.log(`REALM META:`, coord, realm, `[${metadata}]`) }, [coord, realm, metadata])
 
-  const { state: { gptModel } } = useContext(MetadataContext)
+  const { gptModel } = useMetadataContext()
 
   const options: PromptMetadataOptions = {
     gptModel,
@@ -360,7 +362,7 @@ export const useRequestChamberMetadata = (coord: bigint) => {
 
   useEffect(() => { console.log(`CHAMBER META:`, chamber?.tokenId, `[${metadata}]`) }, [chamber, metadata])
 
-  const { state: { gptModel } } = useContext(MetadataContext)
+  const { gptModel } = useMetadataContext()
 
   const options: PromptMetadataOptions = useMemo(() => ({
     gptModel,
@@ -404,7 +406,7 @@ export const useRequestAgentMetadata = (agentEntity: Entity | undefined) => {
   const metadataData = useComponentValue(Metadata, agentEntity) ?? null
   const metadata = useMemo(() => (metadataData?.metadata ?? null), [metadataData])
 
-  const { state: { gptModel } } = useContext(MetadataContext)
+  const { gptModel } = useMetadataContext()
 
   const options: PromptMetadataOptions = useMemo(() => ({
     gptModel,
@@ -577,7 +579,11 @@ export const useRequestAgentArtUrl = (agentEntity: Entity) => {
 
 export const useMetadataContext = () => {
   const { state } = useContext(MetadataContext)
-  return state
+  const gptModel = getKey(Keys.GPT_MODEL)
+  return {
+    ...state,
+    gptModel: (gptModel && gptModel != 'null' ? gptModel : state.gptModel)
+  }
 }
 
 const useStatus = (content: ContentType, type: MetadataType, key: KeyType | undefined) => {
