@@ -48,7 +48,7 @@ export async function promptMetadata(options: PromptMetadataOptions): Promise<Pr
   console.log('Metadata Chat prompt:', prompt)
 
   const messages = [
-    { role: ChatCompletionRequestMessageRoleEnum.System, content: prompts.metadataSystemPromptGPT4 },
+    { role: ChatCompletionRequestMessageRoleEnum.System, content: prompts.metadataSystemPrompt },
     { role: ChatCompletionRequestMessageRoleEnum.User, content: 'Are you ready?' },
     { role: ChatCompletionRequestMessageRoleEnum.Assistant, content: '[Ready]' },
     { role: ChatCompletionRequestMessageRoleEnum.User, content: prompt },

@@ -224,7 +224,7 @@ const useRequestGenericMetadata = (
   key: KeyType,
   currentValue: string | null,
   options: PromptMetadataOptions | ImageOptions,
-  _parseResult: ((matadata: any) => any | null) | null) => {
+  _parseReponseMetadata: ((matadata: any) => any | null) | null) => {
   const { dispatch } = useContext(MetadataContext)
   const { isUnknown, isFetching, isError, isSuccess } = useStatus(content, type, key)
   const isMetadata = content == ContentType.Metadata
@@ -256,7 +256,7 @@ const useRequestGenericMetadata = (
       } else if (isMetadata) {
         const resp = response as PromptMetadataResponse
         if (resp.metadata) {
-          payload.metadata = _parseResult?.(resp.metadata)
+          payload.metadata = _parseReponseMetadata?.(resp.metadata)
           payload.status = payload.metadata ? StatusType.Success : StatusType.Error
         }
       } else {
@@ -325,17 +325,19 @@ export const useRequestRealmMetadata = (coord: bigint) => {
     yonder: null,
   }
 
-  const _parseResult = (responseMetadata: any): any | null => {
+  const _parseReponseMetadata = (responseMetadata: any): any | null => {
     const worldMetadata = responseMetadata.world ?? null
     if (!worldMetadata) return null
-    return {
-      name: worldMetadata.world_name ?? worldMetadata.name ?? '[name]',
-      description: worldMetadata.world_description ?? worldMetadata.description ?? '[description]',
+    const result = {
+      name: worldMetadata.world_name ?? worldMetadata.name ?? null,
+      description: worldMetadata.world_description ?? worldMetadata.description ?? null,
       premise: worldMetadata.world_premise ?? worldMetadata.premise ?? '[premise]',
       boss: worldMetadata.world_boss ?? worldMetadata.boss ?? '[boss]',
       quirk: worldMetadata.world_boss_quirk ?? worldMetadata.quirk ?? '[quirk]',
       treasure: worldMetadata.world_treasure ?? worldMetadata.treasure ?? '[treasure]',
     }
+    if (!result.name || !result.description) return null
+    return result
   }
 
   return useRequestGenericMetadata(
@@ -344,7 +346,7 @@ export const useRequestRealmMetadata = (coord: bigint) => {
     coord,
     realm ? metadata : null,
     options,
-    _parseResult
+    _parseReponseMetadata
   )
 }
 
@@ -373,17 +375,19 @@ export const useRequestChamberMetadata = (coord: bigint) => {
     yonder: chamber?.yonder ?? null,
   }), [chamber])
 
-  const _parseResult = (responseMetadata: any): any | null => {
+  const _parseReponseMetadata = (responseMetadata: any): any | null => {
     const chamberMetadata = responseMetadata.chamber ?? null
     if (!chamberMetadata) return null
-    return {
-      name: chamberMetadata.chamber_name ?? chamberMetadata.name ?? '[name]',
-      description: chamberMetadata.chamber_description ?? chamberMetadata.description ?? '[description]',
+    const result = {
+      name: chamberMetadata.chamber_name ?? chamberMetadata.name ?? null,
+      description: chamberMetadata.chamber_description ?? chamberMetadata.description ?? null,
       terrain: chamber?.terrain ?? null,
       yonder: chamber?.yonder ?? null,
       gemType: chamber?.gemType ?? null,
       coins: chamber?.coins ?? null,
     }
+    if (!result.name || !result.description) return null
+    return result
   }
 
   return useRequestGenericMetadata(
@@ -392,7 +396,7 @@ export const useRequestChamberMetadata = (coord: bigint) => {
     coord,
     chamber ? metadata : null,
     options,
-    _parseResult
+    _parseReponseMetadata
   )
 }
 
@@ -419,20 +423,22 @@ export const useRequestAgentMetadata = (agentEntity: Entity | undefined) => {
 
   useEffect(() => { console.log(`AGENT META:`, agentEntity, agent, `[${metadata}]`) }, [agentEntity, agent, metadata])
 
-  const _parseResult = (responseMetadata: any): any | null => {
+  const _parseReponseMetadata = (responseMetadata: any): any | null => {
     const agentMetadata = responseMetadata.npc ?? responseMetadata.chamber?.npc ?? null
     // console.log(`>>>>>> AGENT META RESULT`, agentMetadata, responseMetadata)
     if (!agentMetadata) return null
-    return {
-      name: agentMetadata.name ?? '[name]',
-      description: agentMetadata.description ?? '[description]',
-      behaviour_mode: agentMetadata.behaviour_mode ?? '[behaviour]',
-      quirk: agentMetadata.quirk ?? '[quirk]',
+    const result = {
+      name: agentMetadata.npc_name ?? null,
+      description: agentMetadata.npc_description ?? null,
+      behaviour_mode: agentMetadata.behaviour_mode ?? '[behaviour_mode]',
+      quirk: agentMetadata.npc_quirk ?? '[quirk]',
       terrain: agent?.terrain,
       yonder: agent?.yonder,
       gemType: agent?.gemType,
       coins: agent?.coins,
     }
+    if (!result.name || !result.description) return null
+    return result
   }
 
   return useRequestGenericMetadata(
@@ -441,7 +447,7 @@ export const useRequestAgentMetadata = (agentEntity: Entity | undefined) => {
     agentEntity ?? ('' as Entity),
     agent ? metadata : null,
     options,
-    _parseResult
+    _parseReponseMetadata
   )
 }
 
