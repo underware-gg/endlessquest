@@ -19,8 +19,13 @@ export async function promptChat(options: PromptAgentOptions): Promise<PromptAge
 
   let messages = [...options.history]
 
+  console.log(`PROMPT_____`, options)
+  
   // 1st interaction
-  if (messages.length == 0) {
+  if (!options.prompt || options.agentMetadata == '{}') {
+    messages = []
+  } else if (messages.length == 0) {
+    // First interaction
     messages = [
       { role: ChatCompletionRequestMessageRoleEnum.System, content: prompts.chatSystemPrompt },
       { role: ChatCompletionRequestMessageRoleEnum.User, content: 'Begin' },
@@ -28,10 +33,10 @@ export async function promptChat(options: PromptAgentOptions): Promise<PromptAge
       { role: ChatCompletionRequestMessageRoleEnum.User, content: options.agentMetadata },
     ]
   } else {
-    if (!options.prompt) console.log('Chat MISSING PROMPT!')
+    // Continuing chat
     messages.push({
       role: ChatCompletionRequestMessageRoleEnum.User,
-      content: options.prompt ?? 'Hello',
+      content: options.prompt,
     })
   }
 

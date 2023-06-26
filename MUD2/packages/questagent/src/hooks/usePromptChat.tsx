@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { promptChat, PromptAgentOptions } from '../openai/promptChat'
 import { ChatHistory } from '../openai/generateChat'
 
 export const usePromptChat = (options: PromptAgentOptions) => {
-  const [isWaiting, setIsWaiting] = useState<boolean>(false)
+  const [isWaiting, setIsWaiting] = useState<boolean>(true)
   const [message, setMessage] = useState<string | null>(null)
   const [history, setHistory] = useState<ChatHistory>([])
   const [error, setError] = useState<string | null>(null)
@@ -29,7 +29,7 @@ export const usePromptChat = (options: PromptAgentOptions) => {
     return () => {
       _mounted = false
     }
-  }, [prompt])
+  }, [options.prompt, options.history.length])
 
   return {
     isWaiting,

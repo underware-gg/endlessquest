@@ -1,12 +1,11 @@
-import { useEffect, useState } from 'react'
+import React from 'react'
+import { usePlayer } from '../hooks/usePlayer'
 import { RealmLocation } from './RealmLocation'
 import { ChamberLocation } from './ChamberLocation'
 import { PlayerLocation } from './PlayerLocation'
 import { AgentLocation } from './AgentLocation'
-import { ChatDialog } from './ChatDialog'
+import { ChatInterface } from './ChatInterface'
 import { Loader } from './Loader'
-import { usePlayer } from '../hooks/usePlayer'
-// import { useSettingsContext } from '../hooks/SettingsContext'
 import { RoomLoader } from '../hyperspace/components/RoomLoader'
 
 declare global {
@@ -14,11 +13,7 @@ declare global {
 }
 
 export const GameUI = () => {
-  // const { isChatting } = useSettingsContext()
-
-  const {
-    agentId,
-  } = usePlayer()
+  const { agentId } = usePlayer()
 
   return (
     <div >
@@ -37,7 +32,7 @@ export const GameUI = () => {
       <Loader />
       <RoomLoader />
 
-      <ChatDialog />
+      <ChatInterface/>
     </div>
   )
 }

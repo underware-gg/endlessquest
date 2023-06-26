@@ -30,7 +30,7 @@ export const RoomLoader = () => {
   }, [])
 
   return (
-    <div className='RoomLoader'>
+    <div className='RoomLoader Infos Smaller'>
       <div className='LoaderContent'>
         Room [{status}][{room?.slug ?? ''}]
         <MetadataName type='questRealm' id='1' />

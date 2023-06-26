@@ -9,14 +9,14 @@ class QuestMessages extends RoomCollection {
     super(room, 'questMessages')
   }
 
-  updateMessages(timestamp: number, realm: bigint, coord: bigint, player: string, messages: ChatHistory) {
-    const slug = coordToSlug(coord, false)
-    console.log(`Hyperspace.updateMessages()`, timestamp, slug, messages.slice(4))
+  updateMessages(timestamp: number, realm: bigint, coord_or_slug: bigint | string, player: string, messages: ChatHistory) {
+    const slug = typeof coord_or_slug == 'string' ? coord_or_slug : coordToSlug(coord_or_slug, false)
+    const _messages = messages.length > 4 ? messages.slice(4) : null
     this.upsert(timestamp.toString(), {
       realm: realm.toString(),
       chamber: slug,
       player,
-      messages: JSON.stringify(messages.slice(4)),
+      messages: _messages ? JSON.stringify(_messages) : null,
     })
   }
 

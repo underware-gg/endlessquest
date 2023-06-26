@@ -2,40 +2,39 @@ import { useEffect, useMemo, useState } from 'react'
 import { ChatCompletionRequestMessageRoleEnum } from 'openai'
 import { ChatRequest } from './ChatRequest'
 import { useHyperspaceContext } from '../hyperspace/hooks/HyperspaceContext'
-import { useSettingsContext, SettingsActions } from '../hooks/SettingsContext'
-import { usePlayer } from '../hooks/usePlayer'
-import { useAgent } from '../hooks/useAgent'
 import { ChatHistory } from 'questagent'
+import { useDocument } from 'hyperbox-sdk'
 
 export const ChatDialog = ({
+  // @ts-ignore
+  store,
+  realmCoord = 1n,    // real coord, always 1n until we implement multiple Realms
+  chamberSlug = '',   // chamber coord
   playerName = 'Player',
+  isChatting = false,
+  onStopChatting = () => {},
 }) => {
-  const [timestamp, setTimestamp] = useState(0)
   const [history, setHistory] = useState<ChatHistory>([])
   const [prompt, setPrompt] = useState('')
   const [isRequesting, setIsRequesting] = useState(false)
-  const { realmCoord, isChatting, dispatch } = useSettingsContext()
+  const [isHalted, setIsHalted] = useState(false)
+  const [timestamp, setTimestamp] = useState(0)
   const { QuestMessages } = useHyperspaceContext()
 
   useEffect(() => {
-    window.QuestNamespace.controlsEnabled = !isChatting
     if (isChatting) {
       setHistory([])
       setIsRequesting(true)
+      setIsHalted(false)
       setTimestamp(Date.now())
     }
   }, [isChatting])
 
-  const {
-    agentEntity,
-  } = usePlayer()
-  const {
-    coord,
-    metadata,
-  } = useAgent(agentEntity)
+  const metadata = useDocument('questAgent', chamberSlug, store)
+  // console.log(`------ GOT METADATA`, chamberSlug, metadata)
 
-  const agentName = useMemo(() => (metadata?.name ?? 'Agent'), [metadata])
-  const agentMetadata = useMemo(() => (metadata ? JSON.stringify(metadata) : ''), [metadata])
+  const agentName = useMemo(() => (metadata?.name ?? '[no agent metadata]'), [metadata])
+  const agentMetadata = useMemo(() => (metadata?.metadata ?? null), [metadata])
 
   const _makeTopic = (key: string, role: ChatCompletionRequestMessageRoleEnum, content: string) => {
     const isAgent = (role == ChatCompletionRequestMessageRoleEnum.Assistant)
@@ -50,42 +49,43 @@ export const ChatDialog = ({
 
   const topics = useMemo(() => {
     let result = []
-    for (let i = 4; i < history.length; ++i) {
+    for (let i = isHalted ? 0 : 4; i < history.length; ++i) {
       const h = history[i]
-      const isAgent = (h.role == ChatCompletionRequestMessageRoleEnum.Assistant)
-      const className = isAgent ? 'AgentTopic' : 'UserTopic'
+      // const isAgent = (h.role == ChatCompletionRequestMessageRoleEnum.Assistant)
+      // const className = isAgent ? 'AgentTopic' : 'UserTopic'
       result.push(_makeTopic(`t_${i}`, h.role, h.content))
     }
     return result
   }, [history])
 
-  const _onClose = () => {
-    dispatch({
-      type: SettingsActions.SET_IS_CHATTING,
-      payload: false,
-    })
-  }
-
   const _submit = () => {
     setIsRequesting(true)
   }
 
-  const _onDone = (newHistory: ChatHistory, message: string) => {
-    setHistory(newHistory)
+  const _onDone = (newHistory: ChatHistory, error: string | null) => {
     setIsRequesting(false)
     setPrompt('')
-    QuestMessages.updateMessages(timestamp, realmCoord, coord, playerName, newHistory)
+    if (error) {
+      setHistory([
+        { role: ChatCompletionRequestMessageRoleEnum.Assistant, content: error },
+      ])
+      setIsHalted(true)
+    } else {
+      setHistory(newHistory)
+      QuestMessages.updateMessages(timestamp, realmCoord, chamberSlug, playerName, newHistory)
+    }
   }
 
-  const canSubmit = (!isRequesting && prompt.length > 0)
+  const waitingToSubmit = (!isRequesting && !isHalted)
+  const canSubmit = (waitingToSubmit && prompt.length > 0)
 
   if (!isChatting) {
-    return null
+    return <></>
   }
 
   return (
     <>
-      <div className='FadedCover' onClick={() => _onClose()} />
+      <div className='FadedCover' onClick={() => onStopChatting()} />
 
       <div className='FillScreen CenteredContainer'>
         <div className='ChatDialog'>
@@ -101,11 +101,14 @@ export const ChatDialog = ({
                 <ChatRequest prompt={prompt} previousHistory={history} onDone={_onDone} agentMetadata={agentMetadata} />
               </div>
             }
+            {waitingToSubmit &&
+              <div className='Infos'>{agentName} is waiting for your answer...</div>
+            }
           </div>
 
           <div className='ChatInputRow'>
             <input disabled={isRequesting} className='ChatInput' value={prompt} onChange={(e) => setPrompt(e.target.value)}></input>
-            <button disabled={!canSubmit} className='ChatSubmit' onClick={() => _submit()}>Submit</button>
+            <button disabled={!canSubmit} className='ChatSubmit' onClick={() => _submit()}>Answer</button>
           </div>
 
         </div>
