@@ -7,7 +7,6 @@ import { BridgeProvider } from '../hooks/BridgeContext'
 import { MetadataProvider } from '../hooks/MetadataContext'
 import { GameSelector } from './GameSelector'
 import { GameUI } from './GameUI'
-import { Room } from '../hyperspace/components/Room'
 
 const _GameRoot = () => {
   const { realmCoord } = useSettingsContext()
@@ -42,7 +41,6 @@ export const GameRoot = () => {
         <BridgeProvider networkLayer={networkLayer}>
           <MetadataProvider networkLayer={networkLayer}>
             <_GameRoot />
-            <Room />
           </MetadataProvider>
         </BridgeProvider>
       </HyperspaceProvider>

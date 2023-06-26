@@ -7,6 +7,7 @@ import { ChatDialog } from './ChatDialog'
 import { Loader } from './Loader'
 import { usePlayer } from '../hooks/usePlayer'
 // import { useSettingsContext } from '../hooks/SettingsContext'
+import { RoomLoader } from '../hyperspace/components/RoomLoader'
 
 declare global {
   interface Window { QuestNamespace: any }
@@ -34,6 +35,7 @@ export const GameUI = () => {
       </div>
 
       <Loader />
+      <RoomLoader />
 
       <ChatDialog />
     </div>

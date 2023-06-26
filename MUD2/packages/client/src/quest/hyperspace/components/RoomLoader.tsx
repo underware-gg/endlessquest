@@ -3,7 +3,7 @@ import { HyperspaceContext } from '../hooks/HyperspaceContext'
 import { useRemoteDocument } from '../hooks/useDocument'
 import { useRemoteDocumentIds } from '../hooks/useDocumentIds'
 
-export const Room = () => {
+export const RoomLoader = () => {
   // @ts-ignore
   const { dispatchRoom } = useContext(HyperspaceContext)
   const [status, setStatus] = useState('?')
