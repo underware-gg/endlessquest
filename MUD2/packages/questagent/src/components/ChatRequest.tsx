@@ -1,10 +1,11 @@
-import { useEffect, useMemo, useState } from 'react'
-import { useMetadataContext } from '../hooks/MetadataContext'
+import { useEffect, useMemo } from 'react'
 import {
+  Keys, getKey,
   ChatHistory,
   PromptAgentOptions,
-  usePromptChat,
-} from 'questagent'
+} from '../openai'
+import { usePromptChat } from '../hooks'
+
 
 interface ChatRequestProps {
   prompt: string | null,
@@ -19,7 +20,8 @@ export const ChatRequest = ({
   agentMetadata,
   onDone,
 }: ChatRequestProps) => {
-  const { gptModel } = useMetadataContext()
+
+  const gptModel = getKey(Keys.GPT_MODEL)
 
   const options: PromptAgentOptions = {
     gptModel,

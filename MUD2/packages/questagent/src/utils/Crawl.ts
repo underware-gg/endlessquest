@@ -1,5 +1,5 @@
 //------------------------------
-// Ensledd Crawler Constsnts
+// Endless Crawler Constants
 //
 
 export const Terrain = {

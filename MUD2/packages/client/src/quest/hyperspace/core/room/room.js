@@ -3,8 +3,6 @@ import {
   ClientRoom,
  } from 'hyperbox-sdk'
 import { getServerUrl } from '../utils/config'
-import QuestMetadata from '../components/questMetadata'
-import QuestMessages from '../components/questMessages'
 
 let _roomCounter = 0
 let _openRooms = 0
@@ -39,12 +37,6 @@ class Room {
     })
 
     this.agentId = this.clientRoom?.agentId ?? null
-
-    // instantiate components before this.clientRoom.init() to listen to snapshot loading events
-    this.QuestRealm = new QuestMetadata(this, 'questRealm')
-    this.QuestChamber = new QuestMetadata(this, 'questChamber')
-    this.QuestAgent = new QuestMetadata(this, 'questAgent')
-    this.QuestMessages = new QuestMessages(this)
 
     this.clientRoom.init({
       loadLocalSnapshot: true,

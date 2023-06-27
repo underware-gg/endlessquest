@@ -1,5 +1,5 @@
 //------------------------------
-// Constsnts
+// Constants
 //
 export var Tiles;
 (function (Tiles) {

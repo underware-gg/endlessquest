@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { generateImage, ImageSize } from '../openai/generateImage'
+import { generateImage, ImageSize } from '../openai'
 
 export const useGeneratedImage = (prompt: string | null) => {
   const [isWaiting, setIsWaiting] = useState<boolean>(false)

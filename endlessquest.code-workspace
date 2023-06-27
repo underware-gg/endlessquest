@@ -9,6 +9,7 @@
       "**/.next": true,
       "**/.vscode": true,
       "**/build": true,
+      "**/dist": true,
       "**/node_modules": true,
       "**/_artwork": true,
       "**/contracts/cache": true,

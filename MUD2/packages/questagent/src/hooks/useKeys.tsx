@@ -1,5 +1,5 @@
 import { useCookies } from 'react-cookie'
-import { Keys } from '../openai/keys'
+import { Keys } from '../openai'
 
 export const useKeys = () => {
   const [cookies, setCookie, removeCookie] = useCookies([Keys.OPENAI_API_KEY, Keys.OPENAI_ORG_ID])

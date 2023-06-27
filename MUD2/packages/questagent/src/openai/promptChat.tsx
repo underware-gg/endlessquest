@@ -1,17 +1,21 @@
-import * as Chat from './generateChat'
-import { prompts } from '../prompts/prompts'
 import { ChatCompletionRequestMessageRoleEnum } from 'openai'
+import {
+  GPTModel,
+  ChatHistory,
+  generateChat,
+} from '../openai'
+import { prompts } from '../prompts'
 
 export interface PromptAgentOptions {
-  gptModel: Chat.GPTModel,
-  history: Chat.ChatHistory
+  gptModel: GPTModel,
+  history: ChatHistory
   agentMetadata: string
   prompt: string | null
 }
 
 export interface PromptAgentResponse {
   message: string
-  history: Chat.ChatHistory
+  history: ChatHistory
   error: string | null
 }
 
@@ -41,7 +45,7 @@ export async function promptChat(options: PromptAgentOptions): Promise<PromptAge
   }
 
   // https://platform.openai.com/docs/api-reference/chat/create
-  const response = await Chat.generateChat({
+  const response = await generateChat({
     model: options.gptModel,
     messages,
   })

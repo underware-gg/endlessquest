@@ -1,5 +1,5 @@
-import { GPTModel } from './generateChat'
 import Cookies from 'universal-cookie'
+import { GPTModel } from '../openai'
 
 export enum Keys {
   OPENAI_API_KEY = 'OPENAI_API_KEY',

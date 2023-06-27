@@ -1,4 +1,4 @@
-import { Terrain } from '../utils/Crawl'
+import { Terrain } from '../utils'
 
 export const prompts = {
 

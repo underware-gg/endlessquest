@@ -4,7 +4,7 @@ import {
   ChatCompletionRequestMessage,
   ChatCompletionRequestMessageRoleEnum,
  } from 'openai'
-import { Keys, getKey } from './keys'
+import { Keys, getKey } from '../openai'
 
 //-----------------------
 // OPenAI Client

@@ -1,6 +1,9 @@
-import * as Chat from './generateChat'
-import { prompts } from '../prompts/prompts'
 import { ChatCompletionRequestMessageRoleEnum } from 'openai'
+import {
+  GPTModel,
+  generateChat,
+} from './generateChat'
+import { prompts } from '../prompts'
 import * as Crawl from '../utils/Crawl'
 
 // types must match Prompts commands
@@ -14,7 +17,7 @@ export enum MetadataType {
 }
 
 export interface PromptMetadataOptions {
-  gptModel: Chat.GPTModel
+  gptModel: GPTModel
   type: MetadataType
   terrain: number | null
   gemType: number | null
@@ -57,7 +60,7 @@ export async function promptMetadata(options: PromptMetadataOptions): Promise<Pr
   ]
 
   // https://platform.openai.com/docs/api-reference/chat/create
-  const response = await Chat.generateChat({
+  const response = await generateChat({
     model: options.gptModel,
     messages,
   })

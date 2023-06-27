@@ -1,5 +1,9 @@
 import { useState, useEffect } from 'react'
-import { promptMetadata, PromptMetadataOptions, MetadataType } from '../openai/promptMetadata'
+import {
+  promptMetadata,
+  PromptMetadataOptions,
+  MetadataType,
+} from '../openai'
 
 export const usePromptMetadata = (options: PromptMetadataOptions) => {
   const [isWaiting, setIsWaiting] = useState<boolean>(false)

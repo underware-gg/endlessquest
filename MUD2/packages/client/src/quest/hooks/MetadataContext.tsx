@@ -5,11 +5,12 @@ import {
   generateImage, ImageOptions, ImageResponse, ImageSize,
   GPTModel,
   prompts,
-  getKey,
-  Keys,
+  Keys, getKey,
 } from 'questagent'
 // Hyperspace
 import { useHyperspaceContext } from '../hyperspace/hooks/HyperspaceContext'
+import { QuestRealmDoc, QuestChamberDoc, QuestAgentDoc } from 'hyperbox-sdk'
+import { coordToSlug } from '../bridge/Crawl'
 // MUD
 import { useRow, useComponentValue } from '@latticexyz/react'
 import { Entity } from '@latticexyz/recs'
@@ -113,7 +114,7 @@ const MetadataProvider = ({
   children,
   networkLayer,
 }: MetadataProviderProps) => {
-  const { QuestRealm, QuestChamber, QuestAgent } = useHyperspaceContext()
+  const { remoteStore } = useHyperspaceContext()
   const {
     systemCalls: {
       setChamberMetadata, setRealmMetadata, setAgentMetadata,
@@ -147,17 +148,20 @@ const MetadataProvider = ({
                 if (type == MetadataType.Realm) {
                   setRealmMetadata(key, _meta)
                   setTimeout(() => {
-                    QuestRealm.updateMetadataWithCoord(key, metadata)
+                    QuestRealmDoc.updateMetadata(remoteStore, key.toString(), metadata)
                   }, 100)
                 } else if (type == MetadataType.Chamber) {
                   setChamberMetadata(key, _meta)
                   setTimeout(() => {
-                    QuestChamber.updateMetadataWithSlug(key, metadata)
+                    const chamberSlug = coordToSlug(key as bigint, false)
+                    QuestChamberDoc.updateMetadata(remoteStore, chamberSlug, metadata)
                   }, 100)
                 } else if (type == MetadataType.Agent) {
                   setAgentMetadata(key, _meta)
                   setTimeout(() => {
-                    QuestAgent.updateMetadataWithSlug(agentToCoord(storeCache, key as Entity), metadata)
+                    const coord = agentToCoord(storeCache, key as Entity)
+                    const chamberSlug = coordToSlug(coord as bigint, false)
+                    QuestAgentDoc.updateMetadata(remoteStore, chamberSlug, metadata)
                   }, 100)
                 } else {
                   throw (`Invalid metadata type ${type}`)
@@ -166,17 +170,20 @@ const MetadataProvider = ({
                 if (type == MetadataType.Realm) {
                   setRealmArtUrl(key, url)
                   setTimeout(() => {
-                    QuestRealm.updateArtUrlWithCoord(key, url)
+                    QuestRealmDoc.updateArtUrl(remoteStore, key.toString(), url)
                   }, 100)
                 } else if (type == MetadataType.Chamber) {
                   setChamberArtUrl(key, url)
                   setTimeout(() => {
-                    QuestChamber.updateArtUrlWithSlug(key, url)
+                    const chamberSlug = coordToSlug(key as bigint, false)
+                    QuestChamberDoc.updateArtUrl(remoteStore, chamberSlug, url)
                   }, 100)
                 } else if (type == MetadataType.Agent) {
                   setAgentArtUrl(key, url)
                   setTimeout(() => {
-                    QuestAgent.updateArtUrlWithSlug(agentToCoord(storeCache, key as Entity), url)
+                    const coord = agentToCoord(storeCache, key as Entity)
+                    const chamberSlug = coordToSlug(coord as bigint, false)
+                    QuestAgentDoc.updateArtUrl(remoteStore, chamberSlug, url)
                   }, 100)
                 } else {
                   throw (`Invalid metadata type ${type}`)

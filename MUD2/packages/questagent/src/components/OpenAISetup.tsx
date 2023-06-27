@@ -1,6 +1,5 @@
 import { useCookies } from 'react-cookie'
-import { Keys } from '../openai/keys'
-import { GPTModel } from '../openai/generateChat'
+import { Keys, GPTModel } from '../openai'
 
 const validKeyStyle = { color: '#4f4' } as React.CSSProperties
 const invalidKeyStyle = { color: '#fa0' } as React.CSSProperties

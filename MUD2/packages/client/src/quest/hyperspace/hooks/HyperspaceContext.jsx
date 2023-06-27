@@ -72,11 +72,6 @@ export const useHyperspaceContext = () => {
     remoteStore: room?.remoteStore ?? null,
     clientRoom: room?.clientRoom ?? null,
     agentId: room?.clientAgent?.agentId ?? null,
-    Screen: room?.Screen ?? null,
-    QuestRealm: room?.QuestRealm ?? null,
-    QuestChamber: room?.QuestChamber ?? null,
-    QuestAgent: room?.QuestAgent ?? null,
-    QuestMessages: room?.QuestMessages ?? null,
   }
 }
 

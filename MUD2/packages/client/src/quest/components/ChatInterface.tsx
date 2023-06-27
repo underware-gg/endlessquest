@@ -3,8 +3,8 @@ import { useSettingsContext, SettingsActions } from '../hooks/SettingsContext'
 import { useHyperspaceContext } from '../hyperspace/hooks/HyperspaceContext'
 import { usePlayer } from '../hooks/usePlayer'
 import { useAgent } from '../hooks/useAgent'
-import { ChatDialog } from './ChatDialog'
 import { coordToSlug } from '../bridge/Crawl'
+import { ChatDialog } from 'questagent'
 
 declare global {
   interface Window { QuestNamespace: any }

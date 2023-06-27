@@ -38,7 +38,7 @@ export const Loader = () => {
   useBridgeToken(1n)
 
   return (
-    <div className='Loader Infos'>
+    <div className='Loader Infos Smaller'>
       <div className='LoaderContent'>
         {loaders}
       </div>

@@ -1,9 +1,8 @@
 import { useEffect, useMemo, useState } from 'react'
 import { ChatCompletionRequestMessageRoleEnum } from 'openai'
-import { ChatRequest } from './ChatRequest'
-import { useHyperspaceContext } from '../hyperspace/hooks/HyperspaceContext'
-import { ChatHistory } from 'questagent'
-import { useDocument } from 'hyperbox-sdk'
+import { useDocument, QuestMessagesDoc } from 'hyperbox-sdk'
+import { ChatHistory } from '../openai'
+import { ChatRequest } from '../components'
 
 export const ChatDialog = ({
   // @ts-ignore
@@ -19,7 +18,6 @@ export const ChatDialog = ({
   const [isRequesting, setIsRequesting] = useState(false)
   const [isHalted, setIsHalted] = useState(false)
   const [timestamp, setTimestamp] = useState(0)
-  const { QuestMessages } = useHyperspaceContext()
 
   useEffect(() => {
     if (isChatting) {
@@ -72,7 +70,7 @@ export const ChatDialog = ({
       setIsHalted(true)
     } else {
       setHistory(newHistory)
-      QuestMessages.updateMessages(timestamp, realmCoord, chamberSlug, playerName, newHistory)
+      QuestMessagesDoc.updateMessages(store, timestamp, realmCoord, chamberSlug, playerName, newHistory)
     }
   }
 

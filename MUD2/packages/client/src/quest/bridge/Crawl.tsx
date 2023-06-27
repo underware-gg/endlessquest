@@ -1,6 +1,6 @@
 
 //------------------------------
-// Constsnts
+// Constants
 //
 export enum Tiles {
   Tile_Void = 0x00,
