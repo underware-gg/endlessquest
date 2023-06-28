@@ -1,19 +1,11 @@
 import { useCookies } from 'react-cookie'
 import { Keys, GPTModel } from '../openai'
 
-const validKeyStyle = { color: '#4f4' } as React.CSSProperties
-const invalidKeyStyle = { color: '#fa0' } as React.CSSProperties
-const clickableStyle = {
-  cursor: 'pointer',
-  pointerEvents: 'all',
-  textDecoration: 'underline',
-} as React.CSSProperties
-
 export const OpenAISetup = ({
   className = '',
 }) => {
   return (
-    <div className={className}>
+    <div className={`ChatBody ${className}`}>
       <p>Setup your OpenAI keys (cookies)</p>
       <p>⏺ <KeySetup keyName={Keys.OPENAI_API_KEY} prefix='sk-' /></p>
       <p>⏺ <KeySetup keyName={Keys.OPENAI_ORG_ID} prefix='org-' /></p>
@@ -46,14 +38,14 @@ const KeySetup = ({
       {keyName}:&nbsp;
       {isValid
         ? <>
-          <span className='validOpenAIKey' style={validKeyStyle}>OK</span>
+          <span className='ChatValidKey'>OK</span>
           {' '}
-          (<span className='invalidOpenAIKey' style={clickableStyle} onClick={() => _setupCookie()}>edit</span>)
+          (<span className='ChatInvalidKey ChatClickable' onClick={() => _setupCookie()}>edit</span>)
         </>
         : <>
-          <span className='invalidKeyStyle' style={invalidKeyStyle}>NOT SET</span>
+          <span className='invalidKeyStyle'>NOT SET</span>
           {' '}
-          (<span className='invalidOpenAIKey' style={clickableStyle} onClick={() => _setupCookie()}>edit</span>)
+          (<span className='ChatInvalidKey ChatClickable' onClick={() => _setupCookie()}>edit</span>)
         </>
       }
     </span>
@@ -73,9 +65,9 @@ const ModelSetup = () => {
   return (
     <span>
       {Keys.GPT_MODEL}:&nbsp;
-      {isGPT3 ? <span className='validOpenAIKey' style={validKeyStyle}>GPT3</span> : <span style={clickableStyle} onClick={() => _setupCookie(GPTModel.GPT3)}>GPT3</span>}
+      {isGPT3 ? <span className='ChatValidKey ChatClickable'>GPT3</span> : <span className='ChatClickable' onClick={() => _setupCookie(GPTModel.GPT3)}>GPT3</span>}
       {' / '}
-      {isGPT4 ? <span className='validOpenAIKey' style={validKeyStyle}>GPT4</span> : <span style={clickableStyle} onClick={() => _setupCookie(GPTModel.GPT4)}>GPT4</span>}
+      {isGPT4 ? <span className='ChatValidKey ChatClickable'>GPT4</span> : <span className='ChatClickable' onClick={() => _setupCookie(GPTModel.GPT4)}>GPT4</span>}
     </span>
   )
 }

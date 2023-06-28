@@ -11,7 +11,7 @@ html, body {
   // background-color: #1a3a1e;
   background-color: #000;
   color: #fff;
-  font-family: 'Noto Sans Mono';
+  font-family: 'Noto Sans Mono', monospace;
   font-size: 12px;
   overflow: hidden;
   text-shadow: 0.1em 0.1em #000;
@@ -287,54 +287,4 @@ canvas {
   height: 1024px;
 }
 
-
-//---------------
-// Chat
-//
-.ChatDialog {
-  width: 500px;
-  height: 700px;
-  padding: 0;
-  margin: 0;
-}
-
-.ChatContent {
-  @extend .UI;
-  overflow-y: scroll;
-  position: relative;
-  width: 100%;
-  height: 650px;
-  padding: 1em;
-}
-
-.ChatInputRow {
-  @extend .UI;
-  width: 100%;
-  height: 50px;
-  padding: 0.5em;
-  position: relative;
-}
-
-.ChatInput {
-  position: absolute;
-  left: 0.5em;
-  width: calc(100% - 100px);
-  height: 20px;
-}
-
-.ChatSubmit {
-  position: absolute;
-  right: 0.5em;
-  width: 70px;
-  height: 25px;
-}
-
-.UserTopic {
-  margin-bottom: 1em;
-}
-
-.AgentTopic {
-  @extend .UserTopic;
-  background-color: #fff2;
-}
 

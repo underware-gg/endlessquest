@@ -27,13 +27,20 @@ export const ChatInterface = () => {
   const { agentEntity } = usePlayer()
   const { coord } = useAgent(agentEntity)
 
+  if (!isChatting) return <></>
+
   return (
-    <ChatDialog
-      store={remoteStore}
-      realmCoord={realmCoord}
-      chamberSlug={coordToSlug(coord ?? 0n, null) ?? ''}
-      isChatting={isChatting}
-      onStopChatting={_onStopChatting}
-    />
+    <>
+      <div className='FadedCover' onClick={() => _onStopChatting()} />
+      <div className='FillScreen CenteredContainer'>
+        <ChatDialog
+          store={remoteStore}
+          realmCoord={realmCoord}
+          chamberSlug={coordToSlug(coord ?? 0n, null) ?? ''}
+          isChatting={isChatting}
+          onStopChatting={_onStopChatting}
+        />
+      </div>
+    </>
   )
 }

@@ -1,0 +1,97 @@
+:root {
+  --color-text: #fff;
+  --color-important: #fa0;
+  --color-valid: #4f4;
+  --color-invalid: #fa0;
+  --color-info: #aaa;
+  --color-bg: #000a;
+  --ui-border: 5px ridge var(--color-important);
+}
+
+.ChatImportant, .ChatTitle {
+  color: var(--color-important);
+}
+
+.ChatTitle {
+  font-size: 120%;
+}
+
+.ChatSmaller {
+  font-size: 80%;
+}
+
+.ChatInfo {
+  color: var(--color-info);
+}
+
+.ChatValidKey {
+  color: var(--color-valid);
+}
+
+.ChatInvalidKey {
+  color: var(--color-invalid);
+}
+
+.ChatClickable {
+  cursor: 'pointer';
+  pointer-events: 'all';
+  text-decoration: 'underline';
+}
+
+.ChatBody {
+  padding: 0.5em;
+  margin: 0.5em;
+  background-color: var(--color-bg);
+  font-family: 'Noto Sans Mono', monospace;
+  font-size: 12px;
+}
+
+.ChatDialog {
+  width: 500px;
+  height: 700px;
+  padding: 0;
+  margin: 0;
+}
+
+.ChatContent, .ChatInputRow {
+  border: var(--ui-border);
+  background-color: var(--color-bg);
+  padding: 0.3em;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.ChatContent {
+  overflow-y: scroll;
+  position: relative;
+  height: 650px;
+  padding: 1em;
+}
+
+.ChatInputRow {
+  height: 50px;
+  padding: 0.5em;
+  position: relative;
+}
+
+.ChatInput {
+  position: absolute;
+  left: 0.5em;
+  width: calc(100% - 100px);
+  height: 20px;
+}
+
+.ChatSubmit {
+  position: absolute;
+  right: 0.5em;
+  width: 70px;
+  height: 25px;
+}
+
+.ChatUserTopic, .ChatAgentTopic {
+  margin-bottom: 1em;
+}
+
+.ChatAgentTopic {
+  background-color: #fff2;
+}

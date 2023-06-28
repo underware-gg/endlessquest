@@ -11,7 +11,7 @@ export const ChatDialog = ({
   chamberSlug = '',   // chamber coord
   playerName = 'Player',
   isChatting = false,
-  onStopChatting = () => {},
+  onStopChatting = () => { },
 }) => {
   const [history, setHistory] = useState<ChatHistory>([])
   const [prompt, setPrompt] = useState('')
@@ -36,10 +36,10 @@ export const ChatDialog = ({
 
   const _makeTopic = (key: string, role: ChatCompletionRequestMessageRoleEnum, content: string) => {
     const isAgent = (role == ChatCompletionRequestMessageRoleEnum.Assistant)
-    const className = isAgent ? 'AgentTopic' : 'UserTopic'
+    const className = isAgent ? 'ChatAgentTopic' : 'ChatUserTopic'
     return (
       <div key={key} className={className}>
-        <div className='Importanter'>{isAgent ? agentName : playerName}</div>
+        <div className='ChatTitle'>{isAgent ? agentName : playerName}</div>
         <div>{content}</div>
       </div>
     )
@@ -50,7 +50,7 @@ export const ChatDialog = ({
     for (let i = isHalted ? 0 : 4; i < history.length; ++i) {
       const h = history[i]
       // const isAgent = (h.role == ChatCompletionRequestMessageRoleEnum.Assistant)
-      // const className = isAgent ? 'AgentTopic' : 'UserTopic'
+      // const className = isAgent ? 'ChatAgentTopic' : 'ChatUserTopic'
       result.push(_makeTopic(`t_${i}`, h.role, h.content))
     }
     return result
@@ -77,41 +77,32 @@ export const ChatDialog = ({
   const waitingToSubmit = (!isRequesting && !isHalted)
   const canSubmit = (waitingToSubmit && prompt.length > 0)
 
-  if (!isChatting) {
-    return <></>
-  }
+  if (!isChatting) return <></>
 
   return (
-    <>
-      <div className='FadedCover' onClick={() => onStopChatting()} />
+    <div className='ChatBody ChatDialog'>
 
-      <div className='FillScreen CenteredContainer'>
-        <div className='ChatDialog'>
-
-          <div className='ChatContent'>
-            {topics.length > 0 &&
-              <p className='Smaller'>chat id: {timestamp}</p>
-            }
-            {topics}
-            {isRequesting &&
-              <div>
-                {history.length > 0 && _makeTopic('prompt', ChatCompletionRequestMessageRoleEnum.User, prompt)}
-                <ChatRequest prompt={prompt} previousHistory={history} onDone={_onDone} agentMetadata={agentMetadata} />
-              </div>
-            }
-            {waitingToSubmit &&
-              <div className='Infos'>{agentName} is waiting for your answer...</div>
-            }
+      <div className='ChatContent'>
+        {topics.length > 0 &&
+          <p className='ChatSmaller'>chat id: {timestamp}</p>
+        }
+        {topics}
+        {isRequesting &&
+          <div>
+            {history.length > 0 && _makeTopic('prompt', ChatCompletionRequestMessageRoleEnum.User, prompt)}
+            <ChatRequest prompt={prompt} previousHistory={history} onDone={_onDone} agentMetadata={agentMetadata} />
           </div>
-
-          <div className='ChatInputRow'>
-            <input disabled={isRequesting} className='ChatInput' value={prompt} onChange={(e) => setPrompt(e.target.value)}></input>
-            <button disabled={!canSubmit} className='ChatSubmit' onClick={() => _submit()}>Answer</button>
-          </div>
-
-        </div>
+        }
+        {waitingToSubmit &&
+          <div className='ChatInfo'>{agentName} is waiting for your answer...</div>
+        }
       </div>
 
-    </>
+      <div className='ChatInputRow'>
+        <input disabled={isRequesting} className='ChatInput' value={prompt} onChange={(e) => setPrompt(e.target.value)}></input>
+        <button disabled={!canSubmit} className='ChatSubmit' onClick={() => _submit()}>Answer</button>
+      </div>
+
+    </div>
   )
 }
