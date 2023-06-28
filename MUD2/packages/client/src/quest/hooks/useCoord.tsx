@@ -1,9 +1,9 @@
 import { useMemo } from 'react'
-import * as Crawl from '../bridge/Crawl'
+import { coordToCompass, compassToSlug } from '@rsodre/crawler-data'
 
 export const useCoord = (coord:bigint) => {
-  const compass = useMemo(() => (Crawl.coordToCompass(coord ?? 0n)), [coord])
-  const slug = useMemo(() => (Crawl.compassToSlug(compass)), [compass])
+  const compass = useMemo(() => (coordToCompass(coord ?? 0n)), [coord])
+  const slug = useMemo(() => (compassToSlug(compass)), [compass])
 
   return {
     coord,

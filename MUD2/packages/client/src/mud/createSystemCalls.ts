@@ -9,8 +9,8 @@ import { awaitStreamValue } from '@latticexyz/utils'
 import { ClientComponents } from './createClientComponents'
 import { SetupNetworkResult } from './setupNetwork'
 import { Direction } from '../layers/phaser/constants'
+import { coordToCompass } from '@rsodre/crawler-data'
 import * as Bridge from '../quest/bridge/bridge'
-import * as Crawl from '../quest/bridge/Crawl'
 import * as ethers from 'ethers'
 import Cookies from 'universal-cookie'
 import { nanoid } from 'nanoid'
@@ -96,7 +96,7 @@ export function createSystemCalls(
     }
     // fetch
     const chamberData = await Bridge.coordToChamberData(coord)
-    const compass = Crawl.coordToCompass(coord)
+    const compass = coordToCompass(coord)
     console.warn(`BRIDGE_CHAMBER`, compass, chamberData)
     //
     // store Chamber
@@ -144,10 +144,10 @@ export function createSystemCalls(
       const isEntry = (tile.doorDir == chamberData.entryDir)
       let gridX = (index % 20)
       let gridY = Math.floor(index / 20)
-      if (compass.east > 0) gridX += ((compass.east - 1) * 20)
-      if (compass.west > 0) gridX -= (compass.west * 20)
-      if (compass.south > 0) gridY += ((compass.south - 1) * 20)
-      if (compass.north > 0) gridY -= (compass.north * 20)
+      if (compass?.east && compass.east > 0) gridX += ((compass.east - 1) * 20)
+      if (compass?.west && compass.west > 0) gridX -= (compass.west * 20)
+      if (compass?.south && compass.south > 0) gridY += ((compass.south - 1) * 20)
+      if (compass?.north && compass.north > 0) gridY -= (compass.north * 20)
       if (tile.tileType == 4) gemPos = { gridX, gridY }
       await worldSend('setTile', [
         chamberData.terrain,

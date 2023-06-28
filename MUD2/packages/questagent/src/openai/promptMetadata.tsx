@@ -1,10 +1,10 @@
 import { ChatCompletionRequestMessageRoleEnum } from 'openai'
+import { Terrain, TerrainNames, Gem, GemNames } from '@rsodre/crawler-data'
 import {
   GPTModel,
   generateChat,
 } from './generateChat'
 import { prompts } from '../prompts'
-import * as Crawl from '../utils/Crawl'
 
 // types must match Prompts commands
 export enum MetadataType {
@@ -42,8 +42,8 @@ export async function promptMetadata(options: PromptMetadataOptions): Promise<Pr
   }
 
   let prompt = `Generate ${options.type}`
-  if (options.terrain != null) prompt += `, terrain_type: ${Crawl.TerrainNames[options.terrain]}`
-  if (options.gemType != null) prompt += `, gem_type: ${Crawl.GemNames[options.gemType]}`
+  if (options.terrain != null) prompt += `, terrain_type: ${TerrainNames[options.terrain as Terrain]}`
+  if (options.gemType != null) prompt += `, gem_type: ${GemNames[options.gemType as Gem]}`
   if (options.coins != null) prompt += `, coins: ${options.coins}`
   if (options.yonder != null) prompt += `, yonder: ${options.yonder}`
   // prompt += `}`

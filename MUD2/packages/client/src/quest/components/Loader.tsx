@@ -8,7 +8,7 @@ import {
   useRequestRealmArtUrl, useRequestChamberArtUrl, useRequestAgentArtUrl,
 } from '../hooks/MetadataContext'
 import { useSettingsContext } from '../hooks/SettingsContext'
-import * as Crawl from '../bridge/Crawl'
+import { coordToSlug } from '@rsodre/crawler-data'
 
 export const Loader = () => {
   const { realmCoord } = useSettingsContext()
@@ -135,7 +135,7 @@ export const ChamberLoader = ({
 
   const tiles = useEntityQuery([HasValue(Tile, { terrain: chamberData?.value?.terrain })]) ?? []
 
-  const slug = Crawl.coordToSlug(coord)
+  const slug = coordToSlug(coord)
 
   const { isSuccess: chamberIsSuccess, isError: chamberIsError, isFetching: chamberIsFetching } = useRequestChamberMetadata(coord)
   const { isSuccess: agentIsSuccess, isError: agentIsError, isFetching: agentIsFetching } = useRequestAgentMetadata(agentEntity)

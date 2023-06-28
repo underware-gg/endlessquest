@@ -3,7 +3,7 @@ import { useComponentValue } from '@latticexyz/react'
 import { Entity } from '@latticexyz/recs'
 import { useMUD } from '../../store'
 import { useCoord } from './useCoord'
-import { GemNames } from '../bridge/Crawl'
+import { Gem, GemNames } from '@rsodre/crawler-data'
 import { useAgentMetadata, useAgentArtUrl } from './MetadataContext'
 
 export const useAgent = (agentEntity: Entity | undefined) => {
@@ -30,7 +30,7 @@ export const useAgent = (agentEntity: Entity | undefined) => {
     seed: agent?.seed ?? null,
     yonder: agent?.yonder ?? null,
     gemType: agent?.gemType ?? null,
-    gemName: agent?.gemType != null ? GemNames[agent.gemType] : '?',
+    gemName: agent?.gemType != null ? GemNames[agent.gemType as Gem] : '?',
     coins: agent?.coins ?? null,
     worth: agent?.worth ?? null,
     metadata: metadata ?? null,

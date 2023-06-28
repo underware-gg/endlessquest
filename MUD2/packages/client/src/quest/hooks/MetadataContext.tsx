@@ -10,7 +10,7 @@ import {
 // Hyperspace
 import { useHyperspaceContext } from '../hyperspace/hooks/HyperspaceContext'
 import { QuestRealmDoc, QuestChamberDoc, QuestAgentDoc } from 'hyperbox-sdk'
-import { coordToSlug } from '../bridge/Crawl'
+import { coordToSlug } from '@rsodre/crawler-data'
 // MUD
 import { useRow, useComponentValue } from '@latticexyz/react'
 import { Entity } from '@latticexyz/recs'
@@ -153,14 +153,14 @@ const MetadataProvider = ({
                 } else if (type == MetadataType.Chamber) {
                   setChamberMetadata(key, _meta)
                   setTimeout(() => {
-                    const chamberSlug = coordToSlug(key as bigint, false)
+                    const chamberSlug = coordToSlug(key as bigint, null)
                     QuestChamberDoc.updateMetadata(remoteStore, chamberSlug, metadata)
                   }, 100)
                 } else if (type == MetadataType.Agent) {
                   setAgentMetadata(key, _meta)
                   setTimeout(() => {
                     const coord = agentToCoord(storeCache, key as Entity)
-                    const chamberSlug = coordToSlug(coord as bigint, false)
+                    const chamberSlug = coordToSlug(coord as bigint, null)
                     QuestAgentDoc.updateMetadata(remoteStore, chamberSlug, metadata)
                   }, 100)
                 } else {
@@ -175,14 +175,14 @@ const MetadataProvider = ({
                 } else if (type == MetadataType.Chamber) {
                   setChamberArtUrl(key, url)
                   setTimeout(() => {
-                    const chamberSlug = coordToSlug(key as bigint, false)
+                    const chamberSlug = coordToSlug(key as bigint, null)
                     QuestChamberDoc.updateArtUrl(remoteStore, chamberSlug, url)
                   }, 100)
                 } else if (type == MetadataType.Agent) {
                   setAgentArtUrl(key, url)
                   setTimeout(() => {
                     const coord = agentToCoord(storeCache, key as Entity)
-                    const chamberSlug = coordToSlug(coord as bigint, false)
+                    const chamberSlug = coordToSlug(coord as bigint, null)
                     QuestAgentDoc.updateArtUrl(remoteStore, chamberSlug, url)
                   }, 100)
                 } else {

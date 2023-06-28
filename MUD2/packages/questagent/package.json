@@ -14,6 +14,7 @@
     "unlink": "pnpm install hyperbox-sdk"
   },
   "dependencies": {
+    "@rsodre/crawler-data": "^0.0.7",
     "@types/node": "^20.3.1",
     "@types/react": "^18.2.6",
     "hyperbox-sdk": "github:funDAOmental/hyperbox-sdk",

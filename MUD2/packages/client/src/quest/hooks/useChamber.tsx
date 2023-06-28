@@ -4,7 +4,7 @@ import { Entity } from '@latticexyz/recs'
 import { useMUD } from '../../store'
 import { useCoord } from './useCoord'
 import { usePlayer } from './usePlayer'
-import { GemNames } from '../bridge/Crawl'
+import { Gem, GemNames } from '@rsodre/crawler-data'
 import { useChamberMetadata, useChamberArtUrl } from './MetadataContext'
 
 export const useChamber = () => {
@@ -33,7 +33,7 @@ export const useChamber = () => {
     seed: chamber?.value?.seed ?? null,
     yonder: chamber?.value?.yonder ?? null,
     gemType: chamber?.value?.gemType ?? null,
-    gemName: chamber?.value?.gemType != null ? GemNames[chamber?.value.gemType] : '?',
+    gemName: chamber?.value?.gemType != null ? GemNames[chamber?.value.gemType as Gem] : '?',
     coins: chamber?.value?.coins ?? null,
     worth: chamber?.value?.worth ?? null,
     agentEntity,

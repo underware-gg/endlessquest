@@ -3,8 +3,8 @@ import { useSettingsContext, SettingsActions } from '../hooks/SettingsContext'
 import { useHyperspaceContext } from '../hyperspace/hooks/HyperspaceContext'
 import { usePlayer } from '../hooks/usePlayer'
 import { useAgent } from '../hooks/useAgent'
-import { coordToSlug } from '../bridge/Crawl'
 import { ChatDialog } from 'questagent'
+import { coordToSlug } from '@rsodre/crawler-data'
 
 declare global {
   interface Window { QuestNamespace: any }
@@ -31,7 +31,7 @@ export const ChatInterface = () => {
     <ChatDialog
       store={remoteStore}
       realmCoord={realmCoord}
-      chamberSlug={coordToSlug(coord ?? 0n, false)}
+      chamberSlug={coordToSlug(coord ?? 0n, null) ?? ''}
       isChatting={isChatting}
       onStopChatting={_onStopChatting}
     />
