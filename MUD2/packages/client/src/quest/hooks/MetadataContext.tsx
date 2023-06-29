@@ -6,7 +6,7 @@ import {
   GPTModel,
   prompts,
   Keys, getKey,
-} from 'questagent'
+} from 'endlessquestagent'
 // Hyperspace
 import { useHyperspaceContext } from '../hyperspace/hooks/HyperspaceContext'
 import { QuestRealmDoc, QuestChamberDoc, QuestAgentDoc } from 'hyperbox-sdk'

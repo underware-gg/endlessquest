@@ -1,7 +1,7 @@
 import { useRealm } from '../hooks/useRealm'
 import { Container, Grid, Row, Col } from './Grid'
 import { useSettingsContext, SettingsActions } from '../hooks/SettingsContext'
-import { OpenAISetup } from 'questagent'
+import { OpenAISetup } from 'endlessquestagent'
 
 interface RealmButtonProps {
   coord: bigint,

@@ -3,7 +3,7 @@ import { useSettingsContext, SettingsActions } from '../hooks/SettingsContext'
 import { useHyperspaceContext } from '../hyperspace/hooks/HyperspaceContext'
 import { usePlayer } from '../hooks/usePlayer'
 import { useAgent } from '../hooks/useAgent'
-import { ChatDialog } from 'questagent'
+import { ChatDialog } from 'endlessquestagent'
 import { coordToSlug } from '@rsodre/crawler-data'
 
 declare global {

@@ -1,6 +1,5 @@
 import './styles/style.scss'
-import 'questagent/styles/chat.css'
-import React from "react";
+import 'endlessquestagent/dist/styles/chat.css'
 import ReactDOM from "react-dom/client";
 import { App } from "./ui/App";
 import { mount as mountDevTools } from "@latticexyz/dev-tools";
