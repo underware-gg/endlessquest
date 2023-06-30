@@ -39,7 +39,7 @@ export const RoomLoader = () => {
         <MetadataCount type='questRealm' />
         <MetadataCount type='questChamber' />
         <MetadataCount type='questAgent' />
-        <MetadataCount type='questMessages' />
+        <MetadataCount type='questEncounter' />
       </div>
     </div>
   )
