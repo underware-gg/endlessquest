@@ -41,7 +41,7 @@ export function defineContractComponents(world: World) {
         world,
         {
           opener: RecsType.String,
-          tokenId: RecsType.BigInt,
+          tokenId: RecsType.Number,
           seed: RecsType.BigInt,
           yonder: RecsType.Number,
           chapter: RecsType.Number,
@@ -83,8 +83,8 @@ export function defineContractComponents(world: World) {
         world,
         {
           coord: RecsType.BigInt,
-          tokenId: RecsType.BigInt,
           seed: RecsType.BigInt,
+          tokenId: RecsType.Number,
           yonder: RecsType.Number,
           terrain: RecsType.Number,
           gemType: RecsType.Number,
@@ -120,6 +120,7 @@ export function defineContractComponents(world: World) {
       return defineComponent(
         world,
         {
+          tokenId: RecsType.Number,
           terrain: RecsType.Number,
           tileType: RecsType.Number,
           isEntry: RecsType.Boolean,

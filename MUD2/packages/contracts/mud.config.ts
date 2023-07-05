@@ -24,7 +24,7 @@ export default mudConfig({
     //-----------------------
     Token: {
       keySchema: {
-        tokenId: 'uint256'
+        tokenId: 'uint32'
       },
       schema: {
         coord: 'uint256'
@@ -39,7 +39,7 @@ export default mudConfig({
         // player who opened this Chamber
         opener: 'address',
         // bridged data
-        tokenId: 'uint256',
+        tokenId: 'uint32',
         seed: 'uint256',
         yonder: 'uint8',
         chapter: 'uint8',
@@ -68,8 +68,8 @@ export default mudConfig({
       },
       schema: {
         coord: 'uint256',
-        tokenId: 'uint256',
         seed: 'uint256',
+        tokenId: 'uint32',
         yonder: 'uint8',
         terrain: 'uint8',
         gemType: 'uint8',
@@ -89,11 +89,10 @@ export default mudConfig({
         key: 'bytes32',
       },
       schema: {
+        tokenId: 'uint32', // just for queries
         terrain: 'uint8',
         tileType: 'uint8',
         isEntry: 'bool',
-        // gridX: 'int32',
-        // gridY: 'int32',
       }
     },
     Door: {

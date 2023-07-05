@@ -12,8 +12,8 @@ contract ChamberSystem is System {
 
   function setChamber(
     uint256 coord,
-    uint256 tokenId,
     uint256 seed,
+    uint32 tokenId,
     uint8 yonder,
     uint8 chapter,
     uint8 terrain,

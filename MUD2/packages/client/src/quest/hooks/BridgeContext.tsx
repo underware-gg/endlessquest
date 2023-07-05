@@ -24,13 +24,13 @@ const BridgeActions = {
 // Types
 //
 type BridgeStateType = {
-  tokens: Array<bigint>,
+  tokens: Array<number>,
   chambers: Array<bigint>,
   realms: Array<bigint>,
 }
 
 type ActionType =
-  | { type: 'BRIDGE_TOKEN', payload: bigint }
+  | { type: 'BRIDGE_TOKEN', payload: number }
   | { type: 'BRIDGE_CHAMBER', payload: bigint }
   | { type: 'BRIDGE_REALM', payload: bigint }
 
@@ -68,7 +68,7 @@ const BridgeProvider = ({
     let newState = { ...state }
     switch (action.type) {
       case BridgeActions.BRIDGE_TOKEN: {
-        const tokenId = action.payload
+        const tokenId = action.payload as number
         if (tokenId > 0n && !state.tokens.includes(tokenId)) {
           state.tokens.push(tokenId)
           bridge_tokenId(tokenId)
@@ -76,7 +76,7 @@ const BridgeProvider = ({
         break
       }
       case BridgeActions.BRIDGE_CHAMBER: {
-        const coord = action.payload
+        const coord = action.payload as bigint
         if (coord > 0n && !state.chambers.includes(coord)) {
           state.chambers.push(coord)
           bridge_chamber(coord)
@@ -84,7 +84,7 @@ const BridgeProvider = ({
         break
       }
       case BridgeActions.BRIDGE_REALM: {
-        const coord = action.payload
+        const coord = action.payload as bigint
         if (coord > 0n && !state.realms.includes(coord)) {
           state.realms.push(coord)
           bridge_realm(coord)
@@ -117,7 +117,7 @@ export { BridgeProvider, BridgeContext, BridgeActions }
 // Dispatches
 //
 
-export const useBridgeToken = (tokenId: bigint) => {
+export const useBridgeToken = (tokenId: number) => {
   const { state, dispatch } = useContext(BridgeContext)
   useEffect(() => {
     if (tokenId) {

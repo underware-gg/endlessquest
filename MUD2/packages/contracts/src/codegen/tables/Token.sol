@@ -31,7 +31,7 @@ library Token {
 
   function getKeySchema() internal pure returns (Schema) {
     SchemaType[] memory _schema = new SchemaType[](1);
-    _schema[0] = SchemaType.UINT256;
+    _schema[0] = SchemaType.UINT32;
 
     return SchemaLib.encode(_schema);
   }
@@ -66,7 +66,7 @@ library Token {
   }
 
   /** Get coord */
-  function get(uint256 tokenId) internal view returns (uint256 coord) {
+  function get(uint32 tokenId) internal view returns (uint256 coord) {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32(uint256(tokenId));
 
@@ -75,7 +75,7 @@ library Token {
   }
 
   /** Get coord (using the specified store) */
-  function get(IStore _store, uint256 tokenId) internal view returns (uint256 coord) {
+  function get(IStore _store, uint32 tokenId) internal view returns (uint256 coord) {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32(uint256(tokenId));
 
@@ -84,7 +84,7 @@ library Token {
   }
 
   /** Set coord */
-  function set(uint256 tokenId, uint256 coord) internal {
+  function set(uint32 tokenId, uint256 coord) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32(uint256(tokenId));
 
@@ -92,7 +92,7 @@ library Token {
   }
 
   /** Set coord (using the specified store) */
-  function set(IStore _store, uint256 tokenId, uint256 coord) internal {
+  function set(IStore _store, uint32 tokenId, uint256 coord) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32(uint256(tokenId));
 
@@ -105,13 +105,13 @@ library Token {
   }
 
   /** Encode keys as a bytes32 array using this table's schema */
-  function encodeKeyTuple(uint256 tokenId) internal pure returns (bytes32[] memory _keyTuple) {
+  function encodeKeyTuple(uint32 tokenId) internal pure returns (bytes32[] memory _keyTuple) {
     _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32(uint256(tokenId));
   }
 
   /* Delete all data for given keys */
-  function deleteRecord(uint256 tokenId) internal {
+  function deleteRecord(uint32 tokenId) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32(uint256(tokenId));
 
@@ -119,7 +119,7 @@ library Token {
   }
 
   /* Delete all data for given keys (using the specified store) */
-  function deleteRecord(IStore _store, uint256 tokenId) internal {
+  function deleteRecord(IStore _store, uint32 tokenId) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32(uint256(tokenId));
 

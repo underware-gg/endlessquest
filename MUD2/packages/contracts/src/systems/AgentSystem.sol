@@ -14,8 +14,8 @@ import {
 contract AgentSystem is System {
   function setAgent(
     uint256 coord,
-    uint256 tokenId,
     uint256 seed,
+    uint32 tokenId,
     uint8 yonder,
     uint8 terrain,
     uint8 gemType,

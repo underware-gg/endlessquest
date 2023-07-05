@@ -22,7 +22,7 @@ bytes32 constant ChamberTableId = _tableId;
 
 struct ChamberData {
   address opener;
-  uint256 tokenId;
+  uint32 tokenId;
   uint256 seed;
   uint8 yonder;
   uint8 chapter;
@@ -40,7 +40,7 @@ library Chamber {
   function getSchema() internal pure returns (Schema) {
     SchemaType[] memory _schema = new SchemaType[](12);
     _schema[0] = SchemaType.ADDRESS;
-    _schema[1] = SchemaType.UINT256;
+    _schema[1] = SchemaType.UINT32;
     _schema[2] = SchemaType.UINT256;
     _schema[3] = SchemaType.UINT8;
     _schema[4] = SchemaType.UINT8;
@@ -137,25 +137,25 @@ library Chamber {
   }
 
   /** Get tokenId */
-  function getTokenId(uint256 coord) internal view returns (uint256 tokenId) {
+  function getTokenId(uint256 coord) internal view returns (uint32 tokenId) {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32(uint256(coord));
 
     bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 1);
-    return (uint256(Bytes.slice32(_blob, 0)));
+    return (uint32(Bytes.slice4(_blob, 0)));
   }
 
   /** Get tokenId (using the specified store) */
-  function getTokenId(IStore _store, uint256 coord) internal view returns (uint256 tokenId) {
+  function getTokenId(IStore _store, uint256 coord) internal view returns (uint32 tokenId) {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32(uint256(coord));
 
     bytes memory _blob = _store.getField(_tableId, _keyTuple, 1);
-    return (uint256(Bytes.slice32(_blob, 0)));
+    return (uint32(Bytes.slice4(_blob, 0)));
   }
 
   /** Set tokenId */
-  function setTokenId(uint256 coord, uint256 tokenId) internal {
+  function setTokenId(uint256 coord, uint32 tokenId) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32(uint256(coord));
 
@@ -163,7 +163,7 @@ library Chamber {
   }
 
   /** Set tokenId (using the specified store) */
-  function setTokenId(IStore _store, uint256 coord, uint256 tokenId) internal {
+  function setTokenId(IStore _store, uint256 coord, uint32 tokenId) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32(uint256(coord));
 
@@ -532,7 +532,7 @@ library Chamber {
   function set(
     uint256 coord,
     address opener,
-    uint256 tokenId,
+    uint32 tokenId,
     uint256 seed,
     uint8 yonder,
     uint8 chapter,
@@ -570,7 +570,7 @@ library Chamber {
     IStore _store,
     uint256 coord,
     address opener,
-    uint256 tokenId,
+    uint32 tokenId,
     uint256 seed,
     uint8 yonder,
     uint8 chapter,
@@ -646,33 +646,33 @@ library Chamber {
   function decode(bytes memory _blob) internal pure returns (ChamberData memory _table) {
     _table.opener = (address(Bytes.slice20(_blob, 0)));
 
-    _table.tokenId = (uint256(Bytes.slice32(_blob, 20)));
+    _table.tokenId = (uint32(Bytes.slice4(_blob, 20)));
 
-    _table.seed = (uint256(Bytes.slice32(_blob, 52)));
+    _table.seed = (uint256(Bytes.slice32(_blob, 24)));
 
-    _table.yonder = (uint8(Bytes.slice1(_blob, 84)));
+    _table.yonder = (uint8(Bytes.slice1(_blob, 56)));
 
-    _table.chapter = (uint8(Bytes.slice1(_blob, 85)));
+    _table.chapter = (uint8(Bytes.slice1(_blob, 57)));
 
-    _table.terrain = (uint8(Bytes.slice1(_blob, 86)));
+    _table.terrain = (uint8(Bytes.slice1(_blob, 58)));
 
-    _table.entryDir = (uint8(Bytes.slice1(_blob, 87)));
+    _table.entryDir = (uint8(Bytes.slice1(_blob, 59)));
 
-    _table.gemPos = (uint8(Bytes.slice1(_blob, 88)));
+    _table.gemPos = (uint8(Bytes.slice1(_blob, 60)));
 
-    _table.gemType = (uint8(Bytes.slice1(_blob, 89)));
+    _table.gemType = (uint8(Bytes.slice1(_blob, 61)));
 
-    _table.coins = (uint16(Bytes.slice2(_blob, 90)));
+    _table.coins = (uint16(Bytes.slice2(_blob, 62)));
 
-    _table.worth = (uint16(Bytes.slice2(_blob, 92)));
+    _table.worth = (uint16(Bytes.slice2(_blob, 64)));
 
-    _table.agent = (Bytes.slice32(_blob, 94));
+    _table.agent = (Bytes.slice32(_blob, 66));
   }
 
   /** Tightly pack full data using this table's schema */
   function encode(
     address opener,
-    uint256 tokenId,
+    uint32 tokenId,
     uint256 seed,
     uint8 yonder,
     uint8 chapter,

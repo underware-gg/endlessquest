@@ -21,6 +21,7 @@ bytes32 constant _tableId = bytes32(abi.encodePacked(bytes16(""), bytes16("Tile"
 bytes32 constant TileTableId = _tableId;
 
 struct TileData {
+  uint32 tokenId;
   uint8 terrain;
   uint8 tileType;
   bool isEntry;
@@ -29,10 +30,11 @@ struct TileData {
 library Tile {
   /** Get the table's schema */
   function getSchema() internal pure returns (Schema) {
-    SchemaType[] memory _schema = new SchemaType[](3);
-    _schema[0] = SchemaType.UINT8;
+    SchemaType[] memory _schema = new SchemaType[](4);
+    _schema[0] = SchemaType.UINT32;
     _schema[1] = SchemaType.UINT8;
-    _schema[2] = SchemaType.BOOL;
+    _schema[2] = SchemaType.UINT8;
+    _schema[3] = SchemaType.BOOL;
 
     return SchemaLib.encode(_schema);
   }
@@ -46,10 +48,11 @@ library Tile {
 
   /** Get the table's metadata */
   function getMetadata() internal pure returns (string memory, string[] memory) {
-    string[] memory _fieldNames = new string[](3);
-    _fieldNames[0] = "terrain";
-    _fieldNames[1] = "tileType";
-    _fieldNames[2] = "isEntry";
+    string[] memory _fieldNames = new string[](4);
+    _fieldNames[0] = "tokenId";
+    _fieldNames[1] = "terrain";
+    _fieldNames[2] = "tileType";
+    _fieldNames[3] = "isEntry";
     return ("Tile", _fieldNames);
   }
 
@@ -75,12 +78,46 @@ library Tile {
     _store.setMetadata(_tableId, _tableName, _fieldNames);
   }
 
+  /** Get tokenId */
+  function getTokenId(bytes32 key) internal view returns (uint32 tokenId) {
+    bytes32[] memory _keyTuple = new bytes32[](1);
+    _keyTuple[0] = key;
+
+    bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 0);
+    return (uint32(Bytes.slice4(_blob, 0)));
+  }
+
+  /** Get tokenId (using the specified store) */
+  function getTokenId(IStore _store, bytes32 key) internal view returns (uint32 tokenId) {
+    bytes32[] memory _keyTuple = new bytes32[](1);
+    _keyTuple[0] = key;
+
+    bytes memory _blob = _store.getField(_tableId, _keyTuple, 0);
+    return (uint32(Bytes.slice4(_blob, 0)));
+  }
+
+  /** Set tokenId */
+  function setTokenId(bytes32 key, uint32 tokenId) internal {
+    bytes32[] memory _keyTuple = new bytes32[](1);
+    _keyTuple[0] = key;
+
+    StoreSwitch.setField(_tableId, _keyTuple, 0, abi.encodePacked((tokenId)));
+  }
+
+  /** Set tokenId (using the specified store) */
+  function setTokenId(IStore _store, bytes32 key, uint32 tokenId) internal {
+    bytes32[] memory _keyTuple = new bytes32[](1);
+    _keyTuple[0] = key;
+
+    _store.setField(_tableId, _keyTuple, 0, abi.encodePacked((tokenId)));
+  }
+
   /** Get terrain */
   function getTerrain(bytes32 key) internal view returns (uint8 terrain) {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = key;
 
-    bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 0);
+    bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 1);
     return (uint8(Bytes.slice1(_blob, 0)));
   }
 
@@ -89,7 +126,7 @@ library Tile {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = key;
 
-    bytes memory _blob = _store.getField(_tableId, _keyTuple, 0);
+    bytes memory _blob = _store.getField(_tableId, _keyTuple, 1);
     return (uint8(Bytes.slice1(_blob, 0)));
   }
 
@@ -98,7 +135,7 @@ library Tile {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = key;
 
-    StoreSwitch.setField(_tableId, _keyTuple, 0, abi.encodePacked((terrain)));
+    StoreSwitch.setField(_tableId, _keyTuple, 1, abi.encodePacked((terrain)));
   }
 
   /** Set terrain (using the specified store) */
@@ -106,7 +143,7 @@ library Tile {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = key;
 
-    _store.setField(_tableId, _keyTuple, 0, abi.encodePacked((terrain)));
+    _store.setField(_tableId, _keyTuple, 1, abi.encodePacked((terrain)));
   }
 
   /** Get tileType */
@@ -114,7 +151,7 @@ library Tile {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = key;
 
-    bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 1);
+    bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 2);
     return (uint8(Bytes.slice1(_blob, 0)));
   }
 
@@ -123,7 +160,7 @@ library Tile {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = key;
 
-    bytes memory _blob = _store.getField(_tableId, _keyTuple, 1);
+    bytes memory _blob = _store.getField(_tableId, _keyTuple, 2);
     return (uint8(Bytes.slice1(_blob, 0)));
   }
 
@@ -132,7 +169,7 @@ library Tile {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = key;
 
-    StoreSwitch.setField(_tableId, _keyTuple, 1, abi.encodePacked((tileType)));
+    StoreSwitch.setField(_tableId, _keyTuple, 2, abi.encodePacked((tileType)));
   }
 
   /** Set tileType (using the specified store) */
@@ -140,7 +177,7 @@ library Tile {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = key;
 
-    _store.setField(_tableId, _keyTuple, 1, abi.encodePacked((tileType)));
+    _store.setField(_tableId, _keyTuple, 2, abi.encodePacked((tileType)));
   }
 
   /** Get isEntry */
@@ -148,7 +185,7 @@ library Tile {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = key;
 
-    bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 2);
+    bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 3);
     return (_toBool(uint8(Bytes.slice1(_blob, 0))));
   }
 
@@ -157,7 +194,7 @@ library Tile {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = key;
 
-    bytes memory _blob = _store.getField(_tableId, _keyTuple, 2);
+    bytes memory _blob = _store.getField(_tableId, _keyTuple, 3);
     return (_toBool(uint8(Bytes.slice1(_blob, 0))));
   }
 
@@ -166,7 +203,7 @@ library Tile {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = key;
 
-    StoreSwitch.setField(_tableId, _keyTuple, 2, abi.encodePacked((isEntry)));
+    StoreSwitch.setField(_tableId, _keyTuple, 3, abi.encodePacked((isEntry)));
   }
 
   /** Set isEntry (using the specified store) */
@@ -174,7 +211,7 @@ library Tile {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = key;
 
-    _store.setField(_tableId, _keyTuple, 2, abi.encodePacked((isEntry)));
+    _store.setField(_tableId, _keyTuple, 3, abi.encodePacked((isEntry)));
   }
 
   /** Get the full data */
@@ -196,8 +233,8 @@ library Tile {
   }
 
   /** Set the full data using individual values */
-  function set(bytes32 key, uint8 terrain, uint8 tileType, bool isEntry) internal {
-    bytes memory _data = encode(terrain, tileType, isEntry);
+  function set(bytes32 key, uint32 tokenId, uint8 terrain, uint8 tileType, bool isEntry) internal {
+    bytes memory _data = encode(tokenId, terrain, tileType, isEntry);
 
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = key;
@@ -206,8 +243,8 @@ library Tile {
   }
 
   /** Set the full data using individual values (using the specified store) */
-  function set(IStore _store, bytes32 key, uint8 terrain, uint8 tileType, bool isEntry) internal {
-    bytes memory _data = encode(terrain, tileType, isEntry);
+  function set(IStore _store, bytes32 key, uint32 tokenId, uint8 terrain, uint8 tileType, bool isEntry) internal {
+    bytes memory _data = encode(tokenId, terrain, tileType, isEntry);
 
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = key;
@@ -217,26 +254,28 @@ library Tile {
 
   /** Set the full data using the data struct */
   function set(bytes32 key, TileData memory _table) internal {
-    set(key, _table.terrain, _table.tileType, _table.isEntry);
+    set(key, _table.tokenId, _table.terrain, _table.tileType, _table.isEntry);
   }
 
   /** Set the full data using the data struct (using the specified store) */
   function set(IStore _store, bytes32 key, TileData memory _table) internal {
-    set(_store, key, _table.terrain, _table.tileType, _table.isEntry);
+    set(_store, key, _table.tokenId, _table.terrain, _table.tileType, _table.isEntry);
   }
 
   /** Decode the tightly packed blob using this table's schema */
   function decode(bytes memory _blob) internal pure returns (TileData memory _table) {
-    _table.terrain = (uint8(Bytes.slice1(_blob, 0)));
+    _table.tokenId = (uint32(Bytes.slice4(_blob, 0)));
 
-    _table.tileType = (uint8(Bytes.slice1(_blob, 1)));
+    _table.terrain = (uint8(Bytes.slice1(_blob, 4)));
 
-    _table.isEntry = (_toBool(uint8(Bytes.slice1(_blob, 2))));
+    _table.tileType = (uint8(Bytes.slice1(_blob, 5)));
+
+    _table.isEntry = (_toBool(uint8(Bytes.slice1(_blob, 6))));
   }
 
   /** Tightly pack full data using this table's schema */
-  function encode(uint8 terrain, uint8 tileType, bool isEntry) internal view returns (bytes memory) {
-    return abi.encodePacked(terrain, tileType, isEntry);
+  function encode(uint32 tokenId, uint8 terrain, uint8 tileType, bool isEntry) internal view returns (bytes memory) {
+    return abi.encodePacked(tokenId, terrain, tileType, isEntry);
   }
 
   /** Encode keys as a bytes32 array using this table's schema */

@@ -29,7 +29,7 @@ const config = createConfig({
 const address = '0x8E70b94C57b0CBC9807c0F58Bc251f4cD96AcDb0' // mainnet
 const abi = CrawlerToken.abi
 
-export async function tokenIdToCoord(tokenId: bigint) {
+export async function tokenIdToCoord(tokenId: number) {
   const data = await readContract({
     abi,
     address,
@@ -42,7 +42,7 @@ export async function tokenIdToCoord(tokenId: bigint) {
 export interface CoordToChamberDataResult {
   // Stored on Chamber table
   coord: bigint
-  tokenId: bigint
+  tokenId: number
   seed: bigint
   yonder: bigint
   chapter: number

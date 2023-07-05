@@ -5,12 +5,13 @@ pragma solidity >=0.8.0;
 
 interface ITileSystem {
   function setTile(
+    uint256 coord,
+    uint32 tokenId,
     uint8 terrain,
     uint8 tileType,
-    bool isEntry,
     int32 gridX,
     int32 gridY,
-    int8 doorDir,
-    uint256 coord
+    bool isEntry,
+    int8 doorDir
   ) external;
 }

@@ -35,7 +35,7 @@ export const Loader = () => {
   useBridgeRealm(realmCoord)
 
   // force bridge token #1
-  useBridgeToken(1n)
+  useBridgeToken(1)
 
   return (
     <div className='Loader Infos Smaller'>
@@ -77,11 +77,11 @@ export const RealmLoader = ({
 // Token Loader
 //
 interface TokenLoaderProps {
-  tokenId: bigint,
+  tokenId: number,
 }
 
 export const TokenLoader = ({
-  tokenId = 0n,
+  tokenId = 0,
 }: TokenLoaderProps) => {
   const {
     networkLayer: {
@@ -129,13 +129,13 @@ export const ChamberLoader = ({
 
   useBridgeChamber(coord)
 
+  const slug = coordToSlug(coord)
+
   const chamberData = useRow(storeCache, { table: 'Chamber', key: { coord } })
   const seed = useMemo(() => (chamberData?.value?.seed?.toString() ?? null), [chamberData])
   const agentEntity = useMemo(() => (chamberData?.value?.agent ?? '0x0'), [chamberData]) as Entity
 
-  const tiles = useEntityQuery([HasValue(Tile, { terrain: chamberData?.value?.terrain })]) ?? []
-
-  const slug = coordToSlug(coord)
+  const tiles = useEntityQuery([HasValue(Tile, { tokenId: chamberData?.value?.tokenId ?? 0 })]) ?? []
 
   const { isSuccess: chamberIsSuccess, isError: chamberIsError, isFetching: chamberIsFetching } = useRequestChamberMetadata(coord)
   const { isSuccess: agentIsSuccess, isError: agentIsError, isFetching: agentIsFetching } = useRequestAgentMetadata(agentEntity)
