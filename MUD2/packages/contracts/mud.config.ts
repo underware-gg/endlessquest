@@ -12,11 +12,6 @@ export default mudConfig({
   },
   tables: {
     //-----------------------
-    Counter: {
-      keySchema: {},
-      schema: 'uint32',
-    },
-    //-----------------------
     Realm: {
       keySchema: {
         coord: 'uint256'

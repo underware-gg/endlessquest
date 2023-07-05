@@ -21,27 +21,13 @@ const cookies = new Cookies()
 
 export function createSystemCalls(
   { worldSend, txReduced$, singletonEntity, storeCache }: SetupNetworkResult,
-  { Counter, Tile, Agent, Position }: ClientComponents,
+  { Tile, Agent, Position }: ClientComponents,
 ) {
 
   let playerName = cookies.get('playerName')
   if (!playerName || playerName == '') {
     playerName = nanoid()
     cookies.set('playerName', playerName, { path: '/' })
-  }
-
-  //-----------------------------------
-  // CounterSystem
-  //
-  const increment = async () => {
-    const tx = await worldSend('increment', [])
-    await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash)
-    return getComponentValue(Counter, singletonEntity)
-  }
-  const decrement = async () => {
-    const tx = await worldSend('decrement', [])
-    await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash)
-    return getComponentValue(Counter, singletonEntity)
   }
 
   //---------------------------
@@ -259,9 +245,6 @@ export function createSystemCalls(
   }
 
   return {
-    // Example
-    increment,
-    decrement,
     // Crawler
     bridge_realm,
     bridge_tokenId,

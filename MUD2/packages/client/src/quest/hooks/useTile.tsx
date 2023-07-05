@@ -7,8 +7,8 @@ export const useTile = (position: { x: number, y: number }) => {
   const {
     networkLayer: {
       components: { Tile, Position, Door },
-      systemCalls: { increment, decrement, bridge_tokenId, bridge_chamber },
-      singletonEntity, storeCache,
+      // systemCalls: { bridge_tokenId, bridge_chamber },
+      // singletonEntity, storeCache,
     }
   } = useMUD()
 
