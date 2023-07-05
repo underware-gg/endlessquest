@@ -21,7 +21,7 @@ const cookies = new Cookies()
 
 export function createSystemCalls(
   { worldSend, txReduced$, singletonEntity, storeCache }: SetupNetworkResult,
-  { Counter, Token, Agent, Position }: ClientComponents,
+  { Counter, Tile, Agent, Position }: ClientComponents,
 ) {
 
   let playerName = cookies.get('playerName')
@@ -53,19 +53,19 @@ export function createSystemCalls(
     let stored_coord = await storeCache.tables.Token.get({ tokenId })
     if (stored_coord != null) {
       console.log(`STORED_COORD:`, stored_coord)
-      return
+    } else {
+      // fetch
+      const coord = await Bridge.tokenIdToCoord(tokenId)
+      console.warn(`BRIDGE_tokenIdToCoord:`, tokenId, coord)
+      // store
+      const tx = await worldSend('setTokenIdToCoord', [
+        tokenId,
+        coord,
+      ])
+      // return stored value
+      // await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash)
+      // return getComponentValue(Token, singletonEntity)
     }
-    // fetch
-    const coord = await Bridge.tokenIdToCoord(tokenId)
-    console.warn(`BRIDGE_tokenIdToCoord:`, tokenId, coord)
-    // store
-    const tx = await worldSend('setTokenIdToCoord', [
-      tokenId,
-      coord,
-    ])
-    // return stored value
-    await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash)
-    return getComponentValue(Token, singletonEntity)
   }
 
   const bridge_realm = async (coord: bigint) => {
@@ -73,55 +73,26 @@ export function createSystemCalls(
     let stored_realm = await storeCache.tables.Realm.get({ coord })
     if (stored_realm != null) {
       console.log(`STORED_REALM:`, stored_realm)
-      return
+    } else {
+      console.warn(`BRIDGE_REALM`, coord)
+      const tx = await worldSend('setRealm', [
+        coord,
+      ])
+      await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash)
+      const result = await storeCache.tables.Realm.get({ coord })
+      console.warn(`BRIDGED_REALM = `, result)
+      // return result
     }
-    console.warn(`BRIDGE_REALM`, coord)
-    //
-    // store Chamber
-    const tx = await worldSend('setRealm', [
-      coord,
-    ])
-    await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash)
-    const result = await storeCache.tables.Realm.get({ coord })
-    console.warn(`BRIDGED_REALM = `, result)
-    return result
   }
 
   const bridge_chamber = async (coord: bigint) => {
-    // check if already bridged
-    let stored_chamber = await storeCache.tables.Chamber.get({ coord })
-    if (stored_chamber != null) {
-      console.log(`STORED_CHAMBER:`, stored_chamber)
-      return
-    }
-    // fetch
-    const chamberData = await Bridge.coordToChamberData(coord)
     const compass = coordToCompass(coord)
-    console.warn(`BRIDGE_CHAMBER`, compass, chamberData)
-    //
-    // store Chamber
-    const tx = await worldSend('setChamber', [
-      coord,
-      chamberData.tokenId,
-      chamberData.seed,
-      chamberData.yonder,
-      chamberData.chapter,
-      chamberData.terrain,
-      chamberData.entryDir,
-      chamberData.gemPos,
-      chamberData.hoard.gemType,
-      chamberData.hoard.coins,
-      chamberData.hoard.worth,
-    ])
-    await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash)
-    const result = await storeCache.tables.Chamber.get({ coord })
-    // console.warn(`BRIDGED_CHAMBER = `, result)
-    //
-    // store Tiles
+    const chamberData = await Bridge.coordToChamberData(coord)
+    // Parse Tiles
     let gemPos = { gridX: 0, gridY: 0 }
     const tilemap = ethers.utils.arrayify(chamberData.tilemap)
     let map = Array(20 * 20).fill({ tileType: 0 })
-    Object.values(tilemap).forEach(async (tileType, index) => {
+    Object.values(tilemap).forEach((tileType, index) => {
       const doorDir = chamberData.doors.findIndex((i) => i > 0 && i == index)
       const x = 2 + index % 16
       const y = 2 + Math.floor(index / 16)
@@ -140,6 +111,61 @@ export function createSystemCalls(
         map[(y + 2) * 20 + x] = { tileType: 2, doorDir }
       }
     })
+    //
+    // check if already bridged
+    let stored_chamber = await storeCache.tables.Chamber.get({ coord })
+    if (stored_chamber != null) {
+      console.log(`STORED_CHAMBER:`, stored_chamber)
+    } else {
+      //
+      // Create Chamber
+      console.warn(`BRIDGE_CHAMBER`, compass, chamberData)
+      const tx = await worldSend('setChamber', [
+        coord,
+        chamberData.tokenId,
+        chamberData.seed,
+        chamberData.yonder,
+        chamberData.chapter,
+        chamberData.terrain,
+        chamberData.entryDir,
+        chamberData.gemPos,
+        chamberData.hoard.gemType,
+        chamberData.hoard.coins,
+        chamberData.hoard.worth,
+      ])
+      await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash)
+      const result = await storeCache.tables.Chamber.get({ coord })
+      console.warn(`BRIDGED_CHAMBER = `, result)
+      //
+      // Create Agent
+      const agentTx = await worldSend('setAgent', [
+        coord,
+        chamberData.tokenId,
+        chamberData.seed,
+        chamberData.yonder,
+        chamberData.terrain,
+        chamberData.hoard.gemType,
+        chamberData.hoard.coins,
+        chamberData.hoard.worth,
+        gemPos.gridX,
+        gemPos.gridY,
+      ])
+      // wait to commit transaction
+      await awaitStreamValue(txReduced$, (txHash) => txHash === agentTx.hash)
+      //
+      // Set Chamber agent
+      // this query must return only 1 value
+      const agentQuery = runQuery([Has(Agent), HasValue(Position, { x: gemPos.gridX, y: gemPos.gridY })])
+      agentQuery.forEach(async (entity) => {
+        console.log(`AGENT TO CHAMBER...`, coord, entity)
+        await worldSend('setChamberAgent', [
+          coord,
+          entity,
+        ])
+      })
+    }
+    //
+    // Bridge Tiles
     map.forEach(async (tile, index) => {
       const isEntry = (tile.doorDir == chamberData.entryDir)
       let gridX = (index % 20)
@@ -149,47 +175,20 @@ export function createSystemCalls(
       if (compass?.south && compass.south > 0) gridY += ((compass.south - 1) * 20)
       if (compass?.north && compass.north > 0) gridY -= (compass.north * 20)
       if (tile.tileType == 4) gemPos = { gridX, gridY }
-      await worldSend('setTile', [
-        chamberData.terrain,
-        tile.tileType,
-        isEntry,
-        gridX,
-        gridY,
-        tile.doorDir ?? -1,
-        coord
-      ])
+      // Tile exist?
+      const tileQuery = runQuery([Has(Tile), HasValue(Position, { x: gridX, y: gridY })])
+      if (tileQuery.size == 0) {
+        await worldSend('setTile', [
+          chamberData.terrain,
+          tile.tileType,
+          isEntry,
+          gridX,
+          gridY,
+          tile.doorDir ?? -1,
+          coord
+        ])
+      }
     })
-    //
-    // Create Agent
-    const agentTx = await worldSend('setAgent', [
-      coord,
-      chamberData.tokenId,
-      chamberData.seed,
-      chamberData.yonder,
-      chamberData.terrain,
-      chamberData.hoard.gemType,
-      chamberData.hoard.coins,
-      chamberData.hoard.worth,
-      gemPos.gridX,
-      gemPos.gridY,
-    ])
-    // wait to commit transaction
-    await awaitStreamValue(txReduced$, (txHash) => txHash === agentTx.hash)
-    //
-    // Set Chamber agent
-    // this query must return only 1 value
-    const agentQuery = runQuery([Has(Agent), HasValue(Position, { x: gemPos.gridX, y: gemPos.gridY })])
-    console.log(`AGENT QUERY`, agentQuery)
-    agentQuery.forEach(async (entity) => {
-      console.log(`AGENT TO CHAMBER...`, coord, entity)
-      await worldSend('setChamberAgent', [
-        coord,
-        entity,
-      ])
-    })
-    //
-    // return ChamberData
-    return result
   }
 
   //---------------------------

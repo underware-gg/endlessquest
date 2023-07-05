@@ -153,6 +153,8 @@ export const ChamberLoader = ({
       {' | '}
       {agentIsSuccess ? '.' : agentIsError ? '?' : agentIsFetching ? 'm' : 'M'}
       {agentArtIsSuccess ? '.' : agentArtIsError ? '?' : agentArtIsFetching ? 'i' : 'I'}
+      {' | '}
+      {tiles.length}
     </div>
   )
 }
