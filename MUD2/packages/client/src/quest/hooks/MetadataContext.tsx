@@ -142,53 +142,55 @@ const MetadataProvider = ({
           }
           if (status == StatusType.Success) {
             try {
+              let _setter = async () => {}
               if (content == ContentType.Metadata && metadata) {
                 const _meta = JSON.stringify(metadata)
                 if (_meta == '{}') throw (`Empty metadata {}`)
                 if (type == MetadataType.Realm) {
-                  setRealmMetadata(key, _meta)
-                  setTimeout(() => {
+                  _setter = async () => {
+                    await setRealmMetadata(key, _meta)
                     QuestRealmDoc.updateMetadata(remoteStore, key.toString(), metadata)
-                  }, 100)
+                  }
                 } else if (type == MetadataType.Chamber) {
-                  setChamberMetadata(key, _meta)
-                  setTimeout(() => {
+                  _setter = async () => {
+                    await setChamberMetadata(key, _meta)
                     const chamberSlug = coordToSlug(key as bigint, null)
                     QuestChamberDoc.updateMetadata(remoteStore, chamberSlug, metadata)
-                  }, 100)
+                  }
                 } else if (type == MetadataType.Agent) {
-                  setAgentMetadata(key, _meta)
-                  setTimeout(() => {
-                    const coord = agentToCoord(storeCache, key as Entity)
+                  _setter = async () => {
+                    await setAgentMetadata(key, _meta)
+                    const coord = await agentToCoord(storeCache, key as Entity)
                     const chamberSlug = coordToSlug(coord as bigint, null)
                     QuestAgentDoc.updateMetadata(remoteStore, chamberSlug, metadata)
-                  }, 100)
+                  }
                 } else {
                   throw (`Invalid metadata type ${type}`)
                 }
               } else if (content == ContentType.Url && url) {
                 if (type == MetadataType.Realm) {
-                  setRealmArtUrl(key, url)
-                  setTimeout(() => {
+                  _setter = async () => {
+                    await setRealmArtUrl(key, url)
                     QuestRealmDoc.updateArtUrl(remoteStore, key.toString(), url)
-                  }, 100)
+                  }
                 } else if (type == MetadataType.Chamber) {
-                  setChamberArtUrl(key, url)
-                  setTimeout(() => {
+                  _setter = async () => {
+                    await setChamberArtUrl(key, url)
                     const chamberSlug = coordToSlug(key as bigint, null)
                     QuestChamberDoc.updateArtUrl(remoteStore, chamberSlug, url)
-                  }, 100)
+                  }
                 } else if (type == MetadataType.Agent) {
-                  setAgentArtUrl(key, url)
-                  setTimeout(() => {
-                    const coord = agentToCoord(storeCache, key as Entity)
+                  _setter = async () => {
+                    await setAgentArtUrl(key, url)
+                    const coord = await agentToCoord(storeCache, key as Entity)
                     const chamberSlug = coordToSlug(coord as bigint, null)
                     QuestAgentDoc.updateArtUrl(remoteStore, chamberSlug, url)
-                  }, 100)
+                  }
                 } else {
                   throw (`Invalid metadata type ${type}`)
                 }
               }
+              _setter()
             } catch (e) {
               console.warn(`MetadataContext metadata.[${type}][${_key}] exception:`, e)
               newState.data[content][type][_key] = StatusType.Error
@@ -517,8 +519,9 @@ export const useRequestChamberArtUrl = (coord: bigint) => {
   const prompt = useMemo(() => {
     if (metadata && url === '') {
       const meta = JSON.parse(metadata)
-      if (meta.description) {
-        const pertype = prompts.chamberPrompts[meta?.terrain ?? 0] ?? ''
+      if (meta.description && meta.terrain) {
+        // @ts-ignore
+        const pertype = prompts.chamberPrompts[meta.terrain] ?? ''
         return `${pertype} ${meta.description}`
       }
     }

@@ -50,7 +50,7 @@ export function createSystemCalls(
 
   const bridge_tokenId = async (tokenId: bigint) => {
     // check if already bridged
-    let stored_coord = storeCache.tables.Token.get({ tokenId })
+    let stored_coord = await storeCache.tables.Token.get({ tokenId })
     if (stored_coord != null) {
       console.log(`STORED_COORD:`, stored_coord)
       return
@@ -70,7 +70,7 @@ export function createSystemCalls(
 
   const bridge_realm = async (coord: bigint) => {
     // check if already bridged
-    let stored_realm = storeCache.tables.Realm.get({ coord })
+    let stored_realm = await storeCache.tables.Realm.get({ coord })
     if (stored_realm != null) {
       console.log(`STORED_REALM:`, stored_realm)
       return
@@ -82,14 +82,14 @@ export function createSystemCalls(
       coord,
     ])
     await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash)
-    const result = storeCache.tables.Realm.get({ coord })
+    const result = await storeCache.tables.Realm.get({ coord })
     console.warn(`BRIDGED_REALM = `, result)
     return result
   }
 
   const bridge_chamber = async (coord: bigint) => {
     // check if already bridged
-    let stored_chamber = storeCache.tables.Chamber.get({ coord })
+    let stored_chamber = await storeCache.tables.Chamber.get({ coord })
     if (stored_chamber != null) {
       console.log(`STORED_CHAMBER:`, stored_chamber)
       return
@@ -114,7 +114,7 @@ export function createSystemCalls(
       chamberData.hoard.worth,
     ])
     await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash)
-    const result = storeCache.tables.Chamber.get({ coord })
+    const result = await storeCache.tables.Chamber.get({ coord })
     // console.warn(`BRIDGED_CHAMBER = `, result)
     //
     // store Tiles
@@ -195,30 +195,30 @@ export function createSystemCalls(
   //---------------------------
   // Metadata
   //
-  const setRealmMetadata = (coord: bigint, metadata: string) => {
+  const setRealmMetadata = async (coord: bigint, metadata: string) => {
     if (coord && metadata) {
-      // let stored_metadata = storeCache.tables.ChamberMetadata.get({ coord })
+      // let stored_metadata = await storeCache.tables.ChamberMetadata.get({ coord })
       // if (stored_metadata == null) {
       console.warn(`STORE REALM METADATA @`, coord, metadata)
-      worldSend('setRealmMetadata', [coord, metadata])
+      await worldSend('setRealmMetadata', [coord, metadata])
       // }
     }
   }
-  const setChamberMetadata = (coord: bigint, metadata: string) => {
+  const setChamberMetadata = async (coord: bigint, metadata: string) => {
     if (coord && metadata) {
-      // let stored_metadata = storeCache.tables.ChamberMetadata.get({ coord })
+      // let stored_metadata = await storeCache.tables.ChamberMetadata.get({ coord })
       // if (stored_metadata == null) {
       console.warn(`STORE CHAMBER METADATA @`, coord, metadata)
-      worldSend('setChamberMetadata', [coord, metadata])
+      await worldSend('setChamberMetadata', [coord, metadata])
       // }
     }
   }
-  const setAgentMetadata = (entity: Entity, metadata: string) => {
+  const setAgentMetadata = async (entity: Entity, metadata: string) => {
     if (entity && metadata) {
-      // let stored_metadata = storeCache.tables.Metadata.get({ key: entity })
+      // let stored_metadata = await storeCache.tables.Metadata.get({ key: entity })
       // if (stored_metadata == null) {
       console.warn(`STORE AGENT METADATA @`, entity, metadata)
-      worldSend('setAgentMetadata', [entity, metadata])
+      await worldSend('setAgentMetadata', [entity, metadata])
       // }
     }
   }
@@ -226,37 +226,37 @@ export function createSystemCalls(
   //---------------------------
   // Art Url
   //
-  const setRealmArtUrl = (coord: bigint, url: string) => {
+  const setRealmArtUrl = async (coord: bigint, url: string) => {
     if (coord && url) {
       console.warn(`STORE REALM IMAGE URL @`, coord, url)
-      worldSend('setRealmArtUrl', [coord, url])
+      await worldSend('setRealmArtUrl', [coord, url])
     }
   }
-  const setChamberArtUrl = (coord: bigint, url: string) => {
+  const setChamberArtUrl = async (coord: bigint, url: string) => {
     if (coord && url) {
       console.warn(`STORE CHAMBER IMAGE URL @`, coord, url)
-      worldSend('setChamberArtUrl', [coord, url])
+      await worldSend('setChamberArtUrl', [coord, url])
     }
   }
-  const setAgentArtUrl = (entity: Entity, url: string) => {
+  const setAgentArtUrl = async (entity: Entity, url: string) => {
     if (entity && url) {
       console.warn(`STORE AGENT IMAGE URL @`, entity, url)
-      worldSend('setAgentArtUrl', [entity, url])
+      await worldSend('setAgentArtUrl', [entity, url])
     }
   }
 
   //---------------------------
   // Player / Movement
   //
-  const spawnAtPosition = (x: number, y: number) => {
+  const spawnAtPosition = async (x: number, y: number) => {
     console.warn(`SPAWN @`, x, y)
-    worldSend('spawnAtPosition', [playerName, x, y])
+    await worldSend('spawnAtPosition', [playerName, x, y])
   }
-  const moveToDirection = (direction: Direction) => {
-    worldSend('moveToDirection', [direction])
+  const moveToDirection = async (direction: Direction) => {
+    await worldSend('moveToDirection', [direction])
   }
-  const moveToPosition = (x: number, y: number) => {
-    worldSend('moveToPosition', [x, y])
+  const moveToPosition = async (x: number, y: number) => {
+    await worldSend('moveToPosition', [x, y])
   }
 
   return {
