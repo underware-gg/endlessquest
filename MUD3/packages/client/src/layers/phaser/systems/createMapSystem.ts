@@ -9,6 +9,16 @@ export function createMapSystem(layer: PhaserLayer) {
         maps: {
           Main: { putTileAt },
         },
+        input,
+      },
+    },
+    networkLayer: {
+      components: {
+        Counter,
+      },
+      systemCalls: {
+        increment,
+        decament,
       },
     },
   } = layer;
@@ -29,4 +39,21 @@ export function createMapSystem(layer: PhaserLayer) {
       }
     }
   }
+
+  // click + increment
+  // input.pointerdown$.subscribe((event) => {
+  //   // increment()
+  // })
+
+  input.onKeyPress(
+    keys => keys.has('I'),
+    () => {
+      increment()
+    })
+  input.onKeyPress(
+    keys => keys.has('D'),
+    () => {
+      decament()
+    })
+
 }

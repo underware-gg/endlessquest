@@ -1,4 +1,5 @@
 import { useStore } from "../store";
+import { CounterValue } from "./CounterValue";
 import { LoadingScreen } from "./LoadingScreen";
 import { Wrapper } from "./Wrapper";
 
@@ -15,6 +16,7 @@ export const UIRoot = () => {
   return (
     <Wrapper>
       <LoadingScreen />
+      <CounterValue />
     </Wrapper>
   );
 };
