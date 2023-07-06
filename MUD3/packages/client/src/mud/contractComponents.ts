@@ -20,5 +20,77 @@ export function defineContractComponents(world: World) {
         }
       );
     })(),
+    Realm: (() => {
+      const tableId = new TableId("", "Realm");
+      return defineComponent(
+        world,
+        {
+          opener: RecsType.String,
+        },
+        {
+          metadata: {
+            contractId: tableId.toHex(),
+            tableId: tableId.toString(),
+          },
+        }
+      );
+    })(),
+    Token: (() => {
+      const tableId = new TableId("", "Token");
+      return defineComponent(
+        world,
+        {
+          coord: RecsType.BigInt,
+        },
+        {
+          metadata: {
+            contractId: tableId.toHex(),
+            tableId: tableId.toString(),
+          },
+        }
+      );
+    })(),
+    Chamber: (() => {
+      const tableId = new TableId("", "Chamber");
+      return defineComponent(
+        world,
+        {
+          opener: RecsType.String,
+          tokenId: RecsType.Number,
+          seed: RecsType.BigInt,
+          yonder: RecsType.Number,
+          chapter: RecsType.Number,
+          terrain: RecsType.Number,
+          entryDir: RecsType.Number,
+          gemPos: RecsType.Number,
+          gemType: RecsType.Number,
+          coins: RecsType.Number,
+          worth: RecsType.Number,
+          agent: RecsType.String,
+        },
+        {
+          metadata: {
+            contractId: tableId.toHex(),
+            tableId: tableId.toString(),
+          },
+        }
+      );
+    })(),
+    ChamberMetadata: (() => {
+      const tableId = new TableId("", "ChamberMetadata");
+      return defineComponent(
+        world,
+        {
+          metadata: RecsType.String,
+          url: RecsType.String,
+        },
+        {
+          metadata: {
+            contractId: tableId.toHex(),
+            tableId: tableId.toString(),
+          },
+        }
+      );
+    })(),
   };
 }
