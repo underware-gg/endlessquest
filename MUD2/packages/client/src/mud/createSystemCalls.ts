@@ -9,11 +9,17 @@ import { awaitStreamValue } from '@latticexyz/utils'
 import { ClientComponents } from './createClientComponents'
 import { SetupNetworkResult } from './setupNetwork'
 import { Direction } from '../layers/phaser/constants'
-import { coordToCompass, Tile as CrawlerTile, Dir as CrawlerDir } from '@rsodre/crawler-data'
-import * as Bridge from '../quest/bridge/bridge'
-import * as ethers from 'ethers'
-import Cookies from 'universal-cookie'
 import { nanoid } from 'nanoid'
+import Cookies from 'universal-cookie'
+import * as ethers from 'ethers'
+// import * as Bridge from '../quest/bridge/bridge'
+import {
+  getTokenIdToCoords,
+  getChamberData,
+  coordToCompass,
+  Tile as CrawlerTile,
+  Dir as CrawlerDir,
+} from '@rsodre/crawler-data'
 
 export type SystemCalls = ReturnType<typeof createSystemCalls>
 
@@ -41,7 +47,7 @@ export function createSystemCalls(
       console.log(`STORED_COORD:`, stored_coord)
     } else {
       // fetch
-      const coord = await Bridge.tokenIdToCoord(tokenId)
+      const { coord } = getTokenIdToCoords(tokenId)
       console.warn(`BRIDGE_tokenIdToCoord:`, tokenId, coord)
       // store
       const tx = await worldSend('setTokenIdToCoord', [
@@ -73,7 +79,7 @@ export function createSystemCalls(
 
   const bridge_chamber = async (coord: bigint) => {
     const compass = coordToCompass(coord)
-    const chamberData = await Bridge.coordToChamberData(coord)
+    const chamberData = getChamberData(coord.toString())
     // initialize tiles
     let map = new Array(20 * 20)
     for (let i = 0; i < map.length; ++i) {
@@ -144,9 +150,9 @@ export function createSystemCalls(
         chamberData.terrain,
         chamberData.entryDir,
         chamberData.gemPos,
-        chamberData.hoard.gemType,
-        chamberData.hoard.coins,
-        chamberData.hoard.worth,
+        chamberData.gemType,
+        chamberData.coins,
+        chamberData.worth,
       ])
       await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash)
       const result = await storeCache.tables.Chamber.get({ coord })
@@ -159,9 +165,9 @@ export function createSystemCalls(
         chamberData.tokenId,
         chamberData.yonder,
         chamberData.terrain,
-        chamberData.hoard.gemType,
-        chamberData.hoard.coins,
-        chamberData.hoard.worth,
+        chamberData.gemType,
+        chamberData.coins,
+        chamberData.worth,
         gemPos.gridX,
         gemPos.gridY,
       ])
