@@ -189,21 +189,25 @@ export function createSystemCalls(
     }
     //
     // Bridge Tiles
+    let tileCount = 0
     map.forEach(async (tile, index) => {
       // Tile exist?
       const tileQuery = runQuery([Has(Tile), HasValue(Position, { x: tile.gridX, y: tile.gridY })])
       if (tileQuery.size == 0) {
-        const tx = await worldSend('setTile', [
-          coord,
-          chamberData.tokenId,
-          chamberData.terrain,
-          tile.tileType,
-          tile.gridX,
-          tile.gridY,
-          tile.isEntry ?? false,
-          tile.doorDir ?? -1
-        ])
-        await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash)
+        setTimeout(async () => {
+          const tx = await worldSend('setTile', [
+            coord,
+            chamberData.tokenId,
+            chamberData.terrain,
+            tile.tileType,
+            tile.gridX,
+            tile.gridY,
+            tile.isEntry ?? false,
+            tile.doorDir ?? -1
+          ])
+          await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash)
+          console.log(`SETTILE()`, coord, tile.gridX, tile.gridY, tx)
+        }, ++tileCount * 20);
       }
     })
   }
