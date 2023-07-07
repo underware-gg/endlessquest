@@ -19,6 +19,7 @@ export const LoadingScreen = () => {
     percentage: 0,
     state: SyncState.CONNECTING,
   });
+  console.log(`loadingState`, loadingState)
 
   if (loadingState.state === SyncState.LIVE) {
     return null;

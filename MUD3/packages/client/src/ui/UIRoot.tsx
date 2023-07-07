@@ -1,9 +1,9 @@
 import { useStore } from "../store";
-import { CounterValue } from "../quest/components/CounterValue";
-import { LoadingScreen } from "./LoadingScreen";
 import { Wrapper } from "./Wrapper";
 import { GameLoading } from "../quest/components/GameLoading";
 import { GameRoot } from "../quest/components/GameRoot";
+import { CounterValue } from "../quest/components/CounterValue";
+import { LoadingScreen } from "./LoadingScreen";
 
 export const UIRoot = () => {
   const layers = useStore((state) => {
@@ -17,6 +17,8 @@ export const UIRoot = () => {
 
   return (
     <Wrapper>
+      {/* <LoadingScreen /> */}
+      {/* <CounterValue /> */}
       <GameLoading />
       <GameRoot />
     </Wrapper>

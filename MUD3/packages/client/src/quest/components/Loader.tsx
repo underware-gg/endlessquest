@@ -37,9 +37,6 @@ export const Loader = () => {
 
   // force bridge token #1
   useBridgeToken(1)
-  useBridgeToken(2)
-  useBridgeToken(3)
-  useBridgeToken(4)
 
   return (
     <div className='Loader Infos Smaller'>
