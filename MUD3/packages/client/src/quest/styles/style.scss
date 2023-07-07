@@ -1,0 +1,290 @@
+@import 'googlefonts';
+
+$important: #fa0;
+$ui-bg: #000a;
+// $ui-border: 1px solid #ddd;
+$ui-border: 5px ridge $important;
+$ui-realms-size: 150px;
+$ui-chamber-size: 250px;
+
+html, body {
+  // background-color: #1a3a1e;
+  background-color: #000;
+  color: #fff;
+  font-family: 'Noto Sans Mono', monospace;
+  font-size: 12px;
+  overflow: hidden;
+  text-shadow: 0.1em 0.1em #000;
+}
+
+h1, h2, h3, h4, h5 {
+  line-height: 1.1em;
+  margin: 0.2em;
+}
+
+p {
+  line-height: 1.5em;
+  margin: 0.1em;
+}
+
+canvas {
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+.Canvas {
+  @extend canvas;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  cursor: crosshair;
+}
+
+.Smaller {
+  font-size: 80%;
+}
+
+.Important {
+  color: $important;
+}
+
+.Importanter {
+  color: $important;
+  font-size: 1.3rem;
+}
+
+.Red {
+  color: #f44;
+}
+
+.Green {
+  color: #4f4;
+}
+
+.NoMouse {
+  pointer-events: none!important;
+}
+
+.WithMouse {
+  pointer-events: all!important;
+}
+
+.Clickable {
+  cursor: pointer!important;
+  pointer-events: all!important;
+}
+
+.FillScreen {
+  width: 100vw;
+  height: 100vh;
+}
+
+.FillParent {
+  width: 100%;
+  height: 100%;
+  min-width: 100%;
+  min-height: 100%;
+}
+
+.CenteredContainer {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+.Flex {
+  display: flex;
+}
+
+.Block {
+  display: block !important;
+}
+
+.Relative {
+  position: relative;
+}
+
+.Absolute {
+  position: absolute !important;
+  top: 0;
+  left: 0;
+}
+
+.Padded {
+  padding: 0.5em !important;
+}
+
+.NoPadding {
+  padding: 0 !important;
+}
+
+.NoMargin {
+  margin: 0 !important;
+}
+
+.NoBorder {
+  border: none !important;
+}
+
+.Debug {
+  background-color: #f0f8;
+}
+
+//-----------------------------
+// <GameLoading>
+//
+.GameLoadingBox {
+  width: 400px;
+  height: 40px;
+  position: absolute;
+  left: calc(50% - (300px / 2));
+  top: calc(50% - (40px / 2));
+}
+.GameLoadingBar {
+  width: 100%;
+  height: 50%;
+  margin: auto;
+}
+
+//-----------------------------
+// <GameSelector>
+//
+.SelectRealmContainer {
+  width: 600px !important;
+}
+.SelectRealmInfo {
+  @extend .CenteredContainer;
+  width: 600px !important;
+  height: 80px;
+}
+.SelectRealmBox {
+  width: 600px !important;
+  height: 200px;
+}
+
+//-----------------------------
+// <GameUI>
+//
+.GameUITop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: $ui-realms-size;
+  display: flex;
+}
+
+.GameUIRight {
+  position: absolute;
+  top: $ui-realms-size;
+  right: 0;
+}
+
+.UI {
+  border: $ui-border;
+  background-color: $ui-bg;
+  padding: 0.3em;
+  box-sizing: border-box; // padding does not increase element size
+}
+
+.RealmImage {
+  @extend .UI;
+  width: $ui-realms-size;
+  height: $ui-realms-size;
+}
+
+.RealmLocation {
+  @extend .UI;
+  width: calc(100% - $ui-realms-size - $ui-chamber-size);
+  height: $ui-realms-size;
+}
+
+.PlayerLocation {
+  @extend .UI;
+  width: $ui-chamber-size;
+  height: $ui-realms-size;
+}
+
+.ChamberImage {
+  @extend .UI;
+  width: $ui-chamber-size;
+  height: $ui-chamber-size;
+}
+
+.ChamberLocation {
+  @extend .UI;
+  width: $ui-chamber-size;
+  height: calc($ui-chamber-size * 1.5);
+}
+
+.ChatButton {
+  position: absolute;
+  bottom: 20px;
+  left: 60px;
+  width: 50%;
+  height: 40px;
+}
+
+.Infos {
+  color: #aaa;
+  padding: 0.5em;
+}
+
+
+//-------------
+// <Loader>
+//
+
+.Loader {
+  @extend .UI;
+  width: $ui-chamber-size;
+  height: 100px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+.LoaderContent {
+  padding: 0 0.5em;
+  overflow-y: scroll;
+  width: calc(100% - 1em);
+  height: calc(80px - 0.25em);
+}
+
+.RoomLoader {
+  @extend .UI;
+  width: $ui-chamber-size;
+  height: 100px;
+  position: absolute;
+  bottom: 0;
+  left: $ui-chamber-size;
+}
+
+
+//---------------
+// Full screeners
+//
+.ClearCover {
+  @extend .FillScreen; 
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+.FadedCover {
+  @extend .ClearCover;
+  background-color: $ui-bg;
+}
+
+.FullscreenProfileImage {
+  @extend .UI;
+  position: absolute;
+  left: calc(50% - 512px);
+  top: calc(50% - 512px);
+  width: 1024px;
+  height: 1024px;
+}
+
+

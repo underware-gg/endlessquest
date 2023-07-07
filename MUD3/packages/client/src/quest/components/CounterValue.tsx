@@ -1,5 +1,5 @@
 import { useComponentValue } from '@latticexyz/react'
-import { useMUD } from "../store";
+import { useMUD } from "../../store";
 
 export const CounterValue = () => {
   const {

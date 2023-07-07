@@ -70,33 +70,13 @@ export function createSystemCalls(
   // Quest
   //
 
-  const bridge_tokenId = async (tokenId: number) => {
-    // check if already bridged
-    let stored_coord = await storeCache.tables.Token.get({ tokenId })
-    if (stored_coord != null) {
-      console.log(`STORED_COORD:`, stored_coord)
-    } else {
-      // fetch
-      const { coord } = getTokenIdToCoords(tokenId)
-      console.warn(`BRIDGE_tokenIdToCoord:`, tokenId, coord)
-      // store
-      const tx = await worldSend('setTokenIdToCoord', [
-        tokenId,
-        coord,
-      ])
-      // return stored value
-      await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash)
-      // return getComponentValue(Token, singletonEntity)
-    }
-  }
-
   const bridge_realm = async (coord: bigint) => {
     // check if already bridged
     let stored_realm = await storeCache.tables.Realm.get({ coord })
     if (stored_realm != null) {
-      console.log(`STORED_REALM:`, stored_realm)
+      console.warn(`STORED_REALM:`, coord, stored_realm)
     } else {
-      console.warn(`BRIDGE_REALM`, coord)
+      console.warn(`BRIDGING_REALM...`, coord)
       const tx = await worldSend('setRealm', [
         coord,
       ])
@@ -104,6 +84,28 @@ export function createSystemCalls(
       const result = await storeCache.tables.Realm.get({ coord })
       console.warn(`BRIDGED_REALM = `, result)
       // return result
+    }
+  }
+
+  const bridge_tokenId = async (tokenId: number) => {
+    // check if already bridged
+    let stored_coord = await storeCache.tables.Token.get({ tokenId })
+    if (stored_coord != null) {
+      console.warn(`STORED_TOKEN:`, tokenId, stored_coord)
+    } else {
+      // fetch
+      const { coord } = getTokenIdToCoords(tokenId)
+      console.warn(`BRIDGING_TOKEN...`, tokenId, coord)
+      // store
+      const tx = await worldSend('setTokenIdToCoord', [
+        tokenId,
+        coord,
+      ])
+      // return stored value
+      await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash)
+      const result = await storeCache.tables.Token.get({ tokenId })
+      console.warn(`BRIDGED_TOKEN = `, result)
+      return result
     }
   }
 
@@ -166,11 +168,11 @@ export function createSystemCalls(
     // check if already bridged
     let stored_chamber = await storeCache.tables.Chamber.get({ coord })
     if (stored_chamber != null) {
-      console.log(`STORED_CHAMBER:`, stored_chamber)
+      console.warn(`STORED_CHAMBER:`, coord, stored_chamber)
     } else {
       //
       // Create Chamber
-      console.warn(`BRIDGE_CHAMBER`, compass, chamberData)
+      console.warn(`BRIDGING_CHAMBER...`, compass, chamberData)
       let tx = await worldSend('setChamber', [
         coord,
         chamberData.seed,
