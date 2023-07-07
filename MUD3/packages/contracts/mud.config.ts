@@ -67,28 +67,28 @@ export default mudConfig({
         url: 'string',
       }
     },
-    // //-----------------------
-    // Agent: {
-    //   keySchema: {
-    //     key: 'bytes32',
-    //   },
-    //   schema: {
-    //     coord: 'uint256',
-    //     seed: 'uint256',
-    //     tokenId: 'uint32',
-    //     yonder: 'uint8',
-    //     terrain: 'uint8',
-    //     gemType: 'uint8',
-    //     coins: 'uint16',
-    //     worth: 'uint16'
-    //   }
-    // },
-    // Metadata: {
-    //   schema: {
-    //     metadata: 'string',
-    //     url: 'string',
-    //   }
-    // },
+    //-----------------------
+    Agent: {
+      keySchema: {
+        key: 'bytes32',
+      },
+      schema: {
+        coord: 'uint256',
+        seed: 'uint256',
+        tokenId: 'uint32',
+        yonder: 'uint8',
+        terrain: 'uint8',
+        gemType: 'uint8',
+        coins: 'uint16',
+        worth: 'uint16'
+      }
+    },
+    Metadata: {
+      schema: {
+        metadata: 'string',
+        url: 'string',
+      }
+    },
     // //-----------------------
     // Tile: {
     //   keySchema: {
@@ -106,17 +106,22 @@ export default mudConfig({
     //     nextCoord: 'uint256',
     //   }
     // },
+    Position: {
+      schema: {
+        x: 'int32',
+        y: 'int32',
+      }
+    },
+    Blocker: {
+      schema: {
+        enabled: 'bool',
+      }
+    },
     // //-----------------------
     // Player: {
     //   schema: {
     //     level: 'uint8',
     //     name: 'string',
-    //   }
-    // },
-    // Position: {
-    //   schema: {
-    //     x: 'int32',
-    //     y: 'int32',
     //   }
     // },
     // Location: {
@@ -125,26 +130,21 @@ export default mudConfig({
     //     agent: 'bytes32',
     //   }
     // },
-    // Blocker: {
-    //   schema: {
-    //     enabled: 'bool',
-    //   }
-    // },
 
 
   },
 
-  // modules: [
-  //   {
-  //     name: 'UniqueEntityModule',
-  //     root: true,
-  //     args: [],
-  //   },
-  //   {
-  //     name: 'KeysWithValueModule',
-  //     root: true,
-  //     args: [resolveTableId('Position')],
-  //   },
-  // ],
+  modules: [
+    {
+      name: 'UniqueEntityModule',
+      root: true,
+      args: [],
+    },
+    // {
+    //   name: 'KeysWithValueModule',
+    //   root: true,
+    //   args: [resolveTableId('Position')],
+    // },
+  ],
 
 });

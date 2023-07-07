@@ -135,18 +135,22 @@ export const ChamberLoader = ({
 }: ChamberLoaderProps) => {
   const {
     networkLayer: {
-      // components: { Tile },
+      components: { Agent },
       storeCache,
     }
   } = useMUD()
 
-  const bridging = useBridgeChamber(coord)
+  const bridgingChamber = useBridgeChamber(coord)
 
   const slug = coordToSlug(coord)
 
   const chamberData = useRow(storeCache, { table: 'Chamber', key: { coord } })
   const seed = useMemo(() => (chamberData?.value?.seed?.toString() ?? null), [chamberData])
-  // const agentEntity = useMemo(() => (chamberData?.value?.agent ?? '0x0'), [chamberData]) as Entity
+  const agentEntity = useMemo(() => (chamberData?.value?.agent ?? '0x0'), [chamberData]) as Entity
+  const agentLinked = BigInt(agentEntity) != 0n
+
+  const agents = useEntityQuery([HasValue(Agent, { coord })]) ?? []
+  const agentCreated = agents.length > 0
 
   // TODO...
   // const tiles = useEntityQuery([HasValue(Tile, { tokenId: chamberData?.value?.tokenId ?? 0 })]) ?? []
@@ -162,7 +166,9 @@ export const ChamberLoader = ({
   return (
     <div>
       Chamber(<span>{slug ?? '?'}) </span>
-      {Boolean(seed) ? '.' : bridging ? 'c' : 'C'}
+      {Boolean(seed) ? '.' : bridgingChamber ? 'c' : 'C'}
+      {agentCreated ? '.' : 'A'}
+      {agentLinked ? '.' : 'A'}
       {/* TODO... */}
       {/* {tiles.length == 400 ? '.' : tiles.length > 0 ? 't' : 'T'} */}
       {/* TODO... */}

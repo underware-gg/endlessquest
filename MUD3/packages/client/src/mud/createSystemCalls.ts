@@ -1,4 +1,4 @@
-import { getComponentValue } from "@latticexyz/recs";
+import { getComponentValue, runQuery, Has, HasValue } from "@latticexyz/recs";
 import { awaitStreamValue } from "@latticexyz/utils";
 import { ClientComponents } from "./createClientComponents";
 import { SetupNetworkResult } from "./setupNetwork";
@@ -26,8 +26,8 @@ export function createSystemCalls(
     Token,
     Realm,
     Chamber,
-    // Agent,
-    // Position,
+    Agent,
+    Position,
     // Tile,
 
   }: ClientComponents
@@ -189,12 +189,18 @@ export function createSystemCalls(
       await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash)
       const result = await storeCache.tables.Chamber.get({ coord })
       console.warn(`BRIDGED_CHAMBER = `, result)
+    }
 
-/*
-
+    // let agentQuery = runQuery([Has(Agent), HasValue(Position, { x: gemPos.gridX, y: gemPos.gridY })])
+    const agentQuery = runQuery([HasValue(Agent, { coord })])
+    if (agentQuery.size > 0) {
+      const [agentEntity] = agentQuery;
+      console.warn(`STORED_AGENT:`, coord, agentEntity)
+    } else {
       //
       // Create Agent
-      tx = await worldSend('setAgent', [
+      console.warn(`CREATING_AGENT...`, coord)
+      let tx = await worldSend('setAgent', [
         coord,
         chamberData.seed,
         chamberData.tokenId,
@@ -212,16 +218,17 @@ export function createSystemCalls(
       // Set Chamber agent
       // this query must return only 1 value
       const agentQuery = runQuery([Has(Agent), HasValue(Position, { x: gemPos.gridX, y: gemPos.gridY })])
-      agentQuery.forEach(async (entity) => {
-        console.log(`AGENT TO CHAMBER...`, coord, entity)
-        tx = await worldSend('setChamberAgent', [
-          coord,
-          entity,
-        ])
-        // wait to commit transaction
-        await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash)
-      })
+      const [agentEntity] = agentQuery;
+      console.log(`LINKING_AGENT...`, coord, agentEntity)
+      tx = await worldSend('setChamberAgent', [
+        coord,
+        agentEntity,
+      ])
+      // wait to commit transaction
+      await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash)
     }
+
+    /*
     //
     // Bridge Tiles
     let tileCount = 0
@@ -251,7 +258,6 @@ export function createSystemCalls(
 
 
 
-    }
   }
 
 

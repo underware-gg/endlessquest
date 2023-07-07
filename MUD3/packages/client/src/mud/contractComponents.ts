@@ -92,5 +92,74 @@ export function defineContractComponents(world: World) {
         }
       );
     })(),
+    Agent: (() => {
+      const tableId = new TableId("", "Agent");
+      return defineComponent(
+        world,
+        {
+          coord: RecsType.BigInt,
+          seed: RecsType.BigInt,
+          tokenId: RecsType.Number,
+          yonder: RecsType.Number,
+          terrain: RecsType.Number,
+          gemType: RecsType.Number,
+          coins: RecsType.Number,
+          worth: RecsType.Number,
+        },
+        {
+          metadata: {
+            contractId: tableId.toHex(),
+            tableId: tableId.toString(),
+          },
+        }
+      );
+    })(),
+    Metadata: (() => {
+      const tableId = new TableId("", "Metadata");
+      return defineComponent(
+        world,
+        {
+          metadata: RecsType.String,
+          url: RecsType.String,
+        },
+        {
+          metadata: {
+            contractId: tableId.toHex(),
+            tableId: tableId.toString(),
+          },
+        }
+      );
+    })(),
+    Position: (() => {
+      const tableId = new TableId("", "Position");
+      return defineComponent(
+        world,
+        {
+          x: RecsType.Number,
+          y: RecsType.Number,
+        },
+        {
+          metadata: {
+            contractId: tableId.toHex(),
+            tableId: tableId.toString(),
+          },
+        }
+      );
+    })(),
+    Blocker: (() => {
+      const tableId = new TableId("", "Blocker");
+      return defineComponent(
+        world,
+        {
+          enabled: RecsType.Boolean,
+        },
+        {
+          metadata: {
+            contractId: tableId.toHex(),
+            tableId: tableId.toString(),
+          },
+        }
+      );
+    })(),
   };
 }
