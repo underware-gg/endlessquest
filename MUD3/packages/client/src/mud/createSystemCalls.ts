@@ -28,8 +28,7 @@ export function createSystemCalls(
     Chamber,
     Agent,
     Position,
-    // Tile,
-
+    Tile,
   }: ClientComponents
 ) {
 
@@ -191,6 +190,9 @@ export function createSystemCalls(
       console.warn(`BRIDGED_CHAMBER = `, result)
     }
 
+    // Query returns sets...
+    // https://bobbyhadz.com/blog/javascript-get-first-element-of-set
+
     // let agentQuery = runQuery([Has(Agent), HasValue(Position, { x: gemPos.gridX, y: gemPos.gridY })])
     const agentQuery = runQuery([HasValue(Agent, { coord })])
     if (agentQuery.size > 0) {
@@ -228,7 +230,6 @@ export function createSystemCalls(
       await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash)
     }
 
-    /*
     //
     // Bridge Tiles
     let tileCount = 0
@@ -248,14 +249,10 @@ export function createSystemCalls(
             tile.doorDir ?? -1
           ])
           await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash)
-          console.log(`SETTILE()`, coord, tile.gridX, tile.gridY, tx)
+          // console.log(`SETTILE()`, coord, tile.gridX, tile.gridY, tx)
         }, ++tileCount * 20);
       }
     })
-
-
-    */
-
 
 
   }

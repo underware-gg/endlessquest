@@ -130,6 +130,39 @@ export function defineContractComponents(world: World) {
         }
       );
     })(),
+    Tile: (() => {
+      const tableId = new TableId("", "Tile");
+      return defineComponent(
+        world,
+        {
+          tokenId: RecsType.Number,
+          terrain: RecsType.Number,
+          tileType: RecsType.Number,
+          isEntry: RecsType.Boolean,
+        },
+        {
+          metadata: {
+            contractId: tableId.toHex(),
+            tableId: tableId.toString(),
+          },
+        }
+      );
+    })(),
+    Door: (() => {
+      const tableId = new TableId("", "Door");
+      return defineComponent(
+        world,
+        {
+          nextCoord: RecsType.BigInt,
+        },
+        {
+          metadata: {
+            contractId: tableId.toHex(),
+            tableId: tableId.toString(),
+          },
+        }
+      );
+    })(),
     Position: (() => {
       const tableId = new TableId("", "Position");
       return defineComponent(

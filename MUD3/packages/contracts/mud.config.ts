@@ -1,4 +1,4 @@
-import { mudConfig } from "@latticexyz/world/register";
+import { mudConfig, resolveTableId } from "@latticexyz/world/register";
 
 export default mudConfig({
   enums: {
@@ -89,23 +89,23 @@ export default mudConfig({
         url: 'string',
       }
     },
-    // //-----------------------
-    // Tile: {
-    //   keySchema: {
-    //     key: 'bytes32',
-    //   },
-    //   schema: {
-    //     tokenId: 'uint32', // just for queries
-    //     terrain: 'uint8',
-    //     tileType: 'uint8',
-    //     isEntry: 'bool',
-    //   }
-    // },
-    // Door: {
-    //   schema: {
-    //     nextCoord: 'uint256',
-    //   }
-    // },
+    //-----------------------
+    Tile: {
+      keySchema: {
+        key: 'bytes32',
+      },
+      schema: {
+        tokenId: 'uint32', // just for queries
+        terrain: 'uint8',
+        tileType: 'uint8',
+        isEntry: 'bool',
+      }
+    },
+    Door: {
+      schema: {
+        nextCoord: 'uint256',
+      }
+    },
     Position: {
       schema: {
         x: 'int32',
@@ -140,11 +140,11 @@ export default mudConfig({
       root: true,
       args: [],
     },
-    // {
-    //   name: 'KeysWithValueModule',
-    //   root: true,
-    //   args: [resolveTableId('Position')],
-    // },
+    {
+      name: 'KeysWithValueModule',
+      root: true,
+      args: [resolveTableId('Position')],
+    },
   ],
 
 });

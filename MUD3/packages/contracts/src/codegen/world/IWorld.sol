@@ -9,12 +9,21 @@ import { IAgentSystem } from "./IAgentSystem.sol";
 import { IChamberSystem } from "./IChamberSystem.sol";
 import { IIncrementSystem } from "./IIncrementSystem.sol";
 import { IRealmSystem } from "./IRealmSystem.sol";
+import { ITileSystem } from "./ITileSystem.sol";
 import { ITokenSystem } from "./ITokenSystem.sol";
 
 /**
  * The IWorld interface includes all systems dynamically added to the World
  * during the deploy process.
  */
-interface IWorld is IBaseWorld, IAgentSystem, IChamberSystem, IIncrementSystem, IRealmSystem, ITokenSystem {
+interface IWorld is
+  IBaseWorld,
+  IAgentSystem,
+  IChamberSystem,
+  IIncrementSystem,
+  IRealmSystem,
+  ITileSystem,
+  ITokenSystem
+{
 
 }

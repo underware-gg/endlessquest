@@ -135,7 +135,7 @@ export const ChamberLoader = ({
 }: ChamberLoaderProps) => {
   const {
     networkLayer: {
-      components: { Agent },
+      components: { Agent, Tile },
       storeCache,
     }
   } = useMUD()
@@ -152,8 +152,9 @@ export const ChamberLoader = ({
   const agents = useEntityQuery([HasValue(Agent, { coord })]) ?? []
   const agentCreated = agents.length > 0
 
-  // TODO...
-  // const tiles = useEntityQuery([HasValue(Tile, { tokenId: chamberData?.value?.tokenId ?? 0 })]) ?? []
+  const tiles = useEntityQuery([HasValue(Tile, { tokenId: chamberData?.value?.tokenId ?? 0 })]) ?? []
+  const tilesBridging = tiles.length > 0
+  const tilesBridged = tiles.length == 400
 
   // TODO...
   // const { isSuccess: chamberIsSuccess, isError: chamberIsError, isFetching: chamberIsFetching } = useRequestChamberMetadata(coord)
@@ -169,16 +170,15 @@ export const ChamberLoader = ({
       {Boolean(seed) ? '.' : bridgingChamber ? 'c' : 'C'}
       {agentCreated ? '.' : 'A'}
       {agentLinked ? '.' : 'A'}
-      {/* TODO... */}
-      {/* {tiles.length == 400 ? '.' : tiles.length > 0 ? 't' : 'T'} */}
+      {tilesBridged ? '.' : tilesBridging ? 't' : 'T'}
       {/* TODO... */}
       {/* {chamberIsSuccess ? '.' : chamberIsError ? '?' : chamberIsFetching ? 'm': 'M'} */}
       {/* {chamberArtIsSuccess ? '.' : chamberArtIsError ? '?' : chamberArtIsFetching ? 'i' : 'I'} */}
       {/* {' | '} */}
       {/* {agentIsSuccess ? '.' : agentIsError ? '?' : agentIsFetching ? 'm' : 'M'} */}
       {/* {agentArtIsSuccess ? '.' : agentArtIsError ? '?' : agentArtIsFetching ? 'i' : 'I'} */}
-      {/* {' | '} */}
-      {/* {tiles.length} */}
+      {' | '}
+      {tiles.length}
     </div>
   )
 }
