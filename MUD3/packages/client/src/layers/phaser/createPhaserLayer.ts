@@ -2,6 +2,7 @@ import { createPhaserEngine } from "@latticexyz/phaserx";
 import { namespaceWorld } from "@latticexyz/recs";
 import { NetworkLayer } from "../network/createNetworkLayer";
 import { registerSystems } from "./systems";
+import { BOUNDS } from "./constants";
 
 export type PhaserLayer = Awaited<ReturnType<typeof createPhaserLayer>>;
 type PhaserEngineConfig = Parameters<typeof createPhaserEngine>[0];
@@ -14,8 +15,9 @@ export const createPhaserLayer = async (networkLayer: NetworkLayer, phaserConfig
 
   const { camera } = scenes.Main;
 
-  camera.phaserCamera.setBounds(-1000, -1000, 2000, 2000);
+  camera.phaserCamera.setBounds(BOUNDS.x, BOUNDS.y, BOUNDS.width, BOUNDS.height);
   camera.phaserCamera.centerOn(0, 0);
+  camera.phaserCamera.setZoom(2);
 
   const components = {};
 
