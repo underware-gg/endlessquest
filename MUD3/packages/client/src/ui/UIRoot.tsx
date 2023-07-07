@@ -16,11 +16,11 @@ export const UIRoot = () => {
   if (!layers.networkLayer || !layers.phaserLayer) return <></>;
 
   return (
-    <Wrapper>
+    <div className='FillParent'>
       {/* <LoadingScreen /> */}
       {/* <CounterValue /> */}
       <GameLoading />
       <GameRoot />
-    </Wrapper>
+    </div>
   );
 };

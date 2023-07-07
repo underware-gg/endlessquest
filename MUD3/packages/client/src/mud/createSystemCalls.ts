@@ -2,6 +2,7 @@ import { getComponentValue, runQuery, Has, HasValue } from "@latticexyz/recs";
 import { awaitStreamValue } from "@latticexyz/utils";
 import { ClientComponents } from "./createClientComponents";
 import { SetupNetworkResult } from "./setupNetwork";
+import { Direction } from '../layers/phaser/constants'
 
 // Quest
 // import { nanoid } from 'nanoid'
@@ -253,10 +254,25 @@ export function createSystemCalls(
         }, ++tileCount * 20);
       }
     })
-
-
   }
 
+  
+  //---------------------------
+  // Player / Movement
+  //
+  const spawnAtPosition = async (x: number, y: number) => {
+    console.warn(`SPAWN @`, x, y)
+    const tx = await worldSend('spawnAtPosition', [playerName, x, y])
+    await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash)
+  }
+  const moveToDirection = async (direction: Direction) => {
+    const tx = await worldSend('moveToDirection', [direction])
+    await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash)
+  }
+  const moveToPosition = async (x: number, y: number) => {
+    const tx = await worldSend('moveToPosition', [x, y])
+    await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash)
+  }
 
 
   return {
@@ -267,5 +283,9 @@ export function createSystemCalls(
     bridge_realm,
     bridge_tokenId,
     bridge_chamber,
+    // Player
+    spawnAtPosition,
+    moveToDirection,
+    moveToPosition,
   };
 }

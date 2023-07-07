@@ -117,21 +117,19 @@ export default mudConfig({
         enabled: 'bool',
       }
     },
-    // //-----------------------
-    // Player: {
-    //   schema: {
-    //     level: 'uint8',
-    //     name: 'string',
-    //   }
-    // },
-    // Location: {
-    //   schema: {
-    //     coord: 'uint256',
-    //     agent: 'bytes32',
-    //   }
-    // },
-
-
+    //-----------------------
+    Player: {
+      schema: {
+        level: 'uint8',
+        name: 'string',
+      }
+    },
+    Location: {
+      schema: {
+        coord: 'uint256',
+        agent: 'bytes32',
+      }
+    },
   },
 
   modules: [
