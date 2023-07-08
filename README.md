@@ -87,6 +87,10 @@ Art Assets are generated using DALL-E via OpenAI API, as detailed in [Generative
 
 ## `MUD2`
 
+Old Phaser MUD engine, use MUD3
+
+## `MUD3`
+
 A Phaser MUD engine
 
 ### Setting up a local server
@@ -110,12 +114,11 @@ $ foundryup
 
 * Do this setup...
 
-Edit `MUD2/env.contracts` if you want to use your own Anvil private key.
+Edit `MUD3/env.contracts` if you want to use your own Anvil private key.
 
 ```sh
-$ cd MUD2
+$ cd MUD3
 $ pnpm install
-$ pnpm initialize
 $ cp env.contracts packages/contracts/.env
 ```
 
@@ -125,7 +128,7 @@ $ cp env.contracts packages/contracts/.env
 $ pnpm run dev
 ```
 
-To use a local [sync server](https://github.com/funDAOmental/hyperbox-server), edit `MUD2/packages/client/.env` to contain this, and restart:
+To use a local [sync server](https://github.com/funDAOmental/hyperbox-server), edit `MUD3/packages/client/.env` to contain this, and restart:
 
 ```
 VITE_SERVER_URL=ws://localhost:8787
@@ -134,12 +137,15 @@ VITE_SERVER_URL=ws://localhost:8787
 
 #### OpenAI API Keys
 
-OpenAI API keys enabled for `GPT-4` need to be on cookies. The first time the app is loaded on a browser, empty cookies will be created for editing, if they are not present.
+Your OpenAI API key needs to be stored on cookies.
+A `GPT-4` key is preferred, but it also works with `GPT-3`.
+The first time the app is loaded on a browser, empty cookies will be created for editing.
 
-|cookie |value|
+| cookie name |value|
 |-----|--------|
-| `OPENAI_API_KEY` | `<api_key>` |
-| `OPENAI_ORG_ID`  | `<org_id>` |
+| `OPENAI_API_KEY` | `sk-xxxxxxxxxxxxxxxx` |
+| `OPENAI_ORG_ID`  | `org-xxxxxxxxxxxxxxx` |
+| `GPT_MODEL`  | `gpt-4` or `gpt-3.5-turbo` |
 
 
 
@@ -166,21 +172,21 @@ $ pnpm mud faucet --faucetUrl <faucetService> --address <address>
 
 * [mud cli deploy](https://mud.dev/cli#deploy)
 
-Paste the deployment wallet private key to `PRIVATE_KEY` in `MUD2/packages/contracts/.env`
+Paste the deployment wallet private key to `PRIVATE_KEY` in `MUD3/packages/contracts/.env`
 
-Edit profiles at `MUD2/packages/contracts/foundry.toml`
+Edit profiles at `MUD3/packages/contracts/foundry.toml`
 
 ```sh
 # deploy locally (http://localhost:8545)
-$ cd MUD2/packages/contracts
+$ cd MUD3/packages/contracts
 $ pnpm mud deploy
 
 # deploy to the lattice testnet
-$ cd MUD2/packages/contracts
+$ cd MUD3/packages/contracts
 $ pnpm mud deploy --profile lattice-testnet
 
 # deploy to optimism mainnet
-$ cd MUD2/packages/contracts
+$ cd MUD3/packages/contracts
 $ pnpm mud deploy --profile optimism-mainnet
 ```
 
@@ -198,7 +204,7 @@ $ pnpm mud deploy --profile lattice-testnet --priorityFeeMultiplier 5
 Deploy contracts to testnet...
 
 ```sh
-$ cd MUD2/packages/contracts
+$ cd MUD3/packages/contracts
 $ pnpm deploy:testnet
 > chainid 4242
 ```
@@ -206,7 +212,7 @@ $ pnpm deploy:testnet
 Build distribution...
 
 ```sh
-$ cd MUD2/packages/client
+$ cd MUD3/packages/client
 $ pnpm build
 $ zip packages/client/dist
 ```
@@ -236,14 +242,14 @@ $ pnpm create mud@canary MUD
 Check latest version [here](https://www.npmjs.com/package/@latticexyz/cli?activeTab=versions)
 
 ```sh
-$ cd MUD2
+$ cd MUD3
 $ pnpm mud:up
 ```
 
 Or manually...
 
 ```sh
-$ cd MUD2
+$ cd MUD3
 $ pnpm mud set-version -v 2.0.0-alpha.1.197
 $ cd packages/client
 $ pnpm mud set-version -v 2.0.0-alpha.1.197
