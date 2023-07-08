@@ -30,17 +30,18 @@ export const ChatInterface = () => {
   if (!isChatting) return <></>
 
   return (
-    <>
-      <div className='FadedCover' onClick={() => _onStopChatting()} />
+    <div className='FadedCover' onClick={() => _onStopChatting()}>
       <div className='FillScreen CenteredContainer'>
-        <ChatDialog
-          store={remoteStore}
-          realmCoord={realmCoord}
-          chamberSlug={coordToSlug(coord ?? 0n, null) ?? ''}
-          isChatting={isChatting}
-          onStopChatting={_onStopChatting}
-        />
+        <div onClick={(e) => e.stopPropagation()}>
+          <ChatDialog
+            store={remoteStore}
+            realmCoord={realmCoord}
+            chamberSlug={coordToSlug(coord ?? 0n, null) ?? ''}
+            isChatting={isChatting}
+            onStopChatting={_onStopChatting}
+          />
+        </div>
       </div>
-    </>
+    </div>
   )
 }
