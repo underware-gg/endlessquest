@@ -1,5 +1,4 @@
 import { useStore } from "../store";
-import { Wrapper } from "./Wrapper";
 import { GameLoading } from "../quest/components/GameLoading";
 import { GameRoot } from "../quest/components/GameRoot";
 import { CounterValue } from "../quest/components/CounterValue";

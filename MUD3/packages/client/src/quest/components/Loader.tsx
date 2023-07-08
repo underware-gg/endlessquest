@@ -3,11 +3,10 @@ import { useEntityQuery, useRow } from '@latticexyz/react'
 import { HasValue, Entity } from '@latticexyz/recs'
 import { useMUD } from '../../store'
 import { useBridgeContext, useBridgeToken, useBridgeChamber, useBridgeRealm } from '../hooks/BridgeContext'
-// TODO...
-// import {
-//   useRequestRealmMetadata, useRequestChamberMetadata, useRequestAgentMetadata,
-//   useRequestRealmArtUrl, useRequestChamberArtUrl, useRequestAgentArtUrl,
-// } from '../hooks/MetadataContext'
+import {
+  useRequestRealmMetadata, useRequestChamberMetadata, useRequestAgentMetadata,
+  useRequestRealmArtUrl, useRequestChamberArtUrl, useRequestAgentArtUrl,
+} from '../hooks/MetadataContext'
 import { useSettingsContext } from '../hooks/SettingsContext'
 import { coordToSlug } from '@rsodre/crawler-data'
 
@@ -70,17 +69,15 @@ export const RealmLoader = ({
   const opener = useMemo(() => (realm?.value?.opener ?? null), [realm])
   const openerOk = Boolean(opener)
 
-  // TODO...
-  // const { isSuccess: metaIsSuccess, isError: metaIsError, isFetching: metaIsFetching } = useRequestRealmMetadata(coord)
-  // const { isSuccess: urlIsSuccess, isError: urlIsError, isFetching: urlIsFetching } = useRequestRealmArtUrl(coord)
+  const { isSuccess: metaIsSuccess, isError: metaIsError, isFetching: metaIsFetching } = useRequestRealmMetadata(coord)
+  const { isSuccess: urlIsSuccess, isError: urlIsError, isFetching: urlIsFetching } = useRequestRealmArtUrl(coord)
 
   return (
     <div>
       Realm(<span>{coord.toString() ?? '?'}) </span>
       {openerOk ? '.' : bridging ? 'r' : 'R'}
-      {/* TODO... */}
-      {/* {metaIsSuccess ? '.' : metaIsError ? '?' : metaIsFetching ? 'm' : 'M'} */}
-      {/* {urlIsSuccess ? '.' : urlIsError ? '?' : urlIsFetching ? 'i' : 'I'} */}
+      {metaIsSuccess ? '.' : metaIsError ? '?' : metaIsFetching ? 'm' : 'M'}
+      {urlIsSuccess ? '.' : urlIsError ? '?' : urlIsFetching ? 'i' : 'I'}
     </div>
   )
 }
@@ -156,13 +153,11 @@ export const ChamberLoader = ({
   const tilesBridging = tiles.length > 0
   const tilesBridged = tiles.length == 400
 
-  // TODO...
-  // const { isSuccess: chamberIsSuccess, isError: chamberIsError, isFetching: chamberIsFetching } = useRequestChamberMetadata(coord)
-  // const { isSuccess: agentIsSuccess, isError: agentIsError, isFetching: agentIsFetching } = useRequestAgentMetadata(agentEntity)
+  const { isSuccess: chamberIsSuccess, isError: chamberIsError, isFetching: chamberIsFetching } = useRequestChamberMetadata(coord)
+  const { isSuccess: agentIsSuccess, isError: agentIsError, isFetching: agentIsFetching } = useRequestAgentMetadata(agentEntity)
 
-  // TODO...
-  // const { isSuccess: chamberArtIsSuccess, isError: chamberArtIsError, isFetching: chamberArtIsFetching } = useRequestChamberArtUrl(coord)
-  // const { isSuccess: agentArtIsSuccess, isError: agentArtIsError, isFetching: agentArtIsFetching } = useRequestAgentArtUrl(agentEntity)
+  const { isSuccess: chamberArtIsSuccess, isError: chamberArtIsError, isFetching: chamberArtIsFetching } = useRequestChamberArtUrl(coord)
+  const { isSuccess: agentArtIsSuccess, isError: agentArtIsError, isFetching: agentArtIsFetching } = useRequestAgentArtUrl(agentEntity)
 
   return (
     <div>
@@ -171,12 +166,11 @@ export const ChamberLoader = ({
       {agentCreated ? '.' : 'A'}
       {agentLinked ? '.' : 'A'}
       {tilesBridged ? '.' : tilesBridging ? 't' : 'T'}
-      {/* TODO... */}
-      {/* {chamberIsSuccess ? '.' : chamberIsError ? '?' : chamberIsFetching ? 'm': 'M'} */}
-      {/* {chamberArtIsSuccess ? '.' : chamberArtIsError ? '?' : chamberArtIsFetching ? 'i' : 'I'} */}
-      {/* {' | '} */}
-      {/* {agentIsSuccess ? '.' : agentIsError ? '?' : agentIsFetching ? 'm' : 'M'} */}
-      {/* {agentArtIsSuccess ? '.' : agentArtIsError ? '?' : agentArtIsFetching ? 'i' : 'I'} */}
+      {chamberIsSuccess ? '.' : chamberIsError ? '?' : chamberIsFetching ? 'm': 'M'}
+      {chamberArtIsSuccess ? '.' : chamberArtIsError ? '?' : chamberArtIsFetching ? 'i' : 'I'}
+      {' | '}
+      {agentIsSuccess ? '.' : agentIsError ? '?' : agentIsFetching ? 'm' : 'M'}
+      {agentArtIsSuccess ? '.' : agentArtIsError ? '?' : agentArtIsFetching ? 'i' : 'I'}
       {' | '}
       {tiles.length}
     </div>

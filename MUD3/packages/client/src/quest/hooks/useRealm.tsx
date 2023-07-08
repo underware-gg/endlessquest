@@ -1,8 +1,7 @@
 import React, { useMemo } from 'react'
 import { useMUD } from '../../store'
 import { useRow } from '@latticexyz/react'
-// TODO...
-// import { useRealmMetadata, useRealmArtUrl } from './MetadataContext'
+import { useRealmMetadata, useRealmArtUrl } from './MetadataContext'
 
 export const useRealm = (coord: bigint) => {
   const {
@@ -16,17 +15,16 @@ export const useRealm = (coord: bigint) => {
   const opener = realm?.opener ?? null
   const realmExists = opener ?? false
 
-  // TODO...
-  // const { metadata, isFetching: metadataIsFetching, isError: metadataIsError } = useRealmMetadata(coord)
-  // const { url } = useRealmArtUrl(coord)
+  const { metadata, isFetching: metadataIsFetching, isError: metadataIsError } = useRealmMetadata(coord)
+
+  const { url } = useRealmArtUrl(coord)
 
   return {
     realmExists,
     opener,
-    // TODO...
-    // metadata: metadata ?? null,
-    // metadataIsFetching,
-    // metadataIsError,
-    // url,
+    metadata: metadata ?? null,
+    metadataIsFetching,
+    metadataIsError,
+    url,
   }
 }

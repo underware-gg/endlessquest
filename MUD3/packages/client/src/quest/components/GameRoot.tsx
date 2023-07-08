@@ -2,9 +2,9 @@ import { useComponentValue } from '@latticexyz/react'
 import { SyncState } from '@latticexyz/network'
 import { useMUD } from '../../store'
 import { SettingsProvider, useSettingsContext } from '../hooks/SettingsContext'
-// import { HyperspaceProvider } from '../hyperspace/hooks/HyperspaceContext'
+import { HyperspaceProvider } from '../hyperspace/hooks/HyperspaceContext'
 import { BridgeProvider } from '../hooks/BridgeContext'
-// import { MetadataProvider } from '../hooks/MetadataContext'
+import { MetadataProvider } from '../hooks/MetadataContext'
 import { GameSelector } from './GameSelector'
 import { GameUI } from './GameUI'
 
@@ -37,14 +37,13 @@ export const GameRoot = () => {
 
   return (
     <SettingsProvider>
-      {/* TODO... */}
-      {/* <HyperspaceProvider> */}
+      <HyperspaceProvider>
         <BridgeProvider networkLayer={networkLayer}>
-          {/* <MetadataProvider networkLayer={networkLayer}> */}
+          <MetadataProvider networkLayer={networkLayer}>
             <_GameRoot />
-          {/* </MetadataProvider> */}
+          </MetadataProvider>
         </BridgeProvider>
-      {/* </HyperspaceProvider> */}
+      </HyperspaceProvider>
     </SettingsProvider>
   )
 }
