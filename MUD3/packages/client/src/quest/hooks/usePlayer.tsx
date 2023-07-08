@@ -23,7 +23,7 @@ export const usePlayer = () => {
   const agentEntity = useMemo(() => (location?.agent ?? '0x0'), [location]) as Entity
   const agentId = useMemo(() => (BigInt(agentEntity ? agentEntity as string : 0)), [agentEntity])
 
-  const { tileType, isDoor, nextCoord } = useTile(position ?? { x: 0, y: 0 })
+  const { tileType, isDoor, nextCoord, nextSlug } = useTile(position ?? { x: 0, y: 0 })
 
   return {
     position,
@@ -32,6 +32,7 @@ export const usePlayer = () => {
     coord,
     agentEntity, agentId,
     compass, slug,
-    tileType, isDoor, nextCoord,
+    tileType, isDoor,
+    nextCoord, nextSlug,
   }
 }

@@ -150,18 +150,22 @@ export function createSystemCalls(
         gridY,
       }
       // open corridors
-      if (tile.doorDir === CrawlerDir.North && !chamberData.locks[CrawlerDir.North]) {
-        map[(tile.y - 1) * 20 + tile.x].tileType = CrawlerTile.Exit
-        map[(tile.y - 2) * 20 + tile.x].tileType = CrawlerTile.Exit
-      } else if (tile.doorDir === CrawlerDir.East && !chamberData.locks[CrawlerDir.East]) {
-        map[tile.y * 20 + tile.x + 1].tileType = CrawlerTile.Exit
-        map[tile.y * 20 + tile.x + 2].tileType = CrawlerTile.Exit
-      } else if (tile.doorDir === CrawlerDir.West && !chamberData.locks[CrawlerDir.West]) {
-        map[tile.y * 20 + tile.x - 1].tileType = CrawlerTile.Exit
-        map[tile.y * 20 + tile.x - 2].tileType = CrawlerTile.Exit
-      } else if (tile.doorDir === CrawlerDir.South && !chamberData.locks[CrawlerDir.South]) {
-        map[(tile.y + 1) * 20 + tile.x].tileType = CrawlerTile.Exit
-        map[(tile.y + 2) * 20 + tile.x].tileType = CrawlerTile.Exit
+      const _makeDoor = (index: number, doorDir: number, tile:any) => {
+        map[index].tileType = CrawlerTile.Exit
+        map[index].doorDir = doorDir
+      }
+      if (tile.index == chamberData.doors[CrawlerDir.North] && !chamberData.locks[CrawlerDir.North]) {
+        _makeDoor((tile.y - 1) * 20 + tile.x, tile.doorDir, tile)
+        _makeDoor((tile.y - 2) * 20 + tile.x, tile.doorDir, tile)
+      } else if (tile.index == chamberData.doors[CrawlerDir.East] && !chamberData.locks[CrawlerDir.East]) {
+        _makeDoor(tile.y * 20 + tile.x + 1, tile.doorDir, tile)
+        _makeDoor(tile.y * 20 + tile.x + 2, tile.doorDir, tile)
+      } else if (tile.index == chamberData.doors[CrawlerDir.West] && !chamberData.locks[CrawlerDir.West]) {
+        _makeDoor(tile.y * 20 + tile.x - 1, tile.doorDir, tile)
+        _makeDoor(tile.y * 20 + tile.x - 2, tile.doorDir, tile)
+      } else if (tile.index == chamberData.doors[CrawlerDir.South] && !chamberData.locks[CrawlerDir.South]) {
+        _makeDoor((tile.y + 1) * 20 + tile.x, tile.doorDir, tile)
+        _makeDoor((tile.y + 2) * 20 + tile.x, tile.doorDir, tile)
       }
     })
     //

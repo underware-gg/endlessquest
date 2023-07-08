@@ -2,12 +2,12 @@ import { useMemo } from 'react'
 import { useComponentValue, useEntityQuery } from '@latticexyz/react'
 import { Has, HasValue } from '@latticexyz/recs'
 import { useMUD } from '../../store'
+import { coordToSlug } from '@rsodre/crawler-data'
 
 export const useTile = (position: { x: number, y: number }) => {
   const {
     networkLayer: {
       components: { Tile, Position, Door },
-      // systemCalls: { bridge_tokenId, bridge_chamber },
       // singletonEntity, storeCache,
     }
   } = useMUD()
@@ -32,12 +32,15 @@ export const useTile = (position: { x: number, y: number }) => {
   const tile = useComponentValue(Tile, entity)
   const door = useComponentValue(Door, entity)
   const nextCoord = door?.nextCoord ?? 0n
+  const isDoor = nextCoord != 0n
+  const nextSlug = isDoor ? coordToSlug(nextCoord, null) :  ''
 
   return {
     position,
     tile,
     tileType: tile?.tileType ?? 0,
-    isDoor: nextCoord != 0n,
+    isDoor,
     nextCoord,
+    nextSlug,
   }
 }
