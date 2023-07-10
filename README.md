@@ -214,7 +214,19 @@ Build distribution...
 ```sh
 $ cd MUD3/packages/client
 $ pnpm build
-$ zip packages/client/dist
+$ ls -l dist/
+```
+
+If you get some `out of memory` error like below, increase node memory and try again...
+
+```
+FATAL ERROR: Reached heap limit Allocation failed - JavaScript heap out of memory
+```
+
+
+```sh
+$ export NODE_OPTIONS=--max-old-space-size=8192
+$ pnpm build
 ```
 
 
