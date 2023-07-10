@@ -81,34 +81,34 @@ importers:
         specifier: ^5.7.2
         version: 5.7.2
       '@latticexyz/common':
-        specifier: 2.0.0-alpha.1.268+15e65311
+        specifier: 2.0.0-alpha.1.268
         version: 2.0.0-alpha.1.268(typescript@5.1.6)(zod@3.21.4)
       '@latticexyz/dev-tools':
-        specifier: 2.0.0-alpha.1.268+15e65311
+        specifier: 2.0.0-alpha.1.268
         version: 2.0.0-alpha.1.268(@latticexyz/network@2.0.0-alpha.1.268)(@latticexyz/std-client@2.0.0-alpha.1.268)(@latticexyz/utils@2.0.0-alpha.1.268)(@latticexyz/world@2.0.0-alpha.1.268)(typescript@5.1.6)(zod@3.21.4)
       '@latticexyz/network':
-        specifier: 2.0.0-alpha.1.268+15e65311
+        specifier: 2.0.0-alpha.1.268
         version: 2.0.0-alpha.1.268(google-protobuf@3.21.2)(typescript@5.1.6)(zod@3.21.4)
       '@latticexyz/phaserx':
-        specifier: 2.0.0-alpha.1.268+15e65311
+        specifier: 2.0.0-alpha.1.268
         version: 2.0.0-alpha.1.268(typescript@5.1.6)(zod@3.21.4)
       '@latticexyz/react':
-        specifier: 2.0.0-alpha.1.268+15e65311
+        specifier: 2.0.0-alpha.1.268
         version: 2.0.0-alpha.1.268(typescript@5.1.6)(zod@3.21.4)
       '@latticexyz/recs':
-        specifier: 2.0.0-alpha.1.268+15e65311
+        specifier: 2.0.0-alpha.1.268
         version: 2.0.0-alpha.1.268(typescript@5.1.6)(zod@3.21.4)
       '@latticexyz/schema-type':
-        specifier: 2.0.0-alpha.1.268+15e65311
+        specifier: 2.0.0-alpha.1.268
         version: 2.0.0-alpha.1.268(typescript@5.1.6)(zod@3.21.4)
       '@latticexyz/std-client':
-        specifier: 2.0.0-alpha.1.268+15e65311
+        specifier: 2.0.0-alpha.1.268
         version: 2.0.0-alpha.1.268(google-protobuf@3.21.2)(typescript@5.1.6)(zod@3.21.4)
       '@latticexyz/utils':
-        specifier: 2.0.0-alpha.1.268+15e65311
+        specifier: 2.0.0-alpha.1.268
         version: 2.0.0-alpha.1.268(typescript@5.1.6)(zod@3.21.4)
       '@latticexyz/world':
-        specifier: 2.0.0-alpha.1.268+15e65311
+        specifier: 2.0.0-alpha.1.268
         version: 2.0.0-alpha.1.268(typescript@5.1.6)
       '@rsodre/crawler-data':
         specifier: ^0.0.7
@@ -202,19 +202,19 @@ importers:
         specifier: ^5.7.2
         version: 5.7.2
       '@latticexyz/cli':
-        specifier: 2.0.0-alpha.1.268+15e65311
+        specifier: 2.0.0-alpha.1.268
         version: 2.0.0-alpha.1.268(google-protobuf@3.21.2)
       '@latticexyz/schema-type':
-        specifier: 2.0.0-alpha.1.268+15e65311
+        specifier: 2.0.0-alpha.1.268
         version: 2.0.0-alpha.1.268(typescript@5.1.6)(zod@3.21.4)
       '@latticexyz/std-contracts':
-        specifier: 2.0.0-alpha.1.268+15e65311
+        specifier: 2.0.0-alpha.1.268
         version: 2.0.0-alpha.1.268
       '@latticexyz/store':
-        specifier: 2.0.0-alpha.1.268+15e65311
+        specifier: 2.0.0-alpha.1.268
         version: 2.0.0-alpha.1.268(typescript@5.1.6)
       '@latticexyz/world':
-        specifier: 2.0.0-alpha.1.268+15e65311
+        specifier: 2.0.0-alpha.1.268
         version: 2.0.0-alpha.1.268(typescript@5.1.6)
       ethers:
         specifier: ^5.7.2
