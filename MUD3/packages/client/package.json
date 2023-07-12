@@ -38,6 +38,7 @@
     "styled-components": "^5.3.10",
     "universal-cookie": "^4.0.4",
     "use-resize-observer": "^9.1.0",
+    "viem": "^1.2.13",
     "zustand": "^4.3.8"
   },
   "devDependencies": {

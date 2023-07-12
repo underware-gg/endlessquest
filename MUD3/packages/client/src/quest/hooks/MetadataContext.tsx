@@ -12,6 +12,7 @@ import { useSettingsContext } from '../hooks/SettingsContext'
 import { useHyperspaceContext } from '../hyperspace/hooks/HyperspaceContext'
 import { QuestRealmDoc, QuestChamberDoc, QuestAgentDoc } from 'hyperbox-sdk'
 import { coordToSlug } from '@rsodre/crawler-data'
+import { stringToHex } from 'viem'
 // MUD
 import { useRow, useComponentValue } from '@latticexyz/react'
 import { Entity } from '@latticexyz/recs'
@@ -170,27 +171,36 @@ const MetadataProvider = ({
                   throw (`Invalid metadata type ${type}`)
                 }
               } else if (content == ContentType.Url && url) {
-                const _makeUploadArtUrl = (filename: string, url: string) => (`https://hyperspace.stage.fundaomental.com/api/storage/upload/quest/${realmCoord.toString()}/${filename}/${encodeURIComponent(url)}`)
+                const _uploadArtUrl = async (filename: string, url: string) => {
+                  const uploadUrl = `https://hyperspace.stage.fundaomental.com/api/storage/upload/quest/${realmCoord.toString()}/${filename}/${stringToHex(url)}`
+                  try {
+                    const { data, error } = await (await fetch(uploadUrl, {})).json()
+                    return data?.downloadUrl ?? url
+                  } catch(e) {
+                    console.log(`_uploadArtUrl() ERROR:`, uploadUrl, e)
+                  }
+                  return url
+                }
                 if (type == MetadataType.Realm) {
                   _setter = async () => {
-                    await setRealmArtUrl(key, url)
-                    const { data } = await (await fetch(_makeUploadArtUrl('realm_art', url), {})).json()
-                    QuestRealmDoc.updateArtUrl(remoteStore, key.toString(), data?.downloadUrl ?? url)
+                    const downloadUrl = await _uploadArtUrl('realm_art', url)
+                    await setRealmArtUrl(key, downloadUrl)
+                    QuestRealmDoc.updateArtUrl(remoteStore, key.toString(), downloadUrl)
                   }
                 } else if (type == MetadataType.Chamber) {
                   _setter = async () => {
-                    await setChamberArtUrl(key, url)
                     const chamberSlug = coordToSlug(key as bigint, null)
-                    const { data } = await (await fetch(_makeUploadArtUrl(`${chamberSlug}_chamber_art`, url), {})).json()
-                    QuestChamberDoc.updateArtUrl(remoteStore, chamberSlug, data?.downloadUrl ?? url)
+                    const downloadUrl = await _uploadArtUrl(`${chamberSlug}_chamber_art`, url)
+                    await setChamberArtUrl(key, downloadUrl)
+                    QuestChamberDoc.updateArtUrl(remoteStore, chamberSlug, downloadUrl)
                   }
                 } else if (type == MetadataType.Agent) {
                   _setter = async () => {
-                    await setAgentArtUrl(key, url)
                     const coord = await agentToCoord(storeCache, key as Entity) ?? 0n
                     const chamberSlug = coordToSlug(coord, null)
-                    const { data } = await (await fetch(_makeUploadArtUrl(`${chamberSlug}_agent_art`, url), {})).json()
-                    QuestAgentDoc.updateArtUrl(remoteStore, chamberSlug, data?.downloadUrl ?? url)
+                    const downloadUrl = await _uploadArtUrl(`${chamberSlug}_agent_art`, url)
+                    await setAgentArtUrl(key, downloadUrl)
+                    QuestAgentDoc.updateArtUrl(remoteStore, chamberSlug, downloadUrl)
                   }
                 } else {
                   throw (`Invalid metadata type ${type}`)
