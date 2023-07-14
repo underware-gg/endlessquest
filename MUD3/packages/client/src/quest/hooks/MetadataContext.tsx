@@ -618,7 +618,6 @@ export const useArtUrlStatus = (type: MetadataType, key: string | undefined) => 
 const useGenericMetadata = (key: string, type: string, metadataType: MetadataType) => {
   const { isUnknown, isFetching, isError, isSuccess } = useMetadataStatus(metadataType, key)
   const doc = useRemoteDocument(type, key)
-  console.log(`USE DOC:`, key, type, doc)
   return {
     isUnknown,
     isFetching,
