@@ -124,6 +124,8 @@ $ cp env.contracts packages/contracts/.env
 
 ### Start local server
 
+To start a local server on [http://localhost:3300](http://localhost:3300) :
+
 ```sh
 $ pnpm run dev
 ```
