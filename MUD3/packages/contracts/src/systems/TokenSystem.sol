@@ -7,10 +7,8 @@ import { ChamberBridge } from "../utils/ChamberBridge.sol";
 import { Crawl } from "../utils/Crawl.sol";
 
 contract TokenSystem is System {
-  
   // Bridge setters
   function setTokenIdToCoord(uint32 tokenId, uint256 coord) public {
     Token.set(tokenId, coord);
-  }
-  
+  }  
 }

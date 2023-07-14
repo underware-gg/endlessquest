@@ -10,6 +10,7 @@ import {
 import { useSettingsContext } from '../hooks/SettingsContext'
 // Hyperspace
 import { useHyperspaceContext } from '../hyperspace/hooks/HyperspaceContext'
+import { useRemoteDocument } from '../hyperspace/hooks/useDocument'
 import { QuestRealmDoc, QuestChamberDoc, QuestAgentDoc } from 'hyperbox-sdk'
 import { coordToSlug } from '@rsodre/crawler-data'
 import { stringToHex } from 'viem'
@@ -29,7 +30,7 @@ import { agentToCoord } from '../utils'
 //
 export enum ContentType {
   Metadata = 'metadata',
-  Url = 'url',
+  ArtUrl = 'artUrl',
 }
 
 export const initialState = {
@@ -42,7 +43,7 @@ export const initialState = {
       [MetadataType.Agent]: {},
       [MetadataType.Player]: {},
     },
-    [ContentType.Url]: {
+    [ContentType.ArtUrl]: {
       [MetadataType.None]: {}, // required by MetadataStateType
       [MetadataType.Realm]: {},
       [MetadataType.Chamber]: {},
@@ -78,12 +79,10 @@ type MetadataStateType = {
   }
 }
 
-type KeyType = bigint | Entity
-
 type PayloadType = {
   content: ContentType,
   type: MetadataType,
-  key: KeyType,
+  key: string,
   status: StatusType,
   metadata?: string | null,
   url?: string | null,
@@ -119,10 +118,7 @@ const MetadataProvider = ({
   const { realmCoord } = useSettingsContext()
   const { remoteStore } = useHyperspaceContext()
   const {
-    systemCalls: {
-      setChamberMetadata, setRealmMetadata, setAgentMetadata,
-      setChamberArtUrl, setRealmArtUrl, setAgentArtUrl,
-    },
+    systemCalls: { },
     storeCache,
   } = networkLayer
 
@@ -136,41 +132,33 @@ const MetadataProvider = ({
       }
       case MetadataActions.SET: {
         const { content, type, key, status, metadata, url } = action.payload as PayloadType
-        const _key = key.toString()
-        const currentStatus = state.data[content][type][_key]
+        const currentStatus = state.data[content][type][key]
         if (status != currentStatus) {
           newState.data[content][type] = {
             ...state.data[content][type],
-            [_key]: status,
+            [key]: status,
           }
           if (status == StatusType.Success) {
             try {
               let _setter = async () => {}
               if (content == ContentType.Metadata && metadata) {
-                const _meta = JSON.stringify(metadata)
-                if (_meta == '{}') throw (`Empty metadata {}`)
+                if (Object.keys(metadata).length == 0) throw (`Empty metadata {}`)
                 if (type == MetadataType.Realm) {
                   _setter = async () => {
-                    await setRealmMetadata(key, _meta)
-                    QuestRealmDoc.updateMetadata(remoteStore, key.toString(), metadata)
+                    QuestRealmDoc.updateMetadata(remoteStore, key, metadata)
                   }
                 } else if (type == MetadataType.Chamber) {
                   _setter = async () => {
-                    await setChamberMetadata(key, _meta)
-                    const chamberSlug = coordToSlug(key as bigint, null)
-                    QuestChamberDoc.updateMetadata(remoteStore, chamberSlug, metadata)
+                    QuestChamberDoc.updateMetadata(remoteStore, key, metadata)
                   }
                 } else if (type == MetadataType.Agent) {
                   _setter = async () => {
-                    await setAgentMetadata(key, _meta)
-                    const coord = await agentToCoord(storeCache, key as Entity) ?? 0n
-                    const chamberSlug = coordToSlug(coord, null)
-                    QuestAgentDoc.updateMetadata(remoteStore, chamberSlug, metadata)
+                    QuestAgentDoc.updateMetadata(remoteStore, key, metadata)
                   }
                 } else {
                   throw (`Invalid metadata type ${type}`)
                 }
-              } else if (content == ContentType.Url && url) {
+              } else if (content == ContentType.ArtUrl && url) {
                 const _uploadArtUrl = async (filename: string, url: string) => {
                   const uploadUrl = `https://hyperspace.stage.fundaomental.com/api/storage/upload/quest/${realmCoord.toString()}/${filename}/${stringToHex(url)}`
                   try {
@@ -184,23 +172,17 @@ const MetadataProvider = ({
                 if (type == MetadataType.Realm) {
                   _setter = async () => {
                     const downloadUrl = await _uploadArtUrl('realm_art', url)
-                    await setRealmArtUrl(key, downloadUrl)
-                    QuestRealmDoc.updateArtUrl(remoteStore, key.toString(), downloadUrl)
+                    QuestRealmDoc.updateArtUrl(remoteStore, key, downloadUrl)
                   }
                 } else if (type == MetadataType.Chamber) {
                   _setter = async () => {
-                    const chamberSlug = coordToSlug(key as bigint, null)
-                    const downloadUrl = await _uploadArtUrl(`${chamberSlug}_chamber_art`, url)
-                    await setChamberArtUrl(key, downloadUrl)
-                    QuestChamberDoc.updateArtUrl(remoteStore, chamberSlug, downloadUrl)
+                    const downloadUrl = await _uploadArtUrl(`${key}_chamber_art`, url)
+                    QuestChamberDoc.updateArtUrl(remoteStore, key, downloadUrl)
                   }
                 } else if (type == MetadataType.Agent) {
                   _setter = async () => {
-                    const coord = await agentToCoord(storeCache, key as Entity) ?? 0n
-                    const chamberSlug = coordToSlug(coord, null)
-                    const downloadUrl = await _uploadArtUrl(`${chamberSlug}_agent_art`, url)
-                    await setAgentArtUrl(key, downloadUrl)
-                    QuestAgentDoc.updateArtUrl(remoteStore, chamberSlug, downloadUrl)
+                    const downloadUrl = await _uploadArtUrl(`${key}_agent_art`, url)
+                    QuestAgentDoc.updateArtUrl(remoteStore, key, downloadUrl)
                   }
                 } else {
                   throw (`Invalid metadata type ${type}`)
@@ -208,8 +190,8 @@ const MetadataProvider = ({
               }
               _setter()
             } catch (e) {
-              console.warn(`MetadataContext metadata.[${type}][${_key}] exception:`, e)
-              newState.data[content][type][_key] = StatusType.Error
+              console.warn(`MetadataContext metadata.[${type}][${key}] exception:`, e)
+              newState.data[content][type][key] = StatusType.Error
             }
           }
         }
@@ -246,12 +228,12 @@ export { MetadataProvider, MetadataContext, MetadataActions }
 const useRequestGenericMetadata = (
   content: ContentType,
   type: MetadataType,
-  key: KeyType,
+  key: string,
   currentValue: string | null,
   options: PromptMetadataOptions | ImageOptions,
   _parseReponseMetadata: ((matadata: any) => any | null) | null) => {
   const { dispatch } = useContext(MetadataContext)
-  const { isUnknown, isFetching, isError, isSuccess } = useStatus(content, type, key)
+  const { isUnknown, isFetching, isError, isSuccess } = useStateStatus(content, type, key)
   const isMetadata = content == ContentType.Metadata
 
   useEffect(() => {
@@ -298,10 +280,10 @@ const useRequestGenericMetadata = (
       })
     }
 
-    if (isUnknown && key !== 0n && key != '') {
+    if (isUnknown && key) {
       if (currentValue === '') {
         _generate()
-      } else if (currentValue && currentValue.length > 0) {
+      } else if (currentValue) {
         payload.status = StatusType.Success
         dispatch({
           type: MetadataActions.SET,
@@ -332,12 +314,11 @@ export const useRequestRealmMetadata = (coord: bigint) => {
   const { networkLayer: { storeCache } } = useMUD()
 
   const realmRow = useRow(storeCache, { table: 'Realm', key: { coord } })
-  const metadataRow = useRow(storeCache, { table: 'ChamberMetadata', key: { coord } })
-
   const realm = useMemo(() => (realmRow?.value ?? null), [realmRow])
-  const metadata = useMemo(() => (metadataRow?.value?.metadata ?? null), [metadataRow])
 
-  useEffect(() => { console.log(`REALM META:`, coord, realm, `[${metadata}]`) }, [coord, realm, metadata])
+  const doc = useRemoteDocument(QuestRealmDoc.type, coord.toString())
+
+  useEffect(() => { console.log(`REALM META:`, coord, realm, doc?.metadata) }, [coord, realm, doc])
 
   const { gptModel } = useMetadataContext()
 
@@ -368,8 +349,8 @@ export const useRequestRealmMetadata = (coord: bigint) => {
   return useRequestGenericMetadata(
     ContentType.Metadata,
     MetadataType.Realm,
-    coord,
-    realm ? metadata : null,
+    coord.toString(),
+    realm ? (doc?.metadata ?? '') : null,
     options,
     _parseReponseMetadata
   )
@@ -382,12 +363,12 @@ export const useRequestChamberMetadata = (coord: bigint) => {
   const { networkLayer: { storeCache } } = useMUD()
 
   const chamberRow = useRow(storeCache, { table: 'Chamber', key: { coord } })
-  const metadataRow = useRow(storeCache, { table: 'ChamberMetadata', key: { coord } })
-
   const chamber = useMemo(() => (chamberRow?.value ?? null), [chamberRow])
-  const metadata = useMemo(() => (metadataRow?.value?.metadata ?? null), [metadataRow])
 
-  useEffect(() => { console.log(`CHAMBER META:`, chamber?.tokenId, `[${metadata}]`) }, [chamber, metadata])
+  const chamberSlug = coordToSlug(coord, null)
+  const doc = useRemoteDocument(QuestChamberDoc.type, chamberSlug)
+
+  useEffect(() => { console.log(`CHAMBER META:`, chamber?.tokenId, doc?.metadata) }, [chamber, doc])
 
   const { gptModel } = useMetadataContext()
 
@@ -418,8 +399,8 @@ export const useRequestChamberMetadata = (coord: bigint) => {
   return useRequestGenericMetadata(
     ContentType.Metadata,
     MetadataType.Chamber,
-    coord,
-    chamber ? metadata : null,
+    chamberSlug ?? '',
+    chamber ? (doc?.metadata ?? '') : null,
     options,
     _parseReponseMetadata
   )
@@ -429,11 +410,12 @@ export const useRequestChamberMetadata = (coord: bigint) => {
 // Agent Metadata
 //
 export const useRequestAgentMetadata = (agentEntity: Entity | undefined) => {
-  const { networkLayer: { components: { Agent, Metadata } } } = useMUD()
+  const { networkLayer: { components: { Agent } } } = useMUD()
 
   const agent = useComponentValue(Agent, agentEntity) ?? null
-  const metadataData = useComponentValue(Metadata, agentEntity) ?? null
-  const metadata = useMemo(() => (metadataData?.metadata ?? null), [metadataData])
+  const chamberSlug = agent ? coordToSlug(agent.coord, null) : null
+
+  const doc = useRemoteDocument(QuestAgentDoc.type, chamberSlug)
 
   const { gptModel } = useMetadataContext()
 
@@ -446,7 +428,7 @@ export const useRequestAgentMetadata = (agentEntity: Entity | undefined) => {
     yonder: agent?.yonder ?? null,
   }), [agent])
 
-  useEffect(() => { console.log(`AGENT META:`, agentEntity, agent, `[${metadata}]`) }, [agentEntity, agent, metadata])
+  useEffect(() => { console.log(`AGENT META:`, agentEntity, agent, doc?.metadata) }, [agentEntity, agent, doc])
 
   const _parseReponseMetadata = (responseMetadata: any): any | null => {
     const agentMetadata = responseMetadata.npc ?? responseMetadata.chamber?.npc ?? null
@@ -469,8 +451,8 @@ export const useRequestAgentMetadata = (agentEntity: Entity | undefined) => {
   return useRequestGenericMetadata(
     ContentType.Metadata,
     MetadataType.Agent,
-    agentEntity ?? ('' as Entity),
-    agent ? metadata : null,
+    chamberSlug ?? '',
+    agent ? (doc?.metadata ?? '') : null,
     options,
     _parseReponseMetadata
   )
@@ -488,24 +470,21 @@ export const useRequestAgentMetadata = (agentEntity: Entity | undefined) => {
 // Realm Art
 //
 export const useRequestRealmArtUrl = (coord: bigint) => {
-  const { networkLayer: { storeCache } } = useMUD()
 
-  const metadataRow = useRow(storeCache, { table: 'ChamberMetadata', key: { coord } })
-  const metadata = useMemo(() => (metadataRow?.value?.metadata ?? null), [metadataRow])
-  const url = useMemo(() => (metadataRow?.value?.url ?? null), [metadataRow])
+  const doc = useRemoteDocument(QuestRealmDoc.type, coord.toString())
 
   const prompt = useMemo(() => {
-    if (metadata && url === '') {
-      const meta = JSON.parse(metadata)
+    if (doc?.metadata && !doc?.artUrl) {
+      const meta = JSON.parse(doc.metadata)
       if (meta.name) {
         return `${meta.name}, ${meta.description}`
       }
     }
     return ''
-  }, [metadata, url])
+  }, [doc])
 
   // @ts-ignore
-  useEffect(() => { console.log(`REALM ART URL IMAGE:`, coord, prompt, `[${url}]`) }, [prompt, url])
+  useEffect(() => { console.log(`REALM ART URL IMAGE:`, coord, prompt, `[${doc?.artUrl}]`) }, [prompt, doc])
 
   const options: ImageOptions = {
     prompt,
@@ -513,10 +492,10 @@ export const useRequestRealmArtUrl = (coord: bigint) => {
   }
 
   return useRequestGenericMetadata(
-    ContentType.Url,
+    ContentType.ArtUrl,
     MetadataType.Realm,
-    coord,
-    (prompt || url) ? url : null,
+    coord.toString(),
+    (prompt || doc?.artUrl) ? (doc?.artUrl ?? '') : null,
     options,
     null
   )
@@ -526,15 +505,13 @@ export const useRequestRealmArtUrl = (coord: bigint) => {
 // Chamber Art
 //
 export const useRequestChamberArtUrl = (coord: bigint) => {
-  const { networkLayer: { storeCache } } = useMUD()
 
-  const metadataRow = useRow(storeCache, { table: 'ChamberMetadata', key: { coord } })
-  const metadata = useMemo(() => (metadataRow?.value?.metadata ?? null), [metadataRow])
-  const url = useMemo(() => (metadataRow?.value?.url ?? null), [metadataRow])
+  const chamberSlug = coordToSlug(coord, null)
+  const doc = useRemoteDocument(QuestChamberDoc.type, chamberSlug)
 
   const prompt = useMemo(() => {
-    if (metadata && url === '') {
-      const meta = JSON.parse(metadata)
+    if (doc?.metadata && !doc?.artUrl) {
+      const meta = JSON.parse(doc.metadata)
       if (meta.description && meta.terrain) {
         // @ts-ignore
         const pertype = prompts.chamberPrompts[meta.terrain] ?? ''
@@ -542,10 +519,10 @@ export const useRequestChamberArtUrl = (coord: bigint) => {
       }
     }
     return ''
-  }, [metadata, url])
+  }, [doc])
 
   // @ts-ignore
-  useEffect(() => { console.log(`CHAMBER ART URL IMAGE:`, coord, prompt, `[${url}]`) }, [prompt, url])
+  useEffect(() => { console.log(`CHAMBER ART URL IMAGE:`, chamberSlug, prompt, `[${doc?.artUrl}]`) }, [prompt, doc])
 
   const options: ImageOptions = {
     prompt,
@@ -553,10 +530,10 @@ export const useRequestChamberArtUrl = (coord: bigint) => {
   }
 
   return useRequestGenericMetadata(
-    ContentType.Url,
+    ContentType.ArtUrl,
     MetadataType.Chamber,
-    coord,
-    (prompt || url) ? url : null,
+    chamberSlug ?? '',
+    (prompt || doc?.artUrl) ? (doc?.artUrl ?? '') : null,
     options,
     null
   )
@@ -566,28 +543,24 @@ export const useRequestChamberArtUrl = (coord: bigint) => {
 // Agent Art
 //
 export const useRequestAgentArtUrl = (agentEntity: Entity) => {
-  const {
-    networkLayer: {
-      components: { Agent, Metadata },
-    }
-  } = useMUD()
+  const { networkLayer: { components: { Agent } } } = useMUD()
 
   const agent = useComponentValue(Agent, agentEntity)
-  const metadataData = useComponentValue(Metadata, agentEntity)
-  const metadata = metadataData?.metadata ?? null
-  const url = metadataData?.url ?? null
+  const chamberSlug = agent ? coordToSlug(agent.coord, null) : null
+
+  const doc = useRemoteDocument(QuestAgentDoc.type, chamberSlug)
 
   const prompt = useMemo(() => {
-    if (agent && metadata && !url) {
-      const meta = JSON.parse(metadata)
+    if (doc?.metadata && !doc?.artUrl) {
+      const meta = JSON.parse(doc.metadata)
       return `A watercolor portrait of a maritime figure, digital neon art, luminescent deep sea creatures: ${meta.description} nautical steampunk art, watercolor marine landscape, vintage nautical charts`
       // return `${meta.name}, ${meta.description}`
     }
     return ''
-  }, [metadata, url])
+  }, [doc])
 
   // @ts-ignore
-  useEffect(() => { console.log(`AGENT ART URL IMAGE:`, url) }, [url])
+  useEffect(() => { console.log(`AGENT ART URL IMAGE:`, chamberSlug, prompt, `[${doc?.artUrl}]`) }, [prompt, doc])
 
   const options: ImageOptions = {
     prompt,
@@ -595,10 +568,10 @@ export const useRequestAgentArtUrl = (agentEntity: Entity) => {
   }
 
   return useRequestGenericMetadata(
-    ContentType.Url,
+    ContentType.ArtUrl,
     MetadataType.Agent,
-    agentEntity,
-    (prompt || url) ? url : null,
+    chamberSlug ?? '',
+    (prompt || doc?.artUrl) ? (doc?.artUrl ?? '') : null,
     options,
     null
   )
@@ -614,11 +587,11 @@ export const useMetadataContext = () => {
   const gptModel = getKey(Keys.GPT_MODEL)
   return {
     ...state,
-    gptModel: (gptModel && gptModel != 'null' ? gptModel : state.gptModel)
+    gptModel: (gptModel && gptModel != 'null' && gptModel != 'undefined' ? gptModel : state.gptModel)
   }
 }
 
-const useStatus = (content: ContentType, type: MetadataType, key: KeyType | undefined) => {
+const useStateStatus = (content: ContentType, type: MetadataType, key: string | undefined) => {
   const { state } = useContext(MetadataContext)
   const status = key ? state.data[content][type][key.toString()] : 0
   return {
@@ -629,12 +602,12 @@ const useStatus = (content: ContentType, type: MetadataType, key: KeyType | unde
   }
 }
 
-export const useMetadataStatus = (type: MetadataType, key: KeyType | undefined) => {
-  return useStatus(ContentType.Metadata, type, key)
+export const useMetadataStatus = (type: MetadataType, key: string | undefined) => {
+  return useStateStatus(ContentType.Metadata, type, key)
 }
 
-export const useArtUrlStatus = (type: MetadataType, key: KeyType | undefined) => {
-  return useStatus(ContentType.Url, type, key)
+export const useArtUrlStatus = (type: MetadataType, key: string | undefined) => {
+  return useStateStatus(ContentType.ArtUrl, type, key)
 }
 
 
@@ -642,78 +615,32 @@ export const useArtUrlStatus = (type: MetadataType, key: KeyType | undefined) =>
 // Metadata Hooks
 //
 
-export const useRealmMetadata = (coord: bigint) => {
-  return useChamberMetadata(coord, MetadataType.Realm)
-}
-
-export const useChamberMetadata = (coord: bigint, type: MetadataType = MetadataType.Chamber) => {
-  const { isUnknown, isFetching, isError, isSuccess } = useMetadataStatus(type, coord)
-  const { networkLayer: { storeCache } } = useMUD()
-
-  const metadataRow = useRow(storeCache, { table: 'ChamberMetadata', key: { coord } })
-  const metadata = useMemo(() => (metadataRow?.value?.metadata ?? null), [metadataRow])
-
+const useGenericMetadata = (key: string, type: string, metadataType: MetadataType) => {
+  const { isUnknown, isFetching, isError, isSuccess } = useMetadataStatus(metadataType, key)
+  const doc = useRemoteDocument(type, key)
+  console.log(`USE DOC:`, key, type, doc)
   return {
     isUnknown,
     isFetching,
     isSuccess,
     isError,
-    metadata: metadata ? JSON.parse(metadata) : {},
+    metadata: doc ? JSON.parse(doc.metadata) : {},
+    artUrl: doc?.artUrl ?? null,
   }
+}
+
+export const useRealmMetadata = (coord: bigint) => {
+  return useGenericMetadata(coord.toString(), QuestRealmDoc.type, MetadataType.Realm)
+}
+
+export const useChamberMetadata = (coord: bigint) => {
+  const chamberSlug = coordToSlug(coord, null)
+  return useGenericMetadata(chamberSlug ?? '', QuestChamberDoc.type, MetadataType.Chamber)
 }
 
 export const useAgentMetadata = (agentEntity: Entity | undefined) => {
-  const { isUnknown, isFetching, isError, isSuccess } = useMetadataStatus(MetadataType.Agent, agentEntity)
-  const { networkLayer: { components: { Metadata } } } = useMUD()
-
-  const metadataData = useComponentValue(Metadata, agentEntity) ?? null
-  const metadata = useMemo(() => (metadataData?.metadata ?? null), [metadataData])
-
-  return {
-    isUnknown,
-    isFetching,
-    isSuccess,
-    isError,
-    metadata: metadata ? JSON.parse(metadata) : {},
-  }
-}
-
-//--------------------------------
-// Art Url Hooks
-//
-
-export const useRealmArtUrl = (coord: bigint) => {
-  return useChamberArtUrl(coord, MetadataType.Realm)
-}
-
-export const useChamberArtUrl = (coord: bigint, type: MetadataType = MetadataType.Chamber) => {
-  const { isUnknown, isFetching, isError, isSuccess } = useArtUrlStatus(type, coord)
-  const { networkLayer: { storeCache } } = useMUD()
-
-  const metadataRow = useRow(storeCache, { table: 'ChamberMetadata', key: { coord } })
-  const url = useMemo(() => (metadataRow?.value?.url ?? null), [metadataRow])
-
-  return {
-    isUnknown,
-    isFetching,
-    isSuccess,
-    isError,
-    url,
-  }
-}
-
-export const useAgentArtUrl = (agentEntity: Entity | undefined) => {
-  const { isUnknown, isFetching, isError, isSuccess } = useArtUrlStatus(MetadataType.Agent, agentEntity)
-  const { networkLayer: { components: { Metadata } } } = useMUD()
-
-  const metadataData = useComponentValue(Metadata, agentEntity) ?? null
-  const url = useMemo(() => (metadataData?.url ?? null), [metadataData])
-
-  return {
-    isUnknown,
-    isFetching,
-    isSuccess,
-    isError,
-    url,
-  }
+  const { networkLayer: { components: { Agent } } } = useMUD()
+  const agent = useComponentValue(Agent, agentEntity)
+  const chamberSlug = agent ? coordToSlug(agent.coord, null) : null
+  return useGenericMetadata(chamberSlug ?? '', QuestAgentDoc.type, MetadataType.Agent)
 }

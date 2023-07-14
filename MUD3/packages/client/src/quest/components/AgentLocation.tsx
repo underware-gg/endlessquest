@@ -28,7 +28,7 @@ export const AgentLocation = ({
     worth,
     metadata,
     metadataIsFetching,
-    url,
+    artUrl,
   } = useAgent(agentEntity)
 
   useRequestAgentMetadata(agentEntity)
@@ -45,7 +45,7 @@ export const AgentLocation = ({
   return (
     <>
       <div className='ChamberImage'>
-        <img className='FillParent' src={url ? url : anim} />
+        <img className='FillParent' src={artUrl ? artUrl : anim} />
       </div>
 
       <div className='ChamberLocation'>
@@ -61,7 +61,7 @@ export const AgentLocation = ({
           <div>Yonder: {yonder ?? '?'}</div>
           <div>Gem: {gemName ?? '?'}</div>
           <div>Coins: {coins ?? '?'}</div>
-          {/* <div>Url: {url?.slice(0, 20) ?? '?'}</div> */}
+          {/* <div>Url: {artUrl?.slice(0, 20) ?? '?'}</div> */}
           {/* <div>Worth: {worth ?? '?'}</div> */}
           <button className='ChatButton' disabled={!canChat} onClick={() => _onChat()}>CHAT</button>
         </div>

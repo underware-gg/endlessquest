@@ -241,13 +241,22 @@ canvas {
 // <Loader>
 //
 
+.RoomLoader {
+  @extend .UI;
+  width: $ui-chamber-size;
+  height: 100px;
+  position: absolute;
+  bottom: 0;
+  left: 0
+}
+
 .Loader {
   @extend .UI;
   width: $ui-chamber-size;
   height: 100px;
   position: absolute;
   bottom: 0;
-  left: 0;
+  left: $ui-chamber-size;
 }
 
 .LoaderContent {
@@ -255,15 +264,6 @@ canvas {
   overflow-y: scroll;
   width: calc(100% - 1em);
   height: calc(80px - 0.25em);
-}
-
-.RoomLoader {
-  @extend .UI;
-  width: $ui-chamber-size;
-  height: 100px;
-  position: absolute;
-  bottom: 0;
-  left: $ui-chamber-size;
 }
 
 

@@ -16,8 +16,4 @@ interface IAgentSystem {
     int32 gridX,
     int32 gridY
   ) external;
-
-  function setAgentMetadata(bytes32 key, string memory metadata) external;
-
-  function setAgentArtUrl(bytes32 key, string memory url) external;
 }

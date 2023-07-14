@@ -17,8 +17,9 @@ export const RealmButton = ({
   const {
     realmExists,
     metadata,
-    url,
+    artUrl,
   } = useRealm(coord)
+  console.log(`SELECTOR`, coord, realmExists, artUrl, metadata)
 
   // const _clicked = (event: MouseEvent) => {
   const _clicked = () => {
@@ -33,7 +34,7 @@ export const RealmButton = ({
   return (
     <Row className='SelectRealmBox'>
       <Col span={4} className='UI' onClick={() => _clicked()}>
-        <img className='FillParent' src={url ? url : logo} />
+        <img className='FillParent' src={artUrl ? artUrl : logo} />
       </Col>
       <Col span={8} className='UI' onClick={() => _clicked()}>
         {metadata &&

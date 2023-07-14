@@ -76,22 +76,6 @@ export function defineContractComponents(world: World) {
         }
       );
     })(),
-    ChamberMetadata: (() => {
-      const tableId = new TableId("", "ChamberMetadata");
-      return defineComponent(
-        world,
-        {
-          metadata: RecsType.String,
-          url: RecsType.String,
-        },
-        {
-          metadata: {
-            contractId: tableId.toHex(),
-            tableId: tableId.toString(),
-          },
-        }
-      );
-    })(),
     Agent: (() => {
       const tableId = new TableId("", "Agent");
       return defineComponent(
@@ -105,22 +89,6 @@ export function defineContractComponents(world: World) {
           gemType: RecsType.Number,
           coins: RecsType.Number,
           worth: RecsType.Number,
-        },
-        {
-          metadata: {
-            contractId: tableId.toHex(),
-            tableId: tableId.toString(),
-          },
-        }
-      );
-    })(),
-    Metadata: (() => {
-      const tableId = new TableId("", "Metadata");
-      return defineComponent(
-        world,
-        {
-          metadata: RecsType.String,
-          url: RecsType.String,
         },
         {
           metadata: {

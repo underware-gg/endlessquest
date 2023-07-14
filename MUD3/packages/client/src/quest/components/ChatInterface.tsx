@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useSettingsContext, SettingsActions } from '../hooks/SettingsContext'
 import { useHyperspaceContext } from '../hyperspace/hooks/HyperspaceContext'
 import { usePlayer } from '../hooks/usePlayer'
@@ -26,6 +26,7 @@ export const ChatInterface = () => {
   const { remoteStore } = useHyperspaceContext()
   const { agentEntity } = usePlayer()
   const { coord } = useAgent(agentEntity)
+  const chamberSlug = coordToSlug(coord ?? 0n, null) ?? ''
 
   if (!isChatting) return <></>
 
@@ -36,7 +37,7 @@ export const ChatInterface = () => {
           <ChatDialog
             store={remoteStore}
             realmCoord={realmCoord}
-            chamberSlug={coordToSlug(coord ?? 0n, null) ?? ''}
+            chamberSlug={chamberSlug}
             isChatting={isChatting}
             onStopChatting={_onStopChatting}
           />

@@ -279,65 +279,6 @@ export function createSystemCalls(
   }
 
 
-  //---------------------------
-  // Metadata
-  //
-  const setRealmMetadata = async (coord: bigint, metadata: string) => {
-    if (coord && metadata) {
-      // let stored_metadata = await storeCache.tables.ChamberMetadata.get({ coord })
-      // if (stored_metadata == null) {
-      console.warn(`STORE REALM METADATA @`, coord, metadata)
-      const tx = await worldSend('setRealmMetadata', [coord, metadata])
-      await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash)
-      // }
-    }
-  }
-  const setChamberMetadata = async (coord: bigint, metadata: string) => {
-    if (coord && metadata) {
-      // let stored_metadata = await storeCache.tables.ChamberMetadata.get({ coord })
-      // if (stored_metadata == null) {
-      console.warn(`STORE CHAMBER METADATA @`, coord, metadata)
-      const tx = await worldSend('setChamberMetadata', [coord, metadata])
-      await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash)
-      // }
-    }
-  }
-  const setAgentMetadata = async (entity: Entity, metadata: string) => {
-    if (entity && metadata) {
-      // let stored_metadata = await storeCache.tables.Metadata.get({ key: entity })
-      // if (stored_metadata == null) {
-      console.warn(`STORE AGENT METADATA @`, entity, metadata)
-      const tx = await worldSend('setAgentMetadata', [entity, metadata])
-      await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash)
-      // }
-    }
-  }
-
-  //---------------------------
-  // Art Url
-  //
-  const setRealmArtUrl = async (coord: bigint, url: string) => {
-    if (coord && url) {
-      console.warn(`STORE REALM IMAGE URL @`, coord, url)
-      const tx = await worldSend('setRealmArtUrl', [coord, url])
-      await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash)
-    }
-  }
-  const setChamberArtUrl = async (coord: bigint, url: string) => {
-    if (coord && url) {
-      console.warn(`STORE CHAMBER IMAGE URL @`, coord, url)
-      const tx = await worldSend('setChamberArtUrl', [coord, url])
-      await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash)
-    }
-  }
-  const setAgentArtUrl = async (entity: Entity, url: string) => {
-    if (entity && url) {
-      console.warn(`STORE AGENT IMAGE URL @`, entity, url)
-      const tx = await worldSend('setAgentArtUrl', [entity, url])
-      await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash)
-    }
-  }
-
   return {
     // Counter
     increment,
@@ -350,13 +291,5 @@ export function createSystemCalls(
     spawnAtPosition,
     moveToDirection,
     moveToPosition,
-    // Metadata
-    setRealmMetadata,
-    setChamberMetadata,
-    setAgentMetadata,
-    // Art url
-    setRealmArtUrl,
-    setChamberArtUrl,
-    setAgentArtUrl,
   };
 }

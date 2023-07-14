@@ -5,7 +5,7 @@ import { useMUD } from '../../store'
 import { useCoord } from './useCoord'
 import { usePlayer } from './usePlayer'
 import { Gem, GemNames } from '@rsodre/crawler-data'
-import { useChamberMetadata, useChamberArtUrl } from './MetadataContext'
+import { useChamberMetadata } from './MetadataContext'
 
 export const useChamber = () => {
   const {
@@ -21,9 +21,12 @@ export const useChamber = () => {
 
   const agentEntity = useMemo(() => (chamber?.value?.agent ?? '0x0'), [chamber]) as Entity
 
-  const { metadata, isFetching: metadataIsFetching, isError: metadataIsError } = useChamberMetadata(coord ?? 0n)
-
-  const { url } = useChamberArtUrl(coord ?? 0n)
+  const {
+    metadata,
+    artUrl,
+    isFetching: metadataIsFetching,
+    isError: metadataIsError,
+  } = useChamberMetadata(coord ?? 0n)
 
   return {
     coord: coord ?? null,
@@ -40,6 +43,6 @@ export const useChamber = () => {
     metadata: metadata ?? null,
     metadataIsFetching,
     metadataIsError,
-    url: url ?? null,
+    artUrl: artUrl ?? null,
   }
 }

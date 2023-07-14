@@ -8,13 +8,13 @@ export const RealmLocation = () => {
     opener,
     metadata,
     metadataIsFetching,
-    url,
+    artUrl,
   } = useRealm(realmCoord)
 
   return (
     <>
       <div className='RealmImage'>
-        <img className='FillParent' src={url ? url : anim} />
+        <img className='FillParent' src={artUrl ? artUrl : anim} />
       </div>
 
       <div className='RealmLocation'>

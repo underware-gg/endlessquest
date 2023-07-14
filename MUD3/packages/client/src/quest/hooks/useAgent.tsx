@@ -4,7 +4,7 @@ import { Entity } from '@latticexyz/recs'
 import { useMUD } from '../../store'
 import { useCoord } from './useCoord'
 import { Gem, GemNames } from '@rsodre/crawler-data'
-import { useAgentMetadata, useAgentArtUrl } from './MetadataContext'
+import { useAgentMetadata } from './MetadataContext'
 
 export const useAgent = (agentEntity: Entity | undefined) => {
   const {
@@ -16,9 +16,12 @@ export const useAgent = (agentEntity: Entity | undefined) => {
   const agent = useComponentValue(Agent, agentEntity)
   const { compass, slug } = useCoord(agent?.coord ?? 0n)
 
-  const { metadata, isFetching: metadataIsFetching, isError: metadataIsError } = useAgentMetadata(agentEntity)
-
-  const { url } = useAgentArtUrl(agentEntity ?? '0' as Entity)
+  const {
+    metadata,
+    artUrl,
+    isFetching: metadataIsFetching,
+    isError: metadataIsError,
+  } = useAgentMetadata(agentEntity)
  
   // useEffect(() => { console.log(`____USE_AGENT:`, agentEntity, typeof agentEntity, agent, metadata) }, [agentEntity, agent, metadata])
 
@@ -36,6 +39,6 @@ export const useAgent = (agentEntity: Entity | undefined) => {
     metadata: metadata ?? null,
     metadataIsFetching,
     metadataIsError,
-    url: url ?? null,
+    artUrl: artUrl ?? null,
   }
 }

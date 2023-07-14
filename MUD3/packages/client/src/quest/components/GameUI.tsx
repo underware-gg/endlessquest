@@ -34,7 +34,7 @@ export const GameUI = () => {
 
       <Loader />
 
-      <RoomLoader />
+      {/* <RoomLoader /> */}
 
       <ChatInterface/>
     </div>

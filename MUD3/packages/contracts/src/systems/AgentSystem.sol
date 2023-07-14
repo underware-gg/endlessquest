@@ -6,8 +6,7 @@ import { getUniqueEntity } from "@latticexyz/world/src/modules/uniqueentity/getU
 import {
   Agent, AgentData,
   Position,
-  Blocker,
-  Metadata, MetadataData
+  Blocker
 } from "../codegen/Tables.sol";
 
 contract AgentSystem is System {
@@ -38,18 +37,5 @@ contract AgentSystem is System {
     );
     Blocker.set(key, true);
     Position.set(key, gridX, gridY);
-    Metadata.set(key, MetadataData("", ""));
-  }
-
-  function setAgentMetadata(bytes32 key, string memory metadata) public {
-    MetadataData memory data = Metadata.get(key);
-    data.metadata = metadata;
-    Metadata.set(key, data);
-  }
-
-  function setAgentArtUrl(bytes32 key, string memory url) public {
-    MetadataData memory data = Metadata.get(key);
-    data.url = url;
-    Metadata.set(key, data);
   }
 }

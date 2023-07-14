@@ -5,8 +5,4 @@ pragma solidity >=0.8.0;
 
 interface IRealmSystem {
   function setRealm(uint256 coord) external;
-
-  function setRealmMetadata(uint256 coord, string memory metadata) external;
-
-  function setRealmArtUrl(uint256 coord, string memory url) external;
 }

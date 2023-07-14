@@ -16,13 +16,13 @@ export const ChamberLocation = () => {
     metadata,
     metadataIsFetching,
     metadataIsError,
-    url,
+    artUrl,
   } = useChamber()
 
   return (
     <>
       <div className='ChamberImage'>
-        <img className='FillParent' src={url ? url : anim} />
+        <img className='FillParent' src={artUrl ? artUrl : anim} />
       </div>
 
       <div className='ChamberLocation'>
@@ -38,7 +38,7 @@ export const ChamberLocation = () => {
           <div>Gem: {gemName ?? '?'}</div>
           <div>Coins: {coins ?? '?'}</div>
           {/* <div>Worth: {worth ?? '?'}</div> */}
-          {/* <div>Url: {url?.slice(0, 20) ?? '?'}</div> */}
+          {/* <div>Url: {artUrl?.slice(0, 20) ?? '?'}</div> */}
         </div>
       </div>
     </>
