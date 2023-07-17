@@ -127,7 +127,7 @@ importers:
         version: 5.7.2
       hyperbox-sdk:
         specifier: github:funDAOmental/hyperbox-sdk
-        version: github.com/funDAOmental/hyperbox-sdk/b7740d459877d8edb3bd1633ea0b00bdd1f5d069
+        version: github.com/funDAOmental/hyperbox-sdk/f8b1c76676d1a9379e9ddfe443394028c2f8afa4
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -6115,7 +6115,7 @@ packages:
       '@rsodre/crawler-data': 0.0.7
       '@types/node': 20.4.2
       '@types/react': 18.2.6
-      hyperbox-sdk: github.com/funDAOmental/hyperbox-sdk/b7740d459877d8edb3bd1633ea0b00bdd1f5d069
+      hyperbox-sdk: github.com/funDAOmental/hyperbox-sdk/f8b1c76676d1a9379e9ddfe443394028c2f8afa4
       nanoid: 4.0.2
       openai: 3.3.0
       react: 18.2.0
@@ -6125,8 +6125,8 @@ packages:
       - debug
     dev: false
 
-  github.com/funDAOmental/hyperbox-sdk/b7740d459877d8edb3bd1633ea0b00bdd1f5d069:
-    resolution: {tarball: https://codeload.github.com/funDAOmental/hyperbox-sdk/tar.gz/b7740d459877d8edb3bd1633ea0b00bdd1f5d069}
+  github.com/funDAOmental/hyperbox-sdk/f8b1c76676d1a9379e9ddfe443394028c2f8afa4:
+    resolution: {tarball: https://codeload.github.com/funDAOmental/hyperbox-sdk/tar.gz/f8b1c76676d1a9379e9ddfe443394028c2f8afa4}
     name: hyperbox-sdk
     version: 0.0.1
     engines: {node: '>=16.14.0'}

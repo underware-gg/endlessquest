@@ -2,8 +2,11 @@ import { useEffect, useState, useContext } from 'react'
 import { HyperspaceContext } from '../hooks/HyperspaceContext'
 import { useRemoteDocument } from '../hooks/useDocument'
 import { useRemoteDocumentIds } from '../hooks/useDocumentIds'
+import { useSettingsContext } from '../../hooks/SettingsContext'
+import { QuestRealmDoc, QuestChamberDoc, QuestAgentDoc, QuestEncounterDoc } from 'hyperbox-sdk'
 
 export const RoomLoader = () => {
+  const { realmCoord } = useSettingsContext()
   // @ts-ignore
   const { dispatchRoom } = useContext(HyperspaceContext)
   const [status, setStatus] = useState('?')
@@ -33,13 +36,13 @@ export const RoomLoader = () => {
     <div className='RoomLoader Infos Smaller'>
       <div className='LoaderContent'>
         Room [{status}][{room?.slug ?? ''}]
-        <MetadataName type='questRealm' id='1' />
-        <MetadataName type='questChamber' id='S1W1' />
-        <MetadataName type='questChamber' id='S1E1' />
-        <MetadataCount type='questRealm' />
-        <MetadataCount type='questChamber' />
-        <MetadataCount type='questAgent' />
-        <MetadataCount type='questEncounter' />
+        <MetadataName type={QuestRealmDoc.type} id={realmCoord.toString()} />
+        <MetadataName type={QuestChamberDoc.type} id={QuestChamberDoc.makeChamberKey(realmCoord, 'S1W1')} />
+        <MetadataName type={QuestChamberDoc.type} id={QuestChamberDoc.makeChamberKey(realmCoord, 'S1E1')} />
+        <MetadataCount type={QuestRealmDoc.type} />
+        <MetadataCount type={QuestChamberDoc.type} />
+        <MetadataCount type={QuestAgentDoc.type} />
+        <MetadataCount type={QuestEncounterDoc.type} />
       </div>
     </div>
   )

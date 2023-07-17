@@ -10,7 +10,7 @@ import {
 import { useSettingsContext } from '../hooks/SettingsContext'
 // Hyperspace
 import { useHyperspaceContext } from '../hyperspace/hooks/HyperspaceContext'
-import { useRemoteDocument } from '../hyperspace/hooks/useDocument'
+import { useAgentMetadataDocument, useChamberMetadataDocument, useRealmMetadataDocument } from '../hyperspace/hooks/useMetadataDocument'
 import { QuestRealmDoc, QuestChamberDoc, QuestAgentDoc } from 'hyperbox-sdk'
 import { coordToSlug } from '@rsodre/crawler-data'
 import { stringToHex } from 'viem'
@@ -149,11 +149,11 @@ const MetadataProvider = ({
                   }
                 } else if (type == MetadataType.Chamber) {
                   _setter = async () => {
-                    QuestChamberDoc.updateMetadata(remoteStore, key, metadata)
+                    QuestChamberDoc.updateMetadata(remoteStore, realmCoord, key, metadata)
                   }
                 } else if (type == MetadataType.Agent) {
                   _setter = async () => {
-                    QuestAgentDoc.updateMetadata(remoteStore, key, metadata)
+                    QuestAgentDoc.updateMetadata(remoteStore, realmCoord, key, metadata)
                   }
                 } else {
                   throw (`Invalid metadata type ${type}`)
@@ -177,12 +177,12 @@ const MetadataProvider = ({
                 } else if (type == MetadataType.Chamber) {
                   _setter = async () => {
                     const downloadUrl = await _uploadArtUrl(`${key}_chamber_art`, url)
-                    QuestChamberDoc.updateArtUrl(remoteStore, key, downloadUrl)
+                    QuestChamberDoc.updateArtUrl(remoteStore, realmCoord, key, downloadUrl)
                   }
                 } else if (type == MetadataType.Agent) {
                   _setter = async () => {
                     const downloadUrl = await _uploadArtUrl(`${key}_agent_art`, url)
-                    QuestAgentDoc.updateArtUrl(remoteStore, key, downloadUrl)
+                    QuestAgentDoc.updateArtUrl(remoteStore, realmCoord, key, downloadUrl)
                   }
                 } else {
                   throw (`Invalid metadata type ${type}`)
@@ -316,7 +316,7 @@ export const useRequestRealmMetadata = (coord: bigint) => {
   const realmRow = useRow(storeCache, { table: 'Realm', key: { coord } })
   const realm = useMemo(() => (realmRow?.value ?? null), [realmRow])
 
-  const doc = useRemoteDocument(QuestRealmDoc.type, coord.toString())
+  const doc = useRealmMetadataDocument(coord)
 
   useEffect(() => { console.log(`REALM META:`, coord, realm, doc?.metadata) }, [coord, realm, doc])
 
@@ -366,7 +366,9 @@ export const useRequestChamberMetadata = (coord: bigint) => {
   const chamber = useMemo(() => (chamberRow?.value ?? null), [chamberRow])
 
   const chamberSlug = coordToSlug(coord, null)
-  const doc = useRemoteDocument(QuestChamberDoc.type, chamberSlug)
+
+  const { realmCoord } = useSettingsContext()
+  const doc = useChamberMetadataDocument(realmCoord, chamberSlug)
 
   useEffect(() => { console.log(`CHAMBER META:`, chamber?.tokenId, doc?.metadata) }, [chamber, doc])
 
@@ -415,7 +417,8 @@ export const useRequestAgentMetadata = (agentEntity: Entity | undefined) => {
   const agent = useComponentValue(Agent, agentEntity) ?? null
   const chamberSlug = agent ? coordToSlug(agent.coord, null) : null
 
-  const doc = useRemoteDocument(QuestAgentDoc.type, chamberSlug)
+  const { realmCoord } = useSettingsContext()
+  const doc = useAgentMetadataDocument(realmCoord, chamberSlug)
 
   const { gptModel } = useMetadataContext()
 
@@ -470,8 +473,7 @@ export const useRequestAgentMetadata = (agentEntity: Entity | undefined) => {
 // Realm Art
 //
 export const useRequestRealmArtUrl = (coord: bigint) => {
-
-  const doc = useRemoteDocument(QuestRealmDoc.type, coord.toString())
+  const doc = useRealmMetadataDocument(coord)
 
   const prompt = useMemo(() => {
     if (doc?.metadata && !doc?.artUrl) {
@@ -505,9 +507,10 @@ export const useRequestRealmArtUrl = (coord: bigint) => {
 // Chamber Art
 //
 export const useRequestChamberArtUrl = (coord: bigint) => {
+  const { realmCoord } = useSettingsContext()
 
   const chamberSlug = coordToSlug(coord, null)
-  const doc = useRemoteDocument(QuestChamberDoc.type, chamberSlug)
+  const doc = useChamberMetadataDocument(realmCoord, chamberSlug)
 
   const prompt = useMemo(() => {
     if (doc?.metadata && !doc?.artUrl) {
@@ -548,7 +551,8 @@ export const useRequestAgentArtUrl = (agentEntity: Entity) => {
   const agent = useComponentValue(Agent, agentEntity)
   const chamberSlug = agent ? coordToSlug(agent.coord, null) : null
 
-  const doc = useRemoteDocument(QuestAgentDoc.type, chamberSlug)
+  const { realmCoord } = useSettingsContext()
+  const doc = useAgentMetadataDocument(realmCoord, chamberSlug)
 
   const prompt = useMemo(() => {
     if (doc?.metadata && !doc?.artUrl) {
@@ -615,9 +619,8 @@ export const useArtUrlStatus = (type: MetadataType, key: string | undefined) => 
 // Metadata Hooks
 //
 
-const useGenericMetadata = (key: string, type: string, metadataType: MetadataType) => {
+const useGenericMetadata = (doc: any, key: string, metadataType: MetadataType) => {
   const { isUnknown, isFetching, isError, isSuccess } = useMetadataStatus(metadataType, key)
-  const doc = useRemoteDocument(type, key)
   return {
     isUnknown,
     isFetching,
@@ -629,17 +632,22 @@ const useGenericMetadata = (key: string, type: string, metadataType: MetadataTyp
 }
 
 export const useRealmMetadata = (coord: bigint) => {
-  return useGenericMetadata(coord.toString(), QuestRealmDoc.type, MetadataType.Realm)
+  const doc = useRealmMetadataDocument(coord)
+  return useGenericMetadata(doc, coord.toString(), MetadataType.Realm)
 }
 
 export const useChamberMetadata = (coord: bigint) => {
+  const { realmCoord } = useSettingsContext()
   const chamberSlug = coordToSlug(coord, null)
-  return useGenericMetadata(chamberSlug ?? '', QuestChamberDoc.type, MetadataType.Chamber)
+  const doc = useChamberMetadataDocument(realmCoord, chamberSlug)
+  return useGenericMetadata(doc, chamberSlug ?? '', MetadataType.Chamber)
 }
 
 export const useAgentMetadata = (agentEntity: Entity | undefined) => {
   const { networkLayer: { components: { Agent } } } = useMUD()
   const agent = useComponentValue(Agent, agentEntity)
   const chamberSlug = agent ? coordToSlug(agent.coord, null) : null
-  return useGenericMetadata(chamberSlug ?? '', QuestAgentDoc.type, MetadataType.Agent)
+  const { realmCoord } = useSettingsContext()
+  const doc = useAgentMetadataDocument(realmCoord, chamberSlug)
+  return useGenericMetadata(doc, chamberSlug ?? '', MetadataType.Agent)
 }
