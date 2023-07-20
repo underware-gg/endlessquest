@@ -18,7 +18,6 @@ import { stringToHex } from 'viem'
 import { useRow, useComponentValue } from '@latticexyz/react'
 import { Entity } from '@latticexyz/recs'
 import { useMUD } from '../../store'
-import { agentToCoord } from '../utils'
 
 //
 // React + Typescript + Context
@@ -153,6 +152,7 @@ const MetadataProvider = ({
                   }
                 } else if (type == MetadataType.Agent) {
                   _setter = async () => {
+                    console.log(`____UPDATE AGENT METATADA`, realmCoord, key, metadata)
                     QuestAgentDoc.updateMetadata(remoteStore, realmCoord, key, metadata)
                   }
                 } else {
@@ -318,7 +318,7 @@ export const useRequestRealmMetadata = (coord: bigint) => {
 
   const doc = useRealmMetadataDocument(coord)
 
-  useEffect(() => { console.log(`REALM META:`, coord, realm, doc?.metadata) }, [coord, realm, doc])
+  useEffect(() => { console.log(`REALM META DOC:`, coord, realm, doc) }, [coord, realm, doc])
 
   const { gptModel } = useMetadataContext()
 
@@ -370,7 +370,7 @@ export const useRequestChamberMetadata = (coord: bigint) => {
   const { realmCoord } = useSettingsContext()
   const doc = useChamberMetadataDocument(realmCoord, chamberSlug)
 
-  useEffect(() => { console.log(`CHAMBER META:`, chamber?.tokenId, doc?.metadata) }, [chamber, doc])
+  useEffect(() => { console.log(`CHAMBER META DOC:`, `#${chamber?.tokenId}`, realmCoord, chamberSlug, doc) }, [chamber, doc])
 
   const { gptModel } = useMetadataContext()
 
@@ -431,7 +431,7 @@ export const useRequestAgentMetadata = (agentEntity: Entity | undefined) => {
     yonder: agent?.yonder ?? null,
   }), [agent])
 
-  useEffect(() => { console.log(`AGENT META:`, agentEntity, agent, doc?.metadata) }, [agentEntity, agent, doc])
+  useEffect(() => { console.log(`AGENT META DOC:`, realmCoord, chamberSlug, agentEntity, agent, doc) }, [agentEntity, agent, doc])
 
   const _parseReponseMetadata = (responseMetadata: any): any | null => {
     const agentMetadata = responseMetadata.npc ?? responseMetadata.chamber?.npc ?? null

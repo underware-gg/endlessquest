@@ -9,13 +9,13 @@ const useRealmMetadataDocument = (realmCoord) => {
 
 // @ts-ignore
 const useChamberMetadataDocument = (realmCoord, chamberSlug) => {
-  const key = useMemo(() => QuestChamberDoc.makeChamberKey(realmCoord, chamberSlug), [realmCoord, chamberSlug])
+  const key = QuestChamberDoc.makeChamberKey(realmCoord, chamberSlug)
   return useRemoteDocument(QuestChamberDoc.type, key)
 }
 
 // @ts-ignore
 const useAgentMetadataDocument = (realmCoord, chamberSlug) => {
-  const key = useMemo(() => QuestAgentDoc.makeChamberKey(realmCoord, chamberSlug), [realmCoord, chamberSlug])
+  const key = QuestAgentDoc.makeChamberKey(realmCoord, chamberSlug)
   return useRemoteDocument(QuestAgentDoc.type, key)
 }
 
