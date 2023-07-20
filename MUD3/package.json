@@ -12,10 +12,10 @@
     "test": "pnpm recursive run test"
   },
   "devDependencies": {
-    "@latticexyz/cli": "2.0.0-alpha.1.268+15e65311",
+    "@latticexyz/cli": "2.0.0-alpha.1.268",
     "@typescript-eslint/eslint-plugin": "5.46.1",
     "@typescript-eslint/parser": "5.46.1",
-    "concurrently": "^8.0.1",
+    "concurrently": "^8.2.0",
     "eslint": "8.29.0",
     "rimraf": "^3.0.2",
     "typescript": "^4.9.5"
