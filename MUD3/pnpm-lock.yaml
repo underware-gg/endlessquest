@@ -121,13 +121,13 @@ importers:
         version: link:../contracts
       endlessquestagent:
         specifier: github:funDAOmental/endlessquestagent
-        version: github.com/funDAOmental/endlessquestagent/a89be0ea3913844ac36f8194da44da5c466f7f28
+        version: github.com/funDAOmental/endlessquestagent/6737f75c723dea1c887a6b21a9603c5ed2f61085
       ethers:
         specifier: ^5.7.2
         version: 5.7.2
       hyperbox-sdk:
         specifier: github:funDAOmental/hyperbox-sdk
-        version: github.com/funDAOmental/hyperbox-sdk/f8b1c76676d1a9379e9ddfe443394028c2f8afa4
+        version: github.com/funDAOmental/hyperbox-sdk/d076c665c6c83394a1d5d6dc341f61eececac48c
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -774,8 +774,8 @@ packages:
       eslint-visitor-keys: 3.4.1
     dev: true
 
-  /@eslint-community/regexpp@4.5.1:
-    resolution: {integrity: sha512-Z5ba73P98O1KUYCCJTUeVpja9RcGoMdncZ6T49FCUl2lN38JtCJ+3WgIDBv0AuY4WChU5PmtJmOCTlN6FZTFKQ==}
+  /@eslint-community/regexpp@4.6.1:
+    resolution: {integrity: sha512-O7x6dMstWLn2ktjcoiNLDkAGG2EjveHL+Vvc+n0fXumkJYAcSqcVYKtwDU+hDZ0uDUsnUagSYaZrOLAYE8un1A==}
     engines: {node: ^12.0.0 || ^14.0.0 || >=16.0.0}
     dev: true
 
@@ -1207,7 +1207,7 @@ packages:
       '@latticexyz/store': 2.0.0-alpha.1.268(typescript@4.9.5)
       '@latticexyz/utils': 2.0.0-alpha.1.268(typescript@4.9.5)(zod@3.21.4)
       '@latticexyz/world': 2.0.0-alpha.1.268(typescript@4.9.5)
-      '@typechain/ethers-v5': 10.2.1(@ethersproject/abi@5.7.0)(@ethersproject/providers@5.7.2)(ethers@5.7.2)(typechain@8.3.0)(typescript@4.9.5)
+      '@typechain/ethers-v5': 10.2.1(@ethersproject/abi@5.7.0)(@ethersproject/providers@5.7.2)(ethers@5.7.2)(typechain@8.3.1)(typescript@4.9.5)
       chalk: 5.3.0
       chokidar: 3.5.3
       dotenv: 16.3.1
@@ -1221,7 +1221,7 @@ packages:
       strip-ansi: 7.1.0
       table: 6.8.1
       throttle-debounce: 5.0.0
-      typechain: 8.3.0(typescript@4.9.5)
+      typechain: 8.3.1(typescript@4.9.5)
       typescript: 4.9.5
       yargs: 17.7.2
       zod: 3.21.4
@@ -1747,7 +1747,7 @@ packages:
       typescript: 5.1.6
     dev: true
 
-  /@typechain/ethers-v5@10.2.1(@ethersproject/abi@5.7.0)(@ethersproject/providers@5.7.2)(ethers@5.7.2)(typechain@8.3.0)(typescript@4.9.5):
+  /@typechain/ethers-v5@10.2.1(@ethersproject/abi@5.7.0)(@ethersproject/providers@5.7.2)(ethers@5.7.2)(typechain@8.3.1)(typescript@4.9.5):
     resolution: {integrity: sha512-n3tQmCZjRE6IU4h6lqUGiQ1j866n5MTCBJreNEHHVWXa2u9GJTaeYyU1/k+1qLutkyw+sS6VAN+AbeiTqsxd/A==}
     peerDependencies:
       '@ethersproject/abi': ^5.0.0
@@ -1761,7 +1761,7 @@ packages:
       ethers: 5.7.2
       lodash: 4.17.21
       ts-essentials: 7.0.3(typescript@4.9.5)
-      typechain: 8.3.0(typescript@4.9.5)
+      typechain: 8.3.1(typescript@4.9.5)
       typescript: 4.9.5
 
   /@types/cookie@0.3.3:
@@ -1801,8 +1801,8 @@ packages:
     resolution: {integrity: sha512-E5Kwq2n4SbMzQOn6wnmBjuK9ouqlURrcZDVfbo9ftDDTFt3nk7ZKK4GMOzoYgnpQJKcxwQw+lGaBvvlMo0qN/Q==}
     dev: true
 
-  /@types/node@20.4.2:
-    resolution: {integrity: sha512-Dd0BYtWgnWJKwO1jkmTrzofjK2QXXcai0dmtzvIBhcA+RsG5h8R3xlyta0kGOZRNfL9GuRtb1knmPEhQrePCEw==}
+  /@types/node@20.4.4:
+    resolution: {integrity: sha512-CukZhumInROvLq3+b5gLev+vgpsIqC2D0deQr/yS1WnxvmYLlJXZpaQrQiseMY+6xusl79E04UjWoqyr+t1/Ew==}
 
   /@types/prettier@2.7.3:
     resolution: {integrity: sha512-+68kP9yzs4LMp7VNh8gdzMSPZFL44MLGqiHWvttYJe+6qnuVr4Ek9wSBQoveqY/r+LwjCcU29kNVkidwim+kYA==}
@@ -1815,6 +1815,14 @@ packages:
     dependencies:
       '@types/react': 18.2.6
     dev: true
+
+  /@types/react@18.2.15:
+    resolution: {integrity: sha512-oEjE7TQt1fFTFSbf8kkNuc798ahTUzn3Le67/PWjE8MAfYAD/qB7O8hSTcromLFqHCt9bcdOg5GXMokzTjJ5SA==}
+    dependencies:
+      '@types/prop-types': 15.7.5
+      '@types/scheduler': 0.16.3
+      csstype: 3.1.2
+    dev: false
 
   /@types/react@18.2.6:
     resolution: {integrity: sha512-wRZClXn//zxCFW+ye/D2qY65UsYP1Fpex2YXorHc8awoNamkMZSvBxwxdYVInsHOZZd2Ppq8isnSzJL5Mpf8OA==}
@@ -3046,7 +3054,7 @@ packages:
       imurmurhash: 0.1.4
       is-glob: 4.0.3
       is-path-inside: 3.0.3
-      js-sdsl: 4.4.1
+      js-sdsl: 4.4.2
       js-yaml: 4.1.0
       json-stable-stringify-without-jsonify: 1.0.1
       levn: 0.4.1
@@ -3068,7 +3076,7 @@ packages:
     hasBin: true
     dependencies:
       '@eslint-community/eslint-utils': 4.4.0(eslint@8.45.0)
-      '@eslint-community/regexpp': 4.5.1
+      '@eslint-community/regexpp': 4.6.1
       '@eslint/eslintrc': 2.1.0
       '@eslint/js': 8.44.0
       '@humanwhocodes/config-array': 0.11.10
@@ -3111,6 +3119,7 @@ packages:
   /esm@3.2.25:
     resolution: {integrity: sha512-U1suiZ2oDVWv4zPO56S0NcR5QriEahGtdN2OR6FiOG4WJvcjBVFB0qI4+eKoWFH483PKGuLuu6V8Z4T5g63UVA==}
     engines: {node: '>=6'}
+    requiresBuild: true
     dev: false
     optional: true
 
@@ -3256,8 +3265,8 @@ packages:
     resolution: {integrity: sha512-VxPP4NqbUjj6MaAOafWeUn2cXWLcCtljklUtZf0Ind4XQ+QPtmA0b18zZy0jIQx+ExRVCR/ZQpBmik5lXshNsw==}
     dev: true
 
-  /fast-glob@3.3.0:
-    resolution: {integrity: sha512-ChDuvbOypPuNjO8yIDf36x7BlZX1smcUMTTcyoIjycexOxd6DFsKsg21qVBzEmr3G7fUKIRy2/psii+CIUt7FA==}
+  /fast-glob@3.3.1:
+    resolution: {integrity: sha512-kNFPyjhh5cKjrUltxs+wFx+ZkbRaxxmZ+X0ZU31SOsxCEtP9VPgtq2teZw1DebupL5GmDaNQ6yKMMVcM41iqDg==}
     engines: {node: '>=8.6.0'}
     dependencies:
       '@nodelib/fs.stat': 2.0.5
@@ -3596,7 +3605,7 @@ packages:
     dependencies:
       array-union: 2.1.0
       dir-glob: 3.0.1
-      fast-glob: 3.3.0
+      fast-glob: 3.3.1
       ignore: 5.2.4
       merge2: 1.4.1
       slash: 3.0.0
@@ -4008,8 +4017,8 @@ packages:
   /js-base64@3.7.5:
     resolution: {integrity: sha512-3MEt5DTINKqfScXKfJFrRbxkrnk2AxPWGBL/ycjz4dK8iqiSJ06UxD8jh8xuh6p10TX4t2+7FsBYVxxQbMg+qA==}
 
-  /js-sdsl@4.4.1:
-    resolution: {integrity: sha512-6Gsx8R0RucyePbWqPssR8DyfuXmLBooYN5cZFZKjHGnQuaf7pEzhtpceagJxVu4LqhYY5EYA7nko3FmeHZ1KbA==}
+  /js-sdsl@4.4.2:
+    resolution: {integrity: sha512-dwXFwByc/ajSV6m5bcKAPwe4yDDF6D614pxmIi5odytzxRlwqF6nwoiCek80Ixc7Cvma5awClxrzFtxCQvcM8w==}
     dev: true
 
   /js-sha3@0.8.0:
@@ -4746,7 +4755,7 @@ packages:
       '@protobufjs/path': 1.1.2
       '@protobufjs/pool': 1.1.0
       '@protobufjs/utf8': 1.1.0
-      '@types/node': 20.4.2
+      '@types/node': 20.4.4
       long: 5.2.3
 
   /proxy-deep@3.1.1:
@@ -5626,8 +5635,8 @@ packages:
       - supports-color
     dev: true
 
-  /typechain@8.3.0(typescript@4.9.5):
-    resolution: {integrity: sha512-AxtAYyOA7f2p28/JkcqrF+gnzam94VNTIbXcaUKodkrKzMX6P/XqBaP6d/OPuBZOi0WgOOmkg1zOSojX8uGkOg==}
+  /typechain@8.3.1(typescript@4.9.5):
+    resolution: {integrity: sha512-fA7clol2IP/56yq6vkMTR+4URF1nGjV82Wx6Rf09EsqD4tkzMAvEaqYxVFCavJm/1xaRga/oD55K+4FtuXwQOQ==}
     hasBin: true
     peerDependencies:
       typescript: '>=4.3.0'
@@ -6105,17 +6114,18 @@ packages:
     version: 1.2.0
     dev: true
 
-  github.com/funDAOmental/endlessquestagent/a89be0ea3913844ac36f8194da44da5c466f7f28:
-    resolution: {tarball: https://codeload.github.com/funDAOmental/endlessquestagent/tar.gz/a89be0ea3913844ac36f8194da44da5c466f7f28}
+  github.com/funDAOmental/endlessquestagent/6737f75c723dea1c887a6b21a9603c5ed2f61085:
+    resolution: {tarball: https://codeload.github.com/funDAOmental/endlessquestagent/tar.gz/6737f75c723dea1c887a6b21a9603c5ed2f61085}
     name: endlessquestagent
     version: 0.0.1
+    engines: {node: '>=18.0.0'}
     prepare: true
     requiresBuild: true
     dependencies:
       '@rsodre/crawler-data': 0.0.7
-      '@types/node': 20.4.2
-      '@types/react': 18.2.6
-      hyperbox-sdk: github.com/funDAOmental/hyperbox-sdk/f8b1c76676d1a9379e9ddfe443394028c2f8afa4
+      '@types/node': 20.4.4
+      '@types/react': 18.2.15
+      hyperbox-sdk: github.com/funDAOmental/hyperbox-sdk/d076c665c6c83394a1d5d6dc341f61eececac48c
       nanoid: 4.0.2
       openai: 3.3.0
       react: 18.2.0
@@ -6125,11 +6135,11 @@ packages:
       - debug
     dev: false
 
-  github.com/funDAOmental/hyperbox-sdk/f8b1c76676d1a9379e9ddfe443394028c2f8afa4:
-    resolution: {tarball: https://codeload.github.com/funDAOmental/hyperbox-sdk/tar.gz/f8b1c76676d1a9379e9ddfe443394028c2f8afa4}
+  github.com/funDAOmental/hyperbox-sdk/d076c665c6c83394a1d5d6dc341f61eececac48c:
+    resolution: {tarball: https://codeload.github.com/funDAOmental/hyperbox-sdk/tar.gz/d076c665c6c83394a1d5d6dc341f61eececac48c}
     name: hyperbox-sdk
     version: 0.0.1
-    engines: {node: '>=16.14.0'}
+    engines: {node: '>=18.0.0'}
     dependencies:
       events: 3.3.0
       messagepack: 1.1.12
