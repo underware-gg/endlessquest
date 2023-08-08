@@ -3,6 +3,10 @@ import { awaitStreamValue } from "@latticexyz/utils";
 import { ClientComponents } from "./createClientComponents";
 import { SetupNetworkResult } from "./setupNetwork";
 import { Direction } from '../layers/phaser/constants'
+import { Queue } from '../quest/utils'
+
+const q_calls = new Queue(200, 'q_calls')
+q_calls.start()
 
 // Quest
 // import { nanoid } from 'nanoid'
@@ -32,6 +36,13 @@ export function createSystemCalls(
     Tile,
   }: ClientComponents
 ) {
+
+  const _worldSend = async (func: any, args: any[]) => {
+    q_calls.push(async () => {
+      const tx = await worldSend(func, args)
+      await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash)
+    }, func)
+  }
 
   // let playerName = cookies.get('playerName')
   // if (!playerName || playerName == '') {
@@ -77,10 +88,9 @@ export function createSystemCalls(
       console.warn(`STORED_REALM:`, coord, stored_realm)
     } else {
       console.warn(`BRIDGING_REALM...`, coord)
-      const tx = await worldSend('setRealm', [
+      await _worldSend('setRealm', [
         coord,
       ])
-      await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash)
       const result = await storeCache.tables.Realm.get({ coord })
       console.warn(`BRIDGED_REALM = `, result)
       // return result
@@ -97,12 +107,11 @@ export function createSystemCalls(
       const { coord } = getTokenIdToCoords(tokenId)
       console.warn(`BRIDGING_TOKEN...`, tokenId, coord)
       // store
-      const tx = await worldSend('setTokenIdToCoord', [
+      await _worldSend('setTokenIdToCoord', [
         tokenId,
         coord,
       ])
       // return stored value
-      await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash)
       const result = await storeCache.tables.Token.get({ tokenId })
       console.warn(`BRIDGED_TOKEN = `, result)
       return result
@@ -177,7 +186,7 @@ export function createSystemCalls(
       //
       // Create Chamber
       console.warn(`BRIDGING_CHAMBER...`, compass, chamberData)
-      let tx = await worldSend('setChamber', [
+      await _worldSend('setChamber', [
         coord,
         chamberData.seed,
         chamberData.tokenId,
@@ -190,7 +199,6 @@ export function createSystemCalls(
         chamberData.coins,
         chamberData.worth,
       ])
-      await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash)
       const result = await storeCache.tables.Chamber.get({ coord })
       console.warn(`BRIDGED_CHAMBER = `, result)
     }
@@ -207,7 +215,7 @@ export function createSystemCalls(
       //
       // Create Agent
       console.warn(`CREATING_AGENT...`, coord)
-      let tx = await worldSend('setAgent', [
+      await _worldSend('setAgent', [
         coord,
         chamberData.seed,
         chamberData.tokenId,
@@ -219,20 +227,16 @@ export function createSystemCalls(
         gemPos.gridX,
         gemPos.gridY,
       ])
-      // wait to commit transaction
-      await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash)
       //
       // Set Chamber agent
       // this query must return only 1 value
       const agentQuery = runQuery([Has(Agent), HasValue(Position, { x: gemPos.gridX, y: gemPos.gridY })])
       const [agentEntity] = agentQuery;
       console.log(`LINKING_AGENT...`, coord, agentEntity)
-      tx = await worldSend('setChamberAgent', [
+      await _worldSend('setChamberAgent', [
         coord,
         agentEntity,
       ])
-      // wait to commit transaction
-      await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash)
     }
 
     //
@@ -243,7 +247,7 @@ export function createSystemCalls(
       const tileQuery = runQuery([Has(Tile), HasValue(Position, { x: tile.gridX, y: tile.gridY })])
       if (tileQuery.size == 0) {
         setTimeout(async () => {
-          const tx = await worldSend('setTile', [
+          await _worldSend('setTile', [
             coord,
             chamberData.tokenId,
             chamberData.terrain,
@@ -253,7 +257,6 @@ export function createSystemCalls(
             tile.isEntry ?? false,
             tile.doorDir ?? -1
           ])
-          await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash)
           // console.log(`SETTILE()`, coord, tile.gridX, tile.gridY, tx)
         }, ++tileCount * 20);
       }
@@ -266,8 +269,7 @@ export function createSystemCalls(
   //
   const spawnAtPosition = async (x: number, y: number) => {
     console.warn(`SPAWN @`, x, y)
-    const tx = await worldSend('spawnAtPosition', [playerName, x, y])
-    await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash)
+    await _worldSend('spawnAtPosition', [playerName, x, y])
   }
   const moveToDirection = async (direction: Direction) => {
     const tx = await worldSend('moveToDirection', [direction])

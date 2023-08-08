@@ -1,43 +1,7 @@
 import React, { ReactNode, createContext, useReducer, useContext, useEffect } from 'react'
+import { Queue } from '../utils'
 
-//
-// React + Typescript + Context
-// https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/context
-//
-
-type Task = () => Promise<any>
-
-class Queue {
-  queue: Task[]
-  interval: number
-
-  constructor() {
-    this.queue = []
-    this.interval = 100
-  }
-
-  async start() {
-    // console.log(`Queue start... (${this.queue.length})`)
-    const fn = this.queue.shift()
-    if(fn) {
-      // console.log(`Queue running... (${this.queue.length})`)
-      await fn()
-    }
-    const that = this
-    // console.log(`Queue timeout... (${this.queue.length})`)
-    setTimeout(function () {
-      that.start()
-    }, this.interval)
-  }
-
-  push(fn:Task) {
-    this.queue.push(fn)
-    // console.log(`Queue push... (${this.queue.length})`)
-  }
-}
-
-const q = new Queue()
-
+const q_bridge = new Queue(100, 'q_bridge')
 
 //--------------------------------
 // Constants
@@ -99,7 +63,7 @@ const BridgeProvider = ({
   } = networkLayer
 
   useEffect(() => {
-    q.start()
+    q_bridge.start()
   }, [])
 
   const [state, dispatch] = useReducer((state: BridgeStateType, action: ActionType) => {
@@ -110,9 +74,9 @@ const BridgeProvider = ({
         if (tokenId > 0n && !state.tokens.includes(tokenId)) {
           newState.tokens = [...state.tokens]
           newState.tokens.push(tokenId)
-          q.push(async () => {
+          q_bridge.push(async () => {
             await bridge_tokenId(tokenId)
-          })
+          }, 'bridge_tokenId')
         }
         break
       }
@@ -121,9 +85,9 @@ const BridgeProvider = ({
         if (coord > 0n && !state.chambers.includes(coord)) {
           newState.chambers = [...state.chambers]
           newState.chambers.push(coord)
-          q.push(async () => {
+          q_bridge.push(async () => {
             await bridge_chamber(coord)
-          })
+          }, 'bridge_chamber')
         }
         break
       }
@@ -132,9 +96,9 @@ const BridgeProvider = ({
         if (coord > 0n && !state.realms.includes(coord)) {
           newState.realms = [...state.realms]
           newState.realms.push(coord)
-          q.push(async () => {
+          q_bridge.push(async () => {
             await bridge_realm(coord)
-          })
+          }, 'bridge_realm')
         }
         break
       }
