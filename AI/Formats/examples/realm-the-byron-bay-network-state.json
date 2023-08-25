@@ -1,0 +1,37 @@
+{
+	"realm_name": "The Byron Bay Network State",
+	"realm_desription": "The Byron Bay Network State is a high-tech, rapidly evolving realm designed and governed by Aus buildoooors - a group of elite coders and hackers. The realm is a living, breathing test bed for new members, reflecting the core values of Aus buildoooors in its very fabric.",
+	"realm_premise": "The Byron Bay Network State is divided into four zones, each a trial that mirrors the pillars of Aus buildoooors. Each zone is a unique testing ground - 'Make Elite Shit', 'No Buildoooors Left Behind', 'Decentralise Everything Except My Love For You', and 'Party Like It's 1979'. Prospective members must navigate these zones, facing their challenges and embodying their principles, to earn a place among the Aus buildoooors.", 
+	"realm_boss": {
+		"name": "The Grand Architect",
+		"description": "A legendary figure, the Grand Architect is said to be the original creator of the Byron Bay Network State. They are rumored to exist within the simulation, hidden, observing, and intervening when necessary.",
+		"behaviour_mode": "A cryptic encounter with the enigmatic ruler of this realm which cannot be passed without the world treasure",
+		"quirk": "They are perpetually shrouded in digital shadows, their presence only hinted at through cryptic code and subtle glitches."
+	},
+	"realm_treasure": "The Source Code, an ancient, powerful algorithm said to hold the secrets to the realm. It's believed to have the power to reshape the Network State itself.",
+	"realm_dictionary": {
+		"fire": {"name":"Make Elite Shit", "description": "A forge of innovation where only the most exceptional creations are birthed"},
+		"water": {"name":"No Buildoooors Left Behind", "description": "A sanctuary of learning and support, where everyone is uplifted and nobody is overlooked"},
+		"earth": {"name":"Decentralise Everything Except My Love For You", "description": "A landscape of interwoven networks, each operating independently, yet part of the whole"},
+		"air": {"name":"Party Like It's 1979", "description": "A ceaseless celebration of life, reminiscent of the euphoria of the late 70s"}
+	},
+    "realm_gems": {
+        "silver": { "label": "quest", "behaviour": "A fellow coder who needs your expertise" },
+        "gold": { "label": "mystery", "behaviour": "An enigmatic piece of code that conceals a profound secret" },
+        "sapphire": { "label": "fight", "behaviour": "A malicious AI that seeks to undermine the network" },
+        "emerald": { "label": "trickster", "behaviour": "A deceptive hologram that lures you into traps" },
+        "ruby": { "label": "trial", "behaviour": "A complex algorithm that tests your coding mettle" },
+        "diamond": { "label": "artefact", "behaviour": "An ancient piece of technology with untapped potential" },
+        "ethernite": { "label": "ruler", "behaviour": "A challenging encounter with the elusive Grand Architect of the realm" },
+        "kao": { "label": "treasure", "behaviour": "A powerful encryption that guards the coveted Source Code" }
+    },
+	"realm_art_prompts": {
+		"realm_suffix": "cyberpunk art, glitch aesthetics, retro futurism",
+		"chamber_prefix": "A bird's-eye view of an intricately networked cityscape",
+		"npc_prefix": "A shadowy figure superimposed on lines of cryptic code",
+		"fire": "neon-infused industrial setting",
+		"water": "luminous, serene sanctuary infused with bioluminescence",
+		"earth": "an organic, self-sustaining metropolis built into a mountain",
+		"air": "a vibrant, retro disco with futuristic upgrades"
+	}
+}

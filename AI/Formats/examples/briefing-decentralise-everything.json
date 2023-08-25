@@ -1,0 +1,17 @@
+{
+    "name": "The Byron Bay Network State: Decentralise Everything Except My Love For You Trial",
+    "description": "A massive interconnected simulation with a vast landscape symbolizing the concept of total decentralization. The environment morphs and shifts according to the collective actions of its inhabitants.",
+    "terrain_type": "Decentralise Everything Except My Love For You",
+    "gem_type": "Emerald",
+    "npc": {
+    "name": "The Oracle of Arkham",
+    "description": "An elusive character known to sell prophetic visions of the Byron Bay Network State via the on-chain intelligence exchange, Arkham. Known for their mastery in manipulation and illusions.",
+    "behaviour_mode": "A trickster NPC who is deceptive",
+    "quirk": "Has the ability to generate indistinguishable real and decoy prophetic visions."
+    },
+        "coins": 300,
+        "yonder": 2,
+        "realm_description": "The Byron Bay Network State is a new kind of nation state, built by the elite group of shadowy coders and hackers known as 'Aus buildoooors'. It is a live-action roleplaying simulation used to test new members, representing the four pillars of the group's ethos: 'make elite shit', 'no buildoooors left behind', 'decentralise everything except my love for you', and 'party like it's 1979'.",
+        "PC_description": "Liam, who despite not being able to see the code, can intuitively interact with the systems around him due to his empathic understanding of technology. He has been chosen for this mission because of his unique abilities."
+    }
+}
