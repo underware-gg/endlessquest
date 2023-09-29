@@ -84,14 +84,9 @@ The core of the generative experience is run by two GPT prompts, both detailed i
 Art Assets are generated using DALL-E via OpenAI API, as detailed in [GenerativeArt.md](https://github.com/funDAOmental/endlessquest/blob/main/AI/GenerativeArt.md)
 
 
-
-## `MUD2`
-
-Old Phaser MUD engine, use MUD3
-
 ## `MUD3`
 
-A Phaser MUD engine
+A Phaser MUD client
 
 ### Setting up a local server
 
@@ -260,7 +255,17 @@ $ cd MUD3
 $ pnpm mud:up
 ```
 
-Or manually...
+Specifig tag...
+
+```sh
+$ cd MUD3
+$ pnpm mud set-version --tag next && pnpm install
+# or...
+$ cd MUD3
+$ pnpx @latticexyz/cli@next set-version --tag next
+```
+
+Specific version...
 
 ```sh
 $ cd MUD3
